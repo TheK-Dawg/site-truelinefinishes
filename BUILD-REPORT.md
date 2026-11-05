@@ -208,3 +208,52 @@ photos, colours and claims. Every override is recorded in `DECISIONS.md` O1-O10.
 14. **LMB credit on a client site**: added because the overhaul brief orders BFL's footer "LMB credit".
     The fleet branding split says client sites carry none, so confirm it stays.
 15. **Trustindex widget id** (open item 1) is now the only thing between the review section and live reviews.
+
+## CORRECTIONS-2 (operator live review 2, 5 Nov 2026)
+
+Brief: `TRUELINE-FIX2-BRIEF.md`. Every ruling is recorded in `DECISIONS.md` R2-1 to R2-16, including the
+standing rule **R2-10a: the default quick-quote form everywhere unless the operator says otherwise**.
+
+**Why the first build failed (recorded for the operator):** it followed the plan's hero instructions
+literally (form + video in the hero, the slider) and only loosely copied the Buildings for Life
+section structure instead of treating BFL's components as the law. The overhaul fixed that; this
+round works through the operator's remaining points.
+
+| | |
+|---|---|
+| Commits | `62dff37` (round 2), `e7a7494` (live fixes), then this report. Push verified with `git ls-remote` |
+| Version | 1.2.0 |
+| Deploy | worker `site-truelinefinishes` via the deploy guard; final version `6940b3e2-9d4c-40e1-9b84-9a561f211c95` |
+| URL | https://site-truelinefinishes.small-bird-3273.workers.dev (real domain still not attached) |
+
+### Fix by fix
+1. **Hero reviews line gone.** "Read Brandon's reviews on Google" is removed. In its place is a slim Trustindex slot (`slots.trustindexStrip`, `data-trustindex-todo="TODO-TrustIndex-ID"`) that renders nothing until the widget arrives. Nothing is faked.
+2. **Review section:** heading "What customers say about us", its lead, then the marked MAIN widget slot (`slots.trustindexReviews`, the 5 Star pattern). Only /reviews/ keeps a "Read Our Google Reviews" button, so that page is not empty.
+3. **No lone top borders.** Every 2-3px top line is gone (cards, hero info cards, form card, contact cards, statement slab, map, CTA cards, dropdown). Cards now use a full 1px border and the card shadow, as BFL does. A Playwright check fails any element with a top border and no other border.
+4. **Five hubs confirmed.** Exterior painting and wallpapering are offered. All five hubs are linked from the nav dropdown, the footer, /services/ and the home cards.
+5. **Copy pass.** Every H1 is now problem-first ("Tired Rooms? Painting and Decorating by Brandon", "Walls Marked and Woodwork Chipped? Interior Painting, Room by Room" ...). Every hub H2 is rewritten as natural English that keeps the blueprint heading's topic ("Surface Preparation" became "The Preparation That Makes Paint Last", and so on). The list heading "Interior painting, exterior painting and wallpapering" is replaced and banned by the audit. Copy that still told people to pick a room from the old dropdown is rewritten on every page and in the Baildon article. Hub leads no longer repeat their H1. No new claims: only the plan's usable list.
+6. **How a job runs:** heading, lead, steps and the Quick Quote Online line are left-aligned and start on the page container's left edge. The photo sits flush against the panel (measured gap 0px).
+7. **Where to Find Us:** plain text and a plain dotted list of places. No box, border or background (Playwright check). The map is kept.
+8. **Home map = Brandon's real listing:** `https://www.google.com/maps?cid=8023434379390696838&output=embed`, the same embed as /contact/. Schema: `hasMap` points at the listing, and `sameAs` = YouTube channel + `https://maps.app.goo.gl/47CXTvHKMybPQHkR9` + the CID URL. **Operator, note:** Google's own card inside the map frame shows the listing's street address and its rating and review count ("5.0 ★ (17)"). The site's own text and schema still never show the address, and they show no count or rating. The plan bans both, but the operator ordered this embed (DECISIONS R2-8). Say if the home page should go back to the area map.
+9. **Three published articles, all live, indexable and in the sitemap:** `/resources/painting-and-decorating-baildon/`, `/resources/painting-and-decorating-guiseley/`, `/resources/interior-painting-ilkley/` (towns 1, 2 and 4 in the publish order; Menston, 3, is next). Each has about 660-760 words with six or seven H2s, a pool photo above every content H2, an FAQ section, and Article + FAQPage + BreadcrumbList schema. They link once to each related hub and show on the hubs' further reading, the resources page, the home resources strip and the site map. The words come from the plan's service detail and content notes only. Guiseley and Ilkley have no bought town research, so their local colour is general geography. No video, because fix 13 overrides the rotation.
+10. **Default form:** the Formlane form `truelinefinishes-quick-quote-online-form` was updated through the Formlane MCP to **version 3**. Fields, in order: name, email, phone, postcode, short description. The "Type of work" and "Home owner or tenant" dropdowns are gone. Still Live, button "Quick Quote Online", heading and security line unchanged. The alert email body now lists the five fields. Destination unchanged: **`admin@apexaimarketing.com`**. The brief again wrote `apexia...`, which is the parked domain with no mail (D4), so I didn't switch to it. Operator: confirm. Privacy Policy field list updated. No test lead was sent.
+11. **Button centring.** Measured on every button: capitals sat about 2px high (1.8px by font metrics, 2.5px by pixel ink). The flex box centred the line box, which leaves room for descenders under capitals. Fix: every label is wrapped in `.btn__t` with `text-box: trim-both cap alphabetic`, so the capitals themselves are centred whatever the system font. The live check then found a second cause on the **Formlane submit button**: form.js gives it uneven padding (10.5px top, 21px bottom), which put the label 5px high. That is overridden with even padding, `display: block` (flex turns the trim off) and the same trim. Result on the live worker, 1440 + 390, every route, including the sticky bar and the Formlane submit: **426 buttons, worst offset 0px**. Firefox has no `text-box` yet and keeps plain line-box centring. Cumbria: see below.
+12. **One hero on every page.** `Hero.astro` is the only hero, and `PageHero` uses it in compact mode. Every page gets the same full-bleed photo under the overlay, the same container and headline position, and Quick Quote Online + Call. Sub-pages are shorter (about 420-650px desktop against the home page's 800px) and have no info cards. The hubs' right-hand photos are now their hero backgrounds. Pages without their own photo use Brandon's dust-sheeted room.
+13. **No YouTube anywhere.** The kitchen Short is off /about/ (a photo of Brandon's work replaces it). The house video is off both hubs and the article template. The VideoObject schema and VideoEmbed component are deleted. Cookie Policy, Privacy and Terms no longer mention embedded videos. The video ids and captions stay in `site.ts`.
+14. **Standard pages added:** `/company-facts/`, `/complaints-procedure/`, plus `/accessibility/` and `/find-us-online/` (the rest of the 5 Star / Vision Plumbing small-trade set). They use plan facts only: no address, company or VAT number, guarantee or response time. They are linked from the footer and the site map. The legal pages keep their base wording.
+15. **Site map hero bug:** a no-photo hero used to set `margin-inline: 0` on its container, which pinned the copy to the far left. The shared hero removes it. Measured: H1 left edge = page container on all 24 non-utility routes (120px desktop, 16px mobile).
+16. **LMB credit** kept as "Painting and decorating websites by Local Map Booster", with one nofollow link on the keyword. It reads naturally for the trade.
+
+### Verification (final deploy `6940b3e2`)
+- `node scripts/audit.mjs`: 26 pages, **0 fails** (selftest passes). New checks: no YouTube embed, no VideoObject, the shared hero pattern with no side image or Google line, the reviews heading, the home map is the CID embed, `sameAs`/`hasMap`, the banned list heading, all standard pages exist, at least 3 published articles each with a photo per H2 and FAQPage. **Proven by breaking a copy of dist: 8 mutations planted, 8 caught.**
+- `node scripts/check.mjs <worker URL>` (Playwright, 1440×900 + 390×844, 25 routes): **0 fails**. New rendered checks: exactly the five default form fields with no dropdown, no YouTube iframe, hero pattern + H1 aligned to the container, no lone top borders, home map src, areas boxless, steps left-aligned + photo flush, optical centring of every button. **Proven on a broken copy: centred steps, a 20px gap, boxed areas, top-bordered cards, an untrimmed label and a far-left hero were all caught.** The first live run caught the Formlane padding, which the local run cannot see (the form only renders on its allowed domains). Fixed, then re-run clean.
+- `node scripts/token-gate.mjs`: PASS. `node scripts/contrast.mjs`: 0 fails. `node scripts/cookies.mjs <worker URL>`: no cookies or first-party storage on any page type.
+- Live read-back: every route 200 (company facts, complaints, accessibility, find us online, the 3 articles, sitemap). The articles are `index, follow` and in `sitemap-0.xml`. Zero YouTube/VideoObject on home, about, hubs and articles.
+- Screenshots: `/root/work/tl-shots/round2/` (desktop + mobile, every route).
+- **NOT RUN:** `astro check` (needs an install; `astro build` is clean). No test lead.
+
+### Open items after round 2
+1. **Trustindex widget ids** (main section + optional slim hero widget): set `slots.trustindexReviews` / `slots.trustindexStrip` in `src/data/site.ts`. Until then the review section is a heading, its lead and an empty marked slot.
+2. **Home and contact maps show the address and rating in Google's own card** (fix 8 above): operator's call.
+3. **Form destination spelling** apexai vs apexia (unchanged, D4).
+4. Earlier open items 2-12 and 14 still stand. Item 13 (contact map address) is now the same question as item 2 here.
