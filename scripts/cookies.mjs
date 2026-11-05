@@ -7,7 +7,7 @@ const require = createRequire('/root/projects/lead-gen-websites/visionplumbing/p
 const { chromium } = require('playwright');
 const EXE = '/root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell';
 const base = (process.argv[2] || '').replace(/\/$/, '');
-const routes = ['/', '/painting-and-decorating/', '/contact/', '/resources/painting-and-decorating-baildon/', '/reviews/'];
+const routes = ['/', '/about/', '/painting-and-decorating/', '/contact/', '/resources/painting-and-decorating-baildon/', '/reviews/'];
 const browser = await chromium.launch({ executablePath: EXE });
 const out = {};
 for (const r of routes) {

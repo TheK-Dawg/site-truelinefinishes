@@ -16,7 +16,7 @@ const { heading, body } = Astro.props;
       <h2 class="ar__h2">{heading}</h2>
       <p class="ar__body">{body}</p>
     </div>
-    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed /></div>
+    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed area="Baildon, Shipley" /></div>
     <ul class="ar__list">{mainPlaces.map((t) => <li>{t}</li>)}</ul>
   </div>
 </section>
