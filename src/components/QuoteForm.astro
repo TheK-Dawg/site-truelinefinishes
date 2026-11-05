@@ -83,7 +83,9 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__form :global(textarea.lf-i) { min-height: calc(var(--space-30) - var(--space-4)); resize: vertical; }
   .qf__form :global(.lf-i::placeholder) { color: var(--text-muted); opacity: 1; }
   .qf__form :global(.lf-i:focus) { outline: 2px solid var(--brand-primary); outline-offset: 1px; border-color: var(--brand-primary); }
-  .qf__form :global(.lf-b) { width: 100%; min-height: var(--btn-h-lg); border: 0; border-radius: var(--btn-radius); background: var(--brand-primary); color: var(--brand-fg); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight); text-box: trim-both cap alphabetic; cursor: pointer; }
+  /* form.js ships the button with uneven padding (twice as much below as above), which pushed the label
+     about 5 pixels high (measured live, round 2). Even padding + the cap trim centre it (a <button> centres its own content; flex would disable the trim). */
+  .qf__form :global(.lf-b) { display: block; padding: 0 var(--space-4); width: 100%; min-height: var(--btn-h-lg); border: 0; border-radius: var(--btn-radius); background: var(--brand-primary); color: var(--brand-fg); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight); text-box: trim-both cap alphabetic; cursor: pointer; }
   .qf__form :global(.lf-b:hover) { background: var(--brand-hover); }
   .qf__form :global(.lf-x), .qf__form :global(.lf-e) { color: var(--status-negative); }
   @media (max-width: 1023px) { .qf__inner { grid-template-columns: 1fr; } .qf__card { max-width: none; } }

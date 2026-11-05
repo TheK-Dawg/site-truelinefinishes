@@ -8,7 +8,7 @@ const content: ServiceContent = {
   metaTitle: 'Commercial Painting and Decorating, Baildon & Leeds | TrueLine Finishes',
   description: 'Commercial painting and decorating for offices, restaurants, schools, hotels and local businesses across Baildon, Shipley, Leeds and Ilkley. Free quotations.',
   h1: 'Premises Looking Worn? Commercial Painting and Decorating',
-  lead: 'Premises looking tired in front of customers or staff? TrueLine Finishes brings the same careful painting and decorating to offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
+  lead: 'Customers and staff notice tired walls. TrueLine Finishes brings the same careful painting and decorating to offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
   heroImage: 'office-navy-feature-wall-0178',
   intro: [
     'Commercial work is the same trade as at home: interior painting, exterior painting and wallpapering, for business premises of every kind. Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to him.',

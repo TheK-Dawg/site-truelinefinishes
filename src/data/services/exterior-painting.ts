@@ -8,7 +8,7 @@ const content: ServiceContent = {
   metaTitle: 'Exterior Painting in Baildon, Shipley & Otley | TrueLine Finishes',
   description: 'Exterior painting in Baildon, Shipley, Otley and Ilkley: masonry paint on render, brick and stone, windows, doors and woodwork. Free quotations.',
   h1: 'Flaking Paint on the Walls, Windows or Front Door? Exterior Painting',
-  lead: 'Faded masonry, flaking windows or a front door that has seen better days? Exterior painting from TrueLine Finishes covers painted render, brick and stone, windows, doors and exterior woodwork, prepared properly first.',
+  lead: 'Exterior painting from TrueLine Finishes covers painted render, brick and stone, windows, doors and exterior woodwork, prepared properly first.',
   heroImage: 'semi-detached-after-0125',
   intro: [
     'If a wall has already been rendered or painted, it can be painted again, even if it is stone. Exterior painting covers masonry, exterior woodwork, mullion, sash and wooden windows, front and garage doors, and oil varnishing. Brandon Dawson, the owner, carries out the work and oversees every job.',

@@ -7,7 +7,7 @@ const content: ServiceContent = {
   metaTitle: 'Interior Painting in Baildon, Guiseley & Ilkley | TrueLine Finishes',
   description: 'Interior painting in Baildon, Guiseley, Ilkley and Shipley: walls, ceilings, stairs and all the woodwork, with full preparation first. Free quotations.',
   h1: 'Walls Marked and Woodwork Chipped? Interior Painting, Room by Room',
-  lead: 'Walls marked, ceilings tired, woodwork chipped? Interior painting from TrueLine Finishes covers every room, the stairs and landings and all the woodwork, with sanding, filling and caulking before any paint goes on.',
+  lead: 'Interior painting from TrueLine Finishes covers every room, the stairs and landings and all the woodwork, with sanding, filling and caulking before any paint goes on.',
   heroImage: 'green-bedroom-0136',
   intro: [
     'From one bedroom to a whole house, interior painting is walls and ceilings, every room, stairs and landings, and all aspects of woodwork. Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to him.',
