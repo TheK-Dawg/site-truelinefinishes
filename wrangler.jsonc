@@ -1,50 +1,16 @@
-// Standard LMB static-assets Worker that owns its own enquiry handling.
-// worker/index.ts only sees requests with no matching asset: /api/lead (GET
-// hands the form its Turnstile sitekey; POST checks, saves the lead in LEADS,
-// emails it through LEAD_MAIL, and posts a record-only copy to Olympus after).
-// The cron trigger retries any undelivered email or recording copy.
-// Full operating and handover notes: HANDOVER-FORMS.md.
-// Secrets (wrangler secret put): TURNSTILE_SITEKEY, TURNSTILE_SECRET, OLYMPUS_SITE_KEY.
-//
-// PRODUCTION Worker for buildingsforlife.com (Vince's order, 26 Oct 2026; domain
-// corrected 27 Oct from buildingsforlifeltd.com, whose domains stay attached as rollback).
-// Custom Domains (apex + www), zone routes and the www -> apex 301 Redirect Rule
-// were attached by API, NOT declared here, so a deploy only ships code and
-// assets and never touches DNS. (wrangler 3 publishes any routes declared here
-// and, run non-interactively, overwrites conflicting DNS records without asking.)
-// Preview URL (noindexed by public/_headers): site-buildingsforlifeltd.small-bird-3273.workers.dev
-// The old test Worker site-buildingsforlifeltd-v3-test is kept, undeployed-to, as the rollback.
+// TrueLine Finishes: static-assets-only Cloudflare Worker (no Worker script, no D1, no email:
+// the quote form is the Formlane direct embed, which posts straight to api.formlane.uk).
+// Preview URL first: site-truelinefinishes.small-bird-3273.workers.dev (noindexed by public/_headers).
+// The real domain (www.truelinefinishes.com, apex 301 -> www) is attached at launch when GoDaddy DNS
+// is handed over; Custom Domains are attached in Cloudflare, not declared here, so a deploy never
+// touches DNS. Always deploy through `npm run deploy` (scripts/deploy-guard.mjs).
 {
-  "name": "site-buildingsforlifeltd",
-  "main": "worker/index.ts",
+  "name": "site-truelinefinishes",
   "compatibility_date": "2025-01-01",
   "assets": {
     "directory": "./dist",
-    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  "vars": {
-    "SITE_ORIGIN": "https://buildingsforlife.com",
-    // Lead email: client inbox first, then the agency copy (set LEAD_ADMIN_COPY to "" on handover).
-    "LEAD_TO": "mail@buildingsforlifeltd.com",
-    "LEAD_ADMIN_COPY": "admin@apexaimarketing.com",
-    "LEAD_FROM": "leads@buildingsforlife.com",
-    "LEAD_BUSINESS": "Buildings For Life Ltd",
-    "LEAD_GREETING": "Hey team",
-    "LEAD_HOLD_POLICY": "deliver",
-    // Secondary record-only copy. "" turns it off; email never depends on it.
-    "OLYMPUS_RECORD_URL": "https://olympus.small-bird-3273.workers.dev/ingest/site-lead"
-  },
-  // This site's own lead store and outbox (schema: migrations/).
-  "d1_databases": [
-    { "binding": "LEADS", "database_name": "site-buildingsforlifeltd-leads", "database_id": "3128afb4-dc07-4f0b-b966-2d2f8e9a1997", "migrations_dir": "migrations" }
-  ],
-  // Cloudflare Email Sending, from this Worker only, and only as leads@buildingsforlife.com.
-  // The domain must be onboarded (Email Service). Email Routing is NOT used and stays off.
-  "send_email": [
-    { "name": "LEAD_MAIL", "allowed_sender_addresses": ["leads@buildingsforlife.com"] }
-  ],
-  "triggers": { "crons": ["*/5 * * * *"] },
   "workers_dev": true
 }

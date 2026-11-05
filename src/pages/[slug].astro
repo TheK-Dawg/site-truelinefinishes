@@ -1,22 +1,10 @@
 ---
-/**
- * ROOT ROUTE: service hub pages at the plan's hub slugs, and SEO articles at the
- * engine's URL contract (core/url-contract.mjs: `/<service>-<town>/`, the same URL
- * the engine plans its silo links against and writes as the canonical).
- */
+/** HUB ROUTES: the five service hubs at the plan's locked root URLs. */
 import ServicePage from '../components/ServicePage.astro';
-import ArticlePage from '../components/ArticlePage.astro';
 import { serviceContent } from '../data/services';
-import { articles } from '../data/articles';
-
 export function getStaticPaths() {
-  const hubs = new Set(serviceContent.map((c) => c.slug));
-  for (const a of articles) if (hubs.has(a.slug)) throw new Error(`article slug collides with a hub: ${a.slug}`);
-  return [
-    ...serviceContent.map((c) => ({ params: { slug: c.slug }, props: { kind: 'service' as const, content: c } })),
-    ...articles.map((a) => ({ params: { slug: a.slug }, props: { kind: 'article' as const, article: a } })),
-  ];
+  return serviceContent.map((c) => ({ params: { slug: c.slug }, props: { content: c } }));
 }
-const props = Astro.props;
+const { content } = Astro.props;
 ---
-{props.kind === 'service' ? <ServicePage content={props.content} /> : <ArticlePage article={props.article} />}
+<ServicePage content={content} />

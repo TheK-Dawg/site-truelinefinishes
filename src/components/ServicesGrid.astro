@@ -1,47 +1,34 @@
 ---
 /**
- * SERVICES (Electrix "Our Services"). Section head: heading left, lead + the
- * Call button (CallButton, light tone) right. Cards on the pale panel, photo on top, the circle icon
- * overlapping it, the first card dark (the capture's highlighted card).
- * CARD LAW: the service name on the title is the card's ONLY link (exact
- * name, canonical href, once per page via the ledger); icons never link.
+ * SERVICES (template services grid): the five hubs as cards, photo on top, the circle icon
+ * overlapping it, the first card black. CARD LAW: the hub name on the title is the card's ONLY
+ * link (exact name, canonical href); images and icons never link.
  */
 import { services } from '../data/site';
-import { AnchorLedger, serviceCardLink } from '../lib/anchors';
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-interface Props { heading?: string; lead?: string; eyebrow?: string; exclude?: string[]; excludeTargets?: string[]; showCall?: boolean }
-const { heading = 'Every stage of a build, from the footings to the finish', lead = 'One family firm for the groundworks, the brickwork, the structure and the joinery, so nobody on your job is waiting on somebody else.', eyebrow = 'Our Services', exclude = [], excludeTargets = [], showCall = true } = Astro.props;
-const list = services.filter((s) => !exclude.includes(s.slug));
-const ledger = new AnchorLedger();
-for (const slug of excludeTargets) ledger.noteInbound(`/${slug}/`);
+interface Props { heading?: string; lead?: string; showCall?: boolean }
+const { heading = 'Painting and decorating, inside and out', lead = 'Five services, one standard of preparation and finish, for homes and businesses.', showCall = true } = Astro.props;
 ---
 <section class="sv section section--panel section-services" id="services" data-section="services">
   <div class="container">
     <div class="sec-head" data-motion="reveal">
-      <div>
-        <p class="eyebrow">{eyebrow}</p>
-        <h2 class="sec-head__h2">{heading}</h2>
-      </div>
+      <h2 class="sec-head__h2">{heading}</h2>
       <div class="sec-head__side">
         <p class="sec-head__lead">{lead}</p>
         {showCall && <CallButton cta="services-call" tone="light" />}
       </div>
     </div>
     <ul class="sv__grid">
-      {list.map((s, i) => {
-        const link = serviceCardLink(s, ledger);
-        return (
-          <li class:list={['sv__card', i === 0 && 'sv__card--on']} data-motion="reveal" style={`--reveal-delay: ${(i % 5) * 60}ms`}>
-            <div class="sv__img"><img src={s.img.src} alt={s.img.alt} width={s.img.width} height={s.img.height} loading="lazy" decoding="async" /></div>
-            <span class="sv__ic"><Icon name={s.icon} size={26} /></span>
-            <h3 class="sv__title">{link ? <a href={link.href} data-link="card">{link.anchor}</a> : <span>{s.name}</span>}</h3>
-            <p class="sv__body">{s.short}</p>
-          </li>
-        );
-      })}
+      {services.map((s, i) => (
+        <li class:list={['sv__card', i === 0 && 'sv__card--on on-dark']} data-motion="reveal" style={`--reveal-delay: ${(i % 5) * 60}ms`}>
+          <div class="sv__img"><img src={s.image.sm} alt={s.image.alt} width={s.image.width} height={s.image.height} loading="lazy" decoding="async" /></div>
+          <span class="sv__ic"><Icon name={s.icon} size={26} /></span>
+          <h3 class="sv__title"><a href={`/${s.slug}/`} data-link="card">{s.name}</a></h3>
+          <p class="sv__body">{s.short}</p>
+        </li>
+      ))}
     </ul>
-    <p class="more-line">Not sure which of these your job falls under? <a href="#contact" class="text-link" data-cta="services-quote">Quick Quote Online</a></p>
   </div>
 </section>
 
@@ -49,19 +36,17 @@ for (const slug of excludeTargets) ledger.noteInbound(`/${slug}/`);
   .sv__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); }
   .sv__card { position: relative; display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--border-strong); padding-bottom: var(--space-6); transition: border-color 0.2s var(--ease); }
   .sv__card:hover { border-top-color: var(--brand-primary); }
-  .sv__card--on { background: var(--bg-inverse); border-top-color: var(--brand-primary); }
+  .sv__card--on { background: var(--bg-inverse); border-top-color: var(--accent-on-dark); }
   .sv__img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-panel); }
   .sv__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
   .sv__card:hover .sv__img img { transform: scale(1.04); }
-  .sv__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); margin: calc(-1 * var(--space-8)) 0 0 var(--space-5); position: relative; border-radius: var(--badge-radius); background: var(--bg-panel); color: var(--text-heading); border: 4px solid var(--bg-card); }
-  .sv__card--on .sv__ic { background: var(--brand-primary); color: var(--brand-fg); border-color: var(--bg-inverse); }
-  .sv__title { font-size: var(--fs-xl); font-weight: var(--fw-medium); padding: var(--space-4) var(--space-5) var(--space-2); }
-  .sv__title a:hover { color: var(--brand-text); }
-  .sv__card--on .sv__title { color: var(--text-inverse); }
-  .sv__card--on .sv__title a:hover { color: var(--accent-on-dark); }
+  .sv__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); margin: calc(-1 * var(--space-8)) 0 0 var(--space-5); position: relative; border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); border: 4px solid var(--bg-card); }
+  .sv__card--on .sv__ic { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); border-color: var(--bg-inverse); }
+  .sv__title { font-size: var(--fs-lg); padding: var(--space-4) var(--space-5) var(--space-2); }
+  .sv__title a { color: var(--brand-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .sv__card--on .sv__title a { color: var(--text-inverse); text-decoration-color: var(--accent-on-dark); }
   .sv__body { padding: 0 var(--space-5); font-size: var(--fs-md); color: var(--text-muted); }
   .sv__card--on .sv__body { color: var(--text-inverse-muted); }
   @media (max-width: 1100px) { .sv__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 760px) { .sv__grid { grid-template-columns: 1fr 1fr; gap: var(--space-3); } .sv__title { font-size: var(--fs-base); padding: var(--space-3) var(--space-3) var(--space-1); } .sv__body { padding: 0 var(--space-3); font-size: var(--fs-sm); } .sv__ic { width: var(--space-12); height: var(--space-12); margin: calc(-1 * var(--space-6)) 0 0 var(--space-3); } }
-  @media (max-width: 400px) { .sv__body { display: none; } }
+  @media (max-width: 640px) { .sv__grid { grid-template-columns: 1fr; } }
 </style>

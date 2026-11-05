@@ -1,40 +1,33 @@
 ---
 /**
- * HEADER (Electrix). Logo left over the hero; the nav sits in a dark panel on
- * the right with uppercase letter-spaced links (Home, Services, Areas, About,
- * Contact, Resources), then the phone number: call-first, no Quick Quote button
- * in the header (pass 2; Quick Quote lives in the hero and CTA buttons). Goes
- * solid once scrolled. Mobile: logo, a call button and the burger; the menu
- * carries the links, the call button and an FAQ link.
- * REV3 item 9: on mobile a white, centred slimline review strip sits directly
- * under the header row, inside the fixed header (--header-h covers both).
- * SERVICES DROPDOWN: desktop opens on hover (pointer devices) or on the chevron
- * button (keyboard/touch); mobile turns it into an accordion row in the menu.
- * The panel is anchored under its own nav item and sized to fit, so it never
- * pushes the page wider than the viewport.
+ * HEADER (Buildings for Life template structure). Brandon's logo left on solid black (the
+ * logo's own ground, so it sits seamlessly); the nav panel on the right with letter-spaced
+ * links and a Services dropdown of the five hubs, then the phone number (call-first: a call
+ * is a direct line to Brandon). The header is black at all times and never changes on scroll.
+ * Mobile: logo, a call button and the burger; the menu carries the links and the call button.
+ * The dropdown panel is anchored under its own nav item and sized to fit the viewport.
  */
 import { business, nav, services } from '../data/site';
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-import HeaderReviews from './HeaderReviews.astro';
 const path = Astro.url.pathname;
 const onService = services.some((s) => path.startsWith(`/${s.slug}/`));
-const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href) || (href === '/services/' && onService));
-const serviceLinks = [{ label: 'All services', href: '/services/' }, ...services.map((s) => ({ label: s.name, href: `/${s.slug}/` }))];
+const isCurrent = (href: string, drop = false) => (href === '/' ? path === '/' : drop ? onService : path.startsWith(href));
+const serviceLinks = services.map((s) => ({ label: s.name, href: `/${s.slug}/` }));
 ---
-<header class="hd" data-header>
+<header class="hd on-dark" data-header>
   <div class="hd__row">
     <a href="/" class="hd__brand" aria-label={`${business.name}, home`}>
-      <img src="/brand/logo-horizontal-white.png" alt={business.name} width="841" height="159" loading="eager" />
+      <img src="/brand/logo.webp" alt={business.name} width="960" height="252" loading="eager" />
     </a>
     <div class="hd__panel">
       <nav class="hd__nav" aria-label="Main">
-        {nav.map((item) => item.href === '/services/' ? (
+        {nav.map((item) => item.drop ? (
           <div class="hd__item" data-drop>
-            <a href={item.href} class="hd__link" aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            <a href={item.href} class="hd__link" aria-current={isCurrent(item.href, true) ? 'page' : undefined}>{item.label}</a>
             <button type="button" class="hd__caret" data-drop-btn aria-expanded="false" aria-controls="hd-drop" aria-label="Show services"><Icon name="chevronDown" size={16} /></button>
             <ul class="hd__drop" id="hd-drop">
-              {serviceLinks.map((s, i) => <li><a href={s.href} class:list={['hd__drop-link', i === 0 && 'hd__drop-hub']} aria-current={path === s.href ? 'page' : undefined}>{s.label}</a></li>)}
+              {serviceLinks.map((s, i) => <li><a href={s.href} class="hd__drop-link" aria-current={path === s.href ? 'page' : undefined}>{s.label}</a></li>)}
             </ul>
           </div>
         ) : <a href={item.href} class="hd__link" aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>)}
@@ -46,10 +39,9 @@ const serviceLinks = [{ label: 'All services', href: '/services/' }, ...services
       <span></span><span></span><span></span>
     </button>
   </div>
-  <HeaderReviews />
   <div class="hd__menu" id="hd-menu" data-menu hidden>
     <nav class="hd__menu-nav" aria-label="Mobile">
-      {nav.map((item) => item.href === '/services/' ? (
+      {nav.map((item) => item.drop ? (
         <div class="hd__acc" data-acc>
           <div class="hd__acc-row">
             <a href={item.href} class="hd__menu-link">{item.label}</a>
@@ -62,20 +54,18 @@ const serviceLinks = [{ label: 'All services', href: '/services/' }, ...services
       ) : <a href={item.href} class="hd__menu-link">{item.label}</a>)}
     </nav>
     <div class="hd__menu-actions">
+      <a href="#contact" class="btn btn-primary" data-cta="menu-quote">Quick Quote Online</a>
       <CallButton cta="menu-call" />
-      <a href="/faq/" class="hd__menu-faq">Questions? Read the FAQ</a>
     </div>
   </div>
 </header>
 
 <style>
-  .hd { position: fixed; inset: 0 0 auto 0; z-index: 90; color: var(--text-inverse); transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-  .hd[data-stuck], .hd[data-open] { background: var(--bg-inverse); box-shadow: var(--shadow-overlay); }
+  .hd { position: fixed; inset: 0 0 auto 0; z-index: 90; color: var(--text-inverse); background: var(--bg-inverse); border-bottom: 1px solid var(--border-inverse); }
   .hd__row { display: flex; align-items: stretch; justify-content: space-between; height: var(--header-row-h); padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2)); }
   .hd__brand { display: flex; align-items: center; flex-shrink: 0; }
   .hd__brand img { width: var(--logo-w); height: auto; }
-  .hd__panel { display: flex; align-items: center; gap: var(--space-8); background: var(--bg-inverse-2); padding: 0 max(var(--gutter), calc((100vw - var(--container)) / 2)) 0 var(--space-10); }
-  .hd[data-stuck] .hd__panel { background: transparent; }
+  .hd__panel { display: flex; align-items: center; gap: var(--space-8); background: var(--bg-inverse); padding: 0 max(var(--gutter), calc((100vw - var(--container)) / 2)) 0 var(--space-10); }
   .hd__nav { display: flex; align-self: stretch; align-items: center; gap: var(--space-8); }
   .hd__item { position: relative; display: flex; align-items: center; align-self: stretch; gap: var(--space-1); }
   .hd__caret { display: inline-flex; align-items: center; justify-content: center; width: var(--space-6); height: var(--space-6); padding: 0; background: none; border: 0; color: var(--text-inverse-muted); cursor: pointer; transition: color 0.2s var(--ease); }
@@ -90,15 +80,13 @@ const serviceLinks = [{ label: 'All services', href: '/services/' }, ...services
   }
   .hd__drop-link { display: block; padding: var(--space-2) var(--space-6); font-size: var(--fs-md); color: var(--text-inverse-muted); white-space: nowrap; transition: color 0.15s var(--ease), background-color 0.15s var(--ease); }
   .hd__drop-link:hover, .hd__drop-link:focus-visible, .hd__drop-link[aria-current='page'] { color: var(--text-inverse); background: var(--bg-inverse-2); }
-  .hd__drop-hub { font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent-on-dark); padding-bottom: var(--space-3); margin-bottom: var(--space-2); border-bottom: 1px solid var(--border-inverse); }
   .hd__link { font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-inverse-muted); padding: var(--space-2) 0; transition: color 0.2s var(--ease); }
   .hd__link:hover, .hd__link[aria-current='page'] { color: var(--accent-on-dark); }
   /* Call-first header (pass 2): the phone number sits where the Quick Quote button was. */
   .hd__phone { display: inline-flex; align-items: center; gap: var(--space-3); font-weight: var(--fw-bold); font-size: var(--fs-lg); color: var(--text-inverse); white-space: nowrap; transition: color 0.2s var(--ease); }
-  .hd__phone-ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }
+  .hd__phone-ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--badge-radius); background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   .hd__phone:hover { color: var(--accent-on-dark); }
-  .hd__mcall { display: none; align-self: center; place-items: center; width: var(--tap); height: var(--tap); margin-left: auto; margin-right: var(--space-2); border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }
-  .hd__menu-faq { color: var(--text-inverse-muted); font-size: var(--fs-md); text-decoration: underline; text-underline-offset: 3px; text-align: center; }
+  .hd__mcall { display: none; align-self: center; place-items: center; width: var(--tap); height: var(--tap); margin-left: auto; margin-right: var(--space-2); border-radius: var(--badge-radius); background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   .hd__burger { display: none; align-self: center; margin-right: var(--gutter); width: var(--tap); height: var(--tap); padding: 0; background: none; border: 0; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
   .hd__burger span { display: block; width: 24px; height: 2px; background: var(--text-inverse); transition: transform 0.25s var(--ease), opacity 0.2s; }
   .hd__burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }

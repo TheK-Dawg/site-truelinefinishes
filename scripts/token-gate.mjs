@@ -1,7 +1,7 @@
 // TOKEN LAW GATE (inputs/TOKENS.md ENFORCEMENT). Fails the build on:
 //  - raw colour (hex, rgb/rgba/hsl) in any style outside src/styles/tokens.css
 //  - px values off the scale (space + radius + hairline/glyph geometry)
-//  - font-size not read from a token; any font-family other than the token
+//  - font-size not read from a token; any font-family other than the two tokens (sans body, serif headings)
 //  - banned webfonts anywhere in src/
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
@@ -27,7 +27,7 @@ for (const file of files) {
     const code = line.replace(/\/\*.*?\*\//g, '');
     if (/#[0-9a-fA-F]{3,8}\b/.test(code)) fails.push(`${at}: raw hex -> ${code.trim()}`);
     if (/\b(rgba?|hsla?)\(/.test(code)) fails.push(`${at}: raw colour function -> ${code.trim()}`);
-    if (/font-family\s*:/.test(code) && !/font-family\s*:\s*(inherit|var\(--font-family\))/.test(code)) fails.push(`${at}: font-family outside token -> ${code.trim()}`);
+    if (/font-family\s*:/.test(code) && !/font-family\s*:\s*(inherit|var\(--font-family\)|var\(--font-heading\))/.test(code)) fails.push(`${at}: font-family outside token -> ${code.trim()}`);
     if (/font-size\s*:/.test(code) && !/font-size\s*:\s*(var\(--fs-|calc\(var\(--fs-|inherit)/.test(code)) fails.push(`${at}: font-size not a token -> ${code.trim()}`);
     const media = code.match(/@media[^{]*/)?.[0] ?? '';
     for (const m of media.matchAll(/(\d+)px/g)) if (!BREAKPOINTS.has(Number(m[1]))) fails.push(`${at}: off-scale breakpoint ${m[0]}`);

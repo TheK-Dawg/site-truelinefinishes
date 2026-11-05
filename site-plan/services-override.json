@@ -1,0 +1,132 @@
+{
+  "_whatThisIs": "Brandon's FIVE hubs, painting and decorating, for homes and businesses: the five from the operator's first brief of 4 Nov 2026 (from Brandon's own WhatsApp), with the commercial hub retitled by the operator's second instruction the same day (D-2026-11-04-07; see _titles). That instruction also added a sixth hub, Kitchen Renovation and Installation, which the operator dropped again that night (D-2026-11-04-10; see _kitchen). Every hub traces to Brandon's own words: his WhatsApp of 27 Oct 2026 ('We would rather just target paint and decorating for now ... just domestic and commercial clients all aspects of painting and decorating'), his printed advert in A Child's Wish magazine, sent on WhatsApp on 27 Oct 2026 ('Trueline Finishes offers professional painting and decorating for homes and businesses ... we specialise in interior and exterior painting, wallpapering and careful surface preparation'; strapline 'INTERIOR | EXTERIOR | RESIDENTIAL | COMMERCIAL'), the reference he sent on 23 Oct 2026 for three tiles, 'wall specialized covering, interior & Exterior work and Domestic & Commercial', and his own service list on the 2 Apr 2026 call (exterior: masonry, woodwork, oil varnishing, mullion and sash windows, doors, fascias and soffits; interior: walls, ceilings, kitchens, bathrooms, hallways, stairs, landings, spindles, doors, architraves, skirting boards, kitchen doors). Each hub is also a group in the 'decorating' money-keyword table, so every phrase below was already priced (2 Nov 2026, from the sibling decorating site's readings): nothing was bought.",
+  "_history": "Supersedes the 3 Nov 2026 select-stage list of ten (Painting, Rendering Painting, Preparation, Spray Painting, Wood Staining, Wall Murals, Exterior Painting, Varnishing, Plaster Repairs, Interior Painting), which came from the keyword table, not from Brandon: the swarm found six of the ten had no client source, and the Wood Staining hub's sections were read off London wood-floor sanding firms. 4 Nov 2026: the five hubs below are operator adds; the other table groups and the 3 Nov hub names are in drop.",
+  "_titles": "Every add is titleLocked (D-2026-11-03-12): its name is the hub title and the article title word for word ('Exterior Painting in Guiseley'), so the phrase market cannot split, merge or relabel it. Painting and Decorating is the whole trade and the headline hub (the operator, 4 Nov 2026: 'Just say Painting and Decorating. That's fine', not 'painter and decorator'); Interior Painting, Exterior Painting and Wallpapering are the three kinds of work Brandon's advert names; Commercial Painting and Decorating is the same painting and decorating work for businesses, which Brandon confirmed in writing on 27 Oct 2026. ITS TITLE IS THE OPERATOR'S, 4 Nov 2026 (D-2026-11-04-07): 'The commercial painting hub should be Commercial Painting and Decorating'. The commercial hub was 'Commercial Painting and Decorating' for one run earlier on 4 Nov, retitled 'Commercial Painting' because the select stage prices both halves of an 'X and Y' title (so the bare 'decorating' attaches as a body-target variant, as the bare 'painting' does on the headline hub) and because 34 characters breaks the 28-character article-title advisory; the operator has now ruled for the longer title, so both are accepted, and its primaryPhrase stops 'decorating' leading it.",
+  "_primaryPhrases": "Painting and Decorating leads on 'painting and decorating' (5,400/mo; 'painter and decorator' is the same 5,400) rather than the bare 'painting' (110,000/mo), which is mostly art. Exterior Painting leads on 'exterior painting' (4,400/mo); 'masonry painting' (27,100/mo) is a targeted variant, because 'masonry paint' searches are mostly people buying paint, and the product phrases 'masonry paint' and 'masonry paints' are not used. Commercial Painting and Decorating leads on 'commercial painting' (390/mo; 'commercial decorating' is 70/mo) by primaryPhrase, so that the bare 'decorating' its title's second half brings in (4,400/mo, the headline hub's word) can never lead it: below the 500/mo floor, kept because Brandon named commercial clients in writing; 'industrial painting' is a different trade (steelwork and coatings) and is not used. Painting and Decorating also carries the bare 'painting' as a body-target variant, because the select stage prices the halves of an 'X and Y' title; it does not lead anything, and the approved Family Home Solutions plan carries the same variant on its own Painting and Decorating hub.",
+  "_lead": "PIN, in the order of Brandon's own advert strapline ('INTERIOR | EXTERIOR | ... | COMMERCIAL'), with the whole trade first: Painting and Decorating is the headline (services[0], so the home page and the handoff's trade head term are 'painting and decorating'), then Interior Painting, Exterior Painting, Wallpapering, Commercial Painting and Decorating. This is the nav order.",
+  "_commercial": "A JUDGEMENT CALL, one line to undo, now confirmed by the operator (4 Nov 2026: 'commercial painting and decorating. Put that as a hub'). Commercial is its own hub because Brandon named commercial clients in writing (27 Oct 2026), his advert says 'homes and businesses' and 'COMMERCIAL', and his photos include offices. The kinds of premises it names are the operator's ruling of 4 Nov 2026 (nap.json hubContentNotes): offices, restaurants, schools, hotels, spas, leisure centres and businesses of every size; restaurants and schools were in the operator's question on the 23 Oct 2026 call ('restaurants or schools or warehouses') and spas, hotels and leisure centres in his next line, each answered 'Yeah'. Every other hub also says, in passing, that the work is for homes and businesses. To use the Cumbria Spas pattern instead (no commercial hub, the line on every hub), move 'Commercial Painting and Decorating' from add to drop and re-run.",
+  "_kitchen": "DROPPED BY THE OPERATOR, 4 Nov 2026, 20:33 UTC (D-2026-11-04-10): 'with regards to the kitchen installation stuff, if you said he didn't do it, then I will not include that. So, you have that, don't include that in the site plan, we'll keep with the ones we had.' The operator had added Kitchen Renovation and Installation earlier that evening (D-2026-11-04-07), for Brandon's kitchen video, and no call, message or photo has Brandon fitting kitchens: what is on record is him painting and decorating them ('I can do the kitchen doors', 2 Apr 2026 call), which Interior Painting covers. Moved from add to drop, not renamed: the operator's word is to keep the hubs the plan had. Its research stays on disk as bought and is referenced by nothing, like the 3 Nov hubs' files: keywords/kitchen-renovation-and-installation.csv, serp/ and serp-classified/kitchen-renovation-and-installation.json, blueprints/kitchen-renovation-and-installation.blueprint.json. The kitchen video stays on the home page, Brandon's own pick (nap.json images.videos).",
+  "_hubUrls": "Locks the five hub URLs, so a re-run that splits, merges, renames or drops one of them FAILS the Jev pass and npm test (D-2026-11-03-10). New build, no live pages: each URL is the slug of its title, so the commercial hub's URL moved with its title on 4 Nov 2026 (/commercial-painting/ → /commercial-painting-and-decorating/); nothing was ever published at the old one, nor at the dropped kitchen hub's /kitchen-renovation-and-installation/.",
+  "_drop": "The other five groups of the 'decorating' money-keyword table, which no client source offers (Spray Painting, Wood Staining & Varnishing, Plaster Repairs & Preparation, Rendering Painting, Wall Murals & Feature Walls), and the 3 Nov 2026 hub names that came from them. Plastering of any kind is out on Brandon's own word (27 Oct 2026: 'rather then planting as well', read as plastering, which the 23 Oct call had listed). Painting render and masonry stays in Exterior Painting; applying render does not. 'Commercial Decorating' is the table's own name for the commercial group, dropped so it cannot come back as a second commercial hub beside the add (with 'industrial painting', a different trade, among its phrasings). 'Varnishing' and 'Feature Walls' are dropped as hubs only: oil varnishing of exterior woodwork is part of Exterior Painting (Brandon's 2 Apr list), and papering a feature wall is part of Wallpapering. 'Kitchen Renovation and Installation' is the operator's own hub of 4 Nov 2026, which the operator dropped that night (_kitchen); painting and decorating a kitchen stays part of Interior Painting.",
+  "drop": [
+    "Spray Painting",
+    "Wood Staining & Varnishing",
+    "Wood Staining",
+    "Varnishing",
+    "Plaster Repairs & Preparation",
+    "Plaster Repairs",
+    "Preparation",
+    "Rendering Painting",
+    "Wall Murals & Feature Walls",
+    "Wall Murals",
+    "Feature Walls",
+    "Commercial Decorating",
+    "Painting",
+    "Kitchen Renovation and Installation"
+  ],
+  "add": [
+    {
+      "service": "Painting and Decorating",
+      "titleLocked": true,
+      "primaryPhrase": "painting and decorating",
+      "phrasings": [
+        "painting and decorating",
+        "painter and decorator",
+        "painter and decorators",
+        "painters and decorators",
+        "decorator",
+        "decorators",
+        "decorating",
+        "local decorator",
+        "local decorators",
+        "painting and decorating services"
+      ]
+    },
+    {
+      "service": "Interior Painting",
+      "titleLocked": true,
+      "primaryPhrase": "interior painting",
+      "phrasings": [
+        "interior painting",
+        "house painting",
+        "room painting",
+        "painting a house interior",
+        "internal painting"
+      ]
+    },
+    {
+      "service": "Exterior Painting",
+      "titleLocked": true,
+      "primaryPhrase": "exterior painting",
+      "phrasings": [
+        "exterior painting",
+        "exterior house painting",
+        "painting exterior walls",
+        "masonry painting",
+        "render painting",
+        "painting render",
+        "outside painting",
+        "exterior decorating"
+      ]
+    },
+    {
+      "service": "Wallpapering",
+      "titleLocked": true,
+      "primaryPhrase": "wallpapering",
+      "phrasings": [
+        "wallpapering",
+        "wallpaper installer",
+        "wallpaper installers",
+        "wallpaper hanging",
+        "hanging wallpaper",
+        "wallpaper fitting"
+      ]
+    },
+    {
+      "service": "Commercial Painting and Decorating",
+      "titleLocked": true,
+      "primaryPhrase": "commercial painting",
+      "phrasings": [
+        "commercial painting",
+        "commercial painting and decorating",
+        "commercial decorating",
+        "commercial painters",
+        "commercial decorators",
+        "commercial painters and decorators",
+        "commercial painter and decorator",
+        "office painting",
+        "office decorating",
+        "shop painting",
+        "restaurant painting",
+        "hotel painting",
+        "school painting"
+      ]
+    }
+  ],
+  "notOffered": [
+    {
+      "service": "Plastering",
+      "reason": "Brandon, WhatsApp 27 Oct 2026: 'We would rather just target paint and decorating for now rather then planting as well for now'. 'planting' is read as plastering: the 23 Oct 2026 call's notes list plastering, silicone rendering and Venetian plastering among his services, and his brother, who helps him now and again, is a plasterer by trade (25 Feb 2026 call). So plastering, skimming, applying render, silicone rendering and Venetian plastering are out for now; Brandon may bring them back. Painting existing render or masonry IS offered, in Exterior Painting."
+    },
+    {
+      "service": "Gutters",
+      "reason": "Brandon, 2 Apr 2026 call: 'I'll stay away from gutters because most of them are plastic now.'"
+    }
+  ],
+  "merge": [],
+  "rename": [],
+  "pin": [
+    "Painting and Decorating",
+    "Interior Painting",
+    "Exterior Painting",
+    "Wallpapering",
+    "Commercial Painting and Decorating"
+  ],
+  "hubUrls": {
+    "Painting and Decorating": "/painting-and-decorating/",
+    "Interior Painting": "/interior-painting/",
+    "Exterior Painting": "/exterior-painting/",
+    "Wallpapering": "/wallpapering/",
+    "Commercial Painting and Decorating": "/commercial-painting-and-decorating/"
+  }
+}

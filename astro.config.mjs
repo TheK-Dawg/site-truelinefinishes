@@ -3,19 +3,21 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import aiFiles from './src/integrations/ai-files.mjs';
 import { INDEXABLE } from './src/data/launch.ts';
+import articles from './src/data/articles.json' with { type: 'json' };
 
-// Utility pages: out of the sitemap, and no markdown twin.
+// Utility pages and articles still in review: out of the sitemap, and no markdown twin.
+const REVIEW = articles.filter((a) => a.status !== 'published').map((a) => `/resources/${a.slug}/`);
 const UTILITY = /\/(thank-you|404)\/?$/;
+const skip = (page) => UTILITY.test(page) || REVIEW.some((r) => page.endsWith(r));
 
-// v3 client build, production since 26 Oct 2026. The apex is the canonical
-// host for every canonical/OG/sitemap URL; www 301s to it at the zone.
+// TrueLine Finishes client site. The canonical host is www (Brandon's own "Www.truelinefinishes.com");
+// the apex 301s to it at the zone when DNS goes live.
 export default defineConfig({
-  site: 'https://buildingsforlife.com',
+  site: 'https://www.truelinefinishes.com',
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'auto' },
   integrations: [
-    sitemap({ filter: (page) => !UTILITY.test(page) }),
-    // Per-page .md twins + llms-full.txt, from the built HTML. Last: needs the sitemap.
+    sitemap({ filter: (page) => !skip(page) }),
     aiFiles({ indexable: INDEXABLE, skip: UTILITY }),
   ],
 });

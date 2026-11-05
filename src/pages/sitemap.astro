@@ -1,0 +1,31 @@
+---
+/** HTML SITE MAP (standard page): every built public page, grouped. */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Reviews from '../components/Reviews.astro';
+import { services } from '../data/site';
+import { articles, articleUrl } from '../data/articles';
+const groups = [
+  { h: 'Main pages', links: [{ href: '/', label: 'Home' }, { href: '/about/', label: 'About' }, { href: '/contact/', label: 'Contact' }, { href: '/gallery/', label: 'Gallery' }, { href: '/reviews/', label: 'Reviews' }, { href: '/resources/', label: 'Resources' }] },
+  { h: 'Services', links: services.map((s) => ({ href: `/${s.slug}/`, label: s.name })) },
+  ...(articles.length ? [{ h: 'Resources', links: articles.map((a) => ({ href: articleUrl(a), label: a.title })) }] : []),
+  { h: 'Legal', links: [{ href: '/privacy/', label: 'Privacy Policy' }, { href: '/terms/', label: 'Terms and Conditions' }, { href: '/cookie-policy/', label: 'Cookie Policy' }] },
+];
+---
+<Base title="Site Map: Painting and Decorating Pages | TrueLine Finishes" description="Every page on the TrueLine Finishes website: painting and decorating services, the gallery, reviews, resources, contact details and the legal pages." page="sitemap">
+  <PageHero h1="Site Map" lead="Every page on the TrueLine Finishes website." />
+  <Reviews />
+  <section class="sm section"><div class="container sm__grid">
+    {groups.map((g) => <div><h2 class="sm__h2">{g.h}</h2><ul>{g.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul></div>)}
+  </div></section>
+  <QuoteForm />
+</Base>
+<style>
+  .sm__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-10); }
+  .sm__h2 { font-size: var(--fs-2xl); margin-bottom: var(--space-4); }
+  .sm ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .sm a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 900px) { .sm__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .sm__grid { grid-template-columns: 1fr; } }
+</style>

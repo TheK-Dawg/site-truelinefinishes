@@ -1,101 +1,158 @@
 ---
 /**
- * ARTICLE. Body is the SEO engine's HTML, rendered as-is (ANCHOR-LAW 6: article
- * links are the engine's business). 60/40 layout: body left, sticky aside with
- * an auto ToC (from the engine's H2s), Quick Quote block and more resources.
- * Article + FAQPage + BreadcrumbList schema. No dates.
+ * SEO ARTICLE (plan, Layout): a header band; breadcrumbs (under the hero, never in it); the WHITE
+ * reading column (#FFFFFF, ink text) and a sidebar with "On this page" and a "Need a quote?" card;
+ * Brandon's house video at the position its hub's rotation gives (src/data/articles.ts); one real
+ * pool photo directly above every content H2 (FAQ excluded); the FAQ in the body; related articles
+ * (the same hub in other towns, other hubs in the same town); the quote form.
+ * The body is the engine's HTML, rendered as-is apart from the figures, the video and H2 ids.
+ * Article + FAQPage + BreadcrumbList schema. Articles not yet published are noindex.
  */
 import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import QuoteForm from './QuoteForm.astro';
-import { articles } from '../data/articles';
-import { business, services, image } from '../data/site';
-import { stripTags, linkedSlugs } from '../lib/links';
+import Icon from './Icon.astro';
+import { articles, articleUrl, videoPosition } from '../data/articles';
+import { business, services, image, images, videos } from '../data/site';
+import { stripTags } from '../lib/links';
 
 interface Props { article: import('../data/articles').Article }
 const { article } = Astro.props;
-const svc = services.find((s) => s.slug === article.related);
-const toc = [...article.bodyHtml.matchAll(/<h2[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)].map((m) => ({ id: m[1], text: stripTags(m[2]) }));
-const others = articles.filter((a) => a.slug !== article.slug);
-const pageUrl = `${business.url}/${article.slug}/`;
-// ANCHOR-LAW 4: an article the engine body already links is listed as plain text in the aside.
-const bodyLinked = linkedSlugs(article.bodyHtml);
+const svc = services.find((s) => s.slug === article.hub)!;
+const hero = image(article.hero);
+const url = articleUrl(article);
+const pageUrl = `${business.url}${url}`;
+
+// Pool photos for the H2s: hub-relevant categories first, deterministic per article, no repeats.
+const PREF: Record<string, string[]> = {
+  'painting-and-decorating': ['interior', 'exterior', 'before-after'],
+  'interior-painting': ['interior', 'before-after'],
+  'exterior-painting': ['exterior', 'before-after'],
+  wallpapering: ['wallpapering', 'interior'],
+  'commercial-painting-and-decorating': ['commercial', 'interior'],
+};
+let seed = [...article.slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+const rand = () => ((seed = (seed * 1103515245 + 12345) >>> 0) / 2 ** 32);
+const pool = (PREF[article.hub] ?? ['interior']).flatMap((cat) => images.filter((i) => i.cat === cat && i.key !== article.hero && !/-before-/.test(i.key)).map((i) => ({ i, r: rand() })).sort((a, b) => a.r - b.r).map((x) => x.i));
+
+const slugify = (s: string) => s.toLowerCase().replace(/<[^>]+>/g, '').replace(/&[a-z#0-9]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const parts = article.bodyHtml.split(/(?=<h2[\s>])/);
+const intro = parts[0].startsWith('<h2') ? '' : parts.shift()!;
+const toc: { id: string; text: string }[] = [];
+const pos = videoPosition(article);
+const vid = videos.house;
+const videoHtml = `<figure class="art__video" data-video="house" data-video-pos="${pos}"><div class="art__video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${vid.id}?rel=0&amp;modestbranding=1&amp;playsinline=1" title="Brandon's video: ${vid.caption}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><figcaption>Brandon’s own video: ${vid.caption}</figcaption></figure>`;
+const mid = Math.max(1, Math.floor(parts.length / 2));
+const sections = parts.map((p, n) => {
+  const m = p.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/);
+  const text = m ? stripTags(m[1]) : '';
+  let id = slugify(text) || `section-${n + 1}`;
+  while (toc.some((t) => t.id === id)) id += '-2';
+  toc.push({ id, text });
+  const img = pool[n % Math.max(pool.length, 1)];
+  const fig = img ? `<figure class="art__fig"><img src="${img.src}" alt="${img.alt}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async" /></figure>` : '';
+  const before = (pos === 'top' && n === 0) || (pos === 'mid' && n === mid) ? videoHtml : '';
+  return `${before}${fig}${p.replace(/^<h2[^>]*>/, `<h2 id="${id}">`)}`;
+});
+const body = `${intro}${sections.join('\n')}${pos === 'end' ? videoHtml : ''}`;
+
+const sameHub = articles.filter((a) => a.hub === article.hub && a.slug !== article.slug).slice(0, 6);
+const sameTown = articles.filter((a) => a.town === article.town && a.slug !== article.slug);
 const schema = [
-  { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(article.hero, business.url).href, author: { '@type': 'Organization', name: business.name }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', ...(svc ? { about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` } } : {}) },
+  { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(hero.src, business.url).href, author: { '@type': 'Person', name: business.owner }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` }, ...(pos ? { video: { '@type': 'VideoObject', name: vid.caption, embedUrl: `https://www.youtube.com/embed/${vid.id}`, contentUrl: vid.url, thumbnailUrl: `https://i.ytimg.com/vi/${vid.id}/hqdefault.jpg`, uploadDate: '2026-11-03' } } : {}) },
   ...(article.faqs.length ? [{ '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: article.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) }] : []),
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` },
-    { '@type': 'ListItem', position: 2, name: 'Resources', item: `${business.url}/resources/` },
+    { '@type': 'ListItem', position: 2, name: svc.name, item: `${business.url}/${svc.slug}/` },
     { '@type': 'ListItem', position: 3, name: article.title, item: pageUrl },
   ] },
 ];
 ---
-<Base title={article.metaTitle} description={article.description} page={`article-${article.slug}`} schema={schema} ogImage={article.hero}>
-  <PageHero eyebrow={article.topic} h1={article.title} lead={article.summary} image={{ src: article.hero, alt: article.heroAlt }} crumbs={[{ label: 'Resources', href: '/resources/' }, { label: article.topic }]} service={svc?.name} />
+<Base title={article.metaTitle} description={article.description} page={`article-${article.slug}`} schema={schema} ogImage={hero.src} noindex={article.status !== 'published'}>
+  <PageHero h1={article.title} lead={article.summary} image={hero} />
+  <nav class="art__crumbs container" aria-label="Breadcrumb">
+    <ol><li><a href="/">Home</a></li><li><a href={`/${svc.slug}/`}>{svc.name}</a></li><li><span aria-current="page">{article.title}</span></li></ol>
+  </nav>
   <Reviews />
-  <section class="art section section-article-body" data-section="article-body">
+  <section class="art section section-article-body on-white" data-section="article-body">
     <div class="art__inner container">
-      <article class="art__main prose" data-motion="reveal" set:html={article.bodyHtml} />
-      <aside class="art__aside" data-motion="reveal" style="--reveal-delay: 80ms">
+      <article class="art__main prose">
+        <Fragment set:html={body} />
+        {article.faqs.length > 0 && (
+          <section class="art__faq" aria-labelledby="faq">
+            <h2 id="faq">{article.title}: questions people ask</h2>
+            {article.faqs.map((f) => <details class="art__q" open><summary>{f.q}</summary><div set:html={f.a} /></details>)}
+          </section>
+        )}
+      </article>
+      <aside class="art__aside">
         {toc.length > 0 && (
           <details class="art__toc" open>
-            <summary>In this article</summary>
-            <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.text}</a></li>)}</ol>
+            <summary>On this page</summary>
+            <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.text}</a></li>)}{article.faqs.length > 0 && <li><a href="#faq">Questions people ask</a></li>}</ol>
           </details>
         )}
         <div class="art__cta on-dark">
-          <p class="eyebrow">Quick Quote Online</p>
-          <p>Read enough to know what the job needs? Send the details for a written quote.</p>
-          <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote" data-service={svc?.name}>Quick Quote Online</a>
+          <p class="art__cta-h">Need a quote?</p>
+          <p>Get a free quotation: call Brandon on <a href={business.phoneHref} data-cta="article-aside-call">{business.phone}</a> or use the quote form.</p>
+          <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote">Quick Quote Online</a>
+          <a href={business.whatsappHref} class="art__wa" target="_blank" rel="noopener" data-cta="article-aside-whatsapp"><Icon name="whatsapp" size={18} /> WhatsApp Brandon</a>
         </div>
-        {others.length > 0 && (
-          <div class="art__more">
-            <p class="art__more-h">More resources</p>
-            <ul>{others.map((a) => <li>{bodyLinked.has(a.slug) ? <span>{a.title}</span> : <a href={`/${a.slug}/`} data-link="card">{a.title}</a>}</li>)}</ul>
-          </div>
-        )}
       </aside>
     </div>
   </section>
-  <div class="art__contact"><QuoteForm service={svc?.name ?? ''} /></div>
+  {(sameHub.length > 0 || sameTown.length > 0) && (
+    <section class="art__rel section section--panel" data-section="related-articles">
+      <div class="container art__rel-grid">
+        {sameHub.length > 0 && <div><h2 class="art__rel-h">{svc.name} in other towns</h2><ul>{sameHub.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
+        {sameTown.length > 0 && <div><h2 class="art__rel-h">More in {article.town}</h2><ul>{sameTown.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
+      </div>
+    </section>
+  )}
+  <QuoteForm heading={`${svc.name} in ${article.town}: talk to Brandon`} />
 </Base>
 
 <style>
-  .art__inner { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--space-16); align-items: start; }
+  .art__crumbs { padding-top: var(--space-5); padding-bottom: var(--space-1); }
+  .art__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; }
+  .art__crumbs li + li::before { content: '/'; margin-right: var(--space-3); color: var(--text-muted); }
+  .art__crumbs a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+  .art__crumbs [aria-current] { color: var(--text-primary); }
+  .art__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--aside-w); gap: var(--space-16); align-items: start; }
+  .art__main { max-width: 72ch; background: var(--bg-card); color: var(--text-primary); }
   .art__main :global(h2) { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
-  /* The engine's own blocks (takeaways, CTA line, FAQ), styled to the tokens. Inline styles the engine
-     ships (accent border, call-button fill) are overridden to the palette, never edited in the bytes. */
-  .art__main :global(.lmb-takeaways) { background: var(--bg-panel); padding: var(--space-5) var(--space-6); border-left: 2px solid var(--brand-primary) !important; margin: var(--space-6) 0; }
-  .art__main :global(.lmb-takeaways__heading) { font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-heading); margin: 0 0 var(--space-2); }
-  .art__main :global(.lmb-takeaways__list) { margin: 0; }
-  .art__main :global(.lmb-cta) { background: var(--bg-inverse); color: var(--text-inverse); padding: var(--space-6); margin: var(--space-8) 0; }
-  .art__main :global(.lmb-cta__line) { color: var(--text-inverse); margin: 0 0 var(--space-4); }
-  .art__main :global(.lmb-cta__line strong) { color: var(--text-inverse); }
-  .art__main :global(.lmb-cta__action) { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: 0; }
-  .art__main :global(.lmb-cta__button) { display: inline-flex !important; align-items: center; min-height: var(--btn-h-md); padding: var(--space-3) var(--space-6); font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; text-decoration: none !important; }
-  .art__main :global(.lmb-cta__button--quote) { background: var(--brand-primary); color: var(--brand-fg) !important; }
-  .art__main :global(.lmb-cta__button--call) { background: transparent !important; color: var(--text-inverse) !important; box-shadow: inset 0 0 0 1px var(--border-inverse); }
-  .art__main :global(.faq-item) { border-top: 1px solid var(--border-default); padding-top: var(--space-3); }
-  .art__main :global(img) { width: 100%; height: auto; margin: var(--space-6) 0; }
-  .art__main :global(table) { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
-  .art__main :global(th), .art__main :global(td) { border: 1px solid var(--border-default); padding: var(--space-2) var(--space-3); text-align: left; }
-  .art__main :global(blockquote) { margin: var(--space-6) 0; padding: var(--space-5) var(--space-6); background: var(--bg-panel); border-left: 2px solid var(--brand-primary); }
+  .art__main :global(.art__fig) { margin: 2em 0 0; }
+  .art__main :global(.art__fig + h2) { margin-top: 0.7em; }
+  .art__main :global(.art__fig img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .art__main :global(.art__video) { margin: 2em 0 0; }
+  .art__main :global(.art__video-frame) { position: relative; aspect-ratio: 16 / 9; background: var(--bg-inverse); }
+  .art__main :global(.art__video-frame iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .art__main :global(.art__video figcaption) { margin-top: var(--space-2); font-size: var(--fs-md); color: var(--text-muted); }
+  .art__faq { margin-top: 2.4em; }
+  .art__q { border-top: 1px solid var(--border-default); padding: var(--space-4) 0; }
+  .art__q summary { cursor: pointer; font-weight: var(--fw-semibold); color: var(--text-heading); }
+  .art__q div { margin-top: var(--space-2); }
   .art__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); display: flex; flex-direction: column; gap: var(--space-5); }
   .art__toc { background: var(--bg-panel); padding: var(--space-6); }
   .art__toc summary { cursor: pointer; list-style: none; font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: var(--fw-semibold); color: var(--text-heading); }
   .art__toc summary::-webkit-details-marker { display: none; }
-  .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); counter-reset: toc; }
-  .art__toc li { counter-increment: toc; display: flex; gap: var(--space-3); }
-  .art__toc li::before { content: counter(toc, decimal-leading-zero); color: var(--brand-text); font-weight: var(--fw-bold); }
-  .art__toc a:hover { color: var(--text-heading); }
-  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); }
+  .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); }
+  .art__toc a { color: var(--brand-text); }
+  .art__toc a:hover { text-decoration: underline; }
+  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); border-top: 3px solid var(--accent-on-dark); }
+  .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-inverse); }
+  .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--accent-on-dark); text-underline-offset: 3px; }
   .art__cta .btn { width: 100%; }
-  .art__more-h { font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: var(--fw-semibold); color: var(--text-heading); margin-bottom: var(--space-3); }
-  .art__more ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); font-weight: var(--fw-semibold); color: var(--text-heading); }
-  .art__more a:hover { color: var(--brand-text); }
+  .art__wa { display: inline-flex; gap: var(--space-2); align-items: center; }
+  .art__wa :global(.icon) { color: var(--whatsapp); }
+  .art__rel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-10); }
+  .art__rel-h { font-size: var(--fs-2xl); margin-bottom: var(--space-4); }
+  .art__rel ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .art__rel a { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 1023px) {
-    .art__inner { grid-template-columns: 1fr; }
+    .art__inner { grid-template-columns: 1fr; gap: var(--space-8); }
     .art__aside { position: static; order: -1; }
+    .art__rel-grid { grid-template-columns: 1fr; }
   }
 </style>

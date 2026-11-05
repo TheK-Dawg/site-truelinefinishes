@@ -1,0 +1,399 @@
+{
+  "businessName": "TrueLine Finishes",
+  "businessNameNote": "CONFIRMED against Brandon's real Google Business Profile (the operator, 4 Nov 2026): https://www.google.com/maps/place/TrueLine+Finishes/@53.8447197,-1.7533232,17z — the listing itself spells it 'TrueLine Finishes': 'TrueLine' one word with a capital L, then 'Finishes'. Re-confirmed by the operator the same evening, independently: 'True Line Finishes, with a capital L for the line part, and True Line is one word'. This overrides the earlier 'Trueline Finishes' spelling (lower-case l), which was inferred from the logo wordmark and his advert, and is how Brandon himself types it in his messages and names his YouTube channel; the GBP is the authority here per the standing rule that the listing must match the site exactly. Quotes of Brandon's own words keep his spelling. The registered company name is still open (the 23 Oct 2026 call's notes have Brandon checking the name at Companies House), so no 'Ltd' and no company number (standing prohibition 22).",
+  "ownerName": "Brandon Dawson",
+  "phone": "07949 484274",
+  "phoneNote": "CONFIRMED by the client in writing: Brandon's WhatsApp of 27 Oct 2026, 'Phone number : 07949 484274' (message Ol9epWK4mg0eNQ-hSGf1wAAAOw), for the website; the same number is printed on his own advert (27 Oct 2026). The site's one number, on every page and in every directory. It is NOT the number Brandon messages from (07706 215917: the WhatsApp chat, the February FatRank enquiry and saleshq), which is his own mobile and goes nowhere on the site unless he says so.",
+  "whatsapp": "07949 484274",
+  "whatsappNote": "THE OPERATOR'S RULING, 4 Nov 2026: the mobile WhatsApp click-to-chat button uses 07949 484274, the site's own business number, the same as the phone ('we'll use his phone number that's on this one, the one that ends in 274, for his WhatsApp ... because then that's his business one'). NOT 07706 215917, the personal mobile Brandon messages the operator from. Link: https://wa.me/447949484274. Before launch, tap it on a phone and check it opens a chat with Brandon: if 07949 484274 is not registered on WhatsApp, the button fails: hide it until Brandon has WhatsApp (or WhatsApp Business) on that number, and never fall back to 07706 215917.",
+  "email": "Brandon@truelinefinishes.com",
+  "emailNote": "CONFIRMED by the client in writing, same message (Ol9epWK4mg0eNQ-hSGf1wAAAOw): 'Email Brandon@truelinefinishes.com'. A new Google Workspace mailbox on the new domain, being set up after the 23 Oct 2026 call: CHECK IT RECEIVES MAIL before the quote form goes live, or leads are lost. His printed advert carries an older address, Brandon.trueline@gmail.com: use it only as the quote form's fallback inbox if the Workspace mailbox is not live yet, and never print it on the site.",
+  "website": "https://www.truelinefinishes.com",
+  "websiteNote": "Brandon, same message: 'Website that will be Www.truelinefinishes.com'. Domain bought at GoDaddy; access is handed over when the site is ready (23 Oct 2026 call).",
+  "address": "Briar Rhydding, Charlestown, Baildon, Shipley BD17 7JW, United Kingdom",
+  "addressDisplay": "no",
+  "addressNote": "CONFIRMED (the operator, 4 Nov 2026), from Brandon's real Google Business Profile. For the Google listing and directories only, never shown on the site (addressDisplay: no; standing prohibition 10 keeps the base off the pages either way): TrueLine Finishes works at customers' homes and premises.",
+  "baseTown": "Baildon",
+  "baseTownNote": "CONFIRMED (the operator, 4 Nov 2026): the real address (Briar Rhydding, Charlestown, Baildon, Shipley BD17 7JW) is in Baildon itself, exactly matching the 4 Nov 2026 inference from Brandon's 'close to home' list and the 2 Apr 2026 call ('I've lived there most of my life'). What it decides: only where the 15-mile proximity fill after the places Brandon named, and the 20-mile later batch after it, are measured from, and which town the home page's local research is for. It is never printed as a base (standing prohibition 10).",
+  "niche": "decorating",
+  "vertical": "Painter and decorator",
+  "nicheNote": "PAINTING AND DECORATING ONLY, for homes and businesses (Brandon, WhatsApp 27 Oct 2026: 'We would rather just target paint and decorating for now ... just domestic and commercial clients all aspects of painting and decorating'). 'decorating' is the money-keyword table's painting-and-decorating vertical, so its ten groups are the candidates, and services-override.json keeps the five that Brandon's own material backs and drops the other five. vertical names the trade for the review brief and the handoff.",
+  "mode": "client",
+  "modeNote": "A CLIENT site: TrueLine Finishes' own marketing site, their job, their quote. TrueLine Finishes prices and does the work itself (Brandon, with his brother working for him 'more or less full time' and 'another lad', 2 Apr 2026 call), and nothing on the site reads like a directory or a referral service. A second or third site under another name, passing enquiries to Brandon, was floated on the 23 Oct 2026 call as a future idea; it is not this site.",
+  "monetisation": "Client site: TrueLine Finishes' own marketing site, their job, their quote. Brandon bought a new website with a year of SEO articles; the first half was paid on 23 Oct 2026 and the rest is due when the site is finished and he is happy (WhatsApp, 23 Oct 2026). A map-boosting service was discussed on the earlier calls; it is not part of this build.",
+  "saleshqContactId": "c_brandon-dawson-painting",
+  "saleshqContactNote": "c_brandon-dawson-painting holds the three calls (25 Feb, 2 Apr and 23 Oct 2026, all transcribed) and four emails. A WhatsApp-only shadow record, c_wa_706215917, holds one message and is waiting in the saleshq match queue to be merged into it: a saleshq decision for the operator, not made here. Brandon's 262 WhatsApp messages (26 Sep to 3 Nov 2026) are NOT in saleshq; this plan read them directly from Whapi on 4 Nov 2026.",
+  "gbp": {
+    "mapsUrl": "https://maps.app.goo.gl/47CXTvHKMybPQHkR9",
+    "fullMapsUrl": "https://www.google.com/maps/place/TrueLine+Finishes/@53.8447197,-1.7533232,17z/data=!3m1!4b1!4m6!3m5!1s0x487be3eb458f0249:0x6f58f70ede3d3d86!8m2!3d53.8447197!4d-1.7533232!16s%2Fg%2F11z0mqr774",
+    "cid": "8023434379390696838"
+  },
+  "gbpNote": "CONFIRMED (the operator, 4 Nov 2026): Brandon's real Google Business Profile, listing name 'TrueLine Finishes' (drove the businessName fix above), coordinates 53.8447197,-1.7533232 (Baildon, matching the confirmed address). On the 2 Apr 2026 call it had three reviews ('because you're new and you only have three reviews'), and on 28 Sep 2026 he wrote 'got a quick a few reviews on there now as well'; he also has reviews on MyJobQuote ('it's just my job quotes', 2 Apr; 'seven five star reviews just in the last couple of months', 25 Feb). The 14 Rated People reviews seen on the 2 Apr call are NOT his: 'No, that's somebody else called TrueLine. They're in Eastbourne.' Never link or cite them. The reviews widget and the NAP check key on this listing; its name, phone and address now match the site.",
+  "hours": {
+    "Monday": "7am-7pm",
+    "Tuesday": "7am-7pm",
+    "Wednesday": "7am-7pm",
+    "Thursday": "7am-7pm",
+    "Friday": "7am-7pm",
+    "Saturday": "8am-6pm",
+    "Sunday": "8am-6pm"
+  },
+  "hoursNote": "CONFIRMED (the operator, 4 Nov 2026), read off Brandon's Google Business Profile (gbp above): open seven days a week, Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm. They go on the Contact page, in the footer and in the HousePainter schema (openingHoursSpecification: Mo-Fr 07:00-19:00, Sa-Su 08:00-18:00), exactly as on the listing so the two match. They are the listing's opening hours: they promise no response time (standing prohibition 6) and no particular time for work on site, which is arranged with Brandon (site prohibition 5). Replaces 'no hours given'.",
+  "buildNote": "New build on truelinefinishes.com (GoDaddy domain; Google Workspace email being set up), on the operator's standard client build with Buildings for Life (buildingsforlife.com; this repo's sites/buildingsforlifeltd.com) as the structural template, its structure and layout only (the operator, 4 Nov 2026: 'change the template be used so it's not Vision Plumbing but it's this one, Buildings for Life, with his colours'; it replaces visionplumbing.co.uk, the template until then). TrueLine Finishes' own brand and colours, not Buildings for Life's: the TRUELINE FINISHES wordmark Brandon sent on 26 Oct 2026, metallic blue on black (SITE-PLAN.md Section 1, Brand). He asked for a before-and-after slider (23 Oct 2026), a layout with the call to action, the quote form, the phone number and a video at the top (23 Oct), a quote form with his own options (28 Oct), and a mention of the charity he supports (27 Oct).",
+  "usps": [
+    {
+      "usp": "Over eight years' experience",
+      "source": "THE OPERATOR'S RULING, 4 Nov 2026 (his own message): 'When it says 8 years' experience, say over 8 years' experience'. The figure is Brandon's, from the 23 Oct 2026 call (recording 'VN - Brandon True Line', saleshq contact c_brandon-dawson-painting): asked how many years' experience he has, he answers 'Eight. Eight.', and the operator replies 'over eight years experience'. The figure is eight and never another (standing prohibition 3); copy may write it 'over eight years' or 'over 8 years'",
+      "affirmed": true
+    },
+    {
+      "usp": "Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to Brandon",
+      "source": "THE OPERATOR'S RULING, 4 Nov 2026 (his own message): 'Do mention Brandon, though, as he is the expert and the man that will be carrying out the work and overseeing all jobs. Whenever you call, you have a direct line to Brandon as well.' The number is Brandon's own business number (WhatsApp 27 Oct 2026, message Ol9epWK4mg0eNQ-hSGf1wAAAOw; on his advert and his Google listing). Brandon is named as the business's expert; nobody who works with him is named, and no team size is claimed (site prohibition 6)",
+      "affirmed": true
+    },
+    {
+      "usp": "Fully insured, friendly and reliable",
+      "source": "Brandon's own printed advert in A Child's Wish magazine, Issue 1, photographed and sent on WhatsApp on 27 Oct 2026 ('That's my article', message Oot_uqIWddL6Ow-haSf1wAAAOw), word for word. No cover amount is stated, so none is given (standing prohibition 15)",
+      "affirmed": true
+    },
+    {
+      "usp": "Free quotations",
+      "source": "the same advert, twice: 'Contact us for a free quotation' and 'CONTACT US FOR A FREE QUOTATION'",
+      "affirmed": true
+    },
+    {
+      "usp": "We take pride in attention to detail, lasting finishes and treating your property with care",
+      "source": "the same advert, word for word",
+      "affirmed": true
+    },
+    {
+      "usp": "Painting and decorating for homes and businesses, from individual rooms to full property redecorations",
+      "source": "the same advert ('Trueline Finishes offers professional painting and decorating for homes and businesses ... From individual rooms to full property redecorations'), and Brandon's WhatsApp of 27 Oct 2026 ('just domestic and commercial clients all aspects of painting and decorating', message Ol9epWK4mg0eNQ-hSGf1wAAAOw)",
+      "affirmed": true
+    },
+    {
+      "usp": "Careful surface preparation on every job: sanding, filling and caulking come with everything",
+      "source": "the advert ('careful surface preparation') and Brandon on the 2 Apr 2026 call ('everything comes with ... full preparation, sanding, filling, caulking')",
+      "affirmed": true
+    },
+    {
+      "usp": "Supports the charity A Child's Wish",
+      "source": "Brandon, WhatsApp 27 Oct 2026: 'Also can we add this to website I've sponsored / donated to the following', with a photo of A Child's Wish magazine, Issue 1, registered charity number 1192870 on its cover (message OlKscwVaxZnHhw-hSOf1wAAAOw); his advert is in that issue. 'Supports' is true of sponsoring and of donating; his 'sponsored / donated' does not say which",
+      "affirmed": true
+    }
+  ],
+  "uspsNote": "Every USP is Brandon's own words (the 23 Oct 2026 call, his WhatsApp, or his own printed advert of 27 Oct 2026) or the operator's ruling of 4 Nov 2026 (the experience wording, and Brandon named as the expert with a direct line). Not used, because they are not his: 'highest quality finish' and 'absolute perfectionist', which were suggested to him as article phrasing on the 23 Oct call; 'high-end', which is the call's auto-notes describing his target customers, not a claim to print. He has no guarantees, warranties, accreditations or qualifications (23 Oct call, asked directly), so none is a USP.",
+  "sectors": [
+    "Homes",
+    "Offices",
+    "Restaurants",
+    "Schools",
+    "Hotels",
+    "Spas",
+    "Leisure centres",
+    "Businesses large and small"
+  ],
+  "sectorsNote": "The kinds of customer, never past clients (standing prohibition 5). Homes and businesses are Brandon's own words (his advert), and 'houses and offices' (his 26 Oct 2026 WhatsApp about his photos). The kinds of business premises are THE OPERATOR'S RULING, 4 Nov 2026: 'offices, restaurants, schools, and all types of businesses he can do painting and decorating for'; 'Any other commercial premises are fine, like schools, offices, local businesses, small businesses, and big businesses. He can do it all'; hotels, spas and leisure centres 'That's all fine'. On the 23 Oct 2026 call the operator asked about 'restaurants or schools or warehouses' and then 'spas, hotels, leisure', and Brandon answered 'Yes ... Yeah' and 'Yeah'. Not named: warehouses (in the 23 Oct question, not in the operator's ruling) and bars (the call's auto-notes only).",
+  "trustAnchors": {
+    "all": [
+      "Over eight years' experience (Brandon's figure, 23 Oct 2026 call; 'over' is the operator's ruling of 4 Nov 2026)",
+      "Brandon Dawson, the owner, carries out the work and oversees every job; a call is a direct line to him (the operator, 4 Nov 2026)",
+      "Fully insured (Brandon's own advert; no cover amount is stated, so none is given)",
+      "Free quotations (Brandon's own advert)",
+      "Supports the charity A Child's Wish (Brandon, WhatsApp 27 Oct 2026)"
+    ],
+    "neverUse": [
+      "Accreditations, trade bodies, qualifications or certifications: Brandon has none (23 Oct 2026 call, asked directly)",
+      "Guarantees or warranties: none (23 Oct 2026 call)",
+      "A review count or star rating (standing prohibition 24): the reviews widget shows his Google reviews, from the listing recorded in gbp",
+      "Prices, day rates, price tables or 'from £' figures: Brandon has published none"
+    ]
+  },
+  "images": {
+    "_note": "Real photographs Brandon sent on WhatsApp, kept on the planning server rather than in this repo (73 MB): /root/work/trueline-finishes-media/images/ (203 files; the three that are never for the site, another business's website, the magazine cover and his printed advert, are kept apart in not-for-the-site/), each named <unix time>_<Whapi message id>.jpg and checked against the SHA-256 Whapi recorded for it. The logo IS in this repo, in sites/truelinefinishes.com/brand/. SITE-PLAN.md Section 1 (Images) says which goes where.",
+    "logo": {
+      "primary": "brand/trueline-finishes-logo-blue.jpg: WhatsApp 26 Oct 2026 12:18 UTC, message OpGoplCKAoe2TQ-hdqf1wAAAOw, followed by 'That's the logo'; 1600 x 535",
+      "variant": "brand/trueline-finishes-logo-silver-blue.jpg: 26 Oct 2026 11:19 UTC, message OgUFdXHp4RVk4w-hSCf1wAAAOw, followed by 'This is my logo just Trueline Finishes'; 2048 x 684",
+      "redo": "THE OPERATOR'S INSTRUCTION FOR VINCENT, 4 Nov 2026: 'He sent a logo already and Vince may need to redo it within the exact same style but to make it suitable for the site as I think it's a low-res image.' The files are JPEGs (1600 x 535, 65 KB; 2048 x 684, 64 KB), compressed, on solid black, with no transparent or vector version. If they are not sharp enough where the site uses them, recreate the logo in exactly the same style, not a new design: 'TRUELINE' in the same classical serif capitals with the taller T, the same bevelled metallic-blue gradient with its chrome highlight, 'FINISHES' beneath in the same spaced serif capitals between the two thin tapering blue lines, on black; as an SVG or a large transparent PNG, at a resolution suitable for the site. Ask Brandon for the original file first: if he has it, nothing needs redrawing."
+    },
+    "pool": "195 job photos in two albums sent on 26 Oct 2026 (11:07 and 11:19 UTC), described by Brandon as 'images of different parts of houses and offices, before and after photos, external photos, bathroom and kitchen photos, bedroom and living room photos, before and after images'. One shared pool for the SEO articles: any photo may illustrate any article it fits.",
+    "beforeAfter": [
+      {
+        "what": "exterior gable wall, stained render to clean white masonry paint",
+        "before": "Oj2fzOpJ80xnkA-hU.f1wAAAOw",
+        "after": "OlaUzHiGp9Vvpw-hbmf1wAAAOw",
+        "source": "Brandon's own pick for the slider, 23 Oct 2026"
+      },
+      {
+        "what": "bedroom, patched plaster to finished",
+        "before": "OsoBU8ttxSeF3w-hSWf1wAAAOw",
+        "after": "OnyFQ1aE2nyQAA-hb.f1wAAAOw",
+        "source": "Brandon's own pick for the slider, 23 Oct 2026"
+      },
+      {
+        "what": "bathroom, bare plaster to green walls",
+        "before": "OoIpOkZ2GffpsQ-hcif1wAAAOw",
+        "after": "OnKHJgeMtUewWg-hQKf1wAAAOw",
+        "source": "Brandon's own pick for the slider, 23 Oct 2026"
+      },
+      {
+        "what": "semi-detached house, painted brick to dark grey",
+        "before": "OnOVwuFyOs40RQ-hdGf1wAAAOw",
+        "after": "Ojkyw9DVZCfS_A-hYWf1wAAAOw",
+        "source": "the 26 Oct 2026 pool, paired by this plan (same house)"
+      }
+    ],
+    "videos": [
+      {
+        "url": "https://youtube.com/shorts/v3g1Kdja0gk",
+        "title": "Full kitchen renovation #painting #kitchen",
+        "what": "THE KITCHEN VIDEO. A YouTube Short, portrait (9:16), on Brandon's channel 'Trueline Finishes' (@TruelineFinishes). The first of the two links he sent on 3 Nov 2026, and his pick for the home page ('maybe the first link as video on home page')",
+        "embedOn": "the home page hero (Brandon's pick), and nowhere else. It was also placed on the Kitchen Renovation and Installation hub page and every one of its articles (the operator, 4 Nov 2026 evening); those placements went with that hub when the operator dropped it the same night (D-2026-11-04-10)"
+      },
+      {
+        "url": "https://youtu.be/mNwdUtQedkc",
+        "title": "Full house panting and decorating #harrogate #painting #house",
+        "what": "THE HOUSE VIDEO. Landscape, on the same channel; the second link of 3 Nov 2026. Its title has Brandon's own typing slip ('panting'): any caption says 'Full house painting and decorating'",
+        "embedOn": "the Painting and Decorating hub page and EVERY Painting and Decorating SEO article; the Interior Painting hub page and EVERY Interior Painting SEO article; each article at a varied position, and 'Painting and Decorating in Harrogate' carries it above its first H2, because the title is tagged #harrogate (the operator, 4 Nov 2026: 'add that one as instructions to add to the paint and decorating hubs ... but also on those SEO articles as well'; 'should be in the interior painting SEO articles')"
+      }
+    ],
+    "videosNote": "Titles read from YouTube's own oEmbed on 4 Nov 2026, and the Short's preview frames looked at: they show a kitchen-diner being decorated, the floor under protection board and the units sheeted, then the finished room freshly painted. Neither video has been watched in full by this plan. THE PLACEMENT RULE for articles, in each hub's content note: by the town's publish order, 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ; at random among the three if the publish order is not to hand. Nothing in this repo placed media at random before; this is new (D-2026-11-04-07).",
+    "gaps": [
+      "Wallpapering: one photo in the pool (Or24brkA.OaAVQ-hZ2f1wAAAOw). Ask Brandon for more",
+      "Commercial: an office mid-job and an exhibition stand; no hotel, spa, school, restaurant or leisure-centre photos. Ask Brandon"
+    ]
+  },
+  "blueprintsNotUsed": {
+    "Exterior Painting": "read off nine London decorators on 4 Nov 2026, and one of its eight headings sells what Brandon does not: 'Masonry, Brickwork and Render Repairs' (applying render and plaster repairs are out, his WhatsApp of 27 Oct 2026; brick repairs and repointing are in no client source). A hub's sections cross the handoff as the outline of every article for the hub, so every Exterior Painting article would carry it. The hub takes the default skeleton and its hubContentNotes entry; the file stays in blueprints/ (the 4 Nov 2026 brief's rule: 'Drop anything built around other trades').",
+    "Commercial Painting and Decorating": "read off thirteen London decorators on 4 Nov 2026, and two of its eight headings sell what Brandon does not: 'Floor Coatings, Carpets and Commercial Surfaces' and 'Spray Painting, Murals and Specialist Finishes' (floor work, spray painting and murals are site prohibition 3; carpets are in no source). The hub takes the default skeleton and its hubContentNotes entry; the file stays in blueprints/."
+  },
+  "blueprintsNotUsedNote": "4 Nov 2026, second pass (D-2026-11-04-07): the blueprints of the six hubs the plan then had were bought, read off London peers after the SERP fix for Google's redirect links. Used: Painting and Decorating, Interior Painting and Wallpapering, and the home page; their headings name nothing Brandon has ruled out, and each hub's content note says how to write the headings that need steering. The 2 Nov Interior Painting blueprint (ruled out for 'Wallpapering, Plastering and Decorative Finishes' and 'Colour Consultation and Paint Matching') is replaced by the 4 Nov one, which has neither, so that ruling is gone. Ruled out: the two above. The sixth, Kitchen Renovation and Installation, was ruled out here too (every heading sold kitchen fitting), and the operator then dropped the hub itself the same night (D-2026-11-04-10): its blueprint stays in blueprints/, referenced by nothing. Every blueprint file of the five hubs, used or not, is research for Vincent's hub pages (PAA gaps, buyer fears, terms), within Brandon's scope.",
+  "blueprintHeadings": {
+    "Painting and Decorating": {
+      "Surface Preparation and Repairs": "Surface Preparation",
+      "Woodwork, Doors and Joinery": "Woodwork, Doors and Staircases",
+      "Period Property and High-End Finishes": "Period Features and Finish Quality",
+      "Requesting a Survey and Quotation": "Requesting a Free Quotation"
+    },
+    "Interior Painting": {
+      "Surface Preparation and Repairs": "Surface Preparation",
+      "Wallpapering and Decorative Finishes": "Wallpapering and Paint Finishes",
+      "Period, Listed and Modern Properties": "Period and Modern Properties"
+    },
+    "Wallpapering": {
+      "Professional Wallpaper Installation": "Professional Wallpaper Hanging",
+      "Wall Preparation and Surface Repairs": "Wall Preparation",
+      "Residential and Commercial Installation": "Wallpapering for Homes and Businesses",
+      "The Consultation and Installation Process": "How a Wallpapering Job Runs",
+      "Completed Wallpapering Work": "Wallpapering in Pictures"
+    },
+    "home page": {
+      "Wallpapering and specialist finishes": "Wallpapering and specialist wallcoverings",
+      "Exterior painting, repairs and restoration": "Exterior painting",
+      "Discuss your project with the team": "Talk to Brandon about your project",
+      "Kitchen renovation and installation": null
+    }
+  },
+  "blueprintHeadingsNote": "4 Nov 2026, after the Goldfish swarm (D-2026-11-04-07): a blueprint's headings are the London firms' words and cross the handoff as the outline of every article for the hub, so a heading that makes a claim makes it on every page, whatever the content note says. Reworded here, at the source, so seed.json carries the clean words: 'Repairs' (plaster repairs are out, site prohibition 1), 'Joinery' (no carpentry or timber repair, site prohibition 3), 'High-End' (not Brandon's claim), 'Listed' (no listed-building experience on record), 'Survey' (no site-visit promise on record), 'Decorative Finishes' (no paint effects, murals or Venetian plaster), wallpaper 'Installation', all three headings (said as hanging or wallpapering), 'Completed ... Work' (the layout's '<hub> in pictures'), and on the home page 'the team' (no team, site prohibition 6), 'repairs and restoration' (render and masonry work is out) and 'specialist finishes' (Brandon's own tile says 'Specialist Wallcoverings'). REMOVED (null), 4 Nov 2026 night (D-2026-11-04-10): the home page's 'Kitchen renovation and installation', the heading the home page blueprint gave the kitchen hub. The blueprint was bought for the six hubs the plan had that evening, and the operator then dropped the kitchen hub; buying the home page again for the five is one paid call, not authorised, so the heading is taken out here and the other seven stand. Every other heading is the blueprint's own.",
+  "townOrder": {
+    "scheme": "proximity",
+    "radiusMiles": 15,
+    "minPopulation": 1000,
+    "pinned": [
+      "Baildon",
+      "Guiseley",
+      "Menston",
+      "Ilkley",
+      "Shipley",
+      "Otley",
+      "Horsforth",
+      "Bingley",
+      "Saltaire",
+      "Harden",
+      "Haworth",
+      "Wilsden",
+      "Idle",
+      "Burley in Wharfedale",
+      "Yeadon",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Leeds",
+      "Skipton",
+      "Wrose",
+      "Pudsey",
+      "Pool",
+      "Headingley",
+      "Meanwood",
+      "Chapel Allerton",
+      "Sowerby Bridge",
+      "Batley",
+      "Dewsbury",
+      "Harrogate",
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton"
+    ],
+    "publishLast": [
+      "Bradford"
+    ],
+    "laterBatches": [
+      {
+        "radiusMiles": 20,
+        "counties": [
+          "Bradford",
+          "Calderdale",
+          "Kirklees",
+          "Leeds",
+          "Wakefield",
+          "North Yorkshire"
+        ]
+      }
+    ],
+    "pinBeyondRadius": true,
+    "namedPlaces": [
+      {
+        "name": "Harden",
+        "lat": 53.84131,
+        "lon": -1.87089,
+        "county": "Bradford",
+        "geonameId": 13275323,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Idle",
+        "lat": 53.83619,
+        "lon": -1.73172,
+        "county": "Bradford",
+        "geonameId": 2646293,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Burley Woodhead",
+        "lat": 53.89859,
+        "lon": -1.76677,
+        "county": "Bradford",
+        "geonameId": 12265202,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Hawksworth",
+        "lat": 53.8748,
+        "lon": -1.75871,
+        "county": "Leeds",
+        "geonameId": 12265246,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Rawdon",
+        "lat": 53.85524,
+        "lon": -1.68411,
+        "county": "Leeds",
+        "geonameId": 2639589,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Headingley",
+        "lat": 53.82205,
+        "lon": -1.5782,
+        "county": "Leeds",
+        "geonameId": 6695619,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured"
+      },
+      {
+        "name": "Meanwood",
+        "lat": 53.82811,
+        "lon": -1.56647,
+        "county": "Leeds",
+        "geonameId": 2642846,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)"
+      },
+      {
+        "name": "Wrose",
+        "lat": 53.82866,
+        "lon": -1.75607,
+        "county": "Bradford",
+        "geonameId": 13271809,
+        "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)"
+      }
+    ],
+    "_note": "THE OPERATOR'S RULING, 4 Nov 2026 (D-2026-11-04-11), on Brandon's own words: a 15-mile base radius, the Lancashire and Rochdale towns gone, the places he named first, Bradford last. PINNED 1-18 are 'the main ones close to home' from his WhatsApp list of 30 Oct 2026 (message OheAFo4OYSjnmg-hcqf1wAAAOw), in his order; his third, written 'Mention', is Menston (a slip of the keyboard: Menston is on his main list and named on both earlier calls). PINNED 19-20 are Leeds and Skipton: on the 2 Apr 2026 call he named 'otley leads [Leeds] ilkley menston skipton' as the places to target, and these are the two of the five not already in the 18 (the operator: 'Leeds and places like that are good'). PINNED 21-35 are the rest of the places he named, nearest first, because his written order is not a ranking ('Baildon' appears twice in it and Horsforth is in both lists): the rest of his 30 Oct list, plus Pool (Pool-in-Wharfedale), which that list leaves out and the 2 Apr call names three times among 'the main ones where you can get the most money' (the operator: 'areas he likes to target ... we should always put them first'). publishLast puts Bradford at the very end of the 77: on the 2 Apr call places 'like shipley or bradford' are ones he 'wouldn't target', because he knows people there and they lowball him; the operator's ruling is to keep it and 'put that one near the end of where to publish'. He never said to drop it, and his 30 Oct list names it. Shipley stays pinned 5th: his 30 Oct list puts it among the close-to-home ones, and the later, written list wins over the call. After the 35, the standard proximity fill from the base, closest first, within 15 miles and with the 1,000-person floor (the operator: 'He said a flat 10-15-mile radius so in his case we'll go for a 15-mile radius'). No Lancashire or Rochdale town is within 15 miles (the nearest, Earby, is 15.2), so the eleven the 20-mile fill brought in are gone (the operator: 'Lancashire and Rochdale, we'll drop them'); the 20-mile later batch below keeps them out with its own county list. pinBeyondRadius keeps the five named places beyond 15 miles: Knaresborough, Holmfirth, Ripon, York and Northallerton. namedPlaces adds eight places he named that the gazetteer does not hold, with GeoNames coordinates (D-2026-11-04-05). LATER BATCH 2 (the operator, 4 Nov 2026, D-2026-11-04-12: 'extend it to a 20-mile radius because there are only 385 articles ... add the new extra towns that are the furthest away. Add them to be published at the end so whenever those 385 run out these new towns would take over'): laterBatches adds every town inside 20 miles of the base that the 77 above do not hold, with the same 1,000-person floor, nearest first, and publishes them AFTER all 77, Bradford included; the 77, their order and what each records are unchanged. Its counties list is the gazetteer's authority names for West and North Yorkshire (the five West Yorkshire districts and North Yorkshire), so the Lancashire and Rochdale towns stay out; inside 20 miles the gazetteer holds no other authority. The 900-article cap does not bite (900 / 5 hubs = 180 towns)."
+  },
+  "coverageEvidence": {
+    "source": "call",
+    "quote": "i could do a 10 mile radius 15 mile but then that won't cover like knaresborough where where i've just done a full house repaint on walls um like knaresborough harriga um york um i've got one in york coming up as well but then obviously within the mile radius around me there's certain places like shipley or bradford that i wouldn't target more target guys the otley leads ilkley menston skipton places like that so i can send all them over yeah yeah if that works for yourself yeah just because i don't want an article posted and someone bringing me up and because i know obviously i've lived there most of my life so i know most of them people that oh what you can't paint a full house for 400 quid no you can't paint a room for 400 quid yeah yeah yeah don't even want to chat to them",
+    "at": "2026-04-02",
+    "ref": "/root/work/call-search/acr/Call - Brandon Trueline Finish -[02-04-2026][13-07-28].txt, from character 5,777 (saleshq c_brandon-dawson-painting holds the same call cut at 12,000 characters, and this passage is inside it)",
+    "who": "Brandon, on the 2 Apr 2026 sign-up call, asked what mile radius he is happy to work within",
+    "radiusMilesStated": 15,
+    "radiusNote": "He named 10 to 15 miles and set it aside in the same breath, because it 'won't cover' Knaresborough, Harrogate and York, where he works. THE OPERATOR'S RULING, 4 Nov 2026: 'He said a flat 10-15-mile radius so in his case we'll go for a 15-mile radius', the top of his range, for the proximity fill (townOrder.radiusMiles). The operator later added the towns from 15 to 20 miles as a later batch, published after the first 77 (townOrder.laterBatches, D-2026-11-04-12); the base radius stays 15. The transcript is machine-made and in lower case: 'harriga' is Harrogate and 'leads' is Leeds.",
+    "namedPlaces": [
+      "Baildon",
+      "Guiseley",
+      "Menston",
+      "Ilkley",
+      "Shipley",
+      "Otley",
+      "Horsforth",
+      "Bingley",
+      "Saltaire",
+      "Harden",
+      "Haworth",
+      "Wilsden",
+      "Idle",
+      "Burley in Wharfedale",
+      "Yeadon",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Leeds",
+      "Skipton",
+      "Wrose",
+      "Pudsey",
+      "Pool",
+      "Headingley",
+      "Meanwood",
+      "Chapel Allerton",
+      "Sowerby Bridge",
+      "Batley",
+      "Dewsbury",
+      "Harrogate",
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton",
+      "Bradford"
+    ],
+    "namedPlacesFrom": "Brandon's written list, WhatsApp 30 Oct 2026 (message OheAFo4OYSjnmg-hcqf1wAAAOw), headed 'West / north yorkshire Areas', and Pool (Pool-in-Wharfedale) from this call; where the two differ (Shipley), the later, written list wins",
+    "note": "NAMED EXCEPTIONS OVERRIDE THE BASE RADIUS BY NAME, NOT BY NUMBER. Far but wanted: Knaresborough, Holmfirth, Ripon, York and Northallerton are beyond 15 miles and in the plan because he named them (townOrder.pinned with pinBeyondRadius); Knaresborough, Harrogate and York are the places this quote says the radius 'won't cover'. Near but not prioritised: Bradford, 4 miles from Baildon, is a place he 'wouldn't target', and it stays in the plan, published last (townOrder.publishLast). Shipley, named in the same breath, stays pinned 5th, because his later written list puts it among the 'main ones close to home'. Named on this call but not on his list, and not in the plan: Kirkstall, Bramley and Farsley (an open item for Brandon). Eight of his places are not in the gazetteer and are added by townOrder.namedPlaces: Harden, Idle, Burley Woodhead, Hawksworth, Rawdon, Headingley, Meanwood, Wrose.",
+    "searched": [
+      "the 2 Apr 2026 call, the full transcript (32,648 characters; saleshq holds the first 12,000)",
+      "the 25 Feb 2026 call (full transcript) and the 23 Oct 2026 call (saleshq): no travel limit from Brandon in either",
+      "Brandon's WhatsApp list of 30 Oct 2026, from the Whapi export of 4 Nov 2026",
+      "the operator's rulings to Hermes, 4 Nov 2026, 22:10 to 22:16 UTC (Hermes's local message store)"
+    ],
+    "recordedBy": "operator",
+    "recordedAt": "2026-11-04T22:35:46Z"
+  },
+  "hubContentNotes": {
+    "painting-and-decorating": "THE HEADLINE HUB: the whole trade, Brandon's 'all aspects of painting and decorating' (WhatsApp 27 Oct 2026). Articles are titled 'Painting and Decorating in [Town]' and answer the main search in every town, 'painter and decorator [town]'. Cover everything TrueLine Finishes does, briefly, and link to the hub that goes deeper: interior painting (walls, ceilings, every room, all the woodwork), exterior painting (masonry, woodwork, windows, doors, fascias and soffits), wallpapering and commercial work, with the careful preparation that goes into all of it. From individual rooms to full property redecorations, for homes and businesses (Brandon's own advert); say in passing that the work is for both. Sell quality, not price: attention to detail, lasting finishes and treating the property with care are Brandon's own words; never 'cheap', never a price. Over eight years' experience (the operator's wording of Brandon's 'eight') is the only figure. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 17 London decorators, 4 Nov 2026); write each within Brandon's scope: 'Surface Preparation' is filling, sanding, caulking and fixing hairline cracks, with a mist coat on new plaster, never plaster repairs or skimming as a service; 'Woodwork, Doors and Staircases' is painting them (skirting boards, architraves, doors, spindles, handrails, staircase trims), never carpentry or timber repair; 'Period Features and Finish Quality' is the period features Brandon names (sash and mullion windows, spindles, handrails, staircase trims) and finish quality in his advert's words, never 'high-end' as a claim and never listed-building or conservation experience; 'Project Management and Site Working' is how a job runs (get in touch, a free quotation, preparation first, floors and surfaces protected, as his own kitchen video shows), with no timings and no team; 'Requesting a Free Quotation' promises no site visit and no response time. VIDEO: on the hub page, embed Brandon's YouTube video https://youtu.be/mNwdUtQedkc once, where it suits the page. In EVERY article for this hub, embed the same video at a position that varies from article to article, by the town's publish order: 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ (at random among the three if the publish order is not to hand). Introduce it in one line as Brandon's own video, 'Full house painting and decorating' (its YouTube title, with his typing slip 'panting' corrected), and say nothing about the job, the house or the customer beyond that title. 'Painting and Decorating in Harrogate' always carries it, above its first H2 whatever the rotation says, because the video's own title is tagged #harrogate. Cross-link Interior Painting, Exterior Painting, Wallpapering and Commercial Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274.",
+    "interior-painting": "Interior painting and decorating, from one room to a whole house (Brandon, 2 Apr 2026 call, and his advert). Walls and ceilings; every room the quote form names (bedrooms, living rooms, kitchens, hallways, bathrooms) plus stairs and landings; and all aspects of woodwork: skirting boards, architraves, doors, spindles, handrails and staircase trims. Kitchen doors too ('I can do the kitchen doors'): painted by hand as part of a kitchen job, never spraying or a respray, which no source offers. Preparation is part of every job: filling, sanding, caulking and fixing hairline cracks; brand-new plaster gets a mist coat first (25 Feb 2026 call). Generic choices make good buyer's-guide material (matt, eggshell, satin and gloss finishes; water-based or oil-based paint on woodwork, as general guidance), with no paint brand unless Brandon names one. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 11 London decorators, 4 Nov 2026); write each within Brandon's scope: 'Surface Preparation' is filling, sanding, caulking and fixing hairline cracks, with a mist coat on new plaster, never plaster repairs or skimming as a service; 'Wallpapering and Paint Finishes' is wallpaper (link Wallpapering), paint finishes and feature walls, never Venetian plaster, murals, paint effects or spraying; 'Period and Modern Properties' is the rooms and features he names, never listed-building or conservation experience; 'The Painting and Decorating Process' is how a job runs, with no timings and no team. VIDEO: on the hub page, embed Brandon's YouTube video https://youtu.be/mNwdUtQedkc once, where it suits the page. In EVERY article for this hub, embed the same video at a position that varies from article to article, by the town's publish order: 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ (at random among the three if the publish order is not to hand). Introduce it in one line as Brandon's own video, 'Full house painting and decorating' (its YouTube title, with his typing slip 'panting' corrected), and say nothing about the job, the house or the customer beyond that title. Cross-link Painting and Decorating, Wallpapering and Exterior Painting. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274.",
+    "exterior-painting": "Exterior painting, Brandon's own list from the 2 Apr 2026 call: masonry painting (painting render, brick or stone that is already rendered or painted: 'if someone's had it rendered ... you can paint the masonry ... even if it's stone and it's already been painted'), exterior woodwork, oil varnishing with oil and water-based finishes, mullion, sash and wooden windows, front doors and garage doors, and fascia boards and soffits (on his 2 Apr list; on 25 Feb he said he tries to stay away from them on their own and takes them on as part of a full exterior, so never lead with them). Not gutters (Brandon: 'I'll stay away from gutters because most of them are plastic now'), and not applying or repairing render, brickwork repairs or repointing: render is plastering work and out for now (27 Oct 2026). Preparation comes with everything: sanding, filling, caulking and fixing hairline cracks. Weather, season and drying times are good general material; promise no timescale. 'Masonry painting' has the big search volume, but most 'masonry paint' searches are people buying paint, so write for the homeowner who wants the job done. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). Cross-link Painting and Decorating, Interior Painting and Commercial Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274.",
+    "wallpapering": "Wallpapering: hanging wallpaper in homes and businesses, a feature wall or a whole room (Brandon's advert names 'wallpapering'; the reference he sent on 23 Oct 2026 has 'Specialist Wallcoverings' as one of the three tiles he wants). Describe the job and the choices generically, as a buyer's guide: preparing the walls first (filling and sanding, lining paper where a wall needs it), pattern matching, a feature wall or the whole room, and the common kinds of paper (standard, vinyl, textured, lining). Name no wallpaper brand or product range, and offer no murals, which no source mentions. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 7 London wallpaper hangers, 4 Nov 2026); write each within Brandon's scope: 'Professional Wallpaper Hanging' is the job, hanging paper for homes and businesses; 'Wall Preparation' is filling, sanding and lining paper where a wall needs it, never plaster repairs or skimming; 'Wallpaper, Vinyl and Specialist Wallcoverings' names kinds of wallcovering generically, with no brand; 'Precision Hanging and Seam Finishing' and 'Feature Walls, Ceilings and Awkward Spaces' are the job itself; 'How a Wallpapering Job Runs' promises no site visit, timescale or response time; 'Wallpapering in Pictures' shows only Brandon's own wallpaper photos (one in the pool so far) and describes no project, customer or place. Cross-link Interior Painting and Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274.",
+    "commercial-painting-and-decorating": "Painting and decorating for business premises of every kind: the commercial half of 'domestic and commercial clients' (Brandon, WhatsApp 27 Oct 2026; his advert says 'for homes and businesses' and 'COMMERCIAL'). The same work as the other hubs, interior and exterior painting and wallpapering, for business premises. Say that it covers all kinds of business premises, and name them, as the operator ruled on 4 Nov 2026 ('all types of businesses he can do painting and decorating for'; 'He can do it all'): offices, restaurants, schools, hotels, spas, leisure centres, and local businesses, small and large. Present them as the kinds of premises TrueLine Finishes works in, never as past clients: no business named, no project described, no 'we decorated a hotel in [Town]' (standing prohibition 5). Good general material: hard-wearing finishes for busy areas, planning the work around the business, and protecting the premises while it is done. The business is open Monday to Friday 7am to 7pm and Saturday and Sunday 8am to 6pm (its Google listing); when the work itself is done is arranged with Brandon, so promise no evening, overnight, weekend or out-of-hours working. Never spray painting, floor coatings, murals or carpets, which the London firms' commercial pages sell and Brandon does not. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). Cross-link Painting and Decorating, Interior Painting and Exterior Painting. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+  },
+  "negativeTopics": [
+    "Plastering, skimming, plaster repairs, applying render, silicone rendering or Venetian plastering as a service of TrueLine Finishes: painting and decorating only, for now (Brandon, WhatsApp 27 Oct 2026). Painting render, brick or stone that is already there IS offered, under Exterior Painting",
+    "Gutter painting or gutter work of any kind (Brandon, 2 Apr 2026 call: 'I'll stay away from gutters because most of them are plastic now')",
+    "Floor sanding, floor staining or floor varnishing, decking, wall murals, spray painting or respraying, or timber repair or replacement, as a service: no client source offers any of them (the 3 Nov 2026 plan's Wood Staining, Wall Murals and Spray Painting hubs came from the keyword table and were dropped on 4 Nov 2026)",
+    "Guarantees, warranties, accreditations, trade-body memberships, certifications or qualifications of any kind: Brandon has none (23 Oct 2026 call, asked directly: 'No')",
+    "Opening hours other than the Google listing's (Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm: state them exactly as listed, or not at all), and any 24-hour, overnight, emergency or out-of-hours availability or call-out, or a promise of evening or weekend work on site: Brandon has offered none. When the work is done is arranged with Brandon",
+    "Team size, staff numbers, or anyone named as working for TrueLine Finishes other than Brandon. Brandon Dawson, the owner, IS named (the operator, 4 Nov 2026): he is the expert who carries out the work and oversees every job, and a call is a direct line to him. His brother and the other worker are never named, and no team, crew or staff count is claimed: write 'we', as his advert does, or 'Brandon'",
+    "The A Child's Wish magazine cover or Brandon's printed advert used as an image (the cover carries a child's photograph and the charity's artwork), and any photo of another business's website, name or phone number (the 23 Oct 2026 reference, message Ooxspsjwt7ZAAQ-hbif1wAAAOw): never shown on the site. Name the charity in words",
+    "The words 'many five-star reviews', on any page. FOR THIS SITE THIS OVERRIDES THE SUGGESTED WORDING IN STANDING PROHIBITION 24 ('say many five-star reviews'): Brandon's Google listing (recorded in gbp) had three reviews on 2 Apr 2026 and 'a few' more by 28 Sep, which is not 'many'. Point to the reviews widget instead, with no count and no rating, and never cite the Rated People reviews of another business called TrueLine. The operator lifts this when the listing shows many reviews",
+    "Kitchen fitting or installation work of any kind as a service of TrueLine Finishes (fitting units, worktops or appliances; kitchen design or layouts; plumbing, electrical or lighting work; tiling, splashbacks or flooring), and kitchen prices or renovation costs: no source has Brandon fitting kitchens, and the operator ruled it out on 4 Nov 2026 ('if you said he didn't do it, then I will not include that'). Painting and decorating a kitchen IS offered, under Interior Painting ('I can do the kitchen doors', 2 Apr 2026 call). His video on the home page, 'Full kitchen renovation #painting #kitchen', is introduced by its title alone and never as a kitchen fitting or renovation service"
+  ]
+}

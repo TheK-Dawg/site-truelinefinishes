@@ -1,0 +1,31 @@
+---
+/**
+ * FURTHER READING (plan, Layout; the skeleton's `areas-covered`): a hub links DOWN to its own
+ * town articles (no Areas page). Until the first articles are published it shows the places
+ * served as plain text, in the seed's publish order (named places, never a whole region).
+ */
+import { articles, articleUrl } from '../data/articles';
+import { towns } from '../data/site';
+interface Props { hub: string; hubName: string }
+const { hub, hubName } = Astro.props;
+const list = articles.filter((a) => a.hub === hub);
+const places = towns.slice(0, 20).map((t) => t.name);
+---
+<section class="fr section section-further-reading" data-section="further-reading">
+  <div class="container">
+    <h2 class="fr__h2">{hubName}: further reading</h2>
+    {list.length > 0 ? (
+      <ul class="fr__list">{list.map((a) => <li><a href={articleUrl(a)} data-link="further">{a.title}</a></li>)}</ul>
+    ) : (
+      <p class="fr__places">{hubName} for homes and businesses in {places.slice(0, -1).join(', ')} and {places.at(-1)}, and the towns and villages around them.</p>
+    )}
+  </div>
+</section>
+<style>
+  .fr { padding: var(--section-pad-sm) 0; border-top: 1px solid var(--border-default); }
+  .fr__h2 { font-size: var(--fs-3xl); margin-bottom: var(--space-5); }
+  .fr__list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3) var(--space-8); }
+  .fr__list a { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
+  .fr__places { max-width: 80ch; color: var(--text-primary); }
+  @media (max-width: 760px) { .fr__list { grid-template-columns: 1fr; } }
+</style>

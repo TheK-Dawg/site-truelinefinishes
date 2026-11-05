@@ -1,0 +1,21 @@
+---
+/**
+ * WHATSAPP CLICK-TO-CHAT (plan, Contact; flag 9): bottom-right corner on MOBILE only, opening a
+ * chat with the business number 07949 484274 (wa.me/447949484274). Never 07706 215917.
+ * Open item: tap it on a phone before launch; if 07949 484274 is not on WhatsApp, hide this
+ * (set WHATSAPP_ON = false) until Brandon has WhatsApp on that number.
+ */
+import Icon from './Icon.astro';
+import { business } from '../data/site';
+const WHATSAPP_ON = true;
+---
+{WHATSAPP_ON && (
+  <a class="wa" href={business.whatsappHref} target="_blank" rel="noopener" data-cta="whatsapp-float" aria-label={`WhatsApp Brandon on ${business.phone}`}>
+    <Icon name="whatsapp" size={30} />
+  </a>
+)}
+<style>
+  .wa { display: none; position: fixed; right: var(--space-4); bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); z-index: 86; width: calc(var(--tap) + var(--space-3)); height: calc(var(--tap) + var(--space-3)); place-items: center; border-radius: var(--badge-radius); background: var(--whatsapp); color: var(--whatsapp-fg); box-shadow: var(--shadow-overlay); transition: bottom 0.2s var(--ease); }
+  @media (max-width: 1023px) { .wa { display: grid; } }
+  :global(html[data-sticky]) .wa { bottom: calc(var(--btn-h-md) + var(--space-8) + env(safe-area-inset-bottom)); }
+</style>

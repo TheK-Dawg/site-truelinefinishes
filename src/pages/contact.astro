@@ -1,59 +1,52 @@
 ---
-/** CONTACT (plan: nap / enquiry-form / hours). Reviews under the hero (every page, pass 2), NAP cards (the only page besides the footer with the email), map, form. */
+/**
+ * CONTACT (seed: nap / enquiry-form / hours; plan, Contact): the name, the phone, the email, the
+ * WhatsApp button, the opening hours exactly as the Google listing, the quote form, and the map
+ * embed of the Google listing by CID. NO address anywhere (addressDisplay "no").
+ */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Reviews from '../components/Reviews.astro';
 import MapEmbed from '../components/MapEmbed.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
-import { business, image } from '../data/site';
+import { business, hours, image } from '../data/site';
 const pageUrl = `${business.url}/contact/`;
 const schema = [
-  { '@type': 'ContactPage', '@id': `${pageUrl}#contact`, url: pageUrl, name: `Contact ${business.name}`, about: { '@id': `${business.url}/#business` } },
+  { '@type': 'ContactPage', '@id': `${pageUrl}#contact-page`, url: pageUrl, name: `Contact ${business.name}`, about: { '@id': `${business.url}/#business` } },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Contact', item: pageUrl }] },
 ];
-const cards = [
-  { icon: 'phone', h: 'Call', lines: [business.phone], href: business.phoneHref, cta: 'contact-call' },
-  { icon: 'mail', h: 'Email', lines: [business.email], href: `mailto:${business.email}`, cta: 'contact-email' },
-  { icon: 'pin', h: 'Based in', lines: [`${business.baseTown}, ${business.city}`, 'Hampshire'], href: '', cta: '' },
-  { icon: 'clock', h: 'Hours', lines: [business.hours, 'Quick Quote Online any time'], href: '', cta: '' },
-];
 ---
-<Base title="Contact Buildings For Life | Builders in Hedge End, Southampton" description="Call Pete Bartlett on 07853 945013, email, or send a Quick Quote Online. Family-run builders in Hedge End covering Southampton and south Hampshire." page="contact" schema={schema}>
-  <PageHero eyebrow="Contact" h1="Contact Buildings For Life" lead="Call Pete, send an email, or use Quick Quote Online with the details of the job. We come back to arrange a visit." image={image('rear-extension-glazing')} crumbs={[{ label: 'Contact' }]} />
+<Base title="Contact Brandon About Painting and Decorating | TrueLine Finishes" description="Call Brandon on 07949 484274, email Brandon@truelinefinishes.com, WhatsApp, or use the quote form. Open Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm." page="contact" schema={schema}>
+  <PageHero h1="Contact TrueLine Finishes" lead="Get a free quotation: call Brandon on 07949 484274 or use the quote form. A call is a direct line to Brandon." image={image('white-sash-window-stone-0029')} />
   <Reviews />
   <section class="ct section section-nap" data-section="nap">
-    <div class="container ct__inner">
+    <div class="container">
+      <h2 class="ct__h2">{business.name}</h2>
       <ul class="ct__cards">
-        {cards.map((c, i) => (
-          <li class:list={['ct__card', i === 0 && 'ct__card--on']} data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
-            <span class="ct__ic"><Icon name={c.icon} size={24} /></span>
-            <h2>{c.h}</h2>
-            {c.lines.map((l, k) => k === 0 && c.href ? <p><a href={c.href} data-cta={c.cta}>{l}</a></p> : <p>{l}</p>)}
-          </li>
-        ))}
+        <li class="ct__card ct__card--on on-dark"><span class="ct__ic"><Icon name="phone" size={24} /></span><h3>Call Brandon</h3><p><a href={business.phoneHref} data-cta="contact-call">{business.phone}</a></p></li>
+        <li class="ct__card"><span class="ct__ic"><Icon name="mail" size={24} /></span><h3>Email</h3><p><a href={`mailto:${business.email}`} data-cta="contact-email">{business.email}</a></p></li>
+        <li class="ct__card"><span class="ct__ic"><Icon name="whatsapp" size={24} /></span><h3>WhatsApp</h3><p><a href={business.whatsappHref} target="_blank" rel="noopener" data-cta="contact-whatsapp">Message Brandon on WhatsApp</a></p></li>
+        <li class="ct__card" id="hours"><span class="ct__ic"><Icon name="clock" size={24} /></span><h3>Opening hours</h3>{hours.map((h) => <p>{h.days}<br /><strong>{h.time}</strong></p>)}</li>
       </ul>
       <div class="ct__map" data-motion="reveal"><MapEmbed /></div>
-      <p class="ct__legal">{business.name} · Registered in England and Wales, company number {business.companyNumber}.</p>
     </div>
   </section>
-  <QuoteForm heading="Send the details and we will be in touch" />
+  <QuoteForm heading="Send Brandon the details" />
 </Base>
-
 <style>
+  .ct__h2 { font-size: var(--fs-3xl); margin-bottom: var(--space-6); }
   .ct__cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
   .ct__card { padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--border-strong); overflow-wrap: anywhere; }
-  .ct__card--on { background: var(--bg-inverse); border-top-color: var(--brand-primary); color: var(--text-inverse-muted); }
-  .ct__card h2 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
-  .ct__card a { font-weight: var(--fw-semibold); color: var(--text-heading); text-decoration: underline; text-underline-offset: 3px; }
-  /* Dark call card: white number (it was losing to the rule above and reading dark-on-dark). */
-  .ct__card--on h2, .ct__card.ct__card--on a { color: var(--text-inverse); }
+  .ct__card p + p { margin-top: var(--space-2); }
+  .ct__card--on { background: var(--bg-inverse); border-top-color: var(--accent-on-dark); color: var(--text-inverse-muted); }
+  .ct__card h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
+  .ct__card a { font-weight: var(--fw-semibold); color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+  .ct__card--on h3, .ct__card.ct__card--on a { color: var(--text-inverse); }
   .ct__card.ct__card--on a { font-size: var(--fs-xl); text-decoration-color: var(--accent-on-dark); }
-  .ct__card.ct__card--on a:hover { color: var(--accent-on-dark); }
-  .ct__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-card); color: var(--text-heading); }
-  .ct__card--on .ct__ic { background: var(--brand-primary); color: var(--brand-fg); }
+  .ct__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-card); color: var(--brand-text); }
+  .ct__card--on .ct__ic { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   .ct__map { margin-top: var(--space-10); height: calc(var(--space-30) * 3.5); }
-  .ct__legal { margin-top: var(--space-5); font-size: var(--fs-sm); color: var(--text-muted); }
   @media (max-width: 1023px) { .ct__cards { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .ct__cards { grid-template-columns: 1fr; } }
 </style>

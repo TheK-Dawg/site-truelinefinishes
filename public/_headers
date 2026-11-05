@@ -1,8 +1,15 @@
-# NOINDEX INTERLOCK, preview hosts only (26 Oct 2026 production order). The real
-# domain is indexable (INDEXABLE true in src/data/launch.ts); the workers.dev
-# copies of the production and v3-test Workers stay out of Google.
-https://site-buildingsforlifeltd.small-bird-3273.workers.dev/*
+# NOINDEX on the workers.dev preview only. The real domain (www.truelinefinishes.com) is indexable
+# at launch; thank-you and 404 carry their own noindex meta.
+https://site-truelinefinishes.small-bird-3273.workers.dev/*
   X-Robots-Tag: noindex, nofollow
 
-https://site-buildingsforlifeltd-v3-test.small-bird-3273.workers.dev/*
-  X-Robots-Tag: noindex, nofollow
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+/images/*
+  Cache-Control: public, max-age=2592000
+
+/brand/*
+  Cache-Control: public, max-age=2592000

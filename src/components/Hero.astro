@@ -1,81 +1,93 @@
 ---
 /**
- * HOME HERO (Electrix). Full-bleed photograph under a deep green overlay,
- * sand eyebrow, H1, Quick Quote Online + the Call button (CallButton, same
- * box as Quick Quote, glass fill), the slim white TrustIndex widget directly
- * under them (pass 2: it replaced the Google review link line), then three glass info
- * cards on the bottom edge (the middle one highlighted, as in the capture).
- * SLOTS: data-hero-video marks where the background video goes (A2, not
- * built); the BBC card links out once slots.bbcVideoUrl is set (A3).
+ * HOME HERO. Black band (plan, Layout), Brandon's own asks (23 Oct: "call to action and quote
+ * form and phone number with the video at the top"): the headline about painting and decorating
+ * for homes and businesses, the call to action, the phone number, his kitchen Short beside it
+ * (portrait, Brandon's pick, home page only, captioned with its title) and the quote form.
+ * Desktop: copy | video | form. Mobile: copy, then the video, then the form.
+ * The form here is the home page's one form (id="contact"); every #contact link lands on it.
  */
 import Icon from './Icon.astro';
-import TiSlim from './TiSlim.astro';
 import CallButton from './CallButton.astro';
-import { facts, slots } from '../data/site';
-interface Props { eyebrow: string; h1: string; lead: string; image: { src: string; alt: string } }
-const { eyebrow, h1, lead, image } = Astro.props;
-const bbc = slots.bbcVideoUrl;
-const bbcExternal = /^https?:/.test(bbc);
+import VideoEmbed from './VideoEmbed.astro';
+import { business, ctaLine } from '../data/site';
+interface Props { h1: string; lead: string }
+const { h1, lead } = Astro.props;
+const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
+const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
 ---
 <section class="hero on-dark section-hero" data-section="hero">
-  <img class="hero__bg" src={image.src} alt="" width="1600" height="1000" fetchpriority="high" decoding="async" data-hero-video={slots.heroVideo} />
   <div class="hero__inner container">
     <div class="hero__copy">
-      <p class="eyebrow">{eyebrow}</p>
+      <img class="hero__logo" src="/brand/logo.webp" alt="" width="960" height="252" />
       <h1 class="hero__h1">{h1}</h1>
       <p class="hero__lead">{lead}</p>
+      <p class="hero__ctaline">{ctaLine}</p>
       <div class="hero__actions">
         <a href="#contact" class="btn btn-primary hero__btn" data-cta="hero-quote">Quick Quote Online</a>
         <CallButton cta="hero-call" class="hero__btn" />
       </div>
-      <div class="hero__strip"><TiSlim where="hero" /></div>
+      <ul class="hero__usps">
+        <li><Icon name="check" size={18} /> Over eight years' experience</li>
+        <li><Icon name="check" size={18} /> Fully insured</li>
+        <li><Icon name="check" size={18} /> Brandon on every job</li>
+      </ul>
+      <p class="hero__reviews"><a href="#reviews" data-cta="hero-reviews"><Icon name="star" size={16} /> Read what customers say on Google</a></p>
     </div>
-    <ul class="hero__cards">
-      <li class="hero__card"><span class="hero__ic"><Icon name="bricks" /></span><div><h2>40+ Years</h2><p>{facts.yearsLine}.</p></div></li>
-      <li class="hero__card hero__card--on"><span class="hero__ic"><Icon name="shield" /></span><div><h2>10-Year Warranty</h2><p>On new builds.</p></div></li>
-      <li class="hero__card" data-bbc-link={bbc}>
-        <span class="hero__ic"><Icon name="tv" /></span>
-        <div>
-          <h2>{bbc ? <a href={bbc} class="hero__bbc" data-cta="hero-bbc" target={bbcExternal ? '_blank' : undefined} rel={bbcExternal ? 'noopener' : undefined}>As Seen on BBC</a> : 'As Seen on BBC'}</h2>
-          <p>Featured on BBC Building Dream Homes.</p>
-        </div>
-      </li>
-    </ul>
+    <div class="hero__video"><VideoEmbed which="kitchen" eager /></div>
+    <div class="hero__card">
+      <h2 class="hero__form-h">Quick Quote Online</h2>
+      <div class="hero__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
+        <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
+      </div>
+      <p class="hero__secure"><Icon name="lock" size={15} /> Any submission through this form is secure. We do not sell your details to third parties.</p>
+      <script is:inline src="https://api.formlane.uk/edge/form.js" defer></script>
+    </div>
   </div>
 </section>
 
 <style>
-  .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--bg-inverse-deep); color: var(--text-inverse-muted); padding-top: calc(var(--header-h) + var(--space-24)); }
-  .hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); }
-  .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-hero); }
-  .hero__copy { max-width: var(--copy-max); }
-  .hero__h1 { color: var(--text-inverse); font-size: var(--fs-6xl); font-weight: var(--fw-medium); line-height: 1.12; margin-bottom: var(--space-6); }
-  .hero__lead { font-size: var(--fs-lg); max-width: 56ch; margin-bottom: var(--space-10); }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .hero { position: relative; background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-16); }
+  .hero__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--hero-video-w) var(--hero-form-w); gap: var(--space-8); align-items: start; }
+  .hero__logo { width: var(--logo-hero-w); margin-bottom: var(--space-6); }
+  .hero__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); line-height: 1.1; margin-bottom: var(--space-5); }
+  .hero__lead { font-size: var(--fs-lg); max-width: 52ch; margin-bottom: var(--space-4); }
+  .hero__ctaline { color: var(--text-inverse); font-weight: var(--fw-semibold); margin-bottom: var(--space-6); }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  .hero__bbc { text-decoration: underline; text-decoration-color: var(--border-inverse); text-underline-offset: 4px; }
-  .hero__bbc:hover { color: var(--accent-on-dark); }
-  /* REV3 follow-up: desktop only. On mobile the review line lives in the white
-     strip under the header (HeaderReviews), so the first screen shows it once. */
-  .hero__strip { margin-top: var(--space-6); }
-  /* Mobile: collapsed to nothing and clipped, NOT display:none. TrustIndex only ever
-     renders this widget if its box is laid out in the first screen, and this slot is
-     the loader host that TiSlim copies into the form and footer strips. */
-  @media (max-width: 1023px) { .hero__strip { height: 0; margin: 0; overflow: hidden; } }
-  .hero__cards { list-style: none; padding: 0; margin-top: var(--space-24); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); }
-  .hero__card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-8) var(--space-6); background: var(--glass); border-top: 2px solid var(--border-inverse); }
-  .hero__card--on { border-top-color: var(--brand-primary); }
-  .hero__card h2 { font-size: var(--fs-xl); font-weight: var(--fw-medium); margin-bottom: var(--space-1); }
-  .hero__card p { font-size: var(--fs-md); }
-  .hero__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); flex-shrink: 0; border-radius: var(--badge-radius); background: var(--glass-strong); color: var(--text-inverse); }
-  .hero__card--on .hero__ic { background: var(--brand-primary); color: var(--brand-fg); }
-  @media (max-width: 1023px) { .hero__h1 { font-size: var(--fs-5xl); } .hero__cards { grid-template-columns: 1fr; gap: var(--space-3); margin-top: var(--space-16); } }
-  @media (max-width: 640px) {
-    .hero { padding-top: calc(var(--header-h) + var(--space-10)); }
-    .hero__h1 { font-size: var(--fs-4xl); }
-    .hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
+  .hero__usps { list-style: none; padding: 0; margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--text-inverse); font-size: var(--fs-md); }
+  .hero__usps li { display: flex; gap: var(--space-2); align-items: center; }
+  .hero__usps :global(.icon) { color: var(--accent-on-dark); }
+  .hero__reviews { margin-top: var(--space-5); font-size: var(--fs-md); }
+  .hero__reviews a { display: inline-flex; gap: var(--space-2); align-items: center; color: var(--text-inverse); text-decoration: underline; text-decoration-color: var(--accent-on-dark); text-underline-offset: 4px; }
+  .hero__reviews :global(.icon) { color: var(--accent-on-dark); }
+  .hero__card { background: var(--bg-card); color: var(--text-primary); padding: var(--space-6); border-top: 3px solid var(--accent-on-dark); }
+  .hero__form-h { font-size: var(--fs-xl); color: var(--text-heading); margin-bottom: var(--space-4); }
+  .hero__form { min-height: calc(var(--space-30) * 3); scroll-margin-top: calc(var(--header-h) + var(--space-3)); }
+  .hero__form noscript a { color: var(--brand-text); font-weight: var(--fw-semibold); }
+  .hero__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
+  .hero__secure :global(.icon) { color: var(--brand-text); flex-shrink: 0; margin-top: 1px; }
+  .hero__form :global(.lf-f) { gap: var(--space-3); }
+  .hero__form :global(.lf-i) { min-height: var(--input-h); padding: var(--space-3) var(--space-4); font: inherit; font-size: var(--fs-base); color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--input-radius); }
+  .hero__form :global(textarea.lf-i) { min-height: calc(var(--space-20) + var(--space-4)); resize: vertical; }
+  .hero__form :global(.lf-i::placeholder) { color: var(--text-muted); opacity: 1; }
+  .hero__form :global(.lf-i:focus) { outline: 2px solid var(--brand-primary); outline-offset: 1px; border-color: var(--brand-primary); }
+  .hero__form :global(.lf-b) { width: 100%; min-height: var(--btn-h-lg); border: 0; border-radius: var(--btn-radius); background: var(--brand-primary); color: var(--brand-fg); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; cursor: pointer; }
+  .hero__form :global(.lf-b:hover) { background: var(--brand-hover); }
+  .hero__form :global(.lf-x), .hero__form :global(.lf-e) { color: var(--status-negative); }
+  @media (max-width: 1180px) { .hero__inner { grid-template-columns: minmax(0, 1fr) var(--hero-video-w-md) var(--hero-form-w-md); gap: var(--space-6); } .hero__h1 { font-size: var(--fs-4xl); } }
+  @media (max-width: 1023px) {
+    .hero__inner { grid-template-columns: minmax(0, 1fr) var(--hero-video-w); }
+    .hero__card { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    .hero { padding-top: calc(var(--header-h) + var(--space-8)); }
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__logo { width: var(--logo-hero-w-sm); }
+    .hero__h1 { font-size: var(--fs-3xl); }
+    .hero__lead { font-size: var(--fs-base); }
     .hero__actions :global(.hero__btn) { width: 100%; }
+    .hero__video { max-width: var(--video-portrait-w); width: 100%; margin-inline: auto; }
     .hero__card { padding: var(--space-5) var(--space-4); }
-    .hero__ic { width: var(--space-12); height: var(--space-12); }
   }
 </style>

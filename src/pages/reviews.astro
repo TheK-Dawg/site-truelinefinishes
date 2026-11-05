@@ -1,0 +1,15 @@
+---
+/** REVIEWS PAGE (brief): the live Google reviews of Brandon's listing (CID 8023434379390696838) through the Trustindex slot, which is a marked TODO until the operator supplies the TrueLine widget id. No written or invented reviews (standing prohibition 2). */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Reviews from '../components/Reviews.astro';
+import OurWork from '../components/OurWork.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { image } from '../data/site';
+---
+<Base title="Painting and Decorating Reviews on Google | TrueLine Finishes" description="Read Google reviews of TrueLine Finishes, Brandon Dawson's painting and decorating business, in customers' own words, and see photographs from his jobs." page="reviews">
+  <PageHero h1="Reviews of TrueLine Finishes" lead="What customers say about Brandon's painting and decorating, from the TrueLine Finishes Google Business Profile." image={image('bay-window-living-room-0054')} />
+  <Reviews full />
+  <OurWork />
+  <QuoteForm />
+</Base>

@@ -1,7 +1,8 @@
 /*
  * Global layer. Reads tokens only (no raw colours, no off-scale px).
- * Electrix rhythm: letter-spaced uppercase eyebrows, tight display headings,
- * square yellow buttons with uppercase labels, generous section padding.
+ * Buildings for Life template rhythm (letter-spaced labels, display headings, square
+ * uppercase buttons, generous section padding) in TrueLine's own type and colours:
+ * classical serif capitals for headings, the system sans for reading.
  */
 @import './tokens.css';
 
@@ -14,7 +15,9 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; }
-h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-weight: var(--fw-medium); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); text-wrap: balance; }
+h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-family: var(--font-heading); font-weight: var(--fw-semibold); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); text-wrap: balance; }
+h1, h2 { text-transform: uppercase; }
+h3, h4 { font-variant-caps: small-caps; letter-spacing: 0.02em; }
 p { margin: 0; }
 ul, ol { margin: 0; }
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
@@ -52,6 +55,9 @@ ul, ol { margin: 0; }
 }
 .btn-primary { background: var(--brand-primary); color: var(--brand-fg); }
 .btn-primary:hover { background: var(--brand-hover); }
+/* On black the primary button is chrome blue with black text (never royal blue on black). */
+.on-dark .btn-primary { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
+.on-dark .btn-primary:hover { background: var(--accent-on-dark-hover); }
 .btn-dark { background: var(--bg-inverse); color: var(--text-inverse); }
 .btn-dark:hover { background: var(--bg-inverse-2); }
 .btn-ghost { background: transparent; color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--border-inverse); }
@@ -63,7 +69,7 @@ ul, ol { margin: 0; }
 .btn-call--dark .icon { color: var(--accent-on-dark); }
 .btn-call--light { background: transparent; color: var(--text-heading); box-shadow: inset 0 0 0 1px var(--border-strong); }
 .btn-call--light:hover { background: var(--bg-subtle); }
-.btn-call--light .icon { color: var(--forest-500); }
+.btn-call--light .icon { color: var(--brand-text); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
 /* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16). */
 .btn::after {
@@ -75,7 +81,7 @@ ul, ol { margin: 0; }
 @keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
 
 /* Inline text link (Electrix "Contact Us" underline). */
-.text-link { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
+.text-link { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
 .on-dark .text-link { color: var(--text-inverse); }
 .more-line { font-size: var(--fs-md); color: var(--text-muted); text-align: center; margin-top: var(--space-10); }
 
@@ -91,7 +97,7 @@ ul, ol { margin: 0; }
 .prose h3 { font-size: var(--fs-xl); margin-top: 1.4em; }
 .prose ul, .prose ol { padding-left: 1.2em; }
 .prose li + li { margin-top: 0.4em; }
-.prose a { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.prose a { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .prose strong { color: var(--text-primary); }
 @media (max-width: 760px) { .prose h2 { font-size: var(--fs-2xl); } }
 
@@ -104,9 +110,5 @@ ul, ol { margin: 0; }
   * { scroll-behavior: auto !important; }
 }
 
-/* TrustIndex floating left-corner widget (every page, from Base). TrustIndex appends it to
-   <body> as .ti-widget[data-layout-category="floating, popup"], position fixed.
-   Hidden below the desktop breakpoint, where the sticky call bar owns the bottom edge. */
-@media (max-width: 1023px) {
-  .ti-widget[data-layout-category*='floating'] { display: none !important; }
-}
+/* Reading surfaces stay white with ink text (plan: every article's reading area). */
+.on-white { background: var(--bg-card); color: var(--text-primary); }

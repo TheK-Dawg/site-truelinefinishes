@@ -1,118 +1,158 @@
 ---
 /**
- * HOME. Electrix section order, adapted: hero (+ info cards), reviews / the
- * TrustIndex slot (operator walkthrough 25 Sep: directly under the hero),
- * statement slab (the family firm story), trust badges (where the client-logo
- * wall sat), about + milestones, services, OUR WORK (operator correction 3), the
- * home-blueprint joinery/kitchens/renovation sections, how it works, areas,
- * articles, FAQ, quote form (last). The TrustIndex slim + corner widgets come
- * from the hero, footer and Base, the same as every page (pass 2).
+ * HOME (plan, Layout, in its order). Hero (black band: headline, CTA, phone, the kitchen Short and
+ * the quote form) -> the three tiles from Brandon's reference -> the before-and-after slider
+ * (bedroom, bathroom, gable wall) -> the five hubs as cards -> why choose us + how a job runs ->
+ * Brandon's own photos -> the one coverage line -> reviews -> the charity line -> FAQ -> the CTA
+ * band -> latest articles -> footer.
+ * Home blueprint headings (seed homePage.sections): "Professional painting and decorating for every
+ * property" = the H1; "Residential and commercial decorating services" = the tiles; the three
+ * hub headings = the hub cards; "A quality-led service from preparation to completion" = why choose
+ * us; "Talk to Brandon about your project" = the CTA band; contact-cta = the hero form.
  */
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
-import Statement from '../components/Statement.astro';
-import TrustBadges from '../components/TrustBadges.astro';
-import AboutBlock from '../components/AboutBlock.astro';
-import Reviews from '../components/Reviews.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
-import OurWork from '../components/OurWork.astro';
 import Steps from '../components/Steps.astro';
-import Areas from '../components/Areas.astro';
-import ArticlesPreview from '../components/ArticlesPreview.astro';
+import OurWork from '../components/OurWork.astro';
+import Reviews from '../components/Reviews.astro';
 import Faq from '../components/Faq.astro';
-import QuoteForm from '../components/QuoteForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ArticlesPreview from '../components/ArticlesPreview.astro';
 import Icon from '../components/Icon.astro';
-import { business, image, seo } from '../data/site';
+import { business, seo, image, mainPlaces, charityLine, ctaLine } from '../data/site';
 import { stripTags } from '../lib/links';
 
 const faqs = [
-  { q: 'What kind of building work do you take on?', a: 'Whole building jobs: new builds, house extensions, loft and basement conversions, renovations, structural work and groundworks, brickwork and natural stone, patios, garden walls, hard landscaping, carpentry, joinery and kitchens.' },
-  { q: 'Which areas do you cover?', a: 'We are based in Hedge End and work across Southampton and the towns around it: Botley, West End, Bishops Waltham, Eastleigh, Chandlers Ford, Romsey and Winchester, down to Hamble-le-Rice, Warsash and across to Totton and Hythe. The full list is on the areas page.' },
-  { q: 'What does the 10-year warranty apply to?', a: 'New builds. The 10-year warranty applies to the new homes we build, and to new builds only.' },
-  { q: 'How do I get a price?', a: 'Use Quick Quote Online or call Pete. Tell us what you want built and where, with any drawings or planning you already have. We arrange a visit, look at the site and the ground, and follow up with a written quote.' },
-  { q: 'Do you handle planning and building regulations?', a: 'We work with your drawings and planning approval, or point you towards an architect or designer if you have neither yet. On site we build to the approved plans and book the building control inspections at each stage so the job is signed off properly.' },
+  { q: 'What does TrueLine Finishes do?', a: 'All aspects of painting and decorating for homes and businesses: interior painting, exterior painting, wallpapering and commercial work, from individual rooms to full property redecorations.' },
+  { q: 'Who will carry out the work?', a: 'Brandon Dawson, the owner. He carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him.' },
+  { q: 'Is the quotation free?', a: 'Yes. Brandon talks the job through with you and gives you a free quotation.' },
+  { q: 'Which areas do you cover?', a: `Baildon, Guiseley, Menston, Ilkley, Shipley, Otley, Horsforth, Bingley and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.` },
+  { q: 'Is preparation included?', a: 'Yes. Sanding, filling and caulking come with everything, and brand-new plaster gets a mist coat before the finish goes on.' },
+  { q: 'Are you insured?', a: 'Yes. TrueLine Finishes is fully insured.' },
 ];
 const schema = [
   { '@type': 'FAQPage', '@id': `${business.url}/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
+  { '@type': 'VideoObject', name: 'Full kitchen renovation', embedUrl: 'https://www.youtube.com/embed/v3g1Kdja0gk', contentUrl: 'https://youtube.com/shorts/v3g1Kdja0gk', thumbnailUrl: 'https://i.ytimg.com/vi/v3g1Kdja0gk/hqdefault.jpg', uploadDate: '2026-11-03', description: 'Full kitchen renovation, from Brandon’s YouTube channel.' },
 ];
-const craft = [
-  { icon: 'saw', h3: 'Fitted Furniture and Joinery', p: 'Alcove units, fitted wardrobes, shelving and cupboards made to fit the room they go in, by the same carpenters who fit the floors, stud walls and roofs on our builds. Scribed to walls that are rarely straight, and finished so the doors still close in five years.' },
-  { icon: 'house', h3: 'Kitchens and Interior Joinery', p: 'Kitchens fitted as part of an extension or a renovation, with the structural work, the walls and the joinery handled by one team. Worktops, units, doors, architraves and skirting all line up because the people fitting them also built the room.' },
-  { icon: 'renovate', h3: 'Renovation and Home Improvements', p: 'Opening up rooms, moving or closing openings, new steels and a proper finish afterwards. We take older houses back to something solid and square, and bring tired post-war houses up to how people live in them now.' },
+const tiles = [
+  { icon: 'roll', title: 'Specialist Wallcoverings', text: 'Feature walls and whole rooms in paper, hung on walls prepared properly first.', links: [{ href: '/wallpapering/', label: 'Wallpapering' }], img: image('leaf-pattern-feature-wall-0026') },
+  { icon: 'layers', title: 'Interior & Exterior Work', text: 'Walls, ceilings, stairs and woodwork inside; masonry, windows and doors outside.', links: [{ href: '/interior-painting/', label: 'Interior Painting' }, { href: '/exterior-painting/', label: 'Exterior Painting' }], img: image('white-staircase-spindles-0162') },
+  { icon: 'office', title: 'Domestic & Commercial', text: 'Homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses.', links: [{ href: '/commercial-painting-and-decorating/', label: 'Commercial Painting and Decorating' }], img: image('office-navy-feature-wall-0178') },
+];
+const why = [
+  { icon: 'user', title: 'Brandon on every job', text: 'Brandon Dawson, the owner, carries out the work and oversees every job.' },
+  { icon: 'phone', title: 'A direct line to Brandon', text: 'Call 07949 484274 and you are talking to the person doing the work.' },
+  { icon: 'clock', title: "Over eight years' experience", text: 'Painting and decorating for homes and businesses, from individual rooms to full redecorations.' },
+  { icon: 'shield', title: 'Fully insured', text: 'Friendly and reliable, and fully insured.' },
+  { icon: 'brush', title: 'Preparation on every job', text: 'Sanding, filling and caulking come with everything.' },
+  { icon: 'check', title: 'Attention to detail', text: 'We take pride in lasting finishes and treating your property with care.' },
 ];
 ---
-<Base title={seo.title} description={seo.description} page="home" schema={schema} ogImage="/brand/og-image.png">
+<Base title={seo.title} description={seo.description} page="home" schema={schema}>
   <Hero
-    eyebrow="Family-run builders · Hedge End, Hampshire"
-    h1="Builders in Hedge End & Southampton, Built for Life"
-    lead="Extensions, new builds, loft conversions, brickwork and natural stone from a family firm with over 40 years in the trade and a 10-year warranty on new builds."
-    image={image('garden-wall-piers')}
+    h1="Professional Painting and Decorating for Every Property"
+    lead="Rooms looking tired, or the outside of the house letting it down? TrueLine Finishes offers painting and decorating for homes and businesses, from individual rooms to full property redecorations, with careful preparation on every job."
   />
-  <Reviews />
-  <Statement html="A family building company that <b>started with a trowel</b> over 40 years ago and now <b>builds whole homes</b>, extensions and natural stone work across Hampshire, with <b>a 10-year warranty</b> on new builds." />
-  <TrustBadges />
-  <AboutBlock
-    heading="A builder who learned the trade one brick at a time"
-    body={[
-      'Pete Bartlett started out as a bricklayer more than 40 years ago. The business he runs now, Buildings For Life, is a family company that takes a job from the first spade in the ground to the last coat of paint: groundworks, brickwork, structure, roofs, joinery and finishing.',
-      'The last 15 years have added high-end and natural stone work to the brick, and our work has featured on the BBC programme Building Dream Homes.',
-    ]}
-    image={image('new-build-brickwork')}
-    rows={[
-      { n: '40+', title: 'Years in the trade', text: 'Starting as a bricklayer, then every stage of a build since.' },
-      { n: '15', title: 'Years of natural stone', text: 'High-end stone walls, facings and details alongside the brick.' },
-      { n: '10', title: 'Year new-build warranty', text: 'On the new homes we build.' },
-      { n: 'BBC', title: 'Building Dream Homes', text: 'Our work featured on the BBC programme.' },
-    ]}
-    features={[
-      { icon: 'family', title: 'Family-run', text: 'One family firm from the footings to the finish, not a chain of subcontractors.' },
-      { icon: 'shield', title: 'New-build warranty', text: 'A 10-year warranty on the new homes we build.' },
-    ]}
-    button={{ href: '/about/', label: 'About Buildings For Life' }}
-  />
-  <ServicesGrid />
-  <OurWork />
-  <section class="cr section section--panel section-craft" data-section="craft">
+
+  <section class="tl section section-tiles" data-section="tiles">
     <div class="container">
       <div class="sec-head" data-motion="reveal">
-        <div><p class="eyebrow">Inside the house too</p><h2 class="sec-head__h2">Joinery, kitchens and renovation work</h2></div>
-        <p class="sec-head__lead">The same team that builds the shell fits out the inside, so the structure, the walls and the finish are all one job with one person answerable for it.</p>
+        <h2 class="sec-head__h2">Residential and commercial decorating services</h2>
+        <p class="sec-head__lead">Painting, wallpapering and decorating for homes and for business premises of every kind.</p>
       </div>
-      <ul class="cr__grid">
-        {craft.map((c, i) => (
-          <li class="cr__item" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
-            <span class="cr__ic"><Icon name={c.icon} size={26} /></span>
-            <h3>{c.h3}</h3>
-            <p>{c.p}</p>
+      <ul class="tl__grid">
+        {tiles.map((t, i) => (
+          <li class="tl__tile on-dark" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+            <img src={t.img.sm} alt={t.img.alt} width={t.img.width} height={t.img.height} loading="lazy" decoding="async" />
+            <div class="tl__body">
+              <span class="tl__ic"><Icon name={t.icon} size={24} /></span>
+              <h3 class="tl__h3">{t.title}</h3>
+              <p>{t.text}</p>
+              <p class="tl__links">{t.links.map((l) => <a href={l.href} data-link="tile">{l.label}</a>)}</p>
+            </div>
           </li>
         ))}
       </ul>
     </div>
   </section>
+
+  <BeforeAfter />
+
+  <ServicesGrid heading="Interior painting, exterior painting and wallpapering" lead="Interior painting and preparation, exterior painting, wallpapering and specialist wallcoverings, and the same work for business premises." />
+
+  <section class="wy section section-why" data-section="why">
+    <div class="container">
+      <div class="sec-head" data-motion="reveal">
+        <h2 class="sec-head__h2">A quality-led service from preparation to completion</h2>
+        <p class="sec-head__lead">Why people choose TrueLine Finishes.</p>
+      </div>
+      <ul class="wy__grid">
+        {why.map((w, i) => (
+          <li class="wy__item" data-motion="reveal" style={`--reveal-delay: ${(i % 3) * 60}ms`}>
+            <span class="wy__ic"><Icon name={w.icon} size={24} /></span>
+            <h3>{w.title}</h3>
+            <p>{w.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <Steps
-    heading="Three steps from first call to a finished build"
-    lead="No sales team and no call centre. You deal with the family running the job from the first visit to the sign-off."
+    heading="How a job runs"
+    lead="Three steps, and you deal with Brandon from the first call to the last coat."
+    photo="kitchen-diner-protected-0007"
     steps={[
-      { icon: 'chat', title: 'Tell us the job', text: 'Quick Quote Online or a call. What you want built, where, and any drawings or planning you have.' },
-      { icon: 'clipboard', title: 'Visit and written quote', text: 'We look at the house, the access and the ground, then put the price and what it includes in writing.' },
-      { icon: 'hammer', title: 'Build and sign-off', text: 'Our own team on site and building control booked at each stage, through to sign-off at handover.' },
+      { icon: 'chat', title: 'Get in touch', text: 'Call Brandon directly, use the quote form or send a WhatsApp message.' },
+      { icon: 'clipboard', title: 'A free quotation', text: 'Brandon talks the job through with you and gives you a free quotation.' },
+      { icon: 'roller', title: 'The work, done properly', text: 'Preparation first, floors and surfaces protected, with Brandon carrying out the work and overseeing the job.' },
     ]}
   />
-  <Areas
-    heading="Hedge End, Southampton and the towns around them"
-    body="From our base in Hedge End we cover 36 towns and villages across south Hampshire: north to Winchester and New Alresford, west to Romsey, Totton and Hythe, and south to Hamble-le-Rice, Warsash and Titchfield."
-  />
+
+  <OurWork />
+
+  <section class="cov section section--panel section-coverage" data-section="coverage">
+    <div class="container cov__inner" data-motion="reveal">
+      <Icon name="house" size={28} />
+      <p>Painting and decorating for homes and businesses in {mainPlaces.slice(0, -1).join(', ')} and {mainPlaces.at(-1)}, and the towns around them.</p>
+    </div>
+  </section>
+
+  <Reviews />
+
+  <section class="ch section section-charity" data-section="charity">
+    <div class="container ch__inner" data-motion="reveal"><Icon name="heart" size={24} /><p>{charityLine}</p></div>
+  </section>
+
+  <Faq items={faqs} heading="Questions people ask before they call" lead="Straight answers about the work, the quotation and who does the job." />
+
+  <CtaBand heading="Talk to Brandon about your project" line={ctaLine} />
+
   <ArticlesPreview />
-  <Faq items={faqs} heading="Questions people ask before they call" lead="Straight answers on what we do, where, and the new-build warranty." allLink />
-  <QuoteForm />
 </Base>
 
 <style>
-  .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .cr__item { background: var(--bg-card); padding: var(--card-pad); border-top: 2px solid var(--border-strong); }
-  .cr__item:hover { border-top-color: var(--brand-primary); }
-  .cr__item h3 { font-size: var(--fs-xl); font-weight: var(--fw-medium); margin: var(--space-5) 0 var(--space-3); }
-  .cr__item p { color: var(--text-muted); font-size: var(--fs-md); }
-  .cr__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }
-  @media (max-width: 900px) { .cr__grid { grid-template-columns: 1fr; } }
+  .tl__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .tl__tile { position: relative; display: flex; flex-direction: column; background: var(--bg-inverse); color: var(--text-inverse-muted); border-top: 3px solid var(--accent-on-dark); }
+  .tl__tile img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .tl__body { flex: 1; display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6) var(--card-pad) var(--card-pad); }
+  .tl__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); margin-top: calc(-1 * var(--space-12)); border-radius: var(--badge-radius); background: var(--accent-on-dark); color: var(--accent-on-dark-fg); border: 4px solid var(--bg-inverse); }
+  .tl__h3 { font-size: var(--fs-2xl); color: var(--text-inverse); }
+  .tl__links { margin-top: auto; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding-top: var(--space-2); }
+  .tl__links a { color: var(--text-inverse); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--accent-on-dark); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .tl__links a:hover { color: var(--accent-on-dark); }
+  .wy__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .wy__item { padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--brand-primary); }
+  .wy__item h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
+  .wy__item p { color: var(--text-primary); font-size: var(--fs-md); }
+  .wy__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }
+  .cov { padding: var(--space-10) 0; }
+  .cov__inner { display: flex; gap: var(--space-4); align-items: center; font-size: var(--fs-lg); color: var(--text-primary); }
+  .cov__inner :global(.icon) { color: var(--brand-primary); flex-shrink: 0; }
+  .ch { padding: var(--space-10) 0; background: var(--bg-inverse); }
+  .ch__inner { display: flex; gap: var(--space-3); align-items: center; justify-content: center; color: var(--text-inverse); font-size: var(--fs-lg); text-align: center; }
+  .ch__inner :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  @media (max-width: 900px) { .tl__grid, .wy__grid { grid-template-columns: 1fr; } }
 </style>

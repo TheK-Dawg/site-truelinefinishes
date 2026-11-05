@@ -1,0 +1,43 @@
+---
+/** GALLERY (standard page): every one of Brandon's categorised job photos from R2 (interiors, exteriors, before and after, wallpapering, commercial), site-matched grid, root Lightbox. */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Reviews from '../components/Reviews.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { images, image } from '../data/site';
+const groups = [
+  { cat: 'interior', h: 'Interiors' },
+  { cat: 'exterior', h: 'Exteriors' },
+  { cat: 'before-after', h: 'Before and after' },
+  { cat: 'wallpapering', h: 'Wallpapering' },
+  { cat: 'commercial', h: 'Commercial' },
+].map((g) => ({ ...g, list: images.filter((i) => i.cat === g.cat) }));
+---
+<Base title="Painting and Decorating Gallery, Brandon's Own Jobs | TrueLine Finishes" description="Photographs from TrueLine Finishes' own painting and decorating jobs: bedrooms, living rooms, kitchens, hallways, stairs, exteriors, wallpaper and business premises." page="gallery">
+  <PageHero h1="Gallery of Brandon's Work" lead="Photographs from Brandon's own jobs, taken on site: preparation, protection and the finished rooms and exteriors." image={image('kitchen-hall-tiled-floor-0144')} />
+  <Reviews />
+  <BeforeAfter pairs={['bedroom', 'bathroom', 'gable', 'house']} />
+  {groups.map((g) => (
+    <section class="gl section" data-section="gallery">
+      <div class="container">
+        <h2 class="gl__h2">{g.h}</h2>
+        <ul class="gl__grid" data-gallery>
+          {g.list.map((im) => <li><button type="button" class="gl__shot" data-lightbox aria-label={`Open larger: ${im.alt}`}><img src={im.sm} data-full={im.src} alt={im.alt} width={im.width} height={im.height} loading="lazy" decoding="async" /></button></li>)}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <QuoteForm />
+</Base>
+<style>
+  .gl { padding: var(--section-pad-sm) 0 0; }
+  .gl__h2 { font-size: var(--fs-3xl); margin-bottom: var(--space-5); }
+  .gl__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+  .gl__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
+  .gl__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .gl__shot:hover img { transform: scale(1.04); }
+  .gl:last-of-type { padding-bottom: var(--section-pad); }
+  @media (max-width: 900px) { .gl__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .gl__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); } }
+</style>

@@ -1,0 +1,1616 @@
+{
+  "domain": "truelinefinishes.com",
+  "builtAt": "2026-11-04T23:19:31.227Z",
+  "stage": "geo (free — no API)",
+  "source": "GeoNames GB extract via data/uk-places.json (CC BY 4.0) — straight-line distance, not drive time; 8 named place(s) from nap.json townOrder.namedPlaces, each with its own source",
+  "base": {
+    "town": "Baildon",
+    "county": "Bradford",
+    "lat": 53.84711,
+    "lon": -1.78785,
+    "population": 15710
+  },
+  "townOrder": {
+    "scheme": "mixed",
+    "basis": "MIXED: 35 town(s) pinned by the operator — 1. Baildon, 2. Guiseley, 3. Menston, 4. Ilkley, 5. Shipley, 6. Otley, 7. Horsforth, 8. Bingley, 9. Saltaire, 10. Harden, 11. Haworth, 12. Wilsden, 13. Idle, 14. Burley in Wharfedale, 15. Yeadon, 16. Burley Woodhead, 17. Hawksworth, 18. Rawdon, 19. Leeds, 20. Skipton, 21. Wrose, 22. Pudsey, 23. Pool, 24. Headingley, 25. Meanwood, 26. Chapel Allerton, 27. Sowerby Bridge, 28. Batley, 29. Dewsbury, 30. Harrogate, 31. Knaresborough, 32. Holmfirth, 33. Ripon, 34. York, 35. Northallerton — publish first, in that exact order. Everything after them is proximity order: proximity to base (closest first); base = Baildon (Bradford); every settlement within 15 miles straight-line, EXCLUDING population under 1000; plus 5 town(s) the client named BEYOND the radius, pinned with townOrder.pinBeyondRadius: Knaresborough 17.1 mi, Holmfirth 19.2 mi, Ripon 22.6 mi, York 29.7 mi, Northallerton 36.9 mi; plus 8 place(s) the client named that the gazetteer does not hold, added by townOrder.namedPlaces with sourced coordinates and no population floor: Harden 3.4 mi, Idle 2.4 mi, Burley Woodhead 3.7 mi, Hawksworth 2.3 mi, Rawdon 4.3 mi, Wrose 1.8 mi, Headingley 8.7 mi, Meanwood 9.1 mi; then 1 town(s) the operator moved to the END of the first batch with townOrder.publishLast, kept in the plan and published after every other town of the first batch: Bradford; then LATER BATCH 2 (townOrder.laterBatches): 39 town(s) inside 20 miles that no earlier batch holds, EXCLUDING population under 1000, RESTRICTED to Bradford, Calderdale, Kirklees, Leeds, Wakefield, North Yorkshire, published after every town of the first batch",
+    "radiusMiles": 15,
+    "minPopulation": 1000,
+    "pinned": [
+      "Baildon",
+      "Guiseley",
+      "Menston",
+      "Ilkley",
+      "Shipley",
+      "Otley",
+      "Horsforth",
+      "Bingley",
+      "Saltaire",
+      "Harden",
+      "Haworth",
+      "Wilsden",
+      "Idle",
+      "Burley in Wharfedale",
+      "Yeadon",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Leeds",
+      "Skipton",
+      "Wrose",
+      "Pudsey",
+      "Pool",
+      "Headingley",
+      "Meanwood",
+      "Chapel Allerton",
+      "Sowerby Bridge",
+      "Batley",
+      "Dewsbury",
+      "Harrogate",
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton"
+    ],
+    "pinnedOver": "proximity",
+    "pinBeyondRadius": true,
+    "pinnedBeyondRadius": [
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton"
+    ],
+    "namedPlaces": [
+      "Harden",
+      "Idle",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Wrose",
+      "Headingley",
+      "Meanwood"
+    ],
+    "publishLast": [
+      "Bradford"
+    ],
+    "laterBatches": [
+      {
+        "batch": 2,
+        "radiusMiles": 20,
+        "minPopulation": 1000,
+        "counties": [
+          "Bradford",
+          "Calderdale",
+          "Kirklees",
+          "Leeds",
+          "Wakefield",
+          "North Yorkshire"
+        ],
+        "outsideCounties": 12,
+        "towns": 39
+      }
+    ]
+  },
+  "counts": {
+    "considered": 5321,
+    "inRadius": 78,
+    "belowFloor": 6,
+    "duplicateNames": 0,
+    "outsideCounties": 0
+  },
+  "towns": [
+    {
+      "town": "Baildon",
+      "county": "Bradford",
+      "distanceMiles": 0,
+      "population": 15710,
+      "publishOrder": 1,
+      "isBase": true,
+      "orderRationale": "PINNED to position 1 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 1: base town — the operator's own patch, distance 0 miles",
+      "pinned": {
+        "position": 1,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 1,
+        "computedRationale": "base town — the operator's own patch, distance 0 miles"
+      }
+    },
+    {
+      "town": "Guiseley",
+      "county": "Leeds",
+      "distanceMiles": 3.7,
+      "population": 21000,
+      "publishOrder": 2,
+      "isBase": false,
+      "orderRationale": "PINNED to position 2 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 11: proximity to base (Baildon) — 3.7 miles straight-line, population 21000",
+      "pinned": {
+        "position": 2,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 11,
+        "computedRationale": "proximity to base (Baildon) — 3.7 miles straight-line, population 21000"
+      }
+    },
+    {
+      "town": "Menston",
+      "county": "Bradford",
+      "distanceMiles": 3.5,
+      "population": 4764,
+      "publishOrder": 3,
+      "isBase": false,
+      "orderRationale": "PINNED to position 3 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 10: proximity to base (Baildon) — 3.5 miles straight-line, population 4764",
+      "pinned": {
+        "position": 3,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 10,
+        "computedRationale": "proximity to base (Baildon) — 3.5 miles straight-line, population 4764"
+      }
+    },
+    {
+      "town": "Ilkley",
+      "county": "Bradford",
+      "distanceMiles": 5.5,
+      "population": 14809,
+      "publishOrder": 4,
+      "isBase": false,
+      "orderRationale": "PINNED to position 4 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 20: proximity to base (Baildon) — 5.5 miles straight-line, population 14809",
+      "pinned": {
+        "position": 4,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 20,
+        "computedRationale": "proximity to base (Baildon) — 5.5 miles straight-line, population 14809"
+      }
+    },
+    {
+      "town": "Shipley",
+      "county": "Bradford",
+      "distanceMiles": 1.3,
+      "population": 28544,
+      "publishOrder": 5,
+      "isBase": false,
+      "orderRationale": "PINNED to position 5 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 3: proximity to base (Baildon) — 1.3 miles straight-line, population 28544",
+      "pinned": {
+        "position": 5,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 3,
+        "computedRationale": "proximity to base (Baildon) — 1.3 miles straight-line, population 28544"
+      }
+    },
+    {
+      "town": "Otley",
+      "county": "Leeds",
+      "distanceMiles": 5.6,
+      "population": 14668,
+      "publishOrder": 6,
+      "isBase": false,
+      "orderRationale": "PINNED to position 6 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 21: proximity to base (Baildon) — 5.6 miles straight-line, population 14668",
+      "pinned": {
+        "position": 6,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 21,
+        "computedRationale": "proximity to base (Baildon) — 5.6 miles straight-line, population 14668"
+      }
+    },
+    {
+      "town": "Horsforth",
+      "county": "Leeds",
+      "distanceMiles": 6.1,
+      "population": 19350,
+      "publishOrder": 7,
+      "isBase": false,
+      "orderRationale": "PINNED to position 7 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 22: proximity to base (Baildon) — 6.1 miles straight-line, population 19350",
+      "pinned": {
+        "position": 7,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 22,
+        "computedRationale": "proximity to base (Baildon) — 6.1 miles straight-line, population 19350"
+      }
+    },
+    {
+      "town": "Bingley",
+      "county": "Bradford",
+      "distanceMiles": 2.1,
+      "population": 18040,
+      "publishOrder": 8,
+      "isBase": false,
+      "orderRationale": "PINNED to position 8 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 5: proximity to base (Baildon) — 2.1 miles straight-line, population 18040",
+      "pinned": {
+        "position": 8,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 5,
+        "computedRationale": "proximity to base (Baildon) — 2.1 miles straight-line, population 18040"
+      }
+    },
+    {
+      "town": "Saltaire",
+      "county": "Bradford",
+      "distanceMiles": 1,
+      "population": 9000,
+      "publishOrder": 9,
+      "isBase": false,
+      "orderRationale": "PINNED to position 9 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 2: proximity to base (Baildon) — 1 miles straight-line, population 9000",
+      "pinned": {
+        "position": 9,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 2,
+        "computedRationale": "proximity to base (Baildon) — 1 miles straight-line, population 9000"
+      }
+    },
+    {
+      "town": "Harden",
+      "county": "Bradford",
+      "distanceMiles": 3.4,
+      "population": null,
+      "publishOrder": 10,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 10 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 9: proximity to base (Baildon) — 3.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 10,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 9,
+        "computedRationale": "proximity to base (Baildon) — 3.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Haworth",
+      "county": "Bradford",
+      "distanceMiles": 6.7,
+      "population": 6213,
+      "publishOrder": 11,
+      "isBase": false,
+      "orderRationale": "PINNED to position 11 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 25: proximity to base (Baildon) — 6.7 miles straight-line, population 6213",
+      "pinned": {
+        "position": 11,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 25,
+        "computedRationale": "proximity to base (Baildon) — 6.7 miles straight-line, population 6213"
+      }
+    },
+    {
+      "town": "Wilsden",
+      "county": "Bradford",
+      "distanceMiles": 3.4,
+      "population": 5524,
+      "publishOrder": 12,
+      "isBase": false,
+      "orderRationale": "PINNED to position 12 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 8: proximity to base (Baildon) — 3.4 miles straight-line, population 5524",
+      "pinned": {
+        "position": 12,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 8,
+        "computedRationale": "proximity to base (Baildon) — 3.4 miles straight-line, population 5524"
+      }
+    },
+    {
+      "town": "Idle",
+      "county": "Bradford",
+      "distanceMiles": 2.4,
+      "population": null,
+      "publishOrder": 13,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 13 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 7: proximity to base (Baildon) — 2.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 13,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 7,
+        "computedRationale": "proximity to base (Baildon) — 2.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Burley in Wharfedale",
+      "county": "Bradford",
+      "distanceMiles": 4.5,
+      "population": 5996,
+      "publishOrder": 14,
+      "isBase": false,
+      "orderRationale": "PINNED to position 14 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 16: proximity to base (Baildon) — 4.5 miles straight-line, population 5996",
+      "pinned": {
+        "position": 14,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 16,
+        "computedRationale": "proximity to base (Baildon) — 4.5 miles straight-line, population 5996"
+      }
+    },
+    {
+      "town": "Yeadon",
+      "county": "Leeds",
+      "distanceMiles": 4.3,
+      "population": 37379,
+      "publishOrder": 15,
+      "isBase": false,
+      "orderRationale": "PINNED to position 15 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 14: proximity to base (Baildon) — 4.3 miles straight-line, population 37379",
+      "pinned": {
+        "position": 15,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 14,
+        "computedRationale": "proximity to base (Baildon) — 4.3 miles straight-line, population 37379"
+      }
+    },
+    {
+      "town": "Burley Woodhead",
+      "county": "Bradford",
+      "distanceMiles": 3.7,
+      "population": null,
+      "publishOrder": 16,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 16 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 12: proximity to base (Baildon) — 3.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 16,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 12,
+        "computedRationale": "proximity to base (Baildon) — 3.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Hawksworth",
+      "county": "Leeds",
+      "distanceMiles": 2.3,
+      "population": null,
+      "publishOrder": 17,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 17 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 6: proximity to base (Baildon) — 2.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 17,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 6,
+        "computedRationale": "proximity to base (Baildon) — 2.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Rawdon",
+      "county": "Leeds",
+      "distanceMiles": 4.3,
+      "population": null,
+      "publishOrder": 18,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 18 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 15: proximity to base (Baildon) — 4.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 18,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 15,
+        "computedRationale": "proximity to base (Baildon) — 4.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Leeds",
+      "county": "Leeds",
+      "distanceMiles": 10.4,
+      "population": 536280,
+      "publishOrder": 19,
+      "isBase": false,
+      "orderRationale": "PINNED to position 19 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 44: proximity to base (Baildon) — 10.4 miles straight-line, population 536280",
+      "pinned": {
+        "position": 19,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 44,
+        "computedRationale": "proximity to base (Baildon) — 10.4 miles straight-line, population 536280"
+      }
+    },
+    {
+      "town": "Skipton",
+      "county": "North Yorkshire",
+      "distanceMiles": 12.2,
+      "population": 14623,
+      "publishOrder": 20,
+      "isBase": false,
+      "orderRationale": "PINNED to position 20 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 55: proximity to base (Baildon) — 12.2 miles straight-line, population 14623",
+      "pinned": {
+        "position": 20,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 55,
+        "computedRationale": "proximity to base (Baildon) — 12.2 miles straight-line, population 14623"
+      }
+    },
+    {
+      "town": "Wrose",
+      "county": "Bradford",
+      "distanceMiles": 1.8,
+      "population": null,
+      "publishOrder": 21,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 21 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 4: proximity to base (Baildon) — 1.8 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 21,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 4,
+        "computedRationale": "proximity to base (Baildon) — 1.8 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Pudsey",
+      "county": "Leeds",
+      "distanceMiles": 6.3,
+      "population": 25393,
+      "publishOrder": 22,
+      "isBase": false,
+      "orderRationale": "PINNED to position 22 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 24: proximity to base (Baildon) — 6.3 miles straight-line, population 25393",
+      "pinned": {
+        "position": 22,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 24,
+        "computedRationale": "proximity to base (Baildon) — 6.3 miles straight-line, population 25393"
+      }
+    },
+    {
+      "town": "Pool",
+      "county": "Leeds",
+      "distanceMiles": 7.9,
+      "population": 1935,
+      "publishOrder": 23,
+      "isBase": false,
+      "orderRationale": "PINNED to position 23 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 31: proximity to base (Baildon) — 7.9 miles straight-line, population 1935",
+      "pinned": {
+        "position": 23,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 31,
+        "computedRationale": "proximity to base (Baildon) — 7.9 miles straight-line, population 1935"
+      }
+    },
+    {
+      "town": "Headingley",
+      "county": "Leeds",
+      "distanceMiles": 8.7,
+      "population": null,
+      "publishOrder": 24,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured",
+      "orderRationale": "PINNED to position 24 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 32: proximity to base (Baildon) — 8.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 24,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 32,
+        "computedRationale": "proximity to base (Baildon) — 8.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Meanwood",
+      "county": "Leeds",
+      "distanceMiles": 9.1,
+      "population": null,
+      "publishOrder": 25,
+      "isBase": false,
+      "named": true,
+      "source": "GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)",
+      "orderRationale": "PINNED to position 25 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 35: proximity to base (Baildon) — 9.1 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 25,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 35,
+        "computedRationale": "proximity to base (Baildon) — 9.1 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Chapel Allerton",
+      "county": "Leeds",
+      "distanceMiles": 10.2,
+      "population": 18206,
+      "publishOrder": 26,
+      "isBase": false,
+      "orderRationale": "PINNED to position 26 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 42: proximity to base (Baildon) — 10.2 miles straight-line, population 18206",
+      "pinned": {
+        "position": 26,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 42,
+        "computedRationale": "proximity to base (Baildon) — 10.2 miles straight-line, population 18206"
+      }
+    },
+    {
+      "town": "Sowerby Bridge",
+      "county": "Calderdale",
+      "distanceMiles": 10.8,
+      "population": 9948,
+      "publishOrder": 27,
+      "isBase": false,
+      "orderRationale": "PINNED to position 27 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 49: proximity to base (Baildon) — 10.8 miles straight-line, population 9948",
+      "pinned": {
+        "position": 27,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 49,
+        "computedRationale": "proximity to base (Baildon) — 10.8 miles straight-line, population 9948"
+      }
+    },
+    {
+      "town": "Batley",
+      "county": "Kirklees",
+      "distanceMiles": 11.8,
+      "population": 39013,
+      "publishOrder": 28,
+      "isBase": false,
+      "orderRationale": "PINNED to position 28 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 53: proximity to base (Baildon) — 11.8 miles straight-line, population 39013",
+      "pinned": {
+        "position": 28,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 53,
+        "computedRationale": "proximity to base (Baildon) — 11.8 miles straight-line, population 39013"
+      }
+    },
+    {
+      "town": "Dewsbury",
+      "county": "Kirklees",
+      "distanceMiles": 12.6,
+      "population": 61035,
+      "publishOrder": 29,
+      "isBase": false,
+      "orderRationale": "PINNED to position 29 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 58: proximity to base (Baildon) — 12.6 miles straight-line, population 61035",
+      "pinned": {
+        "position": 29,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 58,
+        "computedRationale": "proximity to base (Baildon) — 12.6 miles straight-line, population 61035"
+      }
+    },
+    {
+      "town": "Harrogate",
+      "county": "North Yorkshire",
+      "distanceMiles": 14.2,
+      "population": 89060,
+      "publishOrder": 30,
+      "isBase": false,
+      "orderRationale": "PINNED to position 30 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 67: proximity to base (Baildon) — 14.2 miles straight-line, population 89060",
+      "pinned": {
+        "position": 30,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 67,
+        "computedRationale": "proximity to base (Baildon) — 14.2 miles straight-line, population 89060"
+      }
+    },
+    {
+      "town": "Knaresborough",
+      "county": "North Yorkshire",
+      "distanceMiles": 17.1,
+      "population": 14740,
+      "publishOrder": 31,
+      "isBase": false,
+      "beyondRadius": true,
+      "orderRationale": "PINNED to position 31 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 73: named by the client and pinned by the operator — 17.1 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 31,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 73,
+        "computedRationale": "named by the client and pinned by the operator — 17.1 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Holmfirth",
+      "county": "Kirklees",
+      "distanceMiles": 19.2,
+      "population": 1980,
+      "publishOrder": 32,
+      "isBase": false,
+      "beyondRadius": true,
+      "orderRationale": "PINNED to position 32 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 74: named by the client and pinned by the operator — 19.2 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 32,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 74,
+        "computedRationale": "named by the client and pinned by the operator — 19.2 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Ripon",
+      "county": "North Yorkshire",
+      "distanceMiles": 22.6,
+      "population": 16363,
+      "publishOrder": 33,
+      "isBase": false,
+      "beyondRadius": true,
+      "orderRationale": "PINNED to position 33 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 75: named by the client and pinned by the operator — 22.6 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 33,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 75,
+        "computedRationale": "named by the client and pinned by the operator — 22.6 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "York",
+      "county": "York",
+      "distanceMiles": 29.7,
+      "population": 156135,
+      "publishOrder": 34,
+      "isBase": false,
+      "beyondRadius": true,
+      "orderRationale": "PINNED to position 34 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 76: named by the client and pinned by the operator — 29.7 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 34,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 76,
+        "computedRationale": "named by the client and pinned by the operator — 29.7 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Northallerton",
+      "county": "North Yorkshire",
+      "distanceMiles": 36.9,
+      "population": 16832,
+      "publishOrder": 35,
+      "isBase": false,
+      "beyondRadius": true,
+      "orderRationale": "PINNED to position 35 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 77: named by the client and pinned by the operator — 36.9 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 35,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 77,
+        "computedRationale": "named by the client and pinned by the operator — 36.9 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Cullingworth",
+      "county": "Bradford",
+      "distanceMiles": 4.7,
+      "population": 2596,
+      "publishOrder": 36,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 4.7 miles straight-line, population 2596"
+    },
+    {
+      "town": "Keighley",
+      "county": "Bradford",
+      "distanceMiles": 5,
+      "population": 50171,
+      "publishOrder": 37,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 5 miles straight-line, population 50171"
+    },
+    {
+      "town": "Denholme",
+      "county": "Bradford",
+      "distanceMiles": 5.4,
+      "population": 2715,
+      "publishOrder": 38,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 5.4 miles straight-line, population 2715"
+    },
+    {
+      "town": "Queensbury",
+      "county": "Bradford",
+      "distanceMiles": 6.1,
+      "population": 8912,
+      "publishOrder": 39,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 6.1 miles straight-line, population 8912"
+    },
+    {
+      "town": "Steeton",
+      "county": "Bradford",
+      "distanceMiles": 7.1,
+      "population": 4196,
+      "publishOrder": 40,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 7.1 miles straight-line, population 4196"
+    },
+    {
+      "town": "Oxenhope",
+      "county": "Bradford",
+      "distanceMiles": 7.1,
+      "population": 1872,
+      "publishOrder": 41,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 7.1 miles straight-line, population 1872"
+    },
+    {
+      "town": "Bramhope",
+      "county": "Leeds",
+      "distanceMiles": 7.5,
+      "population": 3382,
+      "publishOrder": 42,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 7.5 miles straight-line, population 3382"
+    },
+    {
+      "town": "Silsden",
+      "county": "Bradford",
+      "distanceMiles": 7.7,
+      "population": 7912,
+      "publishOrder": 43,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 7.7 miles straight-line, population 7912"
+    },
+    {
+      "town": "Addingham",
+      "county": "Bradford",
+      "distanceMiles": 7.8,
+      "population": 3730,
+      "publishOrder": 44,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 7.8 miles straight-line, population 3730"
+    },
+    {
+      "town": "Cleckheaton",
+      "county": "Kirklees",
+      "distanceMiles": 9,
+      "population": 27393,
+      "publishOrder": 45,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9 miles straight-line, population 27393"
+    },
+    {
+      "town": "Cross Hills",
+      "county": "North Yorkshire",
+      "distanceMiles": 9,
+      "population": 11731,
+      "publishOrder": 46,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9 miles straight-line, population 11731"
+    },
+    {
+      "town": "Stainburn",
+      "county": "North Yorkshire",
+      "distanceMiles": 9.2,
+      "population": 1666,
+      "publishOrder": 47,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9.2 miles straight-line, population 1666"
+    },
+    {
+      "town": "Halifax",
+      "county": "Calderdale",
+      "distanceMiles": 9.4,
+      "population": 82624,
+      "publishOrder": 48,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9.4 miles straight-line, population 82624"
+    },
+    {
+      "town": "Glusburn",
+      "county": "North Yorkshire",
+      "distanceMiles": 9.4,
+      "population": 7425,
+      "publishOrder": 49,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9.4 miles straight-line, population 7425"
+    },
+    {
+      "town": "Southowram",
+      "county": "Calderdale",
+      "distanceMiles": 9.7,
+      "population": 2003,
+      "publishOrder": 50,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9.7 miles straight-line, population 2003"
+    },
+    {
+      "town": "Brighouse",
+      "county": "Calderdale",
+      "distanceMiles": 9.9,
+      "population": 32872,
+      "publishOrder": 51,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 9.9 miles straight-line, population 32872"
+    },
+    {
+      "town": "Holbeck",
+      "county": "Leeds",
+      "distanceMiles": 10,
+      "population": 5505,
+      "publishOrder": 52,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10 miles straight-line, population 5505"
+    },
+    {
+      "town": "Low Bradley",
+      "county": "North Yorkshire",
+      "distanceMiles": 10.3,
+      "population": 1244,
+      "publishOrder": 53,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10.3 miles straight-line, population 1244"
+    },
+    {
+      "town": "Liversedge",
+      "county": "Kirklees",
+      "distanceMiles": 10.5,
+      "population": 19420,
+      "publishOrder": 54,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10.5 miles straight-line, population 19420"
+    },
+    {
+      "town": "Morley",
+      "county": "Leeds",
+      "distanceMiles": 10.7,
+      "population": 57385,
+      "publishOrder": 55,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 57385"
+    },
+    {
+      "town": "Heckmondwike",
+      "county": "Kirklees",
+      "distanceMiles": 10.7,
+      "population": 18149,
+      "publishOrder": 56,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 18149"
+    },
+    {
+      "town": "Rastrick",
+      "county": "Calderdale",
+      "distanceMiles": 10.7,
+      "population": 11351,
+      "publishOrder": 57,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 11351"
+    },
+    {
+      "town": "Luddenden Foot",
+      "county": "Calderdale",
+      "distanceMiles": 11,
+      "population": 2190,
+      "publishOrder": 58,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 11 miles straight-line, population 2190"
+    },
+    {
+      "town": "Mytholmroyd",
+      "county": "Calderdale",
+      "distanceMiles": 11.3,
+      "population": 3949,
+      "publishOrder": 59,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 11.3 miles straight-line, population 3949"
+    },
+    {
+      "town": "Elland",
+      "county": "Calderdale",
+      "distanceMiles": 11.4,
+      "population": 15625,
+      "publishOrder": 60,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 11.4 miles straight-line, population 15625"
+    },
+    {
+      "town": "Hebden Bridge",
+      "county": "Calderdale",
+      "distanceMiles": 11.8,
+      "population": 4235,
+      "publishOrder": 61,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 11.8 miles straight-line, population 4235"
+    },
+    {
+      "town": "Embsay",
+      "county": "North Yorkshire",
+      "distanceMiles": 12.2,
+      "population": 1679,
+      "publishOrder": 62,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 12.2 miles straight-line, population 1679"
+    },
+    {
+      "town": "Holywell Green",
+      "county": "Calderdale",
+      "distanceMiles": 12.4,
+      "population": 3178,
+      "publishOrder": 63,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 12.4 miles straight-line, population 3178"
+    },
+    {
+      "town": "Mirfield",
+      "county": "Kirklees",
+      "distanceMiles": 12.6,
+      "population": 18800,
+      "publishOrder": 64,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 12.6 miles straight-line, population 18800"
+    },
+    {
+      "town": "Pannal",
+      "county": "North Yorkshire",
+      "distanceMiles": 12.9,
+      "population": 2219,
+      "publishOrder": 65,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 12.9 miles straight-line, population 2219"
+    },
+    {
+      "town": "Shadwell",
+      "county": "Leeds",
+      "distanceMiles": 12.9,
+      "population": 1352,
+      "publishOrder": 66,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 12.9 miles straight-line, population 1352"
+    },
+    {
+      "town": "Barkisland",
+      "county": "Calderdale",
+      "distanceMiles": 13,
+      "population": 1004,
+      "publishOrder": 67,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 13 miles straight-line, population 1004"
+    },
+    {
+      "town": "Ripponden",
+      "county": "Calderdale",
+      "distanceMiles": 13.5,
+      "population": 4665,
+      "publishOrder": 68,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 13.5 miles straight-line, population 4665"
+    },
+    {
+      "town": "Huddersfield",
+      "county": "Kirklees",
+      "distanceMiles": 13.7,
+      "population": 149017,
+      "publishOrder": 69,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 13.7 miles straight-line, population 149017"
+    },
+    {
+      "town": "Scarcroft",
+      "county": "Leeds",
+      "distanceMiles": 13.8,
+      "population": 1194,
+      "publishOrder": 70,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 13.8 miles straight-line, population 1194"
+    },
+    {
+      "town": "East Keswick",
+      "county": "Leeds",
+      "distanceMiles": 14.1,
+      "population": 1224,
+      "publishOrder": 71,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.1 miles straight-line, population 1224"
+    },
+    {
+      "town": "Bardsey",
+      "county": "Leeds",
+      "distanceMiles": 14.2,
+      "population": 2876,
+      "publishOrder": 72,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.2 miles straight-line, population 2876"
+    },
+    {
+      "town": "Ossett",
+      "county": "Wakefield",
+      "distanceMiles": 14.3,
+      "population": 21861,
+      "publishOrder": 73,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.3 miles straight-line, population 21861"
+    },
+    {
+      "town": "Lofthouse",
+      "county": "Leeds",
+      "distanceMiles": 14.4,
+      "population": 23458,
+      "publishOrder": 74,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.4 miles straight-line, population 23458"
+    },
+    {
+      "town": "Thorner",
+      "county": "Leeds",
+      "distanceMiles": 14.7,
+      "population": 1408,
+      "publishOrder": 75,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.7 miles straight-line, population 1408"
+    },
+    {
+      "town": "Scholes",
+      "county": "Leeds",
+      "distanceMiles": 14.8,
+      "population": 2266,
+      "publishOrder": 76,
+      "isBase": false,
+      "orderRationale": "proximity to base (Baildon) — 14.8 miles straight-line, population 2266"
+    },
+    {
+      "town": "Bradford",
+      "county": "Bradford",
+      "distanceMiles": 4,
+      "population": 366187,
+      "publishOrder": 77,
+      "isBase": false,
+      "orderRationale": "PUBLISHES LAST by the operator's ruling (townOrder.publishLast, D-2026-11-04-11): kept in the plan, and published after every other town of the first batch; the later batches (townOrder.laterBatches) follow it. Computed order was 36: proximity to base (Baildon) — 4 miles straight-line, population 366187",
+      "publishLast": {
+        "position": 77,
+        "of": 1,
+        "by": "operator",
+        "computedOrder": 36,
+        "computedRationale": "proximity to base (Baildon) — 4 miles straight-line, population 366187"
+      }
+    },
+    {
+      "town": "Todmorden",
+      "county": "Calderdale",
+      "distanceMiles": 15.6,
+      "population": 11690,
+      "publishOrder": 78,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 11690",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Linthwaite",
+      "county": "Kirklees",
+      "distanceMiles": 15.6,
+      "population": 3835,
+      "publishOrder": 79,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 3835",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Middlestown",
+      "county": "Wakefield",
+      "distanceMiles": 15.6,
+      "population": 2402,
+      "publishOrder": 80,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 2402",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Spofforth",
+      "county": "North Yorkshire",
+      "distanceMiles": 15.7,
+      "population": 1169,
+      "publishOrder": 81,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.7 miles straight-line, population 1169",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Horbury",
+      "county": "Wakefield",
+      "distanceMiles": 15.9,
+      "population": 10225,
+      "publishOrder": 82,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.9 miles straight-line, population 10225",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Collingham",
+      "county": "Leeds",
+      "distanceMiles": 16,
+      "population": 3033,
+      "publishOrder": 83,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16 miles straight-line, population 3033",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Gargrave",
+      "county": "North Yorkshire",
+      "distanceMiles": 16,
+      "population": 1755,
+      "publishOrder": 84,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16 miles straight-line, population 1755",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Swillington",
+      "county": "Leeds",
+      "distanceMiles": 16.1,
+      "population": 3088,
+      "publishOrder": 85,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.1 miles straight-line, population 3088",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Flockton",
+      "county": "Kirklees",
+      "distanceMiles": 16.2,
+      "population": 1368,
+      "publishOrder": 86,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.2 miles straight-line, population 1368",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Blackmoorfoot",
+      "county": "Kirklees",
+      "distanceMiles": 16.3,
+      "population": 3835,
+      "publishOrder": 87,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.3 miles straight-line, population 3835",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Wakefield",
+      "county": "Wakefield",
+      "distanceMiles": 16.4,
+      "population": 109766,
+      "publishOrder": 88,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.4 miles straight-line, population 109766",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Cornholme",
+      "county": "Calderdale",
+      "distanceMiles": 16.4,
+      "population": 1690,
+      "publishOrder": 89,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.4 miles straight-line, population 1690",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Walsden",
+      "county": "Calderdale",
+      "distanceMiles": 16.6,
+      "population": 2000,
+      "publishOrder": 90,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.6 miles straight-line, population 2000",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Pateley Bridge",
+      "county": "North Yorkshire",
+      "distanceMiles": 16.6,
+      "population": 1432,
+      "publishOrder": 91,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.6 miles straight-line, population 1432",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Kirkburton",
+      "county": "Kirklees",
+      "distanceMiles": 16.7,
+      "population": 3786,
+      "publishOrder": 92,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.7 miles straight-line, population 3786",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Garforth",
+      "county": "Leeds",
+      "distanceMiles": 17,
+      "population": 14838,
+      "publishOrder": 93,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17 miles straight-line, population 14838",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Wetherby",
+      "county": "Leeds",
+      "distanceMiles": 17.3,
+      "population": 13572,
+      "publishOrder": 94,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.3 miles straight-line, population 13572",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Emley",
+      "county": "Kirklees",
+      "distanceMiles": 17.3,
+      "population": 1497,
+      "publishOrder": 95,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.3 miles straight-line, population 1497",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Meltham Mills",
+      "county": "Kirklees",
+      "distanceMiles": 17.6,
+      "population": 9000,
+      "publishOrder": 96,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.6 miles straight-line, population 9000",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Shelley",
+      "county": "Kirklees",
+      "distanceMiles": 17.6,
+      "population": 5359,
+      "publishOrder": 97,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.6 miles straight-line, population 5359",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Meltham",
+      "county": "Kirklees",
+      "distanceMiles": 17.7,
+      "population": 7836,
+      "publishOrder": 98,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 7836",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Grassington",
+      "county": "North Yorkshire",
+      "distanceMiles": 17.7,
+      "population": 1792,
+      "publishOrder": 99,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 1792",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Methley",
+      "county": "Leeds",
+      "distanceMiles": 17.7,
+      "population": 1184,
+      "publishOrder": 100,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 1184",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Bramham",
+      "county": "Leeds",
+      "distanceMiles": 17.8,
+      "population": 1650,
+      "publishOrder": 101,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.8 miles straight-line, population 1650",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Kippax",
+      "county": "Leeds",
+      "distanceMiles": 17.9,
+      "population": 15965,
+      "publishOrder": 102,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.9 miles straight-line, population 15965",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Marsden",
+      "county": "Kirklees",
+      "distanceMiles": 17.9,
+      "population": 3889,
+      "publishOrder": 103,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.9 miles straight-line, population 3889",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Aberford",
+      "county": "Leeds",
+      "distanceMiles": 18.2,
+      "population": 1503,
+      "publishOrder": 104,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.2 miles straight-line, population 1503",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Boston Spa",
+      "county": "Leeds",
+      "distanceMiles": 18.5,
+      "population": 6052,
+      "publishOrder": 105,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.5 miles straight-line, population 6052",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Shepley",
+      "county": "Kirklees",
+      "distanceMiles": 18.5,
+      "population": 5444,
+      "publishOrder": 106,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.5 miles straight-line, population 5444",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Skelmanthorpe",
+      "county": "Kirklees",
+      "distanceMiles": 18.6,
+      "population": 4549,
+      "publishOrder": 107,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.6 miles straight-line, population 4549",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "New Mill",
+      "county": "Kirklees",
+      "distanceMiles": 18.9,
+      "population": 9197,
+      "publishOrder": 108,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.9 miles straight-line, population 9197",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Clayton West",
+      "county": "Kirklees",
+      "distanceMiles": 18.9,
+      "population": 8109,
+      "publishOrder": 109,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.9 miles straight-line, population 8109",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Scissett",
+      "county": "Kirklees",
+      "distanceMiles": 19,
+      "population": 1324,
+      "publishOrder": 110,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19 miles straight-line, population 1324",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Upper Cumberworth",
+      "county": "Kirklees",
+      "distanceMiles": 19.2,
+      "population": 1122,
+      "publishOrder": 111,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.2 miles straight-line, population 1122",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Castleford",
+      "county": "Wakefield",
+      "distanceMiles": 19.3,
+      "population": 45106,
+      "publishOrder": 112,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.3 miles straight-line, population 45106",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Sharlston",
+      "county": "Wakefield",
+      "distanceMiles": 19.6,
+      "population": 4028,
+      "publishOrder": 113,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.6 miles straight-line, population 4028",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Thorp Arch",
+      "county": "Leeds",
+      "distanceMiles": 19.6,
+      "population": 1505,
+      "publishOrder": 114,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.6 miles straight-line, population 1505",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Crofton",
+      "county": "Wakefield",
+      "distanceMiles": 19.7,
+      "population": 5258,
+      "publishOrder": 115,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.7 miles straight-line, population 5258",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Denby Dale",
+      "county": "Kirklees",
+      "distanceMiles": 19.7,
+      "population": 3043,
+      "publishOrder": 116,
+      "isBase": false,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.7 miles straight-line, population 3043",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    }
+  ]
+}

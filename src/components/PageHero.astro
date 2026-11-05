@@ -1,63 +1,53 @@
 ---
 /**
- * INNER PAGE HERO (Electrix inner banner). Photograph under the green overlay,
- * then a boxed glass panel on the bottom edge: the H1 left; lead, breadcrumbs,
- * Quick Quote Online + call right; the slim white TrustIndex widget directly
- * under the CTA on every page (pass 2: it replaced the Google review link line).
+ * INNER PAGE HERO (template inner banner, in TrueLine's black band). H1 and lead left, the two
+ * CTAs (Quick Quote Online + Call Brandon) and the usable USPs under them; the page's own photo
+ * (Brandon's, from the pool) on the right. No breadcrumbs in heroes (build brief); articles carry
+ * their breadcrumbs under the hero instead.
  */
-import TiSlim from './TiSlim.astro';
+import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-interface Props { eyebrow?: string; h1: string; lead: string; image: { src: string; alt: string }; crumbs: { label: string; href?: string }[]; service?: string; showCta?: boolean }
-const { eyebrow, h1, lead, image, crumbs, service = '', showCta = true } = Astro.props;
+interface Props { h1: string; lead: string; image?: { src: string; alt: string; width: number; height: number }; showCta?: boolean; formless?: boolean }
+const { h1, lead, image, showCta = true, formless = false } = Astro.props;
 ---
-<section class="ph on-dark section-hero" data-section="hero">
-  <img class="ph__bg" src={image.src} alt="" width="1600" height="1000" fetchpriority="high" decoding="async" />
-  <div class="container">
-    <div class="ph__panel">
-      <div class="ph__left">
-        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-        <h1 class="ph__h1">{h1}</h1>
-      </div>
-      <div class="ph__right">
-        <p class="ph__lead">{lead}</p>
-        <nav class="ph__crumbs" aria-label="Breadcrumb">
-          <ol>
-            <li><a href="/">Home</a></li>
-            {crumbs.map((c) => <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>)}
-          </ol>
-        </nav>
-        {showCta && (
-          <div class="btn-row ph__cta">
-            <a href="#contact" class="btn btn-primary" data-cta="hero-quote" data-service={service || undefined}>Quick Quote Online</a>
-            <CallButton cta="hero-call" />
-          </div>
-        )}
-        <div class="ph__strip"><TiSlim where="hero" /></div>
-      </div>
+<section class:list={['ph on-dark section-hero', !image && 'ph--plain']} data-section="hero">
+  <div class="container ph__inner">
+    <div class="ph__copy">
+      <h1 class="ph__h1">{h1}</h1>
+      <p class="ph__lead">{lead}</p>
+      {showCta && (
+        <div class="btn-row ph__cta">
+          <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="hero-quote">Quick Quote Online</a>
+          <CallButton cta="hero-call" />
+        </div>
+      )}
+      <ul class="ph__usps">
+        <li><Icon name="check" size={18} /> Over eight years' experience</li>
+        <li><Icon name="check" size={18} /> Fully insured</li>
+        <li><Icon name="check" size={18} /> Free quotations</li>
+      </ul>
     </div>
+    {image && (
+      <div class="ph__img"><img src={image.src} alt={image.alt} width={image.width} height={image.height} fetchpriority="high" decoding="async" /></div>
+    )}
   </div>
 </section>
 
 <style>
-  .ph { position: relative; isolation: isolate; overflow: hidden; background: var(--bg-inverse-deep); color: var(--text-inverse-muted); padding-top: calc(var(--header-h) + var(--space-20)); }
-  .ph__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-  .ph::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-hero); }
-  .ph__panel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--space-8) var(--space-16); padding: var(--space-12) var(--space-12) var(--space-10); background: var(--glass); border-top: 1px solid var(--border-inverse); backdrop-filter: blur(2px); }
-  .ph__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); line-height: 1.12; }
-  .ph__lead { font-size: var(--fs-lg); margin-bottom: var(--space-5); }
-  .ph__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-inverse); }
-  .ph__crumbs a:hover { color: var(--accent-on-dark); }
-  .ph__crumbs [aria-current] { color: var(--accent-on-dark); }
-  .ph__cta { margin-top: var(--space-6); }
-  /* REV3 follow-up: desktop only, same as the home hero. */
-  .ph__strip { margin-top: var(--space-5); }
-  /* Mobile: collapsed to nothing and clipped, NOT display:none. TrustIndex only ever
-     renders this widget if its box is laid out in the first screen, and this slot is
-     the loader host that TiSlim copies into the form and footer strips. */
-  @media (max-width: 1023px) { .ph__strip { height: 0; margin: 0; overflow: hidden; } }
+  .ph { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-16); }
+  .ph__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
+  .ph--plain .ph__inner { grid-template-columns: minmax(0, 1fr); max-width: var(--narrow); margin-inline: 0; }
+  .ph__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-5); }
+  .ph__lead { font-size: var(--fs-lg); max-width: 58ch; }
+  .ph__cta { margin-top: var(--space-8); }
+  .ph__usps { list-style: none; padding: 0; margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--text-inverse); font-size: var(--fs-md); }
+  .ph__usps li { display: flex; gap: var(--space-2); align-items: center; }
+  .ph__usps :global(.icon) { color: var(--accent-on-dark); }
+  .ph__img { border-top: 3px solid var(--accent-on-dark); }
+  .ph__img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
   @media (max-width: 900px) {
-    .ph { padding-top: calc(var(--header-h) + var(--space-8)); }
-    .ph__panel { grid-template-columns: 1fr; padding: var(--space-8) var(--space-5); }
+    .ph { padding-top: calc(var(--header-h) + var(--space-8)); padding-bottom: var(--space-10); }
+    .ph__inner { grid-template-columns: 1fr; gap: var(--space-8); }
     .ph__h1 { font-size: var(--fs-4xl); }
   }
   @media (max-width: 640px) {

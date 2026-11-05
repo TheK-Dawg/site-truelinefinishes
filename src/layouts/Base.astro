@@ -1,16 +1,19 @@
 ---
 /**
- * Root layout. Head (noindex interlock, canonical, OG, favicons), the
- * LocalBusiness + WebSite + WebPage @graph plus page-level schema, header,
- * footer, the one root Lightbox, the mobile sticky bar, the TrustIndex corner
- * widget, motion, and the Quick Quote anchor law.
+ * Root layout. Head (robots, canonical, OG, favicons), the HousePainter + WebSite + WebPage
+ * @graph plus page-level schema, header, footer, the one root Lightbox, the mobile sticky bar,
+ * the mobile WhatsApp button, motion, and the Quick Quote anchor law.
+ * SCHEMA (plan, Contact): HousePainter with the name, phone, URL, the five services, areaServed
+ * = the plan's towns, openingHoursSpecification (Mo-Fr 07:00-19:00, Sa-Su 08:00-18:00),
+ * sameAs the YouTube channel, hasMap the Google listing. NO address (addressDisplay "no").
  */
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
 import StickyCtaBar from '../components/StickyCtaBar.astro';
-import { business, towns, services, seo, facts, slots } from '../data/site';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { business, towns, services, seo, hoursSchema } from '../data/site';
 import { INDEXABLE } from '../data/launch';
 import { markdownPath } from '../lib/md-path.js';
 
@@ -21,36 +24,36 @@ interface Props {
   utility?: boolean; // thank-you / 404: no sticky bar, always noindex
   schema?: Record<string, unknown>[];
   ogImage?: string;
+  noindex?: boolean; // articles awaiting Brandon's review
 }
-const { title = seo.title, description = seo.description, page = 'page', utility = false, schema = [], ogImage = '/brand/og-image.png' } = Astro.props;
+const { title = seo.title, description = seo.description, page = 'page', utility = false, schema = [], ogImage = '/brand/og-image.png', noindex = false } = Astro.props;
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
-const robots = INDEXABLE && !utility ? 'index, follow' : 'noindex, nofollow';
+const robots = INDEXABLE && !utility && !noindex ? 'index, follow' : 'noindex, nofollow';
 // The page's markdown twin (written post-build by the ai-files integration).
 const markdownUrl = new URL(markdownPath(Astro.url.pathname), Astro.site).href;
 
 const graph: Record<string, unknown>[] = [
   {
-    '@type': ['LocalBusiness', 'HomeAndConstructionBusiness', 'GeneralContractor'],
+    '@type': 'HousePainter',
     '@id': `${business.url}/#business`,
     name: business.name,
     description: seo.description,
     url: `${business.url}/`,
-    telephone: '+447853945013',
+    telephone: business.phoneE164,
     email: business.email,
-    image: new URL('/brand/logo-full.png', business.url).href,
-    logo: new URL('/brand/logo-full.png', business.url).href,
+    image: new URL('/brand/og-image.png', business.url).href,
+    logo: new URL('/brand/logo.png', business.url).href,
     founder: { '@type': 'Person', name: business.owner },
-    address: { '@type': 'PostalAddress', addressLocality: business.baseTown, addressRegion: business.region, postalCode: business.postcodeArea, addressCountry: 'GB' },
-    geo: { '@type': 'GeoCoordinates', latitude: business.geo.lat, longitude: business.geo.lng },
-    openingHours: 'Mo-Fr 08:00-17:00',
-    areaServed: towns.map((t) => ({ '@type': 'Place', name: `${t.name}, Hampshire` })),
-    knowsAbout: [...services.map((s) => s.name), 'Natural stone'],
-    slogan: facts.guarantee,
+    openingHoursSpecification: hoursSchema,
+    areaServed: towns.map((t) => ({ '@type': 'Place', name: t.name })),
+    hasMap: business.gbp.cidUrl,
+    sameAs: [business.youtube, business.gbp.cidUrl],
+    knowsAbout: services.map((s) => s.name),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Building services',
-      itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, url: `${business.url}/${s.slug}/` } })),
+      name: 'Painting and decorating services',
+      itemListElement: services.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.name, serviceType: s.name, url: `${business.url}/${s.slug}/` } })),
     },
   },
   { '@type': 'WebSite', '@id': `${business.url}/#website`, url: `${business.url}/`, name: business.name, inLanguage: 'en-GB', publisher: { '@id': `${business.url}/#business` } },
@@ -69,10 +72,14 @@ const jsonld = { '@context': 'https://schema.org', '@graph': graph };
     <meta name="robots" content={robots} />
     <link rel="canonical" href={pageUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {!utility && <link rel="alternate" type="text/markdown" href={markdownUrl} />}
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon/32-colour.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon/16-colour.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/brand/favicon/180-colour.png" />
+    {!utility && !noindex && <link rel="alternate" type="text/markdown" href={markdownUrl} />}
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/icon-16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#000000" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={business.name} />
     <meta property="og:title" content={title} />
@@ -91,9 +98,8 @@ const jsonld = { '@context': 'https://schema.org', '@graph': graph };
     </main>
     <Footer formless={utility} />
     {!utility && <StickyCtaBar />}
+    <WhatsAppButton />
     <Lightbox formless={utility} />
-    {/* TrustIndex floating left-corner reviews: every page (pass 2), hidden below 1024px in global.css. */}
-    {!utility && slots.trustindexCorner && <script is:inline defer async src={slots.trustindexCorner}></script>}
 
     <script>
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -110,13 +116,6 @@ const jsonld = { '@context': 'https://schema.org', '@graph': graph };
         reveals.forEach((el) => io.observe(el));
       }
 
-      const header = document.querySelector<HTMLElement>('[data-header]');
-      if (header) {
-        const sync = () => header.toggleAttribute('data-stuck', window.scrollY > 24);
-        window.addEventListener('scroll', sync, { passive: true });
-        sync();
-      }
-
       // CTA ANCHOR LAW (operator, 23 Oct): every Quick Quote link targets the form itself (#contact);
       // a page with no form (thank-you, 404) sends it to /contact/#contact.
       // Mobile lands the form fields in view; desktop scrolls the whole quote section.
@@ -129,15 +128,9 @@ const jsonld = { '@context': 'https://schema.org', '@graph': graph };
         if (!samePage) return;
         e.preventDefault();
         const mobile = window.innerWidth < 1024;
-        const target = mobile ? form : (form.closest('section') ?? form);
+        const target = mobile ? form : (form.closest('[data-quote-card]')?.parentElement ?? form);
         target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         history.replaceState(null, '', '#contact');
-        // The form carries no visible service step (REV3 item 7): the page's service
-        // rides along in the hidden input instead.
-        const svc = a.dataset.service;
-        const hidden = form.querySelector<HTMLInputElement>('input[type="hidden"][name="service"]');
-        if (svc && hidden) hidden.value = svc;
-        setTimeout(() => form.querySelector<HTMLInputElement>('input[name="name"]')?.focus({ preventScroll: true }), 650);
       });
     </script>
   </body>

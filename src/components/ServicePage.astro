@@ -1,54 +1,63 @@
 ---
 /**
- * SERVICE HUB PAGE, one per plan hub, at the plan's hub slug.
- * CONVERSION PAGE (pass 2), not an article. Spine: hero (CTA + slim review
- * widget), LARGE reviews, short intro + section bands, how a job runs (3 steps),
- * OUR WORK gallery (REV3 item 3: above the map), areas + map, related
- * services, resources, FAQ, quote form.
- * No mid-page slim strip and no CTA band: the form is the one closing CTA.
+ * SERVICE HUB PAGE (plan, Layout, Hub pages), in this order: hero with the hub's picture; the
+ * reviews section (template: directly under the hero on every page); intro; what the job covers
+ * (the seed's sections, each photo above its H2) and the `sectors:` line; a before-and-after
+ * slider where a pair fits; how a job runs; "<hub> in pictures"; Brandon's house video on the two
+ * hubs that carry it; the other hubs as related links; FAQ; the quote form; further reading (the
+ * hub's town articles). Landing page, never article-styled.
  */
 import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import ServiceBody from './ServiceBody.astro';
+import BeforeAfter from './BeforeAfter.astro';
 import Steps from './Steps.astro';
-import OurWork from './OurWork.astro';
-import Areas from './Areas.astro';
+import PicturesGrid from './PicturesGrid.astro';
+import VideoEmbed from './VideoEmbed.astro';
 import RelatedServices from './RelatedServices.astro';
-import ArticlesPreview from './ArticlesPreview.astro';
 import Faq from './Faq.astro';
 import QuoteForm from './QuoteForm.astro';
-import { services, business } from '../data/site';
-import { serviceContent } from '../data/services';
-import { articles } from '../data/articles';
+import FurtherReading from './FurtherReading.astro';
+import { services, business, towns, image } from '../data/site';
 import { stripTags } from '../lib/links';
 
 interface Props { content: import('../data/services/types').ServiceContent }
 const { content } = Astro.props;
 const svc = services.find((s) => s.slug === content.slug)!;
+const hero = image(content.heroImage);
 const pageUrl = `${business.url}/${content.slug}/`;
-const icons = ['chat', 'clipboard', 'hammer'];
+const icons = ['chat', 'clipboard', 'roller'];
 const steps = content.process.steps.map((s, i) => ({ icon: icons[i], title: s.title, text: s.body }));
-const hasArticles = articles.some((a) => a.related === content.slug);
 const schema = [
-  { '@type': 'Service', '@id': `${pageUrl}#service`, name: svc.name, serviceType: svc.name, description: content.description, url: pageUrl, image: new URL(svc.img.src, business.url).href, provider: { '@id': `${business.url}/#business` }, areaServed: [{ '@type': 'City', name: 'Southampton' }, { '@type': 'Place', name: 'Hedge End' }, { '@type': 'AdministrativeArea', name: 'Hampshire' }] },
+  { '@type': 'Service', '@id': `${pageUrl}#service`, name: svc.name, serviceType: svc.name, description: content.description, url: pageUrl, image: new URL(hero.src, business.url).href, provider: { '@id': `${business.url}/#business` }, areaServed: towns.map((t) => ({ '@type': 'Place', name: t.name })) },
   { '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: content.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: `${business.url}/services/` },
-    { '@type': 'ListItem', position: 3, name: svc.name, item: pageUrl },
+    { '@type': 'ListItem', position: 2, name: svc.name, item: pageUrl },
   ] },
 ];
 ---
-<Base title={content.metaTitle} description={content.description} page={`service-${content.slug}`} schema={schema} ogImage={svc.img.src}>
-  <PageHero eyebrow={content.eyebrow} h1={content.h1} lead={content.lead} image={svc.img2} service={svc.name} crumbs={[{ label: 'Services', href: '/services/' }, { label: svc.name }]} />
+<Base title={content.metaTitle} description={content.description} page={`service-${content.slug}`} schema={schema} ogImage={hero.src}>
+  <PageHero h1={content.h1} lead={content.lead} image={hero} />
   <Reviews />
-  <ServiceBody intro={content.intro} sections={content.sections} image={svc.img} />
-  <Steps heading={content.process.heading} lead={content.process.lead} steps={steps} photo={svc.img2.slug} />
-  <OurWork heading={`${svc.name}: photographs from our own jobs`} />
-  <Areas heading={content.areas.heading} body={content.areas.body} />
-  <RelatedServices picks={content.related} />
-  {hasArticles && <ArticlesPreview heading={`Resources on ${svc.name.toLowerCase()}`} related={content.slug} />}
-  <Faq items={content.faqs} heading={`${svc.name}: questions people ask first`} />
-  <QuoteForm service={svc.name} heading={content.quote.heading} lead={content.quote.lead} />
+  <ServiceBody intro={content.intro} sections={content.sections} sectorsLine={content.sectorsLine} />
+  {content.slider && <BeforeAfter pairs={content.slider} panel={false} />}
+  <Steps heading={content.process.heading} lead={content.process.lead} steps={steps} photo={content.sections[0].image} />
+  <PicturesGrid heading={content.pictures.heading} lead={content.pictures.lead} images={content.pictures.images} />
+  {content.video && (
+    <section class="hv section section--panel section-video" data-section="video">
+      <div class="container hv__inner">
+        <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">{content.video.heading}</h2><p class="sec-head__lead">{content.video.lead}</p></div>
+        <VideoEmbed which="house" />
+      </div>
+    </section>
+  )}
+  <RelatedServices picks={content.related} heading="Other services from TrueLine Finishes" />
+  <Faq items={content.faqs} heading={`${svc.name}: questions people ask`} />
+  <QuoteForm heading={content.quote.heading} lead={content.quote.lead} />
+  <FurtherReading hub={content.slug} hubName={svc.name} />
 </Base>
+<style>
+  .hv__inner { max-width: var(--narrow); }
+</style>

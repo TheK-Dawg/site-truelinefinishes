@@ -1,25 +1,26 @@
 ---
-/** RESOURCES ARCHIVE (/resources/, never "blog" and never "guides" — REV3 item 5). Reviews under the hero, article cards (title-only links), then form. */
+/** RESOURCES (/resources/, never "blog" or "guides"): published articles as cards; the hubs below. Articles are written by the engine after handoff. */
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Reviews from '../../components/Reviews.astro';
 import ArticlesPreview from '../../components/ArticlesPreview.astro';
 import ServicesGrid from '../../components/ServicesGrid.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
-import { articles } from '../../data/articles';
+import { articles, articleUrl } from '../../data/articles';
 import { business, image } from '../../data/site';
 const pageUrl = `${business.url}/resources/`;
 const schema = [
-  { '@type': 'CollectionPage', '@id': `${pageUrl}#resources`, name: 'Building resources', url: pageUrl, hasPart: articles.map((a) => ({ '@type': 'Article', headline: a.title, url: `${business.url}/${a.slug}/` })) },
+  { '@type': 'CollectionPage', '@id': `${pageUrl}#resources`, name: 'Painting and decorating resources', url: pageUrl, hasPart: articles.map((a) => ({ '@type': 'Article', headline: a.title, url: `${business.url}${articleUrl(a)}` })) },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Resources', item: pageUrl }] },
 ];
 ---
-<Base title="Building Resources: Extensions, Lofts & Brickwork | Buildings For Life" description="Resources from Buildings For Life on extensions, loft conversions, new builds, groundworks and brickwork in Hedge End, Southampton and south Hampshire." page="resources" schema={schema}>
-  <PageHero eyebrow="Resources" h1="Resources from the building site" lead="Answers to the questions people ask before a build starts, from a family firm with over 40 years in the trade." image={image('paving-preparation')} crumbs={[{ label: 'Resources' }]} />
+<Base title="Painting and Decorating Resources | TrueLine Finishes" description="Resources from TrueLine Finishes on painting and decorating, interior and exterior painting, wallpapering and commercial work, town by town." page="resources" schema={schema}>
+  <PageHero h1="Painting and Decorating Resources" lead="Answers to the questions people ask before a room, a house or business premises is decorated." image={image('room-dust-sheets-0085')} />
   <Reviews />
   {articles.length > 0
-    ? <ArticlesPreview heading="All resources" lead="Planning, structure, materials and what happens on site, service by service and town by town." limit={99} />
-    : <section class="section"><div class="container"><p class="sec-head__lead">The first resources are being written. In the meantime, the service pages below explain how each job runs.</p></div></section>}
+    ? <ArticlesPreview heading="All resources" lead="Service by service and town by town." limit={999} />
+    : <section class="section"><div class="container"><p class="rs__empty">The first resources are being written. In the meantime, the service pages below explain each kind of work and how a job runs.</p></div></section>}
   <ServicesGrid heading="The work these resources are about" showCall={false} />
   <QuoteForm />
 </Base>
+<style>.rs__empty { max-width: 70ch; font-size: var(--fs-lg); color: var(--text-primary); }</style>

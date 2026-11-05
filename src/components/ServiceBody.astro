@@ -1,86 +1,68 @@
 ---
 /**
- * SERVICE BODY (REV3 item 1: landing page, not an article). No "On this page"
- * list, no article eyebrow, no numbered sections and no closing button (the
- * form at the end of the page is the one closing CTA).
- * A short intro (two paragraphs max) beside the service photograph, then one
- * SPLIT BAND per plan section: H2 + a short lead + scannable points on one
- * side, that band's own work photograph on the other, sides swapping band by
- * band and the panel background alternating. Mobile stacks image first, then
- * the text, so a 360px scroll reads image + text + image + text, never a wall
- * of prose.
+ * SERVICE BODY (landing page, not an article: no ToC, no sidebar). A short intro, then one card
+ * per plan section in a two-column grid: the section's own real pool photo DIRECTLY ABOVE its H2
+ * (build brief), a short lead and scannable points. Light panel behind the grid; cards white.
+ * Then the seed's `sectors:` line, one line on who the work is for.
  */
-import { image as workImage } from '../data/site';
+import { image as poolImage } from '../data/site';
 import Icon from './Icon.astro';
 interface Props {
   intro: string[];
   sections: { h2: string; lead: string; points: string[]; image: string }[];
-  image: { src: string; alt: string };
+  sectorsLine: string;
 }
-const { intro, sections, image } = Astro.props;
-const bands = sections.map((s) => ({ ...s, photo: workImage(s.image) }));
+const { intro, sections, sectorsLine } = Astro.props;
+const cards = sections.map((s) => ({ ...s, photo: poolImage(s.image) }));
 ---
 <section class="sb3 section section-service-intro" id="details" data-section="service-intro">
-  <div class="container sb3__intro">
+  <div class="container">
     <div class="sb3__copy" data-motion="reveal">
-      {intro.slice(0, 2).map((p, i) => <p class:list={[i === 0 && 'sb3__first']} set:html={p} />)}
+      {intro.map((p, i) => <p class:list={[i === 0 && 'sb3__first']} set:html={p} />)}
     </div>
-    <button type="button" class="sb3__img" data-lightbox aria-label={`Open larger: ${image.alt}`} data-motion="reveal" style="--reveal-delay: 80ms">
-      <img src={image.src} alt={image.alt} width="1200" height="900" loading="lazy" decoding="async" />
-    </button>
   </div>
 </section>
-{bands.map((s, i) => (
-  <section class:list={['sb3__band section', i % 2 === 0 && 'section--panel']} aria-labelledby={`s-${i + 1}`} data-section="service-section" data-band={i + 1}>
-    <div class:list={['container sb3__row', i % 2 === 1 && 'sb3__row--flip']}>
-      <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${s.photo.alt}`} data-motion="reveal">
-        <img src={s.photo.src} alt={s.photo.alt} width={s.photo.width} height={s.photo.height} loading="lazy" decoding="async" />
-      </button>
-      <div class="sb3__text" data-motion="reveal" style="--reveal-delay: 60ms">
-        <h2 id={`s-${i + 1}`} class="sb3__h2">{s.h2}</h2>
-        <p class="sb3__lead" set:html={s.lead} />
-        <ul class="sb3__points">
-          {s.points.map((p) => <li><Icon name="check" size={18} /><span set:html={p} /></li>)}
-        </ul>
-      </div>
+<section class="sb3__grid-wrap section section--panel" data-section="service-sections">
+  <div class="container">
+    <div class="sb3__grid" data-gallery>
+      {cards.map((s, i) => (
+        <article class="sb3__card" aria-labelledby={`s-${i + 1}`} data-motion="reveal" style={`--reveal-delay: ${(i % 2) * 60}ms`}>
+          <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${s.photo.alt}`}>
+            <img src={s.photo.sm} alt={s.photo.alt} width={s.photo.width} height={s.photo.height} loading="lazy" decoding="async" data-full={s.photo.src} />
+          </button>
+          <div class="sb3__text">
+            <h2 id={`s-${i + 1}`} class="sb3__h2">{s.h2}</h2>
+            <p class="sb3__lead" set:html={s.lead} />
+            <ul class="sb3__points">
+              {s.points.map((p) => <li><Icon name="check" size={18} /><span set:html={p} /></li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
     </div>
-  </section>
-))}
+    <p class="sb3__sectors"><Icon name="office" size={20} /> {sectorsLine}</p>
+  </div>
+</section>
 
 <style>
-  /* Follows the white reviews section, so the top padding halves to avoid a double gap. */
-  .sb3 { padding-top: var(--section-pad-sm); }
-  .sb3__intro { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: var(--space-16); align-items: center; }
+  .sb3 { padding-top: var(--space-4); padding-bottom: var(--section-pad-sm); }
+  .sb3__copy { max-width: 70ch; }
   .sb3__copy p { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }
   .sb3__copy p + p { margin-top: 1em; }
-  .sb3__copy :global(a) { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-  .sb3__copy .sb3__first { font-size: var(--fs-xl); color: var(--text-primary); line-height: var(--lh-normal); }
-  .sb3__img { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); border-top: 2px solid var(--brand-primary); }
-  .sb3__img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-
-  /* Split band: photograph one side, short copy the other, sides swapping each band. */
-  .sb3__band { padding: var(--section-pad-sm) 0; }
-  .sb3__row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--space-8) var(--space-16); align-items: center; }
-  .sb3__row--flip .sb3__shot { order: 2; }
-  .sb3__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); border-top: 2px solid var(--brand-primary); }
-  .sb3__shot img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .sb3__copy :global(a), .sb3__lead :global(a) { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .sb3__copy .sb3__first { font-size: var(--fs-xl); line-height: var(--lh-normal); }
+  .sb3__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
+  .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--brand-primary); }
+  .sb3__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); overflow: hidden; }
+  .sb3__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.5s var(--ease); }
   .sb3__shot:hover img { transform: scale(1.03); }
-  .sb3__h2 { font-size: var(--fs-4xl); padding-top: var(--space-4); border-top: 2px solid var(--brand-primary); }
-  .sb3__lead { margin-top: var(--space-4); color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }
-  .sb3__lead :global(a) { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-  .sb3__points { list-style: none; padding: 0; margin-top: var(--space-5); display: grid; gap: var(--space-3); }
+  .sb3__text { padding: var(--space-6) var(--card-pad) var(--card-pad); }
+  .sb3__h2 { font-size: var(--fs-2xl); }
+  .sb3__lead { margin-top: var(--space-3); color: var(--text-secondary); }
+  .sb3__points { list-style: none; padding: 0; margin-top: var(--space-4); display: grid; gap: var(--space-2); }
   .sb3__points li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; color: var(--text-primary); font-size: var(--fs-md); line-height: var(--lh-normal); }
-  .sb3__points :global(.icon) { color: var(--forest-500); margin-top: 2px; }
-  .sb3__points :global(strong) { color: var(--text-heading); font-weight: var(--fw-semibold); }
-
-  @media (max-width: 1023px) {
-    .sb3__intro { grid-template-columns: 1fr; gap: var(--space-6); }
-    .sb3__h2 { font-size: var(--fs-3xl); }
-  }
-  @media (max-width: 900px) {
-    /* Phone: image first, copy under it, every band the same way round. */
-    .sb3__row, .sb3__row--flip { grid-template-columns: 1fr; gap: var(--space-5); }
-    .sb3__row--flip .sb3__shot { order: 0; }
-  }
-  @media (max-width: 640px) { .sb3__h2 { font-size: var(--fs-2xl); } .sb3__copy .sb3__first { font-size: var(--fs-lg); } }
+  .sb3__points :global(.icon) { color: var(--brand-primary); margin-top: 2px; }
+  .sb3__sectors { display: flex; gap: var(--space-3); align-items: center; margin-top: var(--space-10); padding: var(--space-5) var(--space-6); background: var(--bg-inverse); color: var(--text-inverse); font-weight: var(--fw-semibold); }
+  .sb3__sectors :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  @media (max-width: 900px) { .sb3__grid { grid-template-columns: 1fr; gap: var(--space-5); } .sb3__copy .sb3__first { font-size: var(--fs-lg); } }
 </style>

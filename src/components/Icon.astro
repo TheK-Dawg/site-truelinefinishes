@@ -1,12 +1,24 @@
 ---
 /**
- * ICON. Simple line glyphs (24 grid, currentColor stroke) for the Electrix
+ * ICON. Simple line glyphs (24 grid, currentColor stroke) for the template's
  * circle-icon slots. Decorative: always aria-hidden.
  */
 interface Props { name: string; size?: number }
 const { name, size = 24 } = Astro.props;
 const paths: Record<string, string> = {
   house: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6',
+  roller: 'M4 4h13v5H4zM17 6.5h3v6h-8v3M10.5 15.5h3V21h-3z',
+  brush: 'M15 3l6 6-7 7-6-6zM8 10l-4 4c-1.5 1.5-1 4 0 5s3.5 1.5 5 0l4-4',
+  roll: 'M4 5h12v14H4zM16 7h4v12h-4M7 9h6M7 13h6',
+  office: 'M4 21V4h11v17M15 9h5v12M2 21h20M8 8h3M8 12h3M8 16h3',
+  layers: 'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',
+  whatsapp: 'M4 20l1.3-3.8A8 8 0 1 1 8 19zM9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 .8a5 5 0 0 1-2.2-2.2l.8-1-1-2z',
+  lock: 'M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2',
+  heart: 'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z',
+  play: 'M8 5l11 7-11 7z',
+  star: 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z',
+  user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
+  sliders: 'M4 12h16M12 4v16M8 8l-4 4 4 4M16 8l4 4-4 4',
   extension: 'M3 20V10l6-5 6 5v10M15 20V13h6v7M3 20h18M7 14h4',
   bricks: 'M3 5h18v14H3zM3 9.7h18M3 14.3h18M9 5v4.7M15 5v4.7M6 9.7v4.6M12 9.7v4.6M18 9.7v4.6M9 14.3V19M15 14.3V19',
   loft: 'M2 12l10-8 10 8M5 10v10h14V10M9 20v-5h6v5M10 10h4',

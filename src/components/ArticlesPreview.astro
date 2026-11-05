@@ -1,40 +1,34 @@
 ---
 /**
- * ARTICLES PREVIEW (Electrix "Blog & Articles"). Head left, lead + button
- * right; image cards with a topic chip. CARD LAW: the article title is the
- * card's ONLY link (never "Read more"), once per page via the ledger. No dates.
- * REV3 item 5: the section is RESOURCES everywhere; "guides" is a banned word,
- * so the button anchor is the keyword "Resources", never "All guides".
- * Articles come from the SEO engine (src/data/articles.ts).
+ * ARTICLES PREVIEW (template "latest articles"): image cards, the article title is the card's
+ * ONLY link. Published articles only (src/data/articles.ts status gate). Renders nothing when
+ * there are none yet. Never "blog", never "guides": the section is Resources.
  */
-import { articles } from '../data/articles';
-import { AnchorLedger, articleCardLink } from '../lib/anchors';
-interface Props { heading?: string; lead?: string; exclude?: string; limit?: number; related?: string }
-const { heading = 'Resources from the building site', lead = 'Written to answer the questions people ask before a build starts: planning, structure, materials and what happens on site.', exclude = '', limit = 3, related = '' } = Astro.props;
+import { articles, articleUrl } from '../data/articles';
+import { image, services } from '../data/site';
+interface Props { heading?: string; lead?: string; exclude?: string; limit?: number; hub?: string; town?: string }
+const { heading = 'Latest resources', lead = 'Painting and decorating, explained place by place.', exclude = '', limit = 3, hub = '', town = '' } = Astro.props;
 const showAll = Astro.url.pathname !== '/resources/';
-const list = articles.filter((a) => a.slug !== exclude && (!related || a.related === related)).slice(0, limit);
-const ledger = new AnchorLedger();
+const list = articles.filter((a) => a.slug !== exclude && (!hub || a.hub === hub) && (!town || a.town === town)).slice(0, limit);
+const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
 ---
 {list.length > 0 && (
 <section class="ap section section-articles" id="resources" data-section="articles">
   <div class="container">
     <div class="sec-head" data-motion="reveal">
-      <div>
-        <p class="eyebrow">Resources</p>
-        <h2 class="sec-head__h2">{heading}</h2>
-      </div>
+      <h2 class="sec-head__h2">{heading}</h2>
       <div class="sec-head__side">
         <p class="sec-head__lead">{lead}</p>
-        {showAll && <a href="/resources/" class="btn btn-primary" data-cta="articles-all">Resources</a>}
+        {showAll && <a href="/resources/" class="text-link" data-cta="articles-all">All resources</a>}
       </div>
     </div>
     <ul class="ap__grid">
       {list.map((a, i) => {
-        const link = articleCardLink(a, ledger);
+        const img = image(a.hero);
         return (
           <li class="ap__card" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
-            <div class="ap__img"><img src={a.hero} alt={a.heroAlt} width="1200" height="800" loading="lazy" decoding="async" /><span class="ap__chip">{a.topic}</span></div>
-            <h3 class="ap__title">{link ? <a href={link.href} data-link="card">{link.anchor}</a> : <span>{a.title}</span>}</h3>
+            <div class="ap__img"><img src={img.sm} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /><span class="ap__chip">{hubName(a.hub)}</span></div>
+            <h3 class="ap__title"><a href={articleUrl(a)} data-link="card">{a.title}</a></h3>
             <p class="ap__body">{a.summary}</p>
           </li>
         );
@@ -49,9 +43,9 @@ const ledger = new AnchorLedger();
   .ap__card { display: flex; flex-direction: column; gap: var(--space-3); }
   .ap__img { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: var(--bg-panel); margin-bottom: var(--space-2); }
   .ap__img img { width: 100%; height: 100%; object-fit: cover; }
-  .ap__chip { position: absolute; left: 0; bottom: 0; background: var(--bg-card); color: var(--text-heading); font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; padding: var(--space-2) var(--space-3); }
-  .ap__title { font-size: var(--fs-xl); font-weight: var(--fw-medium); }
-  .ap__title a:hover { color: var(--brand-text); }
+  .ap__chip { position: absolute; left: 0; bottom: 0; background: var(--bg-inverse); color: var(--text-inverse); font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; padding: var(--space-2) var(--space-3); }
+  .ap__title { font-size: var(--fs-xl); }
+  .ap__title a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 4px; }
   .ap__body { font-size: var(--fs-md); color: var(--text-muted); }
   @media (max-width: 900px) { .ap__grid { grid-template-columns: 1fr; gap: var(--space-10); } }
 </style>

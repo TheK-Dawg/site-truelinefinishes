@@ -1,13 +1,14 @@
 ---
 /**
- * HOW IT WORKS (Electrix). Pale panel on the left with the centred head and
- * three blocks (white / sand / dark, the capture's sequence), the "Looking for
- * more information?" line, and a full-height photograph on the right.
+ * HOW A JOB RUNS (template block). Pale panel on the left with the centred head and three blocks
+ * (white / royal blue / black), a full-height photograph on the right. Kept to what the sources
+ * support (plan, Layout): get in touch, a free quotation, the work done with preparation first.
+ * No timings, response times, site-visit or start-date promises.
  */
 import Icon from './Icon.astro';
 import { image } from '../data/site';
-interface Props { eyebrow?: string; heading: string; lead: string; steps: { icon: string; title: string; text: string }[]; photo?: string }
-const { eyebrow = 'How It Works', heading, lead, steps, photo = 'new-build-brickwork' } = Astro.props;
+interface Props { heading: string; lead: string; steps: { icon: string; title: string; text: string }[]; photo?: string }
+const { heading, lead, steps, photo = 'kitchen-diner-protected-0007' } = Astro.props;
 const img = image(photo);
 ---
 <section class="hw section-process" data-section="process">
@@ -15,7 +16,6 @@ const img = image(photo);
     <div class="hw__panel">
       <div class="hw__inner">
         <div class="sec-head sec-head--center" data-motion="reveal">
-          <p class="eyebrow">{eyebrow}</p>
           <h2 class="sec-head__h2">{heading}</h2>
           <p class="sec-head__lead">{lead}</p>
         </div>
@@ -28,10 +28,10 @@ const img = image(photo);
             </li>
           ))}
         </ol>
-        <p class="more-line">Ready when you are. <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>
+        <p class="more-line">Ready to talk it through? <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>
       </div>
     </div>
-    <div class="hw__photo"><img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /></div>
+    <div class="hw__photo"><img src={img.sm} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /></div>
   </div>
 </section>
 
@@ -43,14 +43,15 @@ const img = image(photo);
   .hw__step { padding: var(--space-8) var(--space-6); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
   .hw__step h3 { font-size: var(--fs-xl); font-weight: var(--fw-medium); }
   .hw__step p { font-size: var(--fs-md); }
-  .hw__step--0 { background: var(--bg-card); color: var(--text-muted); }
-  .hw__step--1 { background: var(--brand-primary); color: var(--forest-800); }
+  .hw__step--0 { background: var(--bg-card); color: var(--text-primary); }
+  .hw__step--1 { background: var(--brand-primary); color: var(--brand-fg); }
+  .hw__step--1 h3 { color: var(--brand-fg); }
   .hw__step--2 { background: var(--bg-inverse); color: var(--text-inverse-muted); }
   .hw__step--2 h3 { color: var(--text-inverse); }
   .hw__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); margin-bottom: var(--space-2); }
-  .hw__step--0 .hw__ic { background: var(--n-500); color: var(--text-inverse); }
-  .hw__step--1 .hw__ic { background: var(--bg-inverse-deep); color: var(--accent-on-dark); }
-  .hw__step--2 .hw__ic { background: var(--brand-primary); color: var(--brand-fg); }
+  .hw__step--0 .hw__ic { background: var(--bg-inverse); color: var(--accent-on-dark); }
+  .hw__step--1 .hw__ic { background: var(--bg-card); color: var(--brand-primary); }
+  .hw__step--2 .hw__ic { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   .hw__photo { position: relative; min-height: var(--space-30); }
   .hw__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 1023px) {

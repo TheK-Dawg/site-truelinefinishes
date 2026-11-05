@@ -50,7 +50,7 @@ const { formless = false } = Astro.props;
       if (!items.length) return;
       index = (i + items.length) % items.length;
       const src = items[index];
-      img.src = src.currentSrc || src.src;
+      img.src = src.dataset.full || src.currentSrc || src.src;
       img.alt = src.alt;
       cap.textContent = src.alt;
     };

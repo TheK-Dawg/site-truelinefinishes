@@ -1,22 +1,14 @@
 ---
 /**
- * Google Maps embed, lazy iframe, no overlay.
- * gbp (default): Pete's Business Profile listing (walkthrough 25 Sep, E2):
- * slots.gbpEmbedSrc when the operator supplies the exact embed, otherwise the
- * listing looked up by its business name + locality.
- * query: a plain locality map (area, not premises).
+ * GOOGLE MAP EMBED of TrueLine Finishes' Business Profile, keyed on its CID (plan flag 4).
+ * Auto-loads (no click-to-load facade, no image placeholder). Zoomed out to the area served:
+ * the site never prints the address (standing prohibition 10).
  */
-import { business, slots, gbpQuery } from '../data/site';
-interface Props { query?: string; zoom?: number }
-const { query, zoom = 13 } = Astro.props;
-const gbp = !query;
-const src = gbp
-  ? slots.gbpEmbedSrc || `https://maps.google.com/maps?q=${encodeURIComponent(gbpQuery)}&z=${zoom}&output=embed`
-  : `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
-const title = gbp ? `${business.name} on Google Maps` : `Map of ${query}`;
+import { business } from '../data/site';
+const src = `https://maps.google.com/maps?cid=${business.gbp.cid}&z=11&output=embed`;
 ---
-<div class="map" data-map={gbp ? 'gbp' : 'area'} data-gbp-slot={gbp ? slots.gbpEmbedSrc : undefined}>
-  <iframe src={src} title={title} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<div class="map" data-map="gbp" data-gbp-cid={business.gbp.cid}>
+  <iframe src={src} title={`${business.name} on Google Maps`} loading="eager" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 </div>
 <style>
   .map { position: relative; width: 100%; height: 100%; min-height: calc(var(--space-30) * 2); background: var(--bg-panel); }

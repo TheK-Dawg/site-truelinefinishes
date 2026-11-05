@@ -1,0 +1,29 @@
+---
+/**
+ * "<HUB> IN PICTURES" (plan, Layout). Brandon's own photos for the hub, in a site-matched grid,
+ * each opening in the root Lightbox. Captions describe the photo only.
+ */
+import { image } from '../data/site';
+interface Props { heading: string; lead: string; images: string[] }
+const { heading, lead, images } = Astro.props;
+const list = images.map(image);
+---
+<section class="pg section section-pictures" data-section="pictures">
+  <div class="container">
+    <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">{heading}</h2><p class="sec-head__lead">{lead}</p></div>
+    <ul class:list={['pg__grid', list.length === 1 && 'pg__grid--one']} data-gallery>
+      {list.map((im) => (
+        <li><button type="button" class="pg__shot" data-lightbox aria-label={`Open larger: ${im.alt}`}><img src={im.sm} data-full={im.src} alt={im.alt} width={im.width} height={im.height} loading="lazy" decoding="async" /></button></li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .pg__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+  .pg__grid--one { grid-template-columns: minmax(0, var(--narrow)); justify-content: center; }
+  .pg__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
+  .pg__grid--one .pg__shot { aspect-ratio: 4 / 3; }
+  .pg__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .pg__shot:hover img { transform: scale(1.04); }
+  @media (max-width: 640px) { .pg__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); } }
+</style>

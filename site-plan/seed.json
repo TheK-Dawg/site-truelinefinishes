@@ -1,0 +1,2552 @@
+{
+  "version": 1,
+  "site": {
+    "domain": "truelinefinishes.com",
+    "mode": "client",
+    "niche": "decorating",
+    "vertical": "Painter and decorator",
+    "monetisation": "Client site: TrueLine Finishes' own marketing site, their job, their quote. Brandon bought a new website with a year of SEO articles; the first half was paid on 23 Oct 2026 and the rest is due when the site is finished and he is happy (WhatsApp, 23 Oct 2026). A map-boosting service was discussed on the earlier calls; it is not part of this build.",
+    "images": {
+      "_note": "Real photographs Brandon sent on WhatsApp, kept on the planning server rather than in this repo (73 MB): /root/work/trueline-finishes-media/images/ (203 files; the three that are never for the site, another business's website, the magazine cover and his printed advert, are kept apart in not-for-the-site/), each named <unix time>_<Whapi message id>.jpg and checked against the SHA-256 Whapi recorded for it. The logo IS in this repo, in sites/truelinefinishes.com/brand/. SITE-PLAN.md Section 1 (Images) says which goes where.",
+      "logo": {
+        "primary": "brand/trueline-finishes-logo-blue.jpg: WhatsApp 26 Oct 2026 12:18 UTC, message OpGoplCKAoe2TQ-hdqf1wAAAOw, followed by 'That's the logo'; 1600 x 535",
+        "variant": "brand/trueline-finishes-logo-silver-blue.jpg: 26 Oct 2026 11:19 UTC, message OgUFdXHp4RVk4w-hSCf1wAAAOw, followed by 'This is my logo just Trueline Finishes'; 2048 x 684",
+        "redo": "THE OPERATOR'S INSTRUCTION FOR VINCENT, 4 Nov 2026: 'He sent a logo already and Vince may need to redo it within the exact same style but to make it suitable for the site as I think it's a low-res image.' The files are JPEGs (1600 x 535, 65 KB; 2048 x 684, 64 KB), compressed, on solid black, with no transparent or vector version. If they are not sharp enough where the site uses them, recreate the logo in exactly the same style, not a new design: 'TRUELINE' in the same classical serif capitals with the taller T, the same bevelled metallic-blue gradient with its chrome highlight, 'FINISHES' beneath in the same spaced serif capitals between the two thin tapering blue lines, on black; as an SVG or a large transparent PNG, at a resolution suitable for the site. Ask Brandon for the original file first: if he has it, nothing needs redrawing."
+      },
+      "pool": "195 job photos in two albums sent on 26 Oct 2026 (11:07 and 11:19 UTC), described by Brandon as 'images of different parts of houses and offices, before and after photos, external photos, bathroom and kitchen photos, bedroom and living room photos, before and after images'. One shared pool for the SEO articles: any photo may illustrate any article it fits.",
+      "beforeAfter": [
+        {
+          "what": "exterior gable wall, stained render to clean white masonry paint",
+          "before": "Oj2fzOpJ80xnkA-hU.f1wAAAOw",
+          "after": "OlaUzHiGp9Vvpw-hbmf1wAAAOw",
+          "source": "Brandon's own pick for the slider, 23 Oct 2026"
+        },
+        {
+          "what": "bedroom, patched plaster to finished",
+          "before": "OsoBU8ttxSeF3w-hSWf1wAAAOw",
+          "after": "OnyFQ1aE2nyQAA-hb.f1wAAAOw",
+          "source": "Brandon's own pick for the slider, 23 Oct 2026"
+        },
+        {
+          "what": "bathroom, bare plaster to green walls",
+          "before": "OoIpOkZ2GffpsQ-hcif1wAAAOw",
+          "after": "OnKHJgeMtUewWg-hQKf1wAAAOw",
+          "source": "Brandon's own pick for the slider, 23 Oct 2026"
+        },
+        {
+          "what": "semi-detached house, painted brick to dark grey",
+          "before": "OnOVwuFyOs40RQ-hdGf1wAAAOw",
+          "after": "Ojkyw9DVZCfS_A-hYWf1wAAAOw",
+          "source": "the 26 Oct 2026 pool, paired by this plan (same house)"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://youtube.com/shorts/v3g1Kdja0gk",
+          "title": "Full kitchen renovation #painting #kitchen",
+          "what": "THE KITCHEN VIDEO. A YouTube Short, portrait (9:16), on Brandon's channel 'Trueline Finishes' (@TruelineFinishes). The first of the two links he sent on 3 Nov 2026, and his pick for the home page ('maybe the first link as video on home page')",
+          "embedOn": "the home page hero (Brandon's pick), and nowhere else. It was also placed on the Kitchen Renovation and Installation hub page and every one of its articles (the operator, 4 Nov 2026 evening); those placements went with that hub when the operator dropped it the same night (D-2026-11-04-10)"
+        },
+        {
+          "url": "https://youtu.be/mNwdUtQedkc",
+          "title": "Full house panting and decorating #harrogate #painting #house",
+          "what": "THE HOUSE VIDEO. Landscape, on the same channel; the second link of 3 Nov 2026. Its title has Brandon's own typing slip ('panting'): any caption says 'Full house painting and decorating'",
+          "embedOn": "the Painting and Decorating hub page and EVERY Painting and Decorating SEO article; the Interior Painting hub page and EVERY Interior Painting SEO article; each article at a varied position, and 'Painting and Decorating in Harrogate' carries it above its first H2, because the title is tagged #harrogate (the operator, 4 Nov 2026: 'add that one as instructions to add to the paint and decorating hubs ... but also on those SEO articles as well'; 'should be in the interior painting SEO articles')"
+        }
+      ],
+      "videosNote": "Titles read from YouTube's own oEmbed on 4 Nov 2026, and the Short's preview frames looked at: they show a kitchen-diner being decorated, the floor under protection board and the units sheeted, then the finished room freshly painted. Neither video has been watched in full by this plan. THE PLACEMENT RULE for articles, in each hub's content note: by the town's publish order, 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ; at random among the three if the publish order is not to hand. Nothing in this repo placed media at random before; this is new (D-2026-11-04-07).",
+      "gaps": [
+        "Wallpapering: one photo in the pool (Or24brkA.OaAVQ-hZ2f1wAAAOw). Ask Brandon for more",
+        "Commercial: an office mid-job and an exhibition stand; no hotel, spa, school, restaurant or leisure-centre photos. Ask Brandon"
+      ]
+    }
+  },
+  "nap": {
+    "businessName": "TrueLine Finishes",
+    "phone": "07949 484274",
+    "address": "Briar Rhydding, Charlestown, Baildon, Shipley BD17 7JW, United Kingdom",
+    "usps": [
+      {
+        "usp": "Over eight years' experience",
+        "source": "THE OPERATOR'S RULING, 4 Nov 2026 (his own message): 'When it says 8 years' experience, say over 8 years' experience'. The figure is Brandon's, from the 23 Oct 2026 call (recording 'VN - Brandon True Line', saleshq contact c_brandon-dawson-painting): asked how many years' experience he has, he answers 'Eight. Eight.', and the operator replies 'over eight years experience'. The figure is eight and never another (standing prohibition 3); copy may write it 'over eight years' or 'over 8 years'",
+        "affirmed": true
+      },
+      {
+        "usp": "Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to Brandon",
+        "source": "THE OPERATOR'S RULING, 4 Nov 2026 (his own message): 'Do mention Brandon, though, as he is the expert and the man that will be carrying out the work and overseeing all jobs. Whenever you call, you have a direct line to Brandon as well.' The number is Brandon's own business number (WhatsApp 27 Oct 2026, message Ol9epWK4mg0eNQ-hSGf1wAAAOw; on his advert and his Google listing). Brandon is named as the business's expert; nobody who works with him is named, and no team size is claimed (site prohibition 6)",
+        "affirmed": true
+      },
+      {
+        "usp": "Fully insured, friendly and reliable",
+        "source": "Brandon's own printed advert in A Child's Wish magazine, Issue 1, photographed and sent on WhatsApp on 27 Oct 2026 ('That's my article', message Oot_uqIWddL6Ow-haSf1wAAAOw), word for word. No cover amount is stated, so none is given (standing prohibition 15)",
+        "affirmed": true
+      },
+      {
+        "usp": "Free quotations",
+        "source": "the same advert, twice: 'Contact us for a free quotation' and 'CONTACT US FOR A FREE QUOTATION'",
+        "affirmed": true
+      },
+      {
+        "usp": "We take pride in attention to detail, lasting finishes and treating your property with care",
+        "source": "the same advert, word for word",
+        "affirmed": true
+      },
+      {
+        "usp": "Painting and decorating for homes and businesses, from individual rooms to full property redecorations",
+        "source": "the same advert ('Trueline Finishes offers professional painting and decorating for homes and businesses ... From individual rooms to full property redecorations'), and Brandon's WhatsApp of 27 Oct 2026 ('just domestic and commercial clients all aspects of painting and decorating', message Ol9epWK4mg0eNQ-hSGf1wAAAOw)",
+        "affirmed": true
+      },
+      {
+        "usp": "Careful surface preparation on every job: sanding, filling and caulking come with everything",
+        "source": "the advert ('careful surface preparation') and Brandon on the 2 Apr 2026 call ('everything comes with ... full preparation, sanding, filling, caulking')",
+        "affirmed": true
+      },
+      {
+        "usp": "Supports the charity A Child's Wish",
+        "source": "Brandon, WhatsApp 27 Oct 2026: 'Also can we add this to website I've sponsored / donated to the following', with a photo of A Child's Wish magazine, Issue 1, registered charity number 1192870 on its cover (message OlKscwVaxZnHhw-hSOf1wAAAOw); his advert is in that issue. 'Supports' is true of sponsoring and of donating; his 'sponsored / donated' does not say which",
+        "affirmed": true
+      }
+    ],
+    "sources": {
+      "businessName": "operator:sites/truelinefinishes.com/nap.json",
+      "phone": "operator:sites/truelinefinishes.com/nap.json",
+      "address": "operator:sites/truelinefinishes.com/nap.json"
+    }
+  },
+  "services": [
+    {
+      "service": "Painting and Decorating",
+      "primaryPhrase": "painting and decorating",
+      "primaryVolume": 5400,
+      "variants": [
+        "painting",
+        "painter and decorator",
+        "painter and decorators",
+        "decorating",
+        "decorator",
+        "decorators",
+        "local decorator",
+        "local decorators"
+      ],
+      "hub": "painting-and-decorating",
+      "hubMapping": "dedicated",
+      "hubMappingRationale": "one hub for one search intent: \"painting and decorating\" (5400/mo) is the highest-volume phrase for this service.",
+      "selection": "operator-add",
+      "opportunity": false,
+      "reason": "added by the operator in the services override file — a human instruction, which wins",
+      "pinPosition": 1,
+      "competition": "LOW",
+      "volumeEvidence": "primary \"painting and decorating\" 5,400/mo"
+    },
+    {
+      "service": "Interior Painting",
+      "primaryPhrase": "interior painting",
+      "primaryVolume": 1600,
+      "variants": [
+        "house painting",
+        "room painting",
+        "painting a house interior",
+        "internal painting"
+      ],
+      "hub": "interior-painting",
+      "hubMapping": "dedicated",
+      "hubMappingRationale": "one hub for one search intent: \"interior painting\" (1600/mo) is the highest-volume phrase for this service.",
+      "selection": "operator-add",
+      "opportunity": false,
+      "reason": "added by the operator in the services override file — a human instruction, which wins",
+      "pinPosition": 2,
+      "competition": "HIGH",
+      "volumeEvidence": "primary \"interior painting\" 1,600/mo"
+    },
+    {
+      "service": "Exterior Painting",
+      "primaryPhrase": "exterior painting",
+      "primaryVolume": 4400,
+      "variants": [
+        "masonry painting",
+        "exterior house painting",
+        "painting exterior wall",
+        "painting exterior walls",
+        "painting render",
+        "render painting",
+        "outside painting",
+        "exterior decorating"
+      ],
+      "hub": "exterior-painting",
+      "hubMapping": "dedicated",
+      "hubMappingRationale": "one hub for one search intent: \"exterior painting\" (4400/mo) is the highest-volume phrase for this service.",
+      "selection": "operator-add",
+      "opportunity": false,
+      "reason": "added by the operator in the services override file — a human instruction, which wins",
+      "pinPosition": 3,
+      "competition": "HIGH",
+      "volumeEvidence": "primary \"exterior painting\" 4,400/mo"
+    },
+    {
+      "service": "Wallpapering",
+      "primaryPhrase": "wallpapering",
+      "primaryVolume": 720,
+      "variants": [
+        "wallpaper installer",
+        "wallpaper installers",
+        "hanging wallpaper",
+        "hanging wallpapers",
+        "wallpaper hanging",
+        "wallpaper fitting"
+      ],
+      "hub": "wallpapering",
+      "hubMapping": "dedicated",
+      "hubMappingRationale": "one hub for one search intent: \"wallpapering\" (720/mo) is the highest-volume phrase for this service.",
+      "selection": "operator-add",
+      "opportunity": false,
+      "reason": "added by the operator in the services override file — a human instruction, which wins",
+      "pinPosition": 4,
+      "competition": "MEDIUM",
+      "volumeEvidence": "primary \"wallpapering\" 720/mo"
+    },
+    {
+      "service": "Commercial Painting and Decorating",
+      "primaryPhrase": "commercial painting",
+      "primaryVolume": 390,
+      "variants": [
+        "decorating",
+        "office decorating",
+        "office painting",
+        "shop painting",
+        "commercial decorator",
+        "commercial decorators",
+        "commercial painter",
+        "commercial painter and decorator"
+      ],
+      "hub": "commercial-painting-and-decorating",
+      "hubMapping": "dedicated",
+      "hubMappingRationale": "one hub for one search intent: \"commercial painting\" (390/mo) is the highest-volume phrase for this service.",
+      "selection": "operator-add",
+      "opportunity": false,
+      "reason": "added by the operator in the services override file — a human instruction, which wins",
+      "pinPosition": 5,
+      "competition": "MEDIUM",
+      "volumeEvidence": "primary \"commercial painting\" 390/mo"
+    }
+  ],
+  "towns": [
+    {
+      "town": "Baildon",
+      "distanceMiles": 0,
+      "population": 15710,
+      "affinityServices": [],
+      "publishOrder": 1,
+      "orderRationale": "PINNED to position 1 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 1: base town — the operator's own patch, distance 0 miles",
+      "pinned": {
+        "position": 1,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 1,
+        "computedRationale": "base town — the operator's own patch, distance 0 miles"
+      }
+    },
+    {
+      "town": "Guiseley",
+      "distanceMiles": 3.7,
+      "population": 21000,
+      "affinityServices": [],
+      "publishOrder": 2,
+      "orderRationale": "PINNED to position 2 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 11: proximity to base (Baildon) — 3.7 miles straight-line, population 21000",
+      "pinned": {
+        "position": 2,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 11,
+        "computedRationale": "proximity to base (Baildon) — 3.7 miles straight-line, population 21000"
+      }
+    },
+    {
+      "town": "Menston",
+      "distanceMiles": 3.5,
+      "population": 4764,
+      "affinityServices": [],
+      "publishOrder": 3,
+      "orderRationale": "PINNED to position 3 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 10: proximity to base (Baildon) — 3.5 miles straight-line, population 4764",
+      "pinned": {
+        "position": 3,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 10,
+        "computedRationale": "proximity to base (Baildon) — 3.5 miles straight-line, population 4764"
+      }
+    },
+    {
+      "town": "Ilkley",
+      "distanceMiles": 5.5,
+      "population": 14809,
+      "affinityServices": [],
+      "publishOrder": 4,
+      "orderRationale": "PINNED to position 4 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 20: proximity to base (Baildon) — 5.5 miles straight-line, population 14809",
+      "pinned": {
+        "position": 4,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 20,
+        "computedRationale": "proximity to base (Baildon) — 5.5 miles straight-line, population 14809"
+      }
+    },
+    {
+      "town": "Shipley",
+      "distanceMiles": 1.3,
+      "population": 28544,
+      "affinityServices": [],
+      "publishOrder": 5,
+      "orderRationale": "PINNED to position 5 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 3: proximity to base (Baildon) — 1.3 miles straight-line, population 28544",
+      "pinned": {
+        "position": 5,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 3,
+        "computedRationale": "proximity to base (Baildon) — 1.3 miles straight-line, population 28544"
+      }
+    },
+    {
+      "town": "Otley",
+      "distanceMiles": 5.6,
+      "population": 14668,
+      "affinityServices": [],
+      "publishOrder": 6,
+      "orderRationale": "PINNED to position 6 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 21: proximity to base (Baildon) — 5.6 miles straight-line, population 14668",
+      "pinned": {
+        "position": 6,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 21,
+        "computedRationale": "proximity to base (Baildon) — 5.6 miles straight-line, population 14668"
+      }
+    },
+    {
+      "town": "Horsforth",
+      "distanceMiles": 6.1,
+      "population": 19350,
+      "affinityServices": [],
+      "publishOrder": 7,
+      "orderRationale": "PINNED to position 7 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 22: proximity to base (Baildon) — 6.1 miles straight-line, population 19350",
+      "pinned": {
+        "position": 7,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 22,
+        "computedRationale": "proximity to base (Baildon) — 6.1 miles straight-line, population 19350"
+      }
+    },
+    {
+      "town": "Bingley",
+      "distanceMiles": 2.1,
+      "population": 18040,
+      "affinityServices": [],
+      "publishOrder": 8,
+      "orderRationale": "PINNED to position 8 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 5: proximity to base (Baildon) — 2.1 miles straight-line, population 18040",
+      "pinned": {
+        "position": 8,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 5,
+        "computedRationale": "proximity to base (Baildon) — 2.1 miles straight-line, population 18040"
+      }
+    },
+    {
+      "town": "Saltaire",
+      "distanceMiles": 1,
+      "population": 9000,
+      "affinityServices": [],
+      "publishOrder": 9,
+      "orderRationale": "PINNED to position 9 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 2: proximity to base (Baildon) — 1 miles straight-line, population 9000",
+      "pinned": {
+        "position": 9,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 2,
+        "computedRationale": "proximity to base (Baildon) — 1 miles straight-line, population 9000"
+      }
+    },
+    {
+      "town": "Harden",
+      "distanceMiles": 3.4,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 10,
+      "orderRationale": "PINNED to position 10 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 9: proximity to base (Baildon) — 3.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 10,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 9,
+        "computedRationale": "proximity to base (Baildon) — 3.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13275323; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Haworth",
+      "distanceMiles": 6.7,
+      "population": 6213,
+      "affinityServices": [],
+      "publishOrder": 11,
+      "orderRationale": "PINNED to position 11 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 25: proximity to base (Baildon) — 6.7 miles straight-line, population 6213",
+      "pinned": {
+        "position": 11,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 25,
+        "computedRationale": "proximity to base (Baildon) — 6.7 miles straight-line, population 6213"
+      }
+    },
+    {
+      "town": "Wilsden",
+      "distanceMiles": 3.4,
+      "population": 5524,
+      "affinityServices": [],
+      "publishOrder": 12,
+      "orderRationale": "PINNED to position 12 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 8: proximity to base (Baildon) — 3.4 miles straight-line, population 5524",
+      "pinned": {
+        "position": 12,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 8,
+        "computedRationale": "proximity to base (Baildon) — 3.4 miles straight-line, population 5524"
+      }
+    },
+    {
+      "town": "Idle",
+      "distanceMiles": 2.4,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 13,
+      "orderRationale": "PINNED to position 13 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 7: proximity to base (Baildon) — 2.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 13,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 7,
+        "computedRationale": "proximity to base (Baildon) — 2.4 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2646293; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Burley in Wharfedale",
+      "distanceMiles": 4.5,
+      "population": 5996,
+      "affinityServices": [],
+      "publishOrder": 14,
+      "orderRationale": "PINNED to position 14 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 16: proximity to base (Baildon) — 4.5 miles straight-line, population 5996",
+      "pinned": {
+        "position": 14,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 16,
+        "computedRationale": "proximity to base (Baildon) — 4.5 miles straight-line, population 5996"
+      }
+    },
+    {
+      "town": "Yeadon",
+      "distanceMiles": 4.3,
+      "population": 37379,
+      "affinityServices": [],
+      "publishOrder": 15,
+      "orderRationale": "PINNED to position 15 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 14: proximity to base (Baildon) — 4.3 miles straight-line, population 37379",
+      "pinned": {
+        "position": 15,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 14,
+        "computedRationale": "proximity to base (Baildon) — 4.3 miles straight-line, population 37379"
+      }
+    },
+    {
+      "town": "Burley Woodhead",
+      "distanceMiles": 3.7,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 16,
+      "orderRationale": "PINNED to position 16 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 12: proximity to base (Baildon) — 3.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 16,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 12,
+        "computedRationale": "proximity to base (Baildon) — 3.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265202; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Hawksworth",
+      "distanceMiles": 2.3,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 17,
+      "orderRationale": "PINNED to position 17 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 6: proximity to base (Baildon) — 2.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 17,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 6,
+        "computedRationale": "proximity to base (Baildon) — 2.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 12265246, the village by Guiseley (the other Hawksworth in Leeds is an estate in Kirkstall, 7.1 miles away); GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Rawdon",
+      "distanceMiles": 4.3,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 18,
+      "orderRationale": "PINNED to position 18 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 15: proximity to base (Baildon) — 4.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 18,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 15,
+        "computedRationale": "proximity to base (Baildon) — 4.3 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2639589; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Leeds",
+      "distanceMiles": 10.4,
+      "population": 536280,
+      "affinityServices": [],
+      "publishOrder": 19,
+      "orderRationale": "PINNED to position 19 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 44: proximity to base (Baildon) — 10.4 miles straight-line, population 536280",
+      "pinned": {
+        "position": 19,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 44,
+        "computedRationale": "proximity to base (Baildon) — 10.4 miles straight-line, population 536280"
+      }
+    },
+    {
+      "town": "Skipton",
+      "distanceMiles": 12.2,
+      "population": 14623,
+      "affinityServices": [],
+      "publishOrder": 20,
+      "orderRationale": "PINNED to position 20 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 55: proximity to base (Baildon) — 12.2 miles straight-line, population 14623",
+      "pinned": {
+        "position": 20,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 55,
+        "computedRationale": "proximity to base (Baildon) — 12.2 miles straight-line, population 14623"
+      }
+    },
+    {
+      "town": "Wrose",
+      "distanceMiles": 1.8,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 21,
+      "orderRationale": "PINNED to position 21 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 4: proximity to base (Baildon) — 1.8 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 21,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 4,
+        "computedRationale": "proximity to base (Baildon) — 1.8 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 13271809, a section of Bradford; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Pudsey",
+      "distanceMiles": 6.3,
+      "population": 25393,
+      "affinityServices": [],
+      "publishOrder": 22,
+      "orderRationale": "PINNED to position 22 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 24: proximity to base (Baildon) — 6.3 miles straight-line, population 25393",
+      "pinned": {
+        "position": 22,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 24,
+        "computedRationale": "proximity to base (Baildon) — 6.3 miles straight-line, population 25393"
+      }
+    },
+    {
+      "town": "Pool",
+      "distanceMiles": 7.9,
+      "population": 1935,
+      "affinityServices": [],
+      "publishOrder": 23,
+      "orderRationale": "PINNED to position 23 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 31: proximity to base (Baildon) — 7.9 miles straight-line, population 1935",
+      "pinned": {
+        "position": 23,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 31,
+        "computedRationale": "proximity to base (Baildon) — 7.9 miles straight-line, population 1935"
+      }
+    },
+    {
+      "town": "Headingley",
+      "distanceMiles": 8.7,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 24,
+      "orderRationale": "PINNED to position 24 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 32: proximity to base (Baildon) — 8.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 24,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 32,
+        "computedRationale": "proximity to base (Baildon) — 8.7 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 6695619; GeoNames records 300 people, which is not the suburb's population, so it is treated as unmeasured); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Meanwood",
+      "distanceMiles": 9.1,
+      "population": null,
+      "affinityServices": [],
+      "publishOrder": 25,
+      "orderRationale": "PINNED to position 25 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 35: proximity to base (Baildon) — 9.1 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)",
+      "pinned": {
+        "position": 25,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 35,
+        "computedRationale": "proximity to base (Baildon) — 9.1 miles straight-line. NAMED BY THE CLIENT: a place the gazetteer's 500+ extract does not hold, added for this site by townOrder.namedPlaces (GeoNames GB extract (download.geonames.org/export/dump/GB.zip, CC BY 4.0), fetched 4 Nov 2026, geonameId 2642846, a section of Leeds; GeoNames has no population figure (0)); its population is unmeasured, so the population floor does not apply to it (D-2026-11-04-05)"
+      }
+    },
+    {
+      "town": "Chapel Allerton",
+      "distanceMiles": 10.2,
+      "population": 18206,
+      "affinityServices": [],
+      "publishOrder": 26,
+      "orderRationale": "PINNED to position 26 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 42: proximity to base (Baildon) — 10.2 miles straight-line, population 18206",
+      "pinned": {
+        "position": 26,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 42,
+        "computedRationale": "proximity to base (Baildon) — 10.2 miles straight-line, population 18206"
+      }
+    },
+    {
+      "town": "Sowerby Bridge",
+      "distanceMiles": 10.8,
+      "population": 9948,
+      "affinityServices": [],
+      "publishOrder": 27,
+      "orderRationale": "PINNED to position 27 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 49: proximity to base (Baildon) — 10.8 miles straight-line, population 9948",
+      "pinned": {
+        "position": 27,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 49,
+        "computedRationale": "proximity to base (Baildon) — 10.8 miles straight-line, population 9948"
+      }
+    },
+    {
+      "town": "Batley",
+      "distanceMiles": 11.8,
+      "population": 39013,
+      "affinityServices": [],
+      "publishOrder": 28,
+      "orderRationale": "PINNED to position 28 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 53: proximity to base (Baildon) — 11.8 miles straight-line, population 39013",
+      "pinned": {
+        "position": 28,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 53,
+        "computedRationale": "proximity to base (Baildon) — 11.8 miles straight-line, population 39013"
+      }
+    },
+    {
+      "town": "Dewsbury",
+      "distanceMiles": 12.6,
+      "population": 61035,
+      "affinityServices": [],
+      "publishOrder": 29,
+      "orderRationale": "PINNED to position 29 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 58: proximity to base (Baildon) — 12.6 miles straight-line, population 61035",
+      "pinned": {
+        "position": 29,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 58,
+        "computedRationale": "proximity to base (Baildon) — 12.6 miles straight-line, population 61035"
+      }
+    },
+    {
+      "town": "Harrogate",
+      "distanceMiles": 14.2,
+      "population": 89060,
+      "affinityServices": [],
+      "publishOrder": 30,
+      "orderRationale": "PINNED to position 30 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 67: proximity to base (Baildon) — 14.2 miles straight-line, population 89060",
+      "pinned": {
+        "position": 30,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 67,
+        "computedRationale": "proximity to base (Baildon) — 14.2 miles straight-line, population 89060"
+      }
+    },
+    {
+      "town": "Knaresborough",
+      "distanceMiles": 17.1,
+      "population": 14740,
+      "affinityServices": [],
+      "publishOrder": 31,
+      "orderRationale": "PINNED to position 31 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 73: named by the client and pinned by the operator — 17.1 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 31,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 73,
+        "computedRationale": "named by the client and pinned by the operator — 17.1 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Holmfirth",
+      "distanceMiles": 19.2,
+      "population": 1980,
+      "affinityServices": [],
+      "publishOrder": 32,
+      "orderRationale": "PINNED to position 32 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 74: named by the client and pinned by the operator — 19.2 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 32,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 74,
+        "computedRationale": "named by the client and pinned by the operator — 19.2 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Ripon",
+      "distanceMiles": 22.6,
+      "population": 16363,
+      "affinityServices": [],
+      "publishOrder": 33,
+      "orderRationale": "PINNED to position 33 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 75: named by the client and pinned by the operator — 22.6 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 33,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 75,
+        "computedRationale": "named by the client and pinned by the operator — 22.6 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "York",
+      "distanceMiles": 29.7,
+      "population": 156135,
+      "affinityServices": [],
+      "publishOrder": 34,
+      "orderRationale": "PINNED to position 34 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 76: named by the client and pinned by the operator — 29.7 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 34,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 76,
+        "computedRationale": "named by the client and pinned by the operator — 29.7 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Northallerton",
+      "distanceMiles": 36.9,
+      "population": 16832,
+      "affinityServices": [],
+      "publishOrder": 35,
+      "orderRationale": "PINNED to position 35 of 35 by the operator — an explicit position always wins over a computed one (D-2026-09-08-03), and this town publishes before the proximity order from Baildon. Computed order was 77: named by the client and pinned by the operator — 36.9 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)",
+      "pinned": {
+        "position": 35,
+        "of": 35,
+        "by": "operator",
+        "computedOrder": 77,
+        "computedRationale": "named by the client and pinned by the operator — 36.9 miles straight-line from Baildon, BEYOND the 15-mile radius, in the plan because townOrder.pinBeyondRadius is set (D-2026-11-03-14)"
+      }
+    },
+    {
+      "town": "Cullingworth",
+      "distanceMiles": 4.7,
+      "population": 2596,
+      "affinityServices": [],
+      "publishOrder": 36,
+      "orderRationale": "proximity to base (Baildon) — 4.7 miles straight-line, population 2596"
+    },
+    {
+      "town": "Keighley",
+      "distanceMiles": 5,
+      "population": 50171,
+      "affinityServices": [],
+      "publishOrder": 37,
+      "orderRationale": "proximity to base (Baildon) — 5 miles straight-line, population 50171"
+    },
+    {
+      "town": "Denholme",
+      "distanceMiles": 5.4,
+      "population": 2715,
+      "affinityServices": [],
+      "publishOrder": 38,
+      "orderRationale": "proximity to base (Baildon) — 5.4 miles straight-line, population 2715"
+    },
+    {
+      "town": "Queensbury",
+      "distanceMiles": 6.1,
+      "population": 8912,
+      "affinityServices": [],
+      "publishOrder": 39,
+      "orderRationale": "proximity to base (Baildon) — 6.1 miles straight-line, population 8912"
+    },
+    {
+      "town": "Steeton",
+      "distanceMiles": 7.1,
+      "population": 4196,
+      "affinityServices": [],
+      "publishOrder": 40,
+      "orderRationale": "proximity to base (Baildon) — 7.1 miles straight-line, population 4196"
+    },
+    {
+      "town": "Oxenhope",
+      "distanceMiles": 7.1,
+      "population": 1872,
+      "affinityServices": [],
+      "publishOrder": 41,
+      "orderRationale": "proximity to base (Baildon) — 7.1 miles straight-line, population 1872"
+    },
+    {
+      "town": "Bramhope",
+      "distanceMiles": 7.5,
+      "population": 3382,
+      "affinityServices": [],
+      "publishOrder": 42,
+      "orderRationale": "proximity to base (Baildon) — 7.5 miles straight-line, population 3382"
+    },
+    {
+      "town": "Silsden",
+      "distanceMiles": 7.7,
+      "population": 7912,
+      "affinityServices": [],
+      "publishOrder": 43,
+      "orderRationale": "proximity to base (Baildon) — 7.7 miles straight-line, population 7912"
+    },
+    {
+      "town": "Addingham",
+      "distanceMiles": 7.8,
+      "population": 3730,
+      "affinityServices": [],
+      "publishOrder": 44,
+      "orderRationale": "proximity to base (Baildon) — 7.8 miles straight-line, population 3730"
+    },
+    {
+      "town": "Cleckheaton",
+      "distanceMiles": 9,
+      "population": 27393,
+      "affinityServices": [],
+      "publishOrder": 45,
+      "orderRationale": "proximity to base (Baildon) — 9 miles straight-line, population 27393"
+    },
+    {
+      "town": "Cross Hills",
+      "distanceMiles": 9,
+      "population": 11731,
+      "affinityServices": [],
+      "publishOrder": 46,
+      "orderRationale": "proximity to base (Baildon) — 9 miles straight-line, population 11731"
+    },
+    {
+      "town": "Stainburn",
+      "distanceMiles": 9.2,
+      "population": 1666,
+      "affinityServices": [],
+      "publishOrder": 47,
+      "orderRationale": "proximity to base (Baildon) — 9.2 miles straight-line, population 1666"
+    },
+    {
+      "town": "Halifax",
+      "distanceMiles": 9.4,
+      "population": 82624,
+      "affinityServices": [],
+      "publishOrder": 48,
+      "orderRationale": "proximity to base (Baildon) — 9.4 miles straight-line, population 82624"
+    },
+    {
+      "town": "Glusburn",
+      "distanceMiles": 9.4,
+      "population": 7425,
+      "affinityServices": [],
+      "publishOrder": 49,
+      "orderRationale": "proximity to base (Baildon) — 9.4 miles straight-line, population 7425"
+    },
+    {
+      "town": "Southowram",
+      "distanceMiles": 9.7,
+      "population": 2003,
+      "affinityServices": [],
+      "publishOrder": 50,
+      "orderRationale": "proximity to base (Baildon) — 9.7 miles straight-line, population 2003"
+    },
+    {
+      "town": "Brighouse",
+      "distanceMiles": 9.9,
+      "population": 32872,
+      "affinityServices": [],
+      "publishOrder": 51,
+      "orderRationale": "proximity to base (Baildon) — 9.9 miles straight-line, population 32872"
+    },
+    {
+      "town": "Holbeck",
+      "distanceMiles": 10,
+      "population": 5505,
+      "affinityServices": [],
+      "publishOrder": 52,
+      "orderRationale": "proximity to base (Baildon) — 10 miles straight-line, population 5505"
+    },
+    {
+      "town": "Low Bradley",
+      "distanceMiles": 10.3,
+      "population": 1244,
+      "affinityServices": [],
+      "publishOrder": 53,
+      "orderRationale": "proximity to base (Baildon) — 10.3 miles straight-line, population 1244"
+    },
+    {
+      "town": "Liversedge",
+      "distanceMiles": 10.5,
+      "population": 19420,
+      "affinityServices": [],
+      "publishOrder": 54,
+      "orderRationale": "proximity to base (Baildon) — 10.5 miles straight-line, population 19420"
+    },
+    {
+      "town": "Morley",
+      "distanceMiles": 10.7,
+      "population": 57385,
+      "affinityServices": [],
+      "publishOrder": 55,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 57385"
+    },
+    {
+      "town": "Heckmondwike",
+      "distanceMiles": 10.7,
+      "population": 18149,
+      "affinityServices": [],
+      "publishOrder": 56,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 18149"
+    },
+    {
+      "town": "Rastrick",
+      "distanceMiles": 10.7,
+      "population": 11351,
+      "affinityServices": [],
+      "publishOrder": 57,
+      "orderRationale": "proximity to base (Baildon) — 10.7 miles straight-line, population 11351"
+    },
+    {
+      "town": "Luddenden Foot",
+      "distanceMiles": 11,
+      "population": 2190,
+      "affinityServices": [],
+      "publishOrder": 58,
+      "orderRationale": "proximity to base (Baildon) — 11 miles straight-line, population 2190"
+    },
+    {
+      "town": "Mytholmroyd",
+      "distanceMiles": 11.3,
+      "population": 3949,
+      "affinityServices": [],
+      "publishOrder": 59,
+      "orderRationale": "proximity to base (Baildon) — 11.3 miles straight-line, population 3949"
+    },
+    {
+      "town": "Elland",
+      "distanceMiles": 11.4,
+      "population": 15625,
+      "affinityServices": [],
+      "publishOrder": 60,
+      "orderRationale": "proximity to base (Baildon) — 11.4 miles straight-line, population 15625"
+    },
+    {
+      "town": "Hebden Bridge",
+      "distanceMiles": 11.8,
+      "population": 4235,
+      "affinityServices": [],
+      "publishOrder": 61,
+      "orderRationale": "proximity to base (Baildon) — 11.8 miles straight-line, population 4235"
+    },
+    {
+      "town": "Embsay",
+      "distanceMiles": 12.2,
+      "population": 1679,
+      "affinityServices": [],
+      "publishOrder": 62,
+      "orderRationale": "proximity to base (Baildon) — 12.2 miles straight-line, population 1679"
+    },
+    {
+      "town": "Holywell Green",
+      "distanceMiles": 12.4,
+      "population": 3178,
+      "affinityServices": [],
+      "publishOrder": 63,
+      "orderRationale": "proximity to base (Baildon) — 12.4 miles straight-line, population 3178"
+    },
+    {
+      "town": "Mirfield",
+      "distanceMiles": 12.6,
+      "population": 18800,
+      "affinityServices": [],
+      "publishOrder": 64,
+      "orderRationale": "proximity to base (Baildon) — 12.6 miles straight-line, population 18800"
+    },
+    {
+      "town": "Pannal",
+      "distanceMiles": 12.9,
+      "population": 2219,
+      "affinityServices": [],
+      "publishOrder": 65,
+      "orderRationale": "proximity to base (Baildon) — 12.9 miles straight-line, population 2219"
+    },
+    {
+      "town": "Shadwell",
+      "distanceMiles": 12.9,
+      "population": 1352,
+      "affinityServices": [],
+      "publishOrder": 66,
+      "orderRationale": "proximity to base (Baildon) — 12.9 miles straight-line, population 1352"
+    },
+    {
+      "town": "Barkisland",
+      "distanceMiles": 13,
+      "population": 1004,
+      "affinityServices": [],
+      "publishOrder": 67,
+      "orderRationale": "proximity to base (Baildon) — 13 miles straight-line, population 1004"
+    },
+    {
+      "town": "Ripponden",
+      "distanceMiles": 13.5,
+      "population": 4665,
+      "affinityServices": [],
+      "publishOrder": 68,
+      "orderRationale": "proximity to base (Baildon) — 13.5 miles straight-line, population 4665"
+    },
+    {
+      "town": "Huddersfield",
+      "distanceMiles": 13.7,
+      "population": 149017,
+      "affinityServices": [],
+      "publishOrder": 69,
+      "orderRationale": "proximity to base (Baildon) — 13.7 miles straight-line, population 149017"
+    },
+    {
+      "town": "Scarcroft",
+      "distanceMiles": 13.8,
+      "population": 1194,
+      "affinityServices": [],
+      "publishOrder": 70,
+      "orderRationale": "proximity to base (Baildon) — 13.8 miles straight-line, population 1194"
+    },
+    {
+      "town": "East Keswick",
+      "distanceMiles": 14.1,
+      "population": 1224,
+      "affinityServices": [],
+      "publishOrder": 71,
+      "orderRationale": "proximity to base (Baildon) — 14.1 miles straight-line, population 1224"
+    },
+    {
+      "town": "Bardsey",
+      "distanceMiles": 14.2,
+      "population": 2876,
+      "affinityServices": [],
+      "publishOrder": 72,
+      "orderRationale": "proximity to base (Baildon) — 14.2 miles straight-line, population 2876"
+    },
+    {
+      "town": "Ossett",
+      "distanceMiles": 14.3,
+      "population": 21861,
+      "affinityServices": [],
+      "publishOrder": 73,
+      "orderRationale": "proximity to base (Baildon) — 14.3 miles straight-line, population 21861"
+    },
+    {
+      "town": "Lofthouse",
+      "distanceMiles": 14.4,
+      "population": 23458,
+      "affinityServices": [],
+      "publishOrder": 74,
+      "orderRationale": "proximity to base (Baildon) — 14.4 miles straight-line, population 23458"
+    },
+    {
+      "town": "Thorner",
+      "distanceMiles": 14.7,
+      "population": 1408,
+      "affinityServices": [],
+      "publishOrder": 75,
+      "orderRationale": "proximity to base (Baildon) — 14.7 miles straight-line, population 1408"
+    },
+    {
+      "town": "Scholes",
+      "distanceMiles": 14.8,
+      "population": 2266,
+      "affinityServices": [],
+      "publishOrder": 76,
+      "orderRationale": "proximity to base (Baildon) — 14.8 miles straight-line, population 2266"
+    },
+    {
+      "town": "Bradford",
+      "distanceMiles": 4,
+      "population": 366187,
+      "affinityServices": [],
+      "publishOrder": 77,
+      "orderRationale": "PUBLISHES LAST by the operator's ruling (townOrder.publishLast, D-2026-11-04-11): kept in the plan, and published after every other town of the first batch; the later batches (townOrder.laterBatches) follow it. Computed order was 36: proximity to base (Baildon) — 4 miles straight-line, population 366187",
+      "publishLast": {
+        "position": 77,
+        "of": 1,
+        "by": "operator",
+        "computedOrder": 36,
+        "computedRationale": "proximity to base (Baildon) — 4 miles straight-line, population 366187"
+      }
+    },
+    {
+      "town": "Todmorden",
+      "distanceMiles": 15.6,
+      "population": 11690,
+      "affinityServices": [],
+      "publishOrder": 78,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 11690",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Linthwaite",
+      "distanceMiles": 15.6,
+      "population": 3835,
+      "affinityServices": [],
+      "publishOrder": 79,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 3835",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Middlestown",
+      "distanceMiles": 15.6,
+      "population": 2402,
+      "affinityServices": [],
+      "publishOrder": 80,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.6 miles straight-line, population 2402",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Spofforth",
+      "distanceMiles": 15.7,
+      "population": 1169,
+      "affinityServices": [],
+      "publishOrder": 81,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.7 miles straight-line, population 1169",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Horbury",
+      "distanceMiles": 15.9,
+      "population": 10225,
+      "affinityServices": [],
+      "publishOrder": 82,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 15.9 miles straight-line, population 10225",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Collingham",
+      "distanceMiles": 16,
+      "population": 3033,
+      "affinityServices": [],
+      "publishOrder": 83,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16 miles straight-line, population 3033",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Gargrave",
+      "distanceMiles": 16,
+      "population": 1755,
+      "affinityServices": [],
+      "publishOrder": 84,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16 miles straight-line, population 1755",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Swillington",
+      "distanceMiles": 16.1,
+      "population": 3088,
+      "affinityServices": [],
+      "publishOrder": 85,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.1 miles straight-line, population 3088",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Flockton",
+      "distanceMiles": 16.2,
+      "population": 1368,
+      "affinityServices": [],
+      "publishOrder": 86,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.2 miles straight-line, population 1368",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Blackmoorfoot",
+      "distanceMiles": 16.3,
+      "population": 3835,
+      "affinityServices": [],
+      "publishOrder": 87,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.3 miles straight-line, population 3835",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Wakefield",
+      "distanceMiles": 16.4,
+      "population": 109766,
+      "affinityServices": [],
+      "publishOrder": 88,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.4 miles straight-line, population 109766",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Cornholme",
+      "distanceMiles": 16.4,
+      "population": 1690,
+      "affinityServices": [],
+      "publishOrder": 89,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.4 miles straight-line, population 1690",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Walsden",
+      "distanceMiles": 16.6,
+      "population": 2000,
+      "affinityServices": [],
+      "publishOrder": 90,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.6 miles straight-line, population 2000",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Pateley Bridge",
+      "distanceMiles": 16.6,
+      "population": 1432,
+      "affinityServices": [],
+      "publishOrder": 91,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.6 miles straight-line, population 1432",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Kirkburton",
+      "distanceMiles": 16.7,
+      "population": 3786,
+      "affinityServices": [],
+      "publishOrder": 92,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 16.7 miles straight-line, population 3786",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Garforth",
+      "distanceMiles": 17,
+      "population": 14838,
+      "affinityServices": [],
+      "publishOrder": 93,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17 miles straight-line, population 14838",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Wetherby",
+      "distanceMiles": 17.3,
+      "population": 13572,
+      "affinityServices": [],
+      "publishOrder": 94,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.3 miles straight-line, population 13572",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Emley",
+      "distanceMiles": 17.3,
+      "population": 1497,
+      "affinityServices": [],
+      "publishOrder": 95,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.3 miles straight-line, population 1497",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Meltham Mills",
+      "distanceMiles": 17.6,
+      "population": 9000,
+      "affinityServices": [],
+      "publishOrder": 96,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.6 miles straight-line, population 9000",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Shelley",
+      "distanceMiles": 17.6,
+      "population": 5359,
+      "affinityServices": [],
+      "publishOrder": 97,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.6 miles straight-line, population 5359",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Meltham",
+      "distanceMiles": 17.7,
+      "population": 7836,
+      "affinityServices": [],
+      "publishOrder": 98,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 7836",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Grassington",
+      "distanceMiles": 17.7,
+      "population": 1792,
+      "affinityServices": [],
+      "publishOrder": 99,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 1792",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Methley",
+      "distanceMiles": 17.7,
+      "population": 1184,
+      "affinityServices": [],
+      "publishOrder": 100,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.7 miles straight-line, population 1184",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Bramham",
+      "distanceMiles": 17.8,
+      "population": 1650,
+      "affinityServices": [],
+      "publishOrder": 101,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.8 miles straight-line, population 1650",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Kippax",
+      "distanceMiles": 17.9,
+      "population": 15965,
+      "affinityServices": [],
+      "publishOrder": 102,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.9 miles straight-line, population 15965",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Marsden",
+      "distanceMiles": 17.9,
+      "population": 3889,
+      "affinityServices": [],
+      "publishOrder": 103,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 17.9 miles straight-line, population 3889",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Aberford",
+      "distanceMiles": 18.2,
+      "population": 1503,
+      "affinityServices": [],
+      "publishOrder": 104,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.2 miles straight-line, population 1503",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Boston Spa",
+      "distanceMiles": 18.5,
+      "population": 6052,
+      "affinityServices": [],
+      "publishOrder": 105,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.5 miles straight-line, population 6052",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Shepley",
+      "distanceMiles": 18.5,
+      "population": 5444,
+      "affinityServices": [],
+      "publishOrder": 106,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.5 miles straight-line, population 5444",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Skelmanthorpe",
+      "distanceMiles": 18.6,
+      "population": 4549,
+      "affinityServices": [],
+      "publishOrder": 107,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.6 miles straight-line, population 4549",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "New Mill",
+      "distanceMiles": 18.9,
+      "population": 9197,
+      "affinityServices": [],
+      "publishOrder": 108,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.9 miles straight-line, population 9197",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Clayton West",
+      "distanceMiles": 18.9,
+      "population": 8109,
+      "affinityServices": [],
+      "publishOrder": 109,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 18.9 miles straight-line, population 8109",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Scissett",
+      "distanceMiles": 19,
+      "population": 1324,
+      "affinityServices": [],
+      "publishOrder": 110,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19 miles straight-line, population 1324",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Upper Cumberworth",
+      "distanceMiles": 19.2,
+      "population": 1122,
+      "affinityServices": [],
+      "publishOrder": 111,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.2 miles straight-line, population 1122",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Castleford",
+      "distanceMiles": 19.3,
+      "population": 45106,
+      "affinityServices": [],
+      "publishOrder": 112,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.3 miles straight-line, population 45106",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Sharlston",
+      "distanceMiles": 19.6,
+      "population": 4028,
+      "affinityServices": [],
+      "publishOrder": 113,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.6 miles straight-line, population 4028",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Thorp Arch",
+      "distanceMiles": 19.6,
+      "population": 1505,
+      "affinityServices": [],
+      "publishOrder": 114,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.6 miles straight-line, population 1505",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Crofton",
+      "distanceMiles": 19.7,
+      "population": 5258,
+      "affinityServices": [],
+      "publishOrder": 115,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.7 miles straight-line, population 5258",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    },
+    {
+      "town": "Denby Dale",
+      "distanceMiles": 19.7,
+      "population": 3043,
+      "affinityServices": [],
+      "publishOrder": 116,
+      "orderRationale": "LATER BATCH 2 by the operator's ruling (townOrder.laterBatches, D-2026-11-04-12): inside this batch's 20-mile radius and not in the first batch, so it publishes after every town of the first batch, in proximity order. proximity to base (Baildon) — 19.7 miles straight-line, population 3043",
+      "laterBatch": {
+        "batch": 2,
+        "radiusMiles": 20,
+        "by": "operator"
+      }
+    }
+  ],
+  "townOrder": {
+    "scheme": "mixed",
+    "basis": "MIXED: 35 town(s) pinned by the operator — 1. Baildon, 2. Guiseley, 3. Menston, 4. Ilkley, 5. Shipley, 6. Otley, 7. Horsforth, 8. Bingley, 9. Saltaire, 10. Harden, 11. Haworth, 12. Wilsden, 13. Idle, 14. Burley in Wharfedale, 15. Yeadon, 16. Burley Woodhead, 17. Hawksworth, 18. Rawdon, 19. Leeds, 20. Skipton, 21. Wrose, 22. Pudsey, 23. Pool, 24. Headingley, 25. Meanwood, 26. Chapel Allerton, 27. Sowerby Bridge, 28. Batley, 29. Dewsbury, 30. Harrogate, 31. Knaresborough, 32. Holmfirth, 33. Ripon, 34. York, 35. Northallerton — publish first, in that exact order. Everything after them is proximity order: proximity to base (closest first); base = Baildon (Bradford); every settlement within 15 miles straight-line, EXCLUDING population under 1000; plus 5 town(s) the client named BEYOND the radius, pinned with townOrder.pinBeyondRadius: Knaresborough 17.1 mi, Holmfirth 19.2 mi, Ripon 22.6 mi, York 29.7 mi, Northallerton 36.9 mi; plus 8 place(s) the client named that the gazetteer does not hold, added by townOrder.namedPlaces with sourced coordinates and no population floor: Harden 3.4 mi, Idle 2.4 mi, Burley Woodhead 3.7 mi, Hawksworth 2.3 mi, Rawdon 4.3 mi, Wrose 1.8 mi, Headingley 8.7 mi, Meanwood 9.1 mi; then 1 town(s) the operator moved to the END of the first batch with townOrder.publishLast, kept in the plan and published after every other town of the first batch: Bradford; then LATER BATCH 2 (townOrder.laterBatches): 39 town(s) inside 20 miles that no earlier batch holds, EXCLUDING population under 1000, RESTRICTED to Bradford, Calderdale, Kirklees, Leeds, Wakefield, North Yorkshire, published after every town of the first batch",
+    "radiusMiles": 15,
+    "minPopulation": 1000,
+    "pinned": [
+      "Baildon",
+      "Guiseley",
+      "Menston",
+      "Ilkley",
+      "Shipley",
+      "Otley",
+      "Horsforth",
+      "Bingley",
+      "Saltaire",
+      "Harden",
+      "Haworth",
+      "Wilsden",
+      "Idle",
+      "Burley in Wharfedale",
+      "Yeadon",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Leeds",
+      "Skipton",
+      "Wrose",
+      "Pudsey",
+      "Pool",
+      "Headingley",
+      "Meanwood",
+      "Chapel Allerton",
+      "Sowerby Bridge",
+      "Batley",
+      "Dewsbury",
+      "Harrogate",
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton"
+    ],
+    "pinnedOver": "proximity",
+    "pinBeyondRadius": true,
+    "pinnedBeyondRadius": [
+      "Knaresborough",
+      "Holmfirth",
+      "Ripon",
+      "York",
+      "Northallerton"
+    ],
+    "namedPlaces": [
+      "Harden",
+      "Idle",
+      "Burley Woodhead",
+      "Hawksworth",
+      "Rawdon",
+      "Wrose",
+      "Headingley",
+      "Meanwood"
+    ],
+    "publishLast": [
+      "Bradford"
+    ],
+    "laterBatches": [
+      {
+        "batch": 2,
+        "radiusMiles": 20,
+        "minPopulation": 1000,
+        "counties": [
+          "Bradford",
+          "Calderdale",
+          "Kirklees",
+          "Leeds",
+          "Wakefield",
+          "North Yorkshire"
+        ],
+        "outsideCounties": 12,
+        "towns": 39
+      }
+    ]
+  },
+  "articleCap": {
+    "maxArticles": 900,
+    "hubCount": 5,
+    "townsAvailable": 116,
+    "townsAllowed": 180,
+    "townsKept": 116,
+    "townsDropped": 0,
+    "articlesPlanned": 580,
+    "applied": false,
+    "basis": "900 articles ÷ 5 hub(s) allows 180 town(s), and the radius enumerated 116. The cap did not bite: every town is in the plan, and the site is 580 article(s).",
+    "dropped": []
+  },
+  "townResearch": {
+    "Baildon": {
+      "facts": [
+        {
+          "fact": "Baildon’s conservation areas contain a mixture of 17th-, 18th-, 19th- and early-20th-century buildings, including workers’ cottages, substantial houses, churches, shops, offices, mills and industrial premises; decorators working there need to distinguish heritage-sensitive repairs from ordinary repainting.",
+          "label": "PROPERTY TYPES",
+          "source": "https://bradford.oc2.uk/document/71/41289"
+        },
+        {
+          "fact": "Hallcliffe and Northgate contain large areas of 19th-century terraced housing, making exterior masonry preparation, windows and doors, stair halls, kitchens and compact-room redecorations particularly relevant trade work.",
+          "label": "PROPERTY TYPES",
+          "source": "https://www.bradford.gov.uk/media/2326/baildonandstationroadcaa.pdf"
+        },
+        {
+          "fact": "Baildon is surrounded on three sides by open countryside and is bounded by the River Aire and Leeds and Liverpool Canal, so exterior painting businesses should expect varied exposure, damp-risk considerations and access requirements across urban and edge-of-town properties.",
+          "label": "LANDMARKS",
+          "source": "https://bradford.oc2.uk/document/71/41274"
+        },
+        {
+          "fact": "The area between the A6038 and River Aire is predominantly commercial and industrial, alongside housing, creating a local market for commercial painting and decorating as well as residential work.",
+          "label": "LANDMARKS",
+          "source": "https://bradford.oc2.uk/document/71/41327"
+        },
+        {
+          "fact": "Baildon has experienced extensive housing development over the past century, while new development is now constrained by limited suitable sites; this supports a mixed workload of refurbishment, kitchen renovation, wallpapering and redecoration in existing homes rather than relying only on new-build projects.",
+          "label": "PROPERTY TYPES",
+          "source": "https://bradford.oc2.uk/document/71/41289"
+        }
+      ],
+      "labels": {
+        "PROPERTY TYPES": "Stone cottages and farmhouses dating from the 17th and 18th centuries; substantial late-18th- and early-19th-century houses; 19th-century stone workers’ terraces around Hallcliffe and Northgate; former mill and industrial buildings; early-20th-century houses; and extensive later-20th-century suburban developments, including newer housing around High Fold. These materials and eras create regular demand for breathable masonry-compatible coatings, timber repairs, interior redecoration, wallpapering, and careful work around retained period features.",
+        "NEIGHBOURHOODS": "Baildon Village Centre, Baildon Green, Baildon Station Road, Hallcliffe, Northgate, High Fold, Charlestown, Tong Park",
+        "LANDMARKS": "Baildon Moor, Baildon Bank, Roberts Park, River Aire, Leeds and Liverpool Canal, Shipley Glen, Bracken Hall Countryside Centre, Baildon Hall, Baildon Green Quarries",
+        "LOCAL CHARACTER": "Baildon is a substantial Aire Valley town rather than a small village, with a locally recognised “village centre” surrounded by many neighbourhoods, strong commuter links, and an attractive setting between the River Aire and moorland. Locals and planning documents associate its identity with “Baildon Village Centre,” Baildon Green’s tightly packed stone buildings, dramatic views, and the town’s rural and walking connections towards Baildon Moor and Shipley Glen."
+      },
+      "unsourcedOffered": 0
+    }
+  },
+  "blueprints": [
+    {
+      "service": "Painting and Decorating",
+      "blueprintRef": "blueprints/painting-and-decorating.blueprint.json"
+    },
+    {
+      "service": "Interior Painting",
+      "blueprintRef": "blueprints/interior-painting.blueprint.json"
+    },
+    {
+      "service": "Wallpapering",
+      "blueprintRef": "blueprints/wallpapering.blueprint.json"
+    },
+    {
+      "service": "home page",
+      "blueprintRef": "blueprints/home.blueprint.json"
+    }
+  ],
+  "negativeTopics": [
+    "Named staff or team members not listed in Business Info",
+    "Fake or assumed customer reviews or testimonials",
+    "Made-up years of experience. Only the exact figure from Business Info",
+    "Made-up qualifications or certifications not listed in Business Info",
+    "Made-up past projects, clients or work history not stated in Business Info",
+    "Assumed or invented response times, for example arriving within one hour",
+    "Invented business details or claims not stated in Business Info",
+    "How to choose a provider, advisory or comparison sections that set this business against a competitor, or compare or rank named brands or manufacturers against each other. Comparing generic types or options (vented vs unvented cylinders, combi vs system boilers, repair vs replacement) is encouraged, and so is naming the brands the business works with",
+    "Competing businesses, services or providers, local, national or international",
+    "The physical base or location of the business. Only state that the area is served",
+    "Serving this location for X years. Only general experience years from Business Info",
+    "Bespoke, custom, or designed and tailored systems unless stated in Business Info",
+    "Services not listed in Business Info. Do not invent new offerings",
+    "Warranty or guarantee durations not stated in Business Info",
+    "Insurance values or cover amounts not stated in Business Info",
+    "Government grants or schemes such as ECO4, BUS, SEG or HUG2 unless in Business Info",
+    "Price ranges, cost estimates or savings figures not stated in Business Info",
+    "Specific ROI percentages, CO2 savings or energy output projections",
+    "Named utility companies, tariff names or grid operator names",
+    "Awards, ratings or industry body memberships not in Business Info",
+    "Unsubstantiated superlatives in SEO articles, in any position, including number one, best, top, leading and most trusted. Banned as a class, not as a list of strings. Hub pages and the home page may use them",
+    "A company registration number, unless present in Business Info",
+    "A VAT registration number, unless present in Business Info",
+    "A stated review count or numeric rating; say many five-star reviews and point to the reviews widget",
+    "Plastering, skimming, plaster repairs, applying render, silicone rendering or Venetian plastering as a service of TrueLine Finishes: painting and decorating only, for now (Brandon, WhatsApp 27 Oct 2026). Painting render, brick or stone that is already there IS offered, under Exterior Painting",
+    "Gutter painting or gutter work of any kind (Brandon, 2 Apr 2026 call: 'I'll stay away from gutters because most of them are plastic now')",
+    "Floor sanding, floor staining or floor varnishing, decking, wall murals, spray painting or respraying, or timber repair or replacement, as a service: no client source offers any of them (the 3 Nov 2026 plan's Wood Staining, Wall Murals and Spray Painting hubs came from the keyword table and were dropped on 4 Nov 2026)",
+    "Guarantees, warranties, accreditations, trade-body memberships, certifications or qualifications of any kind: Brandon has none (23 Oct 2026 call, asked directly: 'No')",
+    "Opening hours other than the Google listing's (Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm: state them exactly as listed, or not at all), and any 24-hour, overnight, emergency or out-of-hours availability or call-out, or a promise of evening or weekend work on site: Brandon has offered none. When the work is done is arranged with Brandon",
+    "Team size, staff numbers, or anyone named as working for TrueLine Finishes other than Brandon. Brandon Dawson, the owner, IS named (the operator, 4 Nov 2026): he is the expert who carries out the work and oversees every job, and a call is a direct line to him. His brother and the other worker are never named, and no team, crew or staff count is claimed: write 'we', as his advert does, or 'Brandon'",
+    "The A Child's Wish magazine cover or Brandon's printed advert used as an image (the cover carries a child's photograph and the charity's artwork), and any photo of another business's website, name or phone number (the 23 Oct 2026 reference, message Ooxspsjwt7ZAAQ-hbif1wAAAOw): never shown on the site. Name the charity in words",
+    "The words 'many five-star reviews', on any page. FOR THIS SITE THIS OVERRIDES THE SUGGESTED WORDING IN STANDING PROHIBITION 24 ('say many five-star reviews'): Brandon's Google listing (recorded in gbp) had three reviews on 2 Apr 2026 and 'a few' more by 28 Sep, which is not 'many'. Point to the reviews widget instead, with no count and no rating, and never cite the Rated People reviews of another business called TrueLine. The operator lifts this when the listing shows many reviews",
+    "Kitchen fitting or installation work of any kind as a service of TrueLine Finishes (fitting units, worktops or appliances; kitchen design or layouts; plumbing, electrical or lighting work; tiling, splashbacks or flooring), and kitchen prices or renovation costs: no source has Brandon fitting kitchens, and the operator ruled it out on 4 Nov 2026 ('if you said he didn't do it, then I will not include that'). Painting and decorating a kitchen IS offered, under Interior Painting ('I can do the kitchen doors', 2 Apr 2026 call). His video on the home page, 'Full kitchen renovation #painting #kitchen', is introduced by its title alone and never as a kitchen fitting or renovation service"
+  ],
+  "negativeTopicScopes": {
+    "Unsubstantiated superlatives in SEO articles, in any position, including number one, best, top, leading and most trusted. Banned as a class, not as a list of strings. Hub pages and the home page may use them": {
+      "appliesTo": [
+        "article"
+      ],
+      "allowedOn": [
+        "hub",
+        "home"
+      ]
+    }
+  },
+  "sectors": [
+    "Homes",
+    "Offices",
+    "Restaurants",
+    "Schools",
+    "Hotels",
+    "Spas",
+    "Leisure centres",
+    "Businesses large and small"
+  ],
+  "trustAnchors": {
+    "all": [
+      "Over eight years' experience (Brandon's figure, 23 Oct 2026 call; 'over' is the operator's ruling of 4 Nov 2026)",
+      "Brandon Dawson, the owner, carries out the work and oversees every job; a call is a direct line to him (the operator, 4 Nov 2026)",
+      "Fully insured (Brandon's own advert; no cover amount is stated, so none is given)",
+      "Free quotations (Brandon's own advert)",
+      "Supports the charity A Child's Wish (Brandon, WhatsApp 27 Oct 2026)"
+    ],
+    "neverUse": [
+      "Accreditations, trade bodies, qualifications or certifications: Brandon has none (23 Oct 2026 call, asked directly)",
+      "Guarantees or warranties: none (23 Oct 2026 call)",
+      "A review count or star rating (standing prohibition 24): the reviews widget shows his Google reviews, from the listing recorded in gbp",
+      "Prices, day rates, price tables or 'from £' figures: Brandon has published none"
+    ]
+  },
+  "hubs": [
+    {
+      "slug": "painting-and-decorating",
+      "title": "Painting and Decorating",
+      "type": "service-hub",
+      "sections": [
+        "Interior Painting and Repainting",
+        "Surface Preparation",
+        "Wallpapering and Wall Finishes",
+        "Woodwork, Doors and Staircases",
+        "Residential and Commercial Decorating",
+        "Period Features and Finish Quality",
+        "Project Management and Site Working",
+        "Requesting a Free Quotation",
+        "sectors: Homes, Offices, Restaurants, Schools, Hotels, Spas, Leisure centres, Businesses large and small",
+        "contact-cta"
+      ],
+      "sectionsFrom": "blueprint",
+      "townCoverage": [
+        "Baildon",
+        "Guiseley",
+        "Menston",
+        "Ilkley",
+        "Shipley",
+        "Otley",
+        "Horsforth",
+        "Bingley",
+        "Saltaire",
+        "Harden",
+        "Haworth",
+        "Wilsden",
+        "Idle",
+        "Burley in Wharfedale",
+        "Yeadon",
+        "Burley Woodhead",
+        "Hawksworth",
+        "Rawdon",
+        "Leeds",
+        "Skipton",
+        "Wrose",
+        "Pudsey",
+        "Pool",
+        "Headingley",
+        "Meanwood",
+        "Chapel Allerton",
+        "Sowerby Bridge",
+        "Batley",
+        "Dewsbury",
+        "Harrogate",
+        "Knaresborough",
+        "Holmfirth",
+        "Ripon",
+        "York",
+        "Northallerton",
+        "Cullingworth",
+        "Keighley",
+        "Denholme",
+        "Queensbury",
+        "Steeton",
+        "Oxenhope",
+        "Bramhope",
+        "Silsden",
+        "Addingham",
+        "Cleckheaton",
+        "Cross Hills",
+        "Stainburn",
+        "Halifax",
+        "Glusburn",
+        "Southowram",
+        "Brighouse",
+        "Holbeck",
+        "Low Bradley",
+        "Liversedge",
+        "Morley",
+        "Heckmondwike",
+        "Rastrick",
+        "Luddenden Foot",
+        "Mytholmroyd",
+        "Elland",
+        "Hebden Bridge",
+        "Embsay",
+        "Holywell Green",
+        "Mirfield",
+        "Pannal",
+        "Shadwell",
+        "Barkisland",
+        "Ripponden",
+        "Huddersfield",
+        "Scarcroft",
+        "East Keswick",
+        "Bardsey",
+        "Ossett",
+        "Lofthouse",
+        "Thorner",
+        "Scholes",
+        "Bradford",
+        "Todmorden",
+        "Linthwaite",
+        "Middlestown",
+        "Spofforth",
+        "Horbury",
+        "Collingham",
+        "Gargrave",
+        "Swillington",
+        "Flockton",
+        "Blackmoorfoot",
+        "Wakefield",
+        "Cornholme",
+        "Walsden",
+        "Pateley Bridge",
+        "Kirkburton",
+        "Garforth",
+        "Wetherby",
+        "Emley",
+        "Meltham Mills",
+        "Shelley",
+        "Meltham",
+        "Grassington",
+        "Methley",
+        "Bramham",
+        "Kippax",
+        "Marsden",
+        "Aberford",
+        "Boston Spa",
+        "Shepley",
+        "Skelmanthorpe",
+        "New Mill",
+        "Clayton West",
+        "Scissett",
+        "Upper Cumberworth",
+        "Castleford",
+        "Sharlston",
+        "Thorp Arch",
+        "Crofton",
+        "Denby Dale"
+      ],
+      "contentNote": "THE HEADLINE HUB: the whole trade, Brandon's 'all aspects of painting and decorating' (WhatsApp 27 Oct 2026). Articles are titled 'Painting and Decorating in [Town]' and answer the main search in every town, 'painter and decorator [town]'. Cover everything TrueLine Finishes does, briefly, and link to the hub that goes deeper: interior painting (walls, ceilings, every room, all the woodwork), exterior painting (masonry, woodwork, windows, doors, fascias and soffits), wallpapering and commercial work, with the careful preparation that goes into all of it. From individual rooms to full property redecorations, for homes and businesses (Brandon's own advert); say in passing that the work is for both. Sell quality, not price: attention to detail, lasting finishes and treating the property with care are Brandon's own words; never 'cheap', never a price. Over eight years' experience (the operator's wording of Brandon's 'eight') is the only figure. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 17 London decorators, 4 Nov 2026); write each within Brandon's scope: 'Surface Preparation' is filling, sanding, caulking and fixing hairline cracks, with a mist coat on new plaster, never plaster repairs or skimming as a service; 'Woodwork, Doors and Staircases' is painting them (skirting boards, architraves, doors, spindles, handrails, staircase trims), never carpentry or timber repair; 'Period Features and Finish Quality' is the period features Brandon names (sash and mullion windows, spindles, handrails, staircase trims) and finish quality in his advert's words, never 'high-end' as a claim and never listed-building or conservation experience; 'Project Management and Site Working' is how a job runs (get in touch, a free quotation, preparation first, floors and surfaces protected, as his own kitchen video shows), with no timings and no team; 'Requesting a Free Quotation' promises no site visit and no response time. VIDEO: on the hub page, embed Brandon's YouTube video https://youtu.be/mNwdUtQedkc once, where it suits the page. In EVERY article for this hub, embed the same video at a position that varies from article to article, by the town's publish order: 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ (at random among the three if the publish order is not to hand). Introduce it in one line as Brandon's own video, 'Full house painting and decorating' (its YouTube title, with his typing slip 'panting' corrected), and say nothing about the job, the house or the customer beyond that title. 'Painting and Decorating in Harrogate' always carries it, above its first H2 whatever the rotation says, because the video's own title is tagged #harrogate. Cross-link Interior Painting, Exterior Painting, Wallpapering and Commercial Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+    },
+    {
+      "slug": "interior-painting",
+      "title": "Interior Painting",
+      "type": "service-hub",
+      "sections": [
+        "Interior Painting and Decorating Services",
+        "Surface Preparation",
+        "Walls, Ceilings and Woodwork",
+        "Wallpapering and Paint Finishes",
+        "Residential and Commercial Decorating",
+        "Period and Modern Properties",
+        "The Painting and Decorating Process",
+        "Requesting a Quotation",
+        "sectors: Homes, Offices, Restaurants, Schools, Hotels, Spas, Leisure centres, Businesses large and small",
+        "contact-cta"
+      ],
+      "sectionsFrom": "blueprint",
+      "townCoverage": [
+        "Baildon",
+        "Guiseley",
+        "Menston",
+        "Ilkley",
+        "Shipley",
+        "Otley",
+        "Horsforth",
+        "Bingley",
+        "Saltaire",
+        "Harden",
+        "Haworth",
+        "Wilsden",
+        "Idle",
+        "Burley in Wharfedale",
+        "Yeadon",
+        "Burley Woodhead",
+        "Hawksworth",
+        "Rawdon",
+        "Leeds",
+        "Skipton",
+        "Wrose",
+        "Pudsey",
+        "Pool",
+        "Headingley",
+        "Meanwood",
+        "Chapel Allerton",
+        "Sowerby Bridge",
+        "Batley",
+        "Dewsbury",
+        "Harrogate",
+        "Knaresborough",
+        "Holmfirth",
+        "Ripon",
+        "York",
+        "Northallerton",
+        "Cullingworth",
+        "Keighley",
+        "Denholme",
+        "Queensbury",
+        "Steeton",
+        "Oxenhope",
+        "Bramhope",
+        "Silsden",
+        "Addingham",
+        "Cleckheaton",
+        "Cross Hills",
+        "Stainburn",
+        "Halifax",
+        "Glusburn",
+        "Southowram",
+        "Brighouse",
+        "Holbeck",
+        "Low Bradley",
+        "Liversedge",
+        "Morley",
+        "Heckmondwike",
+        "Rastrick",
+        "Luddenden Foot",
+        "Mytholmroyd",
+        "Elland",
+        "Hebden Bridge",
+        "Embsay",
+        "Holywell Green",
+        "Mirfield",
+        "Pannal",
+        "Shadwell",
+        "Barkisland",
+        "Ripponden",
+        "Huddersfield",
+        "Scarcroft",
+        "East Keswick",
+        "Bardsey",
+        "Ossett",
+        "Lofthouse",
+        "Thorner",
+        "Scholes",
+        "Bradford",
+        "Todmorden",
+        "Linthwaite",
+        "Middlestown",
+        "Spofforth",
+        "Horbury",
+        "Collingham",
+        "Gargrave",
+        "Swillington",
+        "Flockton",
+        "Blackmoorfoot",
+        "Wakefield",
+        "Cornholme",
+        "Walsden",
+        "Pateley Bridge",
+        "Kirkburton",
+        "Garforth",
+        "Wetherby",
+        "Emley",
+        "Meltham Mills",
+        "Shelley",
+        "Meltham",
+        "Grassington",
+        "Methley",
+        "Bramham",
+        "Kippax",
+        "Marsden",
+        "Aberford",
+        "Boston Spa",
+        "Shepley",
+        "Skelmanthorpe",
+        "New Mill",
+        "Clayton West",
+        "Scissett",
+        "Upper Cumberworth",
+        "Castleford",
+        "Sharlston",
+        "Thorp Arch",
+        "Crofton",
+        "Denby Dale"
+      ],
+      "contentNote": "Interior painting and decorating, from one room to a whole house (Brandon, 2 Apr 2026 call, and his advert). Walls and ceilings; every room the quote form names (bedrooms, living rooms, kitchens, hallways, bathrooms) plus stairs and landings; and all aspects of woodwork: skirting boards, architraves, doors, spindles, handrails and staircase trims. Kitchen doors too ('I can do the kitchen doors'): painted by hand as part of a kitchen job, never spraying or a respray, which no source offers. Preparation is part of every job: filling, sanding, caulking and fixing hairline cracks; brand-new plaster gets a mist coat first (25 Feb 2026 call). Generic choices make good buyer's-guide material (matt, eggshell, satin and gloss finishes; water-based or oil-based paint on woodwork, as general guidance), with no paint brand unless Brandon names one. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 11 London decorators, 4 Nov 2026); write each within Brandon's scope: 'Surface Preparation' is filling, sanding, caulking and fixing hairline cracks, with a mist coat on new plaster, never plaster repairs or skimming as a service; 'Wallpapering and Paint Finishes' is wallpaper (link Wallpapering), paint finishes and feature walls, never Venetian plaster, murals, paint effects or spraying; 'Period and Modern Properties' is the rooms and features he names, never listed-building or conservation experience; 'The Painting and Decorating Process' is how a job runs, with no timings and no team. VIDEO: on the hub page, embed Brandon's YouTube video https://youtu.be/mNwdUtQedkc once, where it suits the page. In EVERY article for this hub, embed the same video at a position that varies from article to article, by the town's publish order: 1st, 4th, 7th ... just above the first H2; 2nd, 5th, 8th ... mid-article, between two H2 sections; 3rd, 6th, 9th ... near the end, after the last H2 section and before the FAQ (at random among the three if the publish order is not to hand). Introduce it in one line as Brandon's own video, 'Full house painting and decorating' (its YouTube title, with his typing slip 'panting' corrected), and say nothing about the job, the house or the customer beyond that title. Cross-link Painting and Decorating, Wallpapering and Exterior Painting. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+    },
+    {
+      "slug": "exterior-painting",
+      "title": "Exterior Painting",
+      "type": "service-hub",
+      "sections": [
+        "intro",
+        "what-we-do",
+        "process",
+        "areas-covered",
+        "faqs",
+        "sectors: Homes, Offices, Restaurants, Schools, Hotels, Spas, Leisure centres, Businesses large and small",
+        "contact-cta"
+      ],
+      "sectionsFrom": "default-skeleton",
+      "townCoverage": [
+        "Baildon",
+        "Guiseley",
+        "Menston",
+        "Ilkley",
+        "Shipley",
+        "Otley",
+        "Horsforth",
+        "Bingley",
+        "Saltaire",
+        "Harden",
+        "Haworth",
+        "Wilsden",
+        "Idle",
+        "Burley in Wharfedale",
+        "Yeadon",
+        "Burley Woodhead",
+        "Hawksworth",
+        "Rawdon",
+        "Leeds",
+        "Skipton",
+        "Wrose",
+        "Pudsey",
+        "Pool",
+        "Headingley",
+        "Meanwood",
+        "Chapel Allerton",
+        "Sowerby Bridge",
+        "Batley",
+        "Dewsbury",
+        "Harrogate",
+        "Knaresborough",
+        "Holmfirth",
+        "Ripon",
+        "York",
+        "Northallerton",
+        "Cullingworth",
+        "Keighley",
+        "Denholme",
+        "Queensbury",
+        "Steeton",
+        "Oxenhope",
+        "Bramhope",
+        "Silsden",
+        "Addingham",
+        "Cleckheaton",
+        "Cross Hills",
+        "Stainburn",
+        "Halifax",
+        "Glusburn",
+        "Southowram",
+        "Brighouse",
+        "Holbeck",
+        "Low Bradley",
+        "Liversedge",
+        "Morley",
+        "Heckmondwike",
+        "Rastrick",
+        "Luddenden Foot",
+        "Mytholmroyd",
+        "Elland",
+        "Hebden Bridge",
+        "Embsay",
+        "Holywell Green",
+        "Mirfield",
+        "Pannal",
+        "Shadwell",
+        "Barkisland",
+        "Ripponden",
+        "Huddersfield",
+        "Scarcroft",
+        "East Keswick",
+        "Bardsey",
+        "Ossett",
+        "Lofthouse",
+        "Thorner",
+        "Scholes",
+        "Bradford",
+        "Todmorden",
+        "Linthwaite",
+        "Middlestown",
+        "Spofforth",
+        "Horbury",
+        "Collingham",
+        "Gargrave",
+        "Swillington",
+        "Flockton",
+        "Blackmoorfoot",
+        "Wakefield",
+        "Cornholme",
+        "Walsden",
+        "Pateley Bridge",
+        "Kirkburton",
+        "Garforth",
+        "Wetherby",
+        "Emley",
+        "Meltham Mills",
+        "Shelley",
+        "Meltham",
+        "Grassington",
+        "Methley",
+        "Bramham",
+        "Kippax",
+        "Marsden",
+        "Aberford",
+        "Boston Spa",
+        "Shepley",
+        "Skelmanthorpe",
+        "New Mill",
+        "Clayton West",
+        "Scissett",
+        "Upper Cumberworth",
+        "Castleford",
+        "Sharlston",
+        "Thorp Arch",
+        "Crofton",
+        "Denby Dale"
+      ],
+      "contentNote": "Exterior painting, Brandon's own list from the 2 Apr 2026 call: masonry painting (painting render, brick or stone that is already rendered or painted: 'if someone's had it rendered ... you can paint the masonry ... even if it's stone and it's already been painted'), exterior woodwork, oil varnishing with oil and water-based finishes, mullion, sash and wooden windows, front doors and garage doors, and fascia boards and soffits (on his 2 Apr list; on 25 Feb he said he tries to stay away from them on their own and takes them on as part of a full exterior, so never lead with them). Not gutters (Brandon: 'I'll stay away from gutters because most of them are plastic now'), and not applying or repairing render, brickwork repairs or repointing: render is plastering work and out for now (27 Oct 2026). Preparation comes with everything: sanding, filling, caulking and fixing hairline cracks. Weather, season and drying times are good general material; promise no timescale. 'Masonry painting' has the big search volume, but most 'masonry paint' searches are people buying paint, so write for the homeowner who wants the job done. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). Cross-link Painting and Decorating, Interior Painting and Commercial Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+    },
+    {
+      "slug": "wallpapering",
+      "title": "Wallpapering",
+      "type": "service-hub",
+      "sections": [
+        "Professional Wallpaper Hanging",
+        "Wall Preparation",
+        "Wallpaper, Vinyl and Specialist Wallcoverings",
+        "Precision Hanging and Seam Finishing",
+        "Feature Walls, Ceilings and Awkward Spaces",
+        "Wallpapering for Homes and Businesses",
+        "How a Wallpapering Job Runs",
+        "Wallpapering in Pictures",
+        "sectors: Homes, Offices, Restaurants, Schools, Hotels, Spas, Leisure centres, Businesses large and small",
+        "contact-cta"
+      ],
+      "sectionsFrom": "blueprint",
+      "townCoverage": [
+        "Baildon",
+        "Guiseley",
+        "Menston",
+        "Ilkley",
+        "Shipley",
+        "Otley",
+        "Horsforth",
+        "Bingley",
+        "Saltaire",
+        "Harden",
+        "Haworth",
+        "Wilsden",
+        "Idle",
+        "Burley in Wharfedale",
+        "Yeadon",
+        "Burley Woodhead",
+        "Hawksworth",
+        "Rawdon",
+        "Leeds",
+        "Skipton",
+        "Wrose",
+        "Pudsey",
+        "Pool",
+        "Headingley",
+        "Meanwood",
+        "Chapel Allerton",
+        "Sowerby Bridge",
+        "Batley",
+        "Dewsbury",
+        "Harrogate",
+        "Knaresborough",
+        "Holmfirth",
+        "Ripon",
+        "York",
+        "Northallerton",
+        "Cullingworth",
+        "Keighley",
+        "Denholme",
+        "Queensbury",
+        "Steeton",
+        "Oxenhope",
+        "Bramhope",
+        "Silsden",
+        "Addingham",
+        "Cleckheaton",
+        "Cross Hills",
+        "Stainburn",
+        "Halifax",
+        "Glusburn",
+        "Southowram",
+        "Brighouse",
+        "Holbeck",
+        "Low Bradley",
+        "Liversedge",
+        "Morley",
+        "Heckmondwike",
+        "Rastrick",
+        "Luddenden Foot",
+        "Mytholmroyd",
+        "Elland",
+        "Hebden Bridge",
+        "Embsay",
+        "Holywell Green",
+        "Mirfield",
+        "Pannal",
+        "Shadwell",
+        "Barkisland",
+        "Ripponden",
+        "Huddersfield",
+        "Scarcroft",
+        "East Keswick",
+        "Bardsey",
+        "Ossett",
+        "Lofthouse",
+        "Thorner",
+        "Scholes",
+        "Bradford",
+        "Todmorden",
+        "Linthwaite",
+        "Middlestown",
+        "Spofforth",
+        "Horbury",
+        "Collingham",
+        "Gargrave",
+        "Swillington",
+        "Flockton",
+        "Blackmoorfoot",
+        "Wakefield",
+        "Cornholme",
+        "Walsden",
+        "Pateley Bridge",
+        "Kirkburton",
+        "Garforth",
+        "Wetherby",
+        "Emley",
+        "Meltham Mills",
+        "Shelley",
+        "Meltham",
+        "Grassington",
+        "Methley",
+        "Bramham",
+        "Kippax",
+        "Marsden",
+        "Aberford",
+        "Boston Spa",
+        "Shepley",
+        "Skelmanthorpe",
+        "New Mill",
+        "Clayton West",
+        "Scissett",
+        "Upper Cumberworth",
+        "Castleford",
+        "Sharlston",
+        "Thorp Arch",
+        "Crofton",
+        "Denby Dale"
+      ],
+      "contentNote": "Wallpapering: hanging wallpaper in homes and businesses, a feature wall or a whole room (Brandon's advert names 'wallpapering'; the reference he sent on 23 Oct 2026 has 'Specialist Wallcoverings' as one of the three tiles he wants). Describe the job and the choices generically, as a buyer's guide: preparing the walls first (filling and sanding, lining paper where a wall needs it), pattern matching, a feature wall or the whole room, and the common kinds of paper (standard, vinyl, textured, lining). Name no wallpaper brand or product range, and offer no murals, which no source mentions. Say in passing that the work is for homes and businesses. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). THIS HUB'S SECTIONS come from its blueprint (read off 7 London wallpaper hangers, 4 Nov 2026); write each within Brandon's scope: 'Professional Wallpaper Hanging' is the job, hanging paper for homes and businesses; 'Wall Preparation' is filling, sanding and lining paper where a wall needs it, never plaster repairs or skimming; 'Wallpaper, Vinyl and Specialist Wallcoverings' names kinds of wallcovering generically, with no brand; 'Precision Hanging and Seam Finishing' and 'Feature Walls, Ceilings and Awkward Spaces' are the job itself; 'How a Wallpapering Job Runs' promises no site visit, timescale or response time; 'Wallpapering in Pictures' shows only Brandon's own wallpaper photos (one in the pool so far) and describes no project, customer or place. Cross-link Interior Painting and Painting and Decorating. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+    },
+    {
+      "slug": "commercial-painting-and-decorating",
+      "title": "Commercial Painting and Decorating",
+      "type": "service-hub",
+      "sections": [
+        "intro",
+        "what-we-do",
+        "process",
+        "areas-covered",
+        "faqs",
+        "sectors: Homes, Offices, Restaurants, Schools, Hotels, Spas, Leisure centres, Businesses large and small",
+        "contact-cta"
+      ],
+      "sectionsFrom": "default-skeleton",
+      "townCoverage": [
+        "Baildon",
+        "Guiseley",
+        "Menston",
+        "Ilkley",
+        "Shipley",
+        "Otley",
+        "Horsforth",
+        "Bingley",
+        "Saltaire",
+        "Harden",
+        "Haworth",
+        "Wilsden",
+        "Idle",
+        "Burley in Wharfedale",
+        "Yeadon",
+        "Burley Woodhead",
+        "Hawksworth",
+        "Rawdon",
+        "Leeds",
+        "Skipton",
+        "Wrose",
+        "Pudsey",
+        "Pool",
+        "Headingley",
+        "Meanwood",
+        "Chapel Allerton",
+        "Sowerby Bridge",
+        "Batley",
+        "Dewsbury",
+        "Harrogate",
+        "Knaresborough",
+        "Holmfirth",
+        "Ripon",
+        "York",
+        "Northallerton",
+        "Cullingworth",
+        "Keighley",
+        "Denholme",
+        "Queensbury",
+        "Steeton",
+        "Oxenhope",
+        "Bramhope",
+        "Silsden",
+        "Addingham",
+        "Cleckheaton",
+        "Cross Hills",
+        "Stainburn",
+        "Halifax",
+        "Glusburn",
+        "Southowram",
+        "Brighouse",
+        "Holbeck",
+        "Low Bradley",
+        "Liversedge",
+        "Morley",
+        "Heckmondwike",
+        "Rastrick",
+        "Luddenden Foot",
+        "Mytholmroyd",
+        "Elland",
+        "Hebden Bridge",
+        "Embsay",
+        "Holywell Green",
+        "Mirfield",
+        "Pannal",
+        "Shadwell",
+        "Barkisland",
+        "Ripponden",
+        "Huddersfield",
+        "Scarcroft",
+        "East Keswick",
+        "Bardsey",
+        "Ossett",
+        "Lofthouse",
+        "Thorner",
+        "Scholes",
+        "Bradford",
+        "Todmorden",
+        "Linthwaite",
+        "Middlestown",
+        "Spofforth",
+        "Horbury",
+        "Collingham",
+        "Gargrave",
+        "Swillington",
+        "Flockton",
+        "Blackmoorfoot",
+        "Wakefield",
+        "Cornholme",
+        "Walsden",
+        "Pateley Bridge",
+        "Kirkburton",
+        "Garforth",
+        "Wetherby",
+        "Emley",
+        "Meltham Mills",
+        "Shelley",
+        "Meltham",
+        "Grassington",
+        "Methley",
+        "Bramham",
+        "Kippax",
+        "Marsden",
+        "Aberford",
+        "Boston Spa",
+        "Shepley",
+        "Skelmanthorpe",
+        "New Mill",
+        "Clayton West",
+        "Scissett",
+        "Upper Cumberworth",
+        "Castleford",
+        "Sharlston",
+        "Thorp Arch",
+        "Crofton",
+        "Denby Dale"
+      ],
+      "contentNote": "Painting and decorating for business premises of every kind: the commercial half of 'domestic and commercial clients' (Brandon, WhatsApp 27 Oct 2026; his advert says 'for homes and businesses' and 'COMMERCIAL'). The same work as the other hubs, interior and exterior painting and wallpapering, for business premises. Say that it covers all kinds of business premises, and name them, as the operator ruled on 4 Nov 2026 ('all types of businesses he can do painting and decorating for'; 'He can do it all'): offices, restaurants, schools, hotels, spas, leisure centres, and local businesses, small and large. Present them as the kinds of premises TrueLine Finishes works in, never as past clients: no business named, no project described, no 'we decorated a hotel in [Town]' (standing prohibition 5). Good general material: hard-wearing finishes for busy areas, planning the work around the business, and protecting the premises while it is done. The business is open Monday to Friday 7am to 7pm and Saturday and Sunday 8am to 6pm (its Google listing); when the work itself is done is arranged with Brandon, so promise no evening, overnight, weekend or out-of-hours working. Never spray painting, floor coatings, murals or carpets, which the London firms' commercial pages sell and Brandon does not. Name Brandon: Brandon Dawson, the owner, is the expert on every job: he carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him (the operator, 4 Nov 2026). Name nobody else and claim no team (site prohibition 6). Cross-link Painting and Decorating, Interior Painting and Exterior Painting. Calls to action: a free quotation by the quote form, or call Brandon on 07949 484274."
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "type": "about",
+      "sections": [
+        "story",
+        "credentials",
+        "contact-cta"
+      ],
+      "townCoverage": []
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "type": "contact",
+      "sections": [
+        "nap",
+        "enquiry-form",
+        "hours"
+      ],
+      "townCoverage": []
+    }
+  ],
+  "homePage": {
+    "sections": [
+      "Professional painting and decorating for every property",
+      "Residential and commercial decorating services",
+      "Interior painting and preparation",
+      "Exterior painting",
+      "Wallpapering and specialist wallcoverings",
+      "A quality-led service from preparation to completion",
+      "Talk to Brandon about your project",
+      "contact-cta"
+    ],
+    "sectionsFrom": "blueprint",
+    "uspsFeatured": [
+      "Over eight years' experience",
+      "Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to Brandon",
+      "Fully insured, friendly and reliable"
+    ]
+  },
+  "provenance": "PROVENANCE.md"
+}

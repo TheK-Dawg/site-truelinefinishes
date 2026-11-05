@@ -1,0 +1,80 @@
+---
+/**
+ * BEFORE-AND-AFTER SLIDER (Brandon's explicit ask, 23 Oct: "the before and after image ... that you
+ * can slide"). Brandon's own pairs from the R2 before-after/ folder, in his order: the bedroom, the
+ * bathroom, then the gable wall (interior before exterior: his ideal jobs are interiors). A native
+ * range input drives the split, so it works by drag, touch and keyboard; tabs switch pairs.
+ */
+import { image } from '../data/site';
+const ALL = {
+  bedroom: { label: 'Bedroom', before: 'bedroom-before-0002', after: 'bedroom-after-0000' },
+  bathroom: { label: 'Bathroom', before: 'bathroom-before-0005', after: 'bathroom-after-0003' },
+  gable: { label: 'Gable wall', before: 'gable-wall-before-0001', after: 'gable-wall-after-0004' },
+  house: { label: 'Painted brick house', before: 'semi-detached-before-0127', after: 'semi-detached-after-0125' },
+};
+type PairKey = keyof typeof ALL;
+interface Props { pairs?: PairKey[]; heading?: string; lead?: string; panel?: boolean }
+const { pairs = ['bedroom', 'bathroom', 'gable'], heading = 'Before and after: slide to see the difference', lead = 'Brandon’s own photographs from the same rooms and walls, before the work and once it was finished.', panel = true } = Astro.props;
+const list = pairs.map((k) => ({ key: k, label: ALL[k].label, before: image(ALL[k].before), after: image(ALL[k].after) }));
+---
+<section class:list={['ba section section-before-after', panel && 'section--panel']} data-section="before-after">
+  <div class="container">
+    <div class="sec-head" data-motion="reveal">
+      <h2 class="sec-head__h2">{heading}</h2>
+      <p class="sec-head__lead">{lead}</p>
+    </div>
+    <div class="ba__wrap" data-ba-root>
+      {list.length > 1 && (
+        <div class="ba__tabs" role="tablist" aria-label="Choose a before and after">
+          {list.map((p, i) => <button type="button" role="tab" class="ba__tab" aria-selected={i === 0 ? 'true' : 'false'} data-ba-tab={i}>{p.label}</button>)}
+        </div>
+      )}
+      {list.map((p, i) => (
+        <div class:list={['ba__pair', p.after.height > p.after.width && 'ba__pair--tall']} data-ba-pair={i} hidden={i !== 0} style={`--pos: 50%; aspect-ratio: ${p.after.width} / ${p.after.height}`}>
+          <img class="ba__img ba__img--after" src={p.after.src} alt={p.after.alt} width={p.after.width} height={p.after.height} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          <div class="ba__before"><img class="ba__img" src={p.before.src} alt={p.before.alt} width={p.before.width} height={p.before.height} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" /></div>
+          <span class="ba__tag ba__tag--before" aria-hidden="true">Before</span>
+          <span class="ba__tag ba__tag--after" aria-hidden="true">After</span>
+          <span class="ba__handle" aria-hidden="true"></span>
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label={`${p.label}: slide between before and after`} data-ba-range />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .ba__wrap { max-width: var(--narrow); margin-inline: auto; }
+  .ba__tabs { justify-content: center; }
+  .ba__tabs { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .ba__tab { min-height: var(--tap); padding: var(--space-2) var(--space-5); border: 1px solid var(--border-strong); background: var(--bg-card); color: var(--text-primary); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); cursor: pointer; }
+  .ba__tab[aria-selected='true'] { background: var(--bg-inverse); color: var(--text-inverse); border-color: var(--bg-inverse); }
+  .ba__pair { position: relative; overflow: hidden; background: var(--bg-inverse); user-select: none; touch-action: pan-y; margin-inline: auto; }
+  .ba__pair--tall { max-width: var(--form-w); }
+  .ba__pair[hidden] { display: none; }
+  .ba__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ba__before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .ba__handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 4px; margin-left: -2px; background: var(--white); box-shadow: var(--shadow-overlay); pointer-events: none; }
+  .ba__handle::after { content: '\2039\00a0\203a'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--badge-radius); background: var(--accent-on-dark); color: var(--accent-on-dark-fg); font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: 1; }
+  .ba__tag { position: absolute; top: var(--space-4); padding: var(--space-1) var(--space-3); background: var(--bg-inverse); color: var(--text-inverse); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; pointer-events: none; }
+  .ba__tag--before { left: var(--space-4); }
+  .ba__tag--after { right: var(--space-4); }
+  .ba__range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+  .ba__pair:focus-within { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ba-root]').forEach((root) => {
+    root.querySelectorAll<HTMLInputElement>('[data-ba-range]').forEach((r) => {
+      const pair = r.closest<HTMLElement>('.ba__pair')!;
+      const set = () => pair.style.setProperty('--pos', `${r.value}%`);
+      r.addEventListener('input', set);
+      set();
+    });
+    const tabs = root.querySelectorAll<HTMLButtonElement>('[data-ba-tab]');
+    tabs.forEach((t) => t.addEventListener('click', () => {
+      tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+      root.querySelectorAll<HTMLElement>('[data-ba-pair]').forEach((p) => { p.hidden = p.dataset.baPair !== t.dataset.baTab; });
+    }));
+  });
+</script>

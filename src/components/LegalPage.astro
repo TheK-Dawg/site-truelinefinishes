@@ -1,18 +1,14 @@
 ---
 /**
- * LEGAL PAGE SHELL (terms, privacy), pass 2. The same spine as every page:
- * inner hero (CTA + slim review widget), the reviews section, then a REAL two
- * columns: left, a sticky table of contents built from the page's H2s; right,
- * the prose beside a sticky Quick Quote card. The Quick Quote form closes the
- * page (form law: every page, terms and privacy included). Below 1024px the
- * contents list sits above the prose and the card drops below it.
+ * LEGAL PAGE SHELL (privacy, terms, cookie policy): the template's spine. Inner hero, reviews,
+ * then two columns: a sticky contents list built from the page's H2s, and the prose beside a
+ * sticky quote card. The quote form closes the page (form law: every page).
  */
 import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import QuoteForm from './QuoteForm.astro';
 import CallButton from './CallButton.astro';
-import { image } from '../data/site';
 interface Props { title: string; description: string; h1: string; page: string; lead: string }
 const { title, description, h1, page, lead } = Astro.props;
 const slug = (s: string) => s.toLowerCase().replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -25,7 +21,7 @@ const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?
 });
 ---
 <Base title={title} description={description} page={page}>
-  <PageHero eyebrow="Buildings For Life Ltd" h1={h1} lead={lead} image={image('brick-wall-pointing')} crumbs={[{ label: h1 }]} />
+  <PageHero h1={h1} lead={lead} />
   <Reviews />
   <section class="lg section section-legal" data-section="legal">
     <div class="container lg__grid">
@@ -36,9 +32,8 @@ const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?
       <div class="lg__main">
         <div class="prose lg__body" set:html={html} />
         <aside class="lg__card on-dark" aria-label="Quick Quote">
-          <p class="eyebrow">Planning a build?</p>
-          <p class="lg__card-h">Get a written quote from Pete</p>
-          <p class="lg__card-p">Tell us the job and the postcode. We come back to arrange a visit.</p>
+          <p class="lg__card-h">Need a quote?</p>
+          <p class="lg__card-p">Get a free quotation: call Brandon on 07949 484274 or use the quote form.</p>
           <a href="#contact" class="btn btn-primary" data-cta="legal-quote">Quick Quote Online</a>
           <CallButton cta="legal-call" />
         </aside>
@@ -55,15 +50,14 @@ const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?
   .lg__toc ol { list-style: none; padding: 0; display: flex; flex-direction: column; font-size: var(--fs-md); }
   .lg__toc li { padding: var(--space-2) 0; border-bottom: 1px solid var(--border-strong); }
   .lg__toc li:last-child { border-bottom: 0; }
-  .lg__toc a { color: var(--text-secondary); }
+  .lg__toc a { color: var(--brand-text); }
   .lg__toc a:hover { color: var(--text-heading); }
   .lg__main { display: grid; grid-template-columns: minmax(0, 1fr) var(--legal-card-w); gap: var(--space-12); align-items: start; }
   .lg__body { max-width: 72ch; }
   .lg__body > :global(:first-child) { margin-top: 0; }
   .lg__body :global(h2) { scroll-margin-top: calc(var(--header-h) + var(--space-6)); }
-  .lg__card { position: sticky; top: calc(var(--header-h) + var(--space-6)); display: grid; gap: var(--space-4); padding: var(--card-pad); background: var(--bg-inverse); border-top: 2px solid var(--brand-primary); color: var(--text-inverse-muted); }
-  .lg__card .eyebrow { margin-bottom: 0; color: var(--accent-on-dark); }
-  .lg__card-h { font-size: var(--fs-2xl); font-weight: var(--fw-medium); line-height: var(--lh-tight); color: var(--text-inverse); }
+  .lg__card { position: sticky; top: calc(var(--header-h) + var(--space-6)); display: grid; gap: var(--space-4); padding: var(--card-pad); background: var(--bg-inverse); border-top: 3px solid var(--accent-on-dark); color: var(--text-inverse-muted); }
+  .lg__card-h { font-family: var(--font-heading); text-transform: uppercase; font-size: var(--fs-2xl); font-weight: var(--fw-semibold); line-height: var(--lh-tight); color: var(--text-inverse); }
   .lg__card-p { font-size: var(--fs-md); }
   .lg__card :global(.btn) { width: 100%; padding-inline: var(--space-4); }
   @media (max-width: 1180px) { .lg__main { grid-template-columns: 1fr; } .lg__card { position: static; max-width: var(--form-w); } }

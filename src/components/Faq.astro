@@ -1,19 +1,17 @@
 ---
 /**
- * FAQ (Electrix faq page accordion). Native <details>, first open. Answers
- * are plain text / light HTML. FAQPage schema is emitted by the page.
+ * FAQ (template accordion). Native <details>, first open, every item can stay open.
+ * Answers are plain text / light HTML. The page emits the FAQPage schema.
  */
-interface Props { items: { q: string; a: string }[]; heading: string; eyebrow?: string; lead?: string; id?: string; allLink?: boolean }
-const { items, heading, eyebrow = 'FAQ', lead = '', id = 'faq', allLink = false } = Astro.props;
+interface Props { items: { q: string; a: string }[]; heading: string; lead?: string; id?: string }
+const { items, heading, lead = '', id = 'faq' } = Astro.props;
 ---
 <section class="fq section section-faq" id={id} data-section="faq">
   <div class="fq__inner container">
     <div class="fq__head" data-motion="reveal">
-      <p class="eyebrow">{eyebrow}</p>
       <h2 class="fq__h2">{heading}</h2>
       {lead && <p class="fq__lead">{lead}</p>}
-      <p class="fq__more">Question not here? <a href="#contact" class="text-link" data-cta="faq-quote">Quick Quote Online</a></p>
-      {allLink && <p class="fq__more fq__all"><a href="/faq/" class="text-link">Read every question in the FAQ</a></p>}
+      <p class="fq__more">Question not here? Call Brandon on <a href="tel:+447949484274" class="text-link" data-cta="faq-call">07949 484274</a>.</p>
     </div>
     <div class="fq__list">
       {items.map((f, i) => (
@@ -41,7 +39,8 @@ const { items, heading, eyebrow = 'FAQ', lead = '', id = 'faq', allLink = false 
   .fq__plus::before, .fq__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: var(--space-3); height: 2px; background: var(--text-heading); transform: translate(-50%, -50%); transition: transform 0.2s var(--ease); }
   .fq__plus::after { transform: translate(-50%, -50%) rotate(90deg); }
   .fq__item[open] .fq__plus { background: var(--brand-primary); }
+  .fq__item[open] .fq__plus::before, .fq__item[open] .fq__plus::after { background: var(--brand-fg); }
   .fq__item[open] .fq__plus::after { transform: translate(-50%, -50%) rotate(0deg); }
-  .fq__a { padding: 0 var(--space-12) var(--space-6) 0; color: var(--text-muted); }
+  .fq__a { padding: 0 var(--space-12) var(--space-6) 0; color: var(--text-primary); }
   @media (max-width: 900px) { .fq__inner { grid-template-columns: 1fr; gap: var(--space-8); } .fq__head { position: static; } .fq__h2 { font-size: var(--fs-3xl); } .fq__a { padding-right: 0; } .fq__item summary { font-size: var(--fs-base); } }
 </style>

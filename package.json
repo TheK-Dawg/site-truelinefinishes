@@ -1,20 +1,22 @@
 {
-  "name": "site-buildingsforlifeltd-v3-test",
+  "name": "site-truelinefinishes",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "description": "Buildings For Life Ltd (buildingsforlifeltd.com): SiteBuilder v3 client build (Electrix design language, Astryx token system). Cloudflare Worker static assets.",
+  "description": "TrueLine Finishes (truelinefinishes.com): client site on the Buildings for Life v4 template structure, TrueLine's own brand. Static Astro build served by a Cloudflare Worker (static assets only); quote form via Formlane direct embed.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "images": "node scripts/images.mjs",
+    "images": "node scripts/images.mjs /root/work/tl-media",
+    "brand": "node scripts/brand.mjs",
+    "articles:import": "node scripts/import-articles.mjs",
+    "audit": "node scripts/audit.mjs",
     "check": "node scripts/check.mjs",
-    "gate": "node scripts/token-gate.mjs && node scripts/linkcheck.mjs",
-    "test:leads": "node --test tests/lead-kit.test.mjs",
-    "deploy:dry": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy"
+    "gate": "node scripts/token-gate.mjs",
+    "deploy:dry": "node scripts/deploy-guard.mjs && wrangler deploy --dry-run",
+    "deploy": "node scripts/deploy-guard.mjs && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

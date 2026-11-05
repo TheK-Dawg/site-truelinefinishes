@@ -1,0 +1,13 @@
+---
+/** ARTICLE ROUTES: /resources/<hub-slug>-<town-slug>/ (plan's article pattern). */
+import ArticlePage from '../../components/ArticlePage.astro';
+import { allArticles } from '../../data/articles';
+import { services } from '../../data/site';
+export function getStaticPaths() {
+  const hubs = new Set(services.map((s) => s.slug));
+  for (const a of allArticles) if (!hubs.has(a.hub)) throw new Error(`article ${a.slug} names an unknown hub ${a.hub}`);
+  return allArticles.map((a) => ({ params: { slug: a.slug }, props: { article: a } }));
+}
+const { article } = Astro.props;
+---
+<ArticlePage article={article} />

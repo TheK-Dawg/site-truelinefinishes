@@ -1,29 +1,24 @@
 ---
 /**
- * STICKY CTA BAR. MOBILE ONLY (<1024px, display:none above it). Hidden while
- * the hero is on screen, shown once it scrolls out, hidden again over the
- * quote form.
- * REV3 item 8 / floating CTA law: two buttons with a visible gap between them.
- * Left is "Quick Quote" on white. Right is the call button in YELLOW, the more
- * prominent colour, showing ONLY the phone number — never the word "Call",
- * including in its accessible name, which is the number itself.
+ * STICKY CTA BAR. MOBILE ONLY (<1024px). Hidden while the hero is on screen (the hero has its
+ * own CTAs), shown once it scrolls out, hidden again over the quote form and the footer.
+ * The site's own black styling: Quick Quote Online on white, the call button in chrome blue
+ * (black text) showing the number. A call is a direct line to Brandon.
  */
 import Icon from './Icon.astro';
 import { business } from '../data/site';
 ---
-<div class="sb" data-sticky-cta hidden>
+<div class="sb on-dark" data-sticky-cta hidden>
   <a class="sb__quote" href="#contact" data-cta="sticky-quote">Quick Quote</a>
   <a class="sb__call" href={business.phoneHref} data-cta="sticky-call"><Icon name="phone" size={18} />{business.phone}</a>
 </div>
 
 <style>
-  .sb { position: fixed; inset: auto 0 0 0; z-index: 85; grid-template-columns: 1fr 1fr; gap: var(--space-4); padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom)); background: var(--bg-inverse); border-top: 1px solid var(--border-inverse); }
+  .sb { position: fixed; inset: auto 0 0 0; z-index: 85; grid-template-columns: 1fr 1fr; gap: var(--space-3); padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom)); background: var(--bg-inverse); border-top: 1px solid var(--border-inverse); }
   .sb:not([hidden]) { display: grid; }
   .sb a { display: flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--btn-h-md); padding: var(--space-3) var(--space-2); font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; text-align: center; white-space: nowrap; }
-  /* Two different colours, never the same: white quote button, yellow call button. */
   .sb__quote { background: var(--bg-card); color: var(--text-heading); }
-  .sb__call { background: var(--brand-primary); color: var(--brand-fg); }
-  .sb__call :global(.icon) { color: var(--brand-fg); }
+  .sb__call { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   @media (max-width: 400px) { .sb a { font-size: var(--fs-sm); letter-spacing: 0; } }
   @media (min-width: 1024px) { .sb, .sb:not([hidden]) { display: none; } }
 </style>
@@ -31,11 +26,13 @@ import { business } from '../data/site';
 <script>
   const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
   const hero = document.querySelector<HTMLElement>('main > section:first-child');
-  const form = document.querySelector<HTMLElement>('form[data-quote-form]');
+  const watch = [...document.querySelectorAll<HTMLElement>('[data-quote-card], footer')];
   if (bar && hero) {
-    let heroVisible = true, formVisible = false;
-    const sync = () => { bar.hidden = heroVisible || formVisible; };
+    let heroVisible = true;
+    const vis = new Map<Element, boolean>();
+    const sync = () => { bar.hidden = heroVisible || [...vis.values()].some(Boolean); document.documentElement.toggleAttribute('data-sticky', !bar.hidden); };
     new IntersectionObserver((en) => { heroVisible = en[0]?.isIntersecting ?? false; sync(); }, { threshold: 0.05 }).observe(hero);
-    if (form) new IntersectionObserver((en) => { formVisible = en[0]?.isIntersecting ?? false; sync(); }, { threshold: 0.05 }).observe(form);
+    const io = new IntersectionObserver((en) => { en.forEach((e) => vis.set(e.target, e.isIntersecting)); sync(); }, { threshold: 0.05 });
+    watch.forEach((el) => io.observe(el));
   }
 </script>
