@@ -59,6 +59,9 @@ const measureButtons = (sel) => {
           }
           return out;
         };
+// HOMEPAGE VARIANTS (TEMPORARY, operator brief 5 Nov 2026): /home-2/ and /home-3/ port other templates'
+// heroes and areas treatments on purpose, so the one-hero-pattern and boxless-areas checks skip them.
+const VARIANT = /^\/home-[23]\/$/;
 const fails = []; const btnLog = []; const heroLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
 const sizes = [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 844 }];
@@ -151,14 +154,14 @@ for (const vp of sizes) {
       if (!m.buttons.some((x) => x.cls === 'lf-b')) fails.push(`${tag}: form submit button not measured`);
     }
     if (m.youtube) fails.push(`${tag}: ${m.youtube} YouTube iframe(s)`);
-    if (!m.utility) {
+    if (!m.utility && !VARIANT.test(r)) {
       if (!m.heroPattern.ok || m.heroPattern.side) fails.push(`${tag}: hero not the home pattern ${JSON.stringify(m.heroPattern)}`);
       if (m.heroPattern.refLeft != null && Math.abs(m.heroPattern.h1Left - m.heroPattern.refLeft) > 2) fails.push(`${tag}: hero H1 left ${m.heroPattern.h1Left} vs page container ${m.heroPattern.refLeft}`);
       heroLog.push(`${tag} ${m.heroPattern.kind} h=${m.heroPattern.height} h1x=${m.heroPattern.h1Left} cx=${m.heroPattern.refLeft}`);
     }
     if (m.topBorders.length) fails.push(`${tag}: lone top borders ${JSON.stringify(m.topBorders)}`);
     if (r === '/' && m.homeMap !== 'https://www.google.com/maps?cid=8023434379390696838&output=embed') fails.push(`${tag}: home map ${m.homeMap}`);
-    if (m.areasBoxed) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
+    if (m.areasBoxed && !VARIANT.test(r)) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
     if (m.steps && (m.steps.h2 !== 'left' && m.steps.h2 !== 'start' || !['left', 'start'].includes(m.steps.more) || !['left', 'start'].includes(m.steps.step) || (m.steps.gap !== null && m.steps.gap !== 0))) fails.push(`${tag}: how a job runs ${JSON.stringify(m.steps)}`);
     for (const x of m.buttons) { btnLog.push(`${tag} ${x.cls} "${x.label}" top ${x.top} bottom ${x.bottom} delta ${x.delta}`); if (Math.abs(x.delta) > 1.5) fails.push(`${tag}: button "${x.label}" (${x.cls}) not centred: top ${x.top} / bottom ${x.bottom}`); }
     if (vp.name === 'mobile' && !m.utility) {

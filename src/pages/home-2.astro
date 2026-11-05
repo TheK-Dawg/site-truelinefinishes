@@ -1,0 +1,555 @@
+---
+/**
+ * HOME VARIANT 2 (TEMPORARY, operator experiment 5 Nov 2026: brief TRUELINE-VARIANTS-BRIEF.md).
+ * Deleted once the operator picks a homepage. noindex, out of the sitemap, linked from nowhere.
+ * LAYOUT: the section flow of https://flexora.vamtam.com/ (captured 5 Nov): inset rounded photo
+ * hero with a centred serif headline, two pill buttons and the curved cut-out info bar; the
+ * "meet the founder" two-photo block; the testimonials row (moved UP under the second section,
+ * operator rule); the four-card services row with notched images; the "why choose us" photo +
+ * feature chips; the tinted "conditions" panel (here: where Brandon works, with his Google
+ * listing map) + its logo strip (here: opening hours); the three-card row (the home page's three
+ * tiles); the full-width "Are you struggling with" photo banner; the 1 large + 2 small articles
+ * row; the split appointment form (Formlane) with the glass contact card; the FAQ.
+ * CONTENT: TrueLine's own copy from the live home page, Brandon's photos (R2 pool), no address,
+ * no reviews written, no rating or count, no video, no form in the hero, no before/after slider.
+ * COLOURS: the reference's greens and yellow are NOT used; layered blues from tokens.css (--v-*).
+ * The page re-points the semantic tokens on its own <body data-page="home-2">, so the shared
+ * header, footer and sticky bar take the blue grounds here and nowhere else.
+ */
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import { business, seo, image, services, mainPlaces, hours, slots } from '../data/site';
+import { articles, articleUrl } from '../data/articles';
+import { generalFaqs } from '../data/faq';
+import { stripTags } from '../lib/links';
+
+const faqs = generalFaqs;
+const schema = [
+  { '@type': 'FAQPage', '@id': `${business.url}/home-2/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
+];
+const heroImg = image('lounge-navy-feature-wall-0036');
+const aboutTall = image('victorian-hallway-0065');
+const aboutWide = image('bay-window-living-room-0054');
+const whyImg = image('kitchen-diner-protected-0007');
+const bannerImg = image('open-plan-kitchen-diner-0050');
+const formImg = image('hallway-white-staircase-0166');
+const usps = [
+  { icon: 'clock', title: "Over Eight Years' Experience", text: 'Painting and decorating for homes and businesses.' },
+  { icon: 'user', title: 'Brandon on Every Job', text: 'The owner carries out the work and oversees every job.' },
+  { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, with a free quotation for every job.' },
+];
+const chips = ["Over eight years' experience", 'Preparation on every job', 'Floors and furniture protected', 'A free quotation', 'Brandon on every job', 'Fully insured'];
+const tiles = [
+  { img: image('leaf-pattern-feature-wall-0026'), h3: 'Specialist Wallcoverings', html: 'Feature walls and whole rooms in paper, hung on walls prepared properly first. See <a href="/wallpapering/" data-link="tile">Wallpapering</a>.' },
+  { img: null, h3: 'Interior & Exterior Work', html: 'Walls, ceilings, stairs and woodwork inside with <a href="/interior-painting/" data-link="tile">Interior Painting</a>; masonry, windows and doors outside with <a href="/exterior-painting/" data-link="tile">Exterior Painting</a>.' },
+  { img: image('office-navy-feature-wall-0178'), h3: 'Domestic & Commercial', html: 'Homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses. See <a href="/commercial-painting-and-decorating/" data-link="tile">Commercial Painting and Decorating</a>.' },
+];
+const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
+const list = articles.slice(0, 3);
+const ti = slots.trustindexReviews;
+const tiStrip = slots.trustindexStrip;
+const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
+const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
+---
+<Base title={seo.title} description={seo.description} page="home-2" schema={schema} noindex>
+  <!-- HERO (Flexora): inset rounded photo card, centred serif headline, two pills, the curved cut-out info bar with the three USP cards. -->
+  <section class="fx-hero on-dark" data-section="hero" data-hero-variant="flexora">
+    <div class="fx-hero__card">
+      <img class="fx-hero__bg" src={heroImg.src} alt="" width={heroImg.width} height={heroImg.height} fetchpriority="high" decoding="async" />
+      <div class="fx-hero__copy">
+        <h1 class="fx-hero__h1">Tired Rooms? Painting and Decorating by Brandon</h1>
+        <p class="fx-hero__lead">Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation.</p>
+        <div class="fx-hero__actions">
+          <a href="#contact" class="btn fx-pill fx-pill--chrome" data-cta="hero-quote"><span class="fx-pill__dot"><Icon name="arrow" size={14} /></span><span class="btn__t">Quick Quote Online</span></a>
+          <a href={business.phoneHref} class="btn fx-pill fx-pill--white" data-cta="hero-call"><span class="fx-pill__dot fx-pill__dot--ink"><Icon name="phone" size={14} /></span><span class="btn__t">Call {business.phone}</span></a>
+        </div>
+        <Fragment set:html={`<!-- TODO-TrustIndex-ID: slim Trustindex widget (white text) for Google CID ${business.gbp.cid}. Set slots.trustindexStrip in src/data/site.ts. -->`} />
+        <div class:list={['fx-hero__ti', tiStrip && 'fx-hero__ti--live']} data-trustindex-slot="slim-hero" data-trustindex-todo={tiStrip ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-state={tiStrip ? 'live' : 'pending-widget-id'}>
+          {tiStrip && <script is:inline defer async src={tiStrip}></script>}
+        </div>
+      </div>
+      <ul class="fx-hero__bar">
+        {usps.map((u) => (
+          <li class="fx-hero__usp"><span class="fx-hero__ic"><Icon name={u.icon} size={18} /></span><div><h2>{u.title}</h2><p>{u.text}</p></div></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- MEET BRANDON (Flexora "Meet Dr ..."): tall photo with name label left, copy + pills + wide photo right. -->
+  <section class="fx-sec fx-meet" data-section="about">
+    <div class="container fx-meet__grid">
+      <figure class="fx-meet__tall" data-motion="reveal">
+        <img src={aboutTall.src} alt={aboutTall.alt} width={aboutTall.width} height={aboutTall.height} loading="lazy" decoding="async" />
+        <figcaption class="fx-meet__name"><strong>Brandon Dawson</strong><span>Owner, on every job</span></figcaption>
+      </figure>
+      <div class="fx-meet__copy" data-motion="reveal">
+        <h2 class="fx-h2">Preparation First, and a Finish That Lasts</h2>
+        <p>TrueLine Finishes is Brandon Dawson's painting and decorating business: interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.</p>
+        <p>Brandon, the owner, carries out the work and oversees every job. We take pride in attention to detail, lasting finishes and treating your property with care.</p>
+        <div class="fx-btns">
+          <a href="/about/" class="btn fx-pill fx-pill--royal" data-cta="about"><span class="btn__t">About Brandon</span></a>
+          <a href="/gallery/" class="btn fx-pill fx-pill--line fx-pill--desc" data-cta="about-gallery"><span class="btn__t">See the Gallery</span></a>
+        </div>
+        <div class="fx-meet__wide"><img src={aboutWide.src} alt={aboutWide.alt} width={aboutWide.width} height={aboutWide.height} loading="lazy" decoding="async" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS (Flexora "Real People, Real Results"), moved up under the second section (operator rule). The Trustindex slot, empty until the widget id arrives. -->
+  <section class="fx-sec fx-rv" id="reviews" data-section="reviews" data-ai-skip>
+    <div class="container">
+      <div class="fx-rv__head" data-motion="reveal">
+        <h2 class="rv__h2">What customers say about us</h2>
+        <p class="fx-lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
+      </div>
+      <Fragment set:html={`<!-- TODO-TrustIndex-ID: Trustindex review widget for Google CID ${business.gbp.cid}. Set slots.trustindexReviews in src/data/site.ts and the widget renders here. -->`} />
+      <div class:list={['fx-rv__widget', ti && 'fx-rv__widget--ti']} data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-slot="reviews" data-trustindex-cid={business.gbp.cid} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
+        {ti && <script is:inline defer async src={ti}></script>}
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES (Flexora "Begin Your Journey"): tinted band, centred head, cards with a notched image + icon, one pill under. -->
+  <section class="fx-sec fx-sv" id="services" data-section="services">
+    <div class="container">
+      <div class="fx-head fx-head--c" data-motion="reveal">
+        <h2 class="fx-h2">What Brandon Can Paint and Paper for You</h2>
+        <p class="fx-lead">Rooms inside, the outside of the house, wallpaper and business premises: pick the job you have in mind.</p>
+      </div>
+      <ul class="fx-sv__grid">
+        {services.map((s, i) => (
+          <li class="fx-sv__card" data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
+            <div class="fx-sv__img"><img src={s.image.sm} alt={s.image.alt} width={s.image.width} height={s.image.height} loading="lazy" decoding="async" /><span class="fx-sv__notch"><Icon name={s.icon} size={20} /></span></div>
+            <h3 class="fx-sv__title"><a href={`/${s.slug}/`} data-link="card">{s.name}</a></h3>
+            <p class="fx-sv__body">{s.short}</p>
+          </li>
+        ))}
+      </ul>
+      <div class="fx-center"><a href="/services/" class="btn fx-pill fx-pill--sky" data-cta="services-all"><span class="btn__t">View All Services</span></a></div>
+    </div>
+  </section>
+
+  <!-- WHY BRANDON (Flexora "Our Commitment"): photo with a label left, heading, line, six feature chips right. -->
+  <section class="fx-sec fx-why" data-section="why">
+    <div class="container fx-why__grid">
+      <figure class="fx-why__img" data-motion="reveal">
+        <img src={whyImg.src} alt={whyImg.alt} width={whyImg.width} height={whyImg.height} loading="lazy" decoding="async" />
+        <figcaption class="fx-why__badge"><span class="fx-why__badge-ic"><Icon name="shield" size={20} /></span><span><strong>Floors and furniture protected</strong>Dust sheets down before the work starts</span></figcaption>
+      </figure>
+      <div class="fx-why__copy" data-motion="reveal">
+        <h2 class="fx-h2">A Quality-Led Service from Preparation to Completion</h2>
+        <p>A painting and decorating business where the person you call is the person who does the work: Brandon prepares every surface properly, sanding, filling and caulking come with everything, and the finish is made to last.</p>
+        <p class="fx-why__rule">Brand-new plaster gets a mist coat before the finish goes on.</p>
+        <ul class="fx-chips">
+          {chips.map((c) => <li class="fx-chip"><Icon name="check" size={16} /><span>{c}</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE TO FIND US (Flexora "Common Areas" tinted panel) + the strip under it (here: opening hours, where the reference lists insurers). -->
+  <section class="fx-sec fx-ar" data-section="areas">
+    <div class="container">
+      <div class="fx-ar__panel">
+        <div class="fx-ar__copy" data-motion="reveal">
+          <h2 class="fx-h2">Where to Find Us</h2>
+          <p>Painting and decorating for homes and businesses in {mainPlaces.slice(0, -1).join(', ')} and {mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.</p>
+          <ul class="fx-tags">
+            {mainPlaces.map((p) => <li class="fx-tag"><Icon name="pin" size={14} />{p}</li>)}
+          </ul>
+          <a href="#contact" class="btn fx-pill fx-pill--white" data-cta="areas-quote"><span class="btn__t">Quick Quote Online</span></a>
+        </div>
+        <div class="fx-ar__map"><MapEmbed /></div>
+      </div>
+      <div class="fx-ar__strip">
+        <span class="fx-ar__strip-h"><span class="fx-ar__strip-ic"><Icon name="clock" size={18} /></span>Opening hours</span>
+        {hours.map((h) => <span class="fx-ar__strip-i"><strong>{h.days}</strong> {h.time}</span>)}
+        <a href={business.phoneHref} class="fx-ar__strip-phone" data-cta="areas-call"><Icon name="phone" size={16} />{business.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE TILES (Flexora's three-card row): the home page's three tiles, the middle one the gradient card. -->
+  <section class="fx-sec fx-tl" data-section="craft">
+    <div class="container">
+      <ul class="fx-tl__grid">
+        {tiles.map((t, i) => (
+          <li class:list={['fx-tl__card', !t.img && 'fx-tl__card--grad']} data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+            <h3 class="fx-tl__h3">{t.h3}</h3>
+            <p class="fx-tl__p" set:html={t.html} />
+            {t.img && <div class="fx-tl__img"><img src={t.img.sm} alt={t.img.alt} width={t.img.width} height={t.img.height} loading="lazy" decoding="async" /></div>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- PHOTO BANNER (Flexora "Are You Struggling with:"): rounded full-width photo, big serif line, label chips, two pills. -->
+  <section class="fx-sec fx-bn on-dark" data-section="cta-banner">
+    <div class="container">
+      <div class="fx-bn__card">
+        <img class="fx-bn__bg" src={bannerImg.src} alt="" width={bannerImg.width} height={bannerImg.height} loading="lazy" decoding="async" />
+        <div class="fx-bn__copy" data-motion="reveal">
+          <p class="fx-bn__big">Rooms looking tired, or the outside letting the house down?</p>
+          <ul class="fx-bn__chips">
+            {services.slice(1).map((s) => <li><Icon name={s.icon} size={14} />{s.name}</li>)}
+          </ul>
+        </div>
+        <div class="fx-bn__actions">
+          <a href={business.phoneHref} class="btn fx-pill fx-pill--glass" data-cta="banner-call"><Icon name="phone" size={16} /><span class="btn__t">{business.phone}</span></a>
+          <a href="#contact" class="btn fx-pill fx-pill--white" data-cta="banner-quote"><span class="btn__t">Quick Quote Online</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES (Flexora "Helpful Tips and Articles"): head + pill, one large card and two small. -->
+  <section class="fx-sec fx-ap" id="resources" data-section="articles">
+    <div class="container">
+      <div class="fx-head fx-head--row" data-motion="reveal">
+        <h2 class="fx-h2">Worth Reading Before the Dust Sheets Go Down</h2>
+        <a href="/resources/" class="btn fx-pill fx-pill--sky" data-cta="articles-all"><span class="btn__t">All Resources</span></a>
+      </div>
+      <ul class="fx-ap__grid">
+        {list.map((a, i) => {
+          const img = image(a.hero);
+          return (
+            <li class:list={['fx-ap__card', i === 0 && 'fx-ap__card--big']} data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+              <div class="fx-ap__img"><img src={i === 0 ? img.src : img.sm} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /></div>
+              <span class="fx-ap__cat">{hubName(a.hub)}</span>
+              <h3 class="fx-ap__title"><a href={articleUrl(a)} data-link="card">{a.title}</a></h3>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM (Flexora "Request An Appointment"): navy form panel left, photo + glass contact card right. Formlane direct embed, the default form. -->
+  <section class="fx-sec fx-qf section-quote-form" id="quote-section" data-section="quote-form" data-ai-skip>
+    <div class="container">
+      <div class="fx-qf__card">
+        <div class="fx-qf__panel on-dark">
+          <h2 class="fx-h2">Tell Brandon About the Job</h2>
+          <p class="fx-qf__lead">Leave your name, email, phone number and postcode, with a line or two about the job. Brandon will talk it through with you and give you a free quotation.</p>
+          <div class="fx-qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
+            <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
+          </div>
+          <p class="fx-qf__secure"><Icon name="lock" size={15} /> Any submission through this form is secure. We do not sell your details to third parties.</p>
+        </div>
+        <div class="fx-qf__photo">
+          <img src={formImg.src} alt={formImg.alt} width={formImg.width} height={formImg.height} loading="lazy" decoding="async" />
+          <div class="fx-qf__glass on-dark">
+            <div class="fx-qf__glass-top">
+              <span class="fx-qf__glass-ic"><Icon name="phone" size={18} /></span>
+              <div><span class="fx-qf__k">Phone</span><a href={business.phoneHref} class="fx-qf__v" data-cta="form-call">{business.phone}</a></div>
+            </div>
+            <div class="fx-qf__glass-cols">
+              <div><span class="fx-qf__k">WhatsApp</span><a href={business.whatsappHref} class="fx-qf__wa" target="_blank" rel="noopener" data-cta="form-whatsapp">Message Brandon</a></div>
+              <div><span class="fx-qf__k">Opening hours</span>{hours.map((h) => <span class="fx-qf__h">{h.days}: {h.time}</span>)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script is:inline src="https://api.formlane.uk/edge/form.js" defer></script>
+    </div>
+  </section>
+
+  <!-- FAQ (Flexora): heading + pill left, rounded accordion rows right. -->
+  <section class="fx-sec fx-fq" id="faq" data-section="faq">
+    <div class="container fx-fq__grid">
+      <div class="fx-fq__head" data-motion="reveal">
+        <h2 class="fx-h2">Questions People Ask Before They Call</h2>
+        <p class="fx-lead">Straight answers about the work, the quotation and who does the job.</p>
+        <a href="/faq/" class="btn fx-pill fx-pill--sky" data-cta="faq-all"><span class="btn__t">All Questions and Answers</span></a>
+      </div>
+      <div class="fx-fq__list">
+        {faqs.map((f, i) => (
+          <details class="fx-fq__item" open={i === 0}>
+            <summary><span>{f.q}</span><span class="fx-fq__plus" aria-hidden="true"></span></summary>
+            <div class="fx-fq__a" set:html={f.a} />
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  /* Page-only token re-point (body[data-page="home-2"]): blue grounds (fonts re-pointed in tokens.css), pill buttons, sentence-case headings. */
+  body[data-page='home-2'] {
+    --bg-inverse: var(--v-ink-900);
+    --bg-inverse-2: var(--v-ink-800);
+    --bg-inverse-deep: var(--v-ink-900);
+    --bg-panel: var(--v-mist-50);
+    --bg-subtle: var(--v-mist-50);
+    --text-primary: var(--v-ink-900);
+    --text-secondary: var(--v-ink-700);
+    --text-heading: var(--v-ink-900);
+    --text-muted: var(--v-slate-600);
+    --text-inverse-muted: var(--v-mist-300);
+    --border-default: var(--v-mist-200);
+    --border-inverse: var(--v-line-dark);
+    --glass: var(--v-glass-light);
+    --glass-card: var(--v-glass-dark);
+    --brand-primary: var(--v-royal);
+    --brand-hover: var(--v-royal-hover);
+    --btn-radius: var(--radius-full);
+    --input-radius: var(--radius-md);
+  }
+  body[data-page='home-2'] h1, body[data-page='home-2'] h2, body[data-page='home-2'] h3, body[data-page='home-2'] h4 { text-transform: none; letter-spacing: 0; font-variant-caps: normal; }
+  body[data-page='home-2'] h1, body[data-page='home-2'] h2 { font-weight: var(--fw-regular); }
+  body[data-page='home-2'] h3, body[data-page='home-2'] h4 { font-family: var(--font-family); font-weight: var(--fw-semibold); }
+  body[data-page='home-2'] .btn { text-transform: none; letter-spacing: 0; font-weight: var(--fw-semibold); }
+  /* The logo carries its own black ground: lighten lets the navy header show through it. */
+  body[data-page='home-2'] .hd__brand img, body[data-page='home-2'] .ft__brand img { mix-blend-mode: lighten; }
+</style>
+
+<style>
+  .fx-sec { padding: var(--section-pad) 0; }
+  .fx-h2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-6); }
+  .fx-lead { color: var(--text-muted); max-width: 60ch; }
+  .fx-head { margin-bottom: var(--space-12); }
+  .fx-head--c { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .fx-head--c .fx-h2 { margin-bottom: var(--space-4); }
+  .fx-head--row { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-8); }
+  .fx-head--row .fx-h2 { margin-bottom: 0; max-width: 22ch; }
+  .fx-center { display: flex; justify-content: center; margin-top: var(--space-12); }
+  .fx-btns { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: var(--space-8) 0; }
+
+  /* Pills (Flexora buttons): rounded, sentence case, a small icon disc inside the hero pair. */
+  .fx-pill { min-height: var(--btn-h-md); padding: 0 var(--space-6); gap: var(--space-3); font-size: var(--fs-md); }
+  .fx-pill:has(.fx-pill__dot) { padding-left: var(--space-2); }
+  .fx-pill__dot { display: grid; place-items: center; width: var(--space-8); height: var(--space-8); border-radius: var(--radius-full); background: var(--v-ink-900); color: var(--v-chrome); }
+  .fx-pill__dot--ink { background: var(--v-ink-700); color: var(--v-white); }
+  .fx-pill--chrome { background: var(--v-chrome); color: var(--v-ink-900); }
+  .fx-pill--chrome:hover { background: var(--v-chrome-hover); }
+  .fx-pill--white { background: var(--v-white); color: var(--v-ink-900); }
+  .fx-pill--white:hover { background: var(--v-mist-100); }
+  .fx-pill--royal { background: var(--v-royal); color: var(--v-white); }
+  .fx-pill--royal:hover { background: var(--v-royal-hover); }
+  .fx-pill--sky { background: var(--v-sky-100); color: var(--v-ink-900); }
+  .fx-pill--sky:hover { background: var(--v-mist-200); }
+  .fx-pill--line { background: var(--v-white); color: var(--v-ink-900); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
+  .fx-pill--line:hover { box-shadow: inset 0 0 0 1px var(--v-royal); }
+  .fx-pill--glass { background: var(--v-glass-light); color: var(--v-white); box-shadow: inset 0 0 0 1px var(--v-glass-line); backdrop-filter: blur(6px); }
+  /* Mixed-case labels with descenders: lift the cap box 1px so cap top and descender bottom balance (scripts/check.mjs). */
+  .fx-pill--desc .btn__t { transform: translateY(-1px); }
+  .fx-pill--glass :global(.icon) { color: var(--v-chrome); }
+
+  /* HERO */
+  .fx-hero { padding: calc(var(--header-h) + var(--space-5)) var(--space-5) 0; background: var(--v-white); }
+  .fx-hero__card { position: relative; isolation: isolate; overflow: hidden; min-height: min(calc(100vh - var(--header-h) - var(--space-5)), calc(var(--space-30) * 7)); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; border-radius: var(--v-radius-lg); background: var(--v-ink-900); padding: var(--space-24) var(--space-6) 0; }
+  .fx-hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .fx-hero__card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-centre); }
+  .fx-hero__copy { max-width: calc(var(--space-30) * 7); text-align: center; display: flex; flex-direction: column; align-items: center; padding-bottom: var(--space-12); }
+  .fx-hero__h1 { color: var(--v-white); font-size: var(--fs-8xl); line-height: 1.04; margin-bottom: var(--space-6); }
+  .fx-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 60ch; margin-bottom: var(--space-8); }
+  .fx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
+  .fx-hero__ti--live { min-height: var(--space-8); margin-top: var(--space-5); max-width: 100%; overflow: hidden; }
+  /* The cut-out bar: a white tab rising out of the bottom edge with concave shoulders (Flexora's signature shape). */
+  .fx-hero__bar { position: relative; list-style: none; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); width: min(100%, calc(var(--space-30) * 8)); padding: var(--space-6) var(--space-10) var(--space-5); background: var(--v-white); border-radius: var(--v-radius-lg) var(--v-radius-lg) 0 0; }
+  .fx-hero__bar::before, .fx-hero__bar::after { content: ''; position: absolute; bottom: 0; width: var(--v-radius-lg); height: var(--v-radius-lg); }
+  .fx-hero__bar::before { left: calc(-1 * var(--v-radius-lg)); background: radial-gradient(circle at 0 0, transparent var(--v-radius-lg), var(--v-white) calc(var(--v-radius-lg) + 1px)); }
+  .fx-hero__bar::after { right: calc(-1 * var(--v-radius-lg)); background: radial-gradient(circle at 100% 0, transparent var(--v-radius-lg), var(--v-white) calc(var(--v-radius-lg) + 1px)); }
+  .fx-hero__usp { display: flex; gap: var(--space-3); align-items: flex-start; }
+  .fx-hero__usp h2 { font-family: var(--font-family); font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--v-ink-900); margin-bottom: var(--space-1); }
+  .fx-hero__usp p { font-size: var(--fs-sm); color: var(--v-slate-600); line-height: var(--lh-normal); }
+  .fx-hero__ic { display: grid; place-items: center; flex-shrink: 0; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--v-sky-100); color: var(--v-royal); }
+
+  /* MEET BRANDON */
+  .fx-meet__grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--space-16); align-items: end; }
+  .fx-meet__tall { position: relative; margin: 0; border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 4 / 5; }
+  .fx-meet__tall img, .fx-meet__wide img { width: 100%; height: 100%; object-fit: cover; }
+  .fx-meet__name { position: absolute; left: var(--space-4); bottom: var(--space-4); display: flex; flex-direction: column; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--v-white); font-size: var(--fs-sm); color: var(--v-slate-600); line-height: var(--lh-normal); }
+  .fx-meet__name strong { color: var(--v-ink-900); font-size: var(--fs-md); }
+  .fx-meet__copy p { color: var(--text-secondary); max-width: 64ch; }
+  .fx-meet__copy p + p { margin-top: var(--space-4); }
+  .fx-meet__wide { border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 16 / 9; }
+
+  /* REVIEWS */
+  .fx-rv { background: linear-gradient(180deg, var(--v-mist-50), var(--v-white)); }
+  .fx-rv__head { display: flex; flex-direction: column; gap: var(--space-4); }
+  .fx-rv .rv__h2 { font-size: var(--fs-5xl); line-height: 1.12; }
+  .fx-rv__widget { margin-top: var(--space-10); }
+  .fx-rv__widget:empty { display: none; }
+  .fx-rv__widget--ti { min-height: calc(var(--space-30) * 3); }
+
+  /* SERVICES */
+  .fx-sv { background: var(--v-mist-100); }
+  .fx-sv__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-5); }
+  .fx-sv__card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--space-3) var(--space-3) var(--space-6); background: var(--v-white); border-radius: var(--v-radius-card); box-shadow: var(--v-shadow-soft); transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+  .fx-sv__card:hover { transform: translateY(calc(-1 * var(--space-1))); box-shadow: var(--v-shadow-lift); }
+  .fx-sv__img { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: var(--radius-md); overflow: hidden; }
+  .fx-sv__img img { width: 100%; height: 100%; object-fit: cover; }
+  /* The notch: a white tab with concave shoulders cut into the image's bottom edge, the icon inside. */
+  .fx-sv__notch { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: grid; place-items: center; width: var(--space-16); height: var(--space-10); padding-top: var(--space-2); background: var(--v-white); color: var(--v-royal); border-radius: var(--space-5) var(--space-5) 0 0; }
+  .fx-sv__notch::before, .fx-sv__notch::after { content: ''; position: absolute; bottom: 0; width: var(--space-5); height: var(--space-5); }
+  .fx-sv__notch::before { left: calc(-1 * var(--space-5)); background: radial-gradient(circle at 0 0, transparent var(--space-5), var(--v-white) calc(var(--space-5) + 1px)); }
+  .fx-sv__notch::after { right: calc(-1 * var(--space-5)); background: radial-gradient(circle at 100% 0, transparent var(--space-5), var(--v-white) calc(var(--space-5) + 1px)); }
+  .fx-sv__title { font-size: var(--fs-lg); padding: var(--space-4) var(--space-2) var(--space-3); margin-bottom: var(--space-3); position: relative; }
+  .fx-sv__title::after { content: ''; position: absolute; left: 50%; bottom: 0; width: var(--space-8); height: 1px; transform: translateX(-50%); background: var(--v-mist-200); }
+  .fx-sv__title a { color: var(--v-ink-900); transition: color 0.2s var(--ease); }
+  .fx-sv__title a:hover { color: var(--v-royal); }
+  .fx-sv__body { font-size: var(--fs-md); color: var(--v-slate-600); padding: 0 var(--space-2); line-height: var(--lh-normal); }
+
+  /* WHY */
+  .fx-why__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-16); align-items: center; }
+  .fx-why__img { position: relative; margin: 0; border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 4 / 5; }
+  .fx-why__img img { width: 100%; height: 100%; object-fit: cover; }
+  .fx-why__badge { position: absolute; left: var(--space-4); right: var(--space-4); bottom: var(--space-4); display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3) var(--space-4); border-radius: var(--radius-full); background: var(--v-white); font-size: var(--fs-sm); color: var(--v-slate-600); line-height: var(--lh-normal); }
+  .fx-why__badge strong { display: block; color: var(--v-ink-900); font-size: var(--fs-md); }
+  .fx-why__badge-ic { display: grid; place-items: center; flex-shrink: 0; width: var(--space-12); height: var(--space-12); border-radius: var(--radius-full); background: var(--v-sky-100); color: var(--v-royal); }
+  .fx-why__copy > p { color: var(--text-secondary); max-width: 62ch; }
+  .fx-why__rule { margin-top: var(--space-6) !important; padding-top: var(--space-6); border-top: 1px solid var(--v-mist-200); }
+  .fx-chips { list-style: none; padding: 0; margin: var(--space-8) 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+  .fx-chip { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-radius: var(--radius-full); background: var(--v-mist-50); color: var(--v-ink-900); font-size: var(--fs-md); font-weight: var(--fw-semibold); }
+  .fx-chip :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
+
+  /* AREAS */
+  .fx-ar__panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-10); padding: var(--space-16); border-radius: var(--v-radius-card) var(--v-radius-card) 0 0; background: var(--v-sky-100); }
+  .fx-ar__copy p { color: var(--v-ink-700); max-width: 52ch; }
+  .fx-tags { list-style: none; padding: 0; margin: var(--space-6) 0 var(--space-8); display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .fx-tag { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-ink-900); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
+  .fx-tag :global(.icon) { color: var(--v-royal); }
+  .fx-ar__map { border-radius: var(--v-radius-card); overflow: hidden; min-height: calc(var(--space-30) * 3); }
+  .fx-ar__strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4) var(--space-8); padding: var(--space-6) var(--space-16); border-radius: 0 0 var(--v-radius-card) var(--v-radius-card); background: var(--v-mist-100); color: var(--v-ink-700); font-size: var(--fs-md); }
+  .fx-ar__strip-h { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--v-ink-900); font-weight: var(--fw-semibold); font-size: var(--fs-lg); }
+  .fx-ar__strip-ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-royal); }
+  .fx-ar__strip-i strong { color: var(--v-ink-900); }
+  .fx-ar__strip-phone { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--fw-bold); font-size: var(--fs-lg); color: var(--v-ink-900); transition: color 0.2s var(--ease); }
+  .fx-ar__strip-phone:hover { color: var(--v-royal); }
+  .fx-ar__strip-phone :global(.icon) { color: var(--v-royal); }
+
+  /* THREE TILES */
+  .fx-tl { padding-top: 0; }
+  .fx-tl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .fx-tl__card { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--v-radius-card); background: var(--v-mist-50); }
+  .fx-tl__card--grad { background: linear-gradient(160deg, var(--v-white) 0%, var(--v-sky-100) 100%); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
+  .fx-tl__h3 { font-family: var(--font-heading) !important; font-weight: var(--fw-regular) !important; font-size: var(--fs-3xl); line-height: 1.15; }
+  .fx-tl__card--grad .fx-tl__h3 { font-size: var(--fs-4xl); }
+  .fx-tl__p { color: var(--v-slate-600); font-size: var(--fs-md); }
+  .fx-tl__p :global(a) { color: var(--v-royal); font-weight: var(--fw-semibold); transition: color 0.2s var(--ease); }
+  .fx-tl__p :global(a:hover) { color: var(--v-ink-900); }
+  .fx-tl__img { margin-top: auto; width: 60%; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; }
+  .fx-tl__img img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* PHOTO BANNER */
+  .fx-bn { padding-top: 0; }
+  .fx-bn__card { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; min-height: calc(var(--space-30) * 4); padding: var(--space-12); border-radius: var(--v-radius-card); background: var(--v-ink-900); }
+  .fx-bn__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .fx-bn__card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-band); }
+  .fx-bn__big { font-family: var(--font-heading); color: var(--v-white); font-size: var(--fs-6xl); line-height: 1.08; max-width: 16ch; margin-bottom: var(--space-6); }
+  .fx-bn__chips { list-style: none; padding: var(--space-2); margin: 0; display: inline-flex; flex-wrap: wrap; gap: var(--space-2); border-radius: var(--radius-full); background: var(--v-glass-light); backdrop-filter: blur(6px); }
+  .fx-bn__chips li { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-ink-900); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
+  .fx-bn__chips :global(.icon) { color: var(--v-royal); }
+  .fx-bn__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+  /* RESOURCES */
+  .fx-ap__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); }
+  .fx-ap__card { display: flex; flex-direction: column; gap: var(--space-2); }
+  .fx-ap__img { aspect-ratio: 3 / 4; border-radius: var(--v-radius-card); overflow: hidden; margin-bottom: var(--space-3); }
+  .fx-ap__card--big .fx-ap__img { aspect-ratio: auto; height: 100%; max-height: calc(var(--space-30) * 3 + var(--space-24)); min-height: 0; flex: 1; }
+  .fx-ap__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .fx-ap__card:hover .fx-ap__img img { transform: scale(1.03); }
+  .fx-ap__cat { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--v-royal); }
+  .fx-ap__title { font-size: var(--fs-lg); }
+  .fx-ap__title a { color: var(--v-ink-900); transition: color 0.2s var(--ease); }
+  .fx-ap__title a:hover { color: var(--v-royal); }
+
+  /* QUOTE FORM */
+  .fx-qf { padding-top: 0; }
+  .fx-qf__card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: var(--v-radius-card); overflow: hidden; background: var(--v-ink-700); }
+  .fx-qf__panel { padding: var(--space-16) var(--space-12); background: var(--v-ink-700); color: var(--v-mist-300); }
+  .fx-qf__panel .fx-h2 { color: var(--v-white); margin-bottom: var(--space-4); }
+  .fx-qf__lead { margin-bottom: var(--space-8); max-width: 52ch; }
+  .fx-qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
+  .fx-qf__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-mist-300); }
+  .fx-qf__secure :global(.icon) { color: var(--v-chrome); flex-shrink: 0; margin-top: 1px; }
+  .fx-qf__photo { position: relative; min-height: calc(var(--space-30) * 5); }
+  .fx-qf__photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .fx-qf__glass { position: absolute; left: var(--space-8); right: var(--space-8); bottom: var(--space-8); padding: var(--space-6); border-radius: var(--v-radius-card); background: var(--v-glass-dark); border: 1px solid var(--v-glass-line); backdrop-filter: blur(10px); color: var(--v-mist-100); }
+  .fx-qf__glass-top { display: flex; gap: var(--space-4); align-items: center; padding-bottom: var(--space-5); margin-bottom: var(--space-5); border-bottom: 1px solid var(--v-glass-line); }
+  .fx-qf__glass-ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--radius-full); background: var(--v-chrome); color: var(--v-ink-900); }
+  .fx-qf__glass-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .fx-qf__k { display: block; font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--v-mist-300); margin-bottom: var(--space-1); }
+  .fx-qf__v { font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--v-white); }
+  .fx-qf__wa { font-weight: var(--fw-semibold); color: var(--v-white); transition: color 0.2s var(--ease); }
+  .fx-qf__v:hover, .fx-qf__wa:hover { color: var(--v-chrome); }
+  .fx-qf__h { display: block; font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-white); }
+  /* Formlane form.js fields, Flexora's tinted rounded inputs. */
+  .fx-qf__form :global(.lf-f) { gap: var(--space-3); }
+  .fx-qf__form :global(.lf-f > .lf-w) { grid-column: 1 / -1; }
+  .fx-qf__form :global(.lf-k) { display: none; }
+  .fx-qf__form :global(.lf-i) { min-height: var(--input-h); padding: var(--space-3) var(--space-5); font: inherit; font-size: var(--fs-base); color: var(--v-ink-900); background: var(--v-mist-100); border: 1px solid var(--v-mist-100); border-radius: var(--radius-md); }
+  .fx-qf__form :global(textarea.lf-i) { min-height: calc(var(--space-30) - var(--space-4)); resize: vertical; }
+  .fx-qf__form :global(.lf-i::placeholder) { color: var(--v-slate-600); opacity: 1; }
+  .fx-qf__form :global(.lf-i:focus) { outline: 2px solid var(--v-chrome); outline-offset: 1px; }
+  .fx-qf__form :global(.lf-b) { display: block; padding: 0 var(--space-8); width: auto; min-width: calc(var(--space-30) + var(--space-20)); min-height: var(--btn-h-md); border: 0; border-radius: var(--radius-full); background: var(--v-chrome); color: var(--v-ink-900); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-bold); line-height: var(--lh-tight); text-box: trim-both cap alphabetic; cursor: pointer; }
+  .fx-qf__form :global(.lf-b:hover) { background: var(--v-chrome-hover); }
+  .fx-qf__form :global(.lf-x), .fx-qf__form :global(.lf-e) { color: var(--v-chrome-hover); }
+
+  /* FAQ */
+  .fx-fq__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-16); align-items: start; }
+  .fx-fq__head { position: sticky; top: calc(var(--header-h) + var(--space-6)); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-6); }
+  .fx-fq__head .fx-h2 { margin-bottom: 0; }
+  .fx-fq__list { display: flex; flex-direction: column; gap: var(--space-3); }
+  .fx-fq__item { border-radius: var(--radius-md); background: var(--v-white); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
+  .fx-fq__item summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: var(--space-6); padding: var(--space-5) var(--space-6); cursor: pointer; font-size: var(--fs-lg); font-weight: var(--fw-semibold); color: var(--v-ink-900); }
+  .fx-fq__item summary::-webkit-details-marker { display: none; }
+  .fx-fq__plus { position: relative; flex-shrink: 0; width: var(--space-8); height: var(--space-8); border-radius: var(--radius-full); box-shadow: inset 0 0 0 1px var(--v-mist-300); }
+  .fx-fq__plus::before, .fx-fq__plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: var(--space-3); height: 2px; background: var(--v-ink-900); transform: translate(-50%, -50%); transition: transform 0.2s var(--ease); }
+  .fx-fq__plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .fx-fq__item[open] .fx-fq__plus { background: var(--v-sky-100); box-shadow: none; }
+  .fx-fq__item[open] .fx-fq__plus::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .fx-fq__a { padding: 0 var(--space-6) var(--space-6); color: var(--text-secondary); }
+
+  @media (max-width: 1180px) {
+    .fx-sv__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fx-hero__h1 { font-size: var(--fs-7xl); }
+  }
+  @media (max-width: 1023px) {
+    .fx-meet__grid, .fx-why__grid, .fx-fq__grid, .fx-ar__panel, .fx-qf__card { grid-template-columns: 1fr; }
+    .fx-meet__tall { aspect-ratio: 4 / 3; }
+    .fx-why__img { aspect-ratio: 4 / 3; }
+    .fx-fq__head { position: static; }
+    .fx-tl__grid, .fx-ap__grid { grid-template-columns: 1fr; }
+    .fx-ap__card--big .fx-ap__img { aspect-ratio: 4 / 3; height: auto; flex: none; }
+    .fx-ap__img { aspect-ratio: 4 / 3; }
+    .fx-hero__h1 { font-size: var(--fs-6xl); }
+    .fx-ar__panel { padding: var(--space-10); }
+    .fx-ar__strip { padding: var(--space-6) var(--space-10); }
+  }
+  @media (max-width: 760px) {
+    .fx-hero { padding: calc(var(--header-h) + var(--space-2)) var(--space-2) 0; }
+    .fx-hero__card { padding: var(--space-12) var(--space-4) 0; border-radius: var(--v-radius-card); min-height: 0; }
+    .fx-hero__copy { padding-bottom: var(--space-8); }
+    .fx-hero__h1 { font-size: var(--fs-4xl); }
+    .fx-hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
+    .fx-hero__actions { width: 100%; flex-direction: column; }
+    .fx-hero__actions .fx-pill { width: 100%; }
+    .fx-hero__bar { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-6) var(--space-5) var(--space-5); width: calc(100% - 2 * var(--space-6)); }
+    .fx-h2 { font-size: var(--fs-3xl); }
+    .fx-rv .rv__h2 { font-size: var(--fs-3xl); }
+    .fx-sv__grid { grid-template-columns: 1fr; }
+    .fx-sv__img { aspect-ratio: 4 / 3; }
+    .fx-chips { grid-template-columns: 1fr; }
+    .fx-head--row { flex-direction: column; align-items: flex-start; }
+    .fx-ar__panel { padding: var(--space-6); }
+    .fx-ar__strip { padding: var(--space-5) var(--space-6); flex-direction: column; align-items: flex-start; }
+    .fx-tl__card { padding: var(--space-6); }
+    .fx-bn__card { padding: var(--space-6); min-height: calc(var(--space-30) * 4); }
+    .fx-bn__big { font-size: var(--fs-3xl); }
+    .fx-bn__chips { border-radius: var(--v-radius-card); }
+    .fx-bn__actions { width: 100%; flex-direction: column; }
+    .fx-bn__actions .fx-pill { width: 100%; }
+    .fx-qf__panel { padding: var(--space-10) var(--space-5); }
+    .fx-qf__form :global(.lf-b) { width: 100%; }
+    .fx-qf__photo { min-height: calc(var(--space-30) * 4); }
+    .fx-qf__glass { left: var(--space-4); right: var(--space-4); bottom: var(--space-4); padding: var(--space-5); }
+    .fx-qf__glass-cols { grid-template-columns: 1fr; gap: var(--space-4); }
+    .fx-fq__item summary { font-size: var(--fs-base); padding: var(--space-4) var(--space-5); }
+  }
+</style>

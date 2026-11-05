@@ -37,6 +37,9 @@ const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); st
 walk(dist);
 const articles = JSON.parse(readFileSync(new URL('../src/data/articles.json', import.meta.url), 'utf8'));
 const review = new Set(articles.filter((a) => a.status !== 'published').map((a) => `/resources/${a.slug}/`));
+// HOMEPAGE VARIANTS (TEMPORARY, operator brief 5 Nov 2026): noindex, out of the sitemap, and exempt
+// from the one-hero-pattern check only (they port other templates' heroes on purpose).
+const VARIANT = /^\/home-[23]\/$/;
 const fails = []; const warns = [];
 const route = (file) => '/' + relative(dist, file).replace(/index\.html$/, '').replace(/\.html$/, '/');
 const exists = (href) => { const p = href.split('#')[0].split('?')[0]; if (!p || p === '/') return true; const f = join(dist, p); return existsSync(join(f, 'index.html')) || existsSync(f); };
@@ -58,11 +61,12 @@ for (const file of pages) {
   if (!/\| TrueLine Finishes$/.test(title.replace(/&amp;/g, '&'))) fails.push(`${r}: title must end "| TrueLine Finishes" (brand last): "${title}"`);
   if (title.length > 75) warns.push(`${r}: title ${title.length} chars`);
   if (desc.length < 110 || desc.length > 165) warns.push(`${r}: description ${desc.length} chars`);
-  const wantRobots = utility || review.has(r) ? 'noindex, nofollow' : 'index, follow';
+  const variant = VARIANT.test(r);
+  const wantRobots = utility || review.has(r) || variant ? 'noindex, nofollow' : 'index, follow';
   if (!html.includes(`<meta name="robots" content="${wantRobots}"`)) fails.push(`${r}: robots meta is not "${wantRobots}"`);
   if (!/<link rel="canonical" href="https:\/\/www\.truelinefinishes\.com\//.test(html)) fails.push(`${r}: canonical missing or not www`);
-  if (!utility && !review.has(r) && !sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: missing from sitemap`);
-  if ((utility || review.has(r)) && sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: noindex page is in the sitemap`);
+  if (!utility && !review.has(r) && !variant && !sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: missing from sitemap`);
+  if ((utility || review.has(r) || variant) && sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: noindex page is in the sitemap`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     let j; try { j = JSON.parse(m[1]); } catch (e) { fails.push(`${r}: schema JSON parse ${e.message}`); continue; }
     const biz = j['@graph']?.find((n) => n['@type'] === 'HousePainter');
@@ -115,7 +119,7 @@ for (const file of pages) {
   const hero = (html.match(/<section[^>]*data-section="hero"[\s\S]*?<\/section>/) || [''])[0];
   if (/<iframe|data-video=|data-lead-form|<form\b|\/brand\/logo/.test(hero)) fails.push(`${r}: hero carries a video, a form or the logo`);
   if (!/404|thank-you/.test(r)) {
-    if (!/class="hero on-dark section-hero[^"]*"[^>]*data-hero="(home|page)"/.test(hero) || !/class="hero__bg"/.test(hero)) fails.push(`${r}: hero is not the shared home-hero pattern`);
+    if (!variant && (!/class="hero on-dark section-hero[^"]*"[^>]*data-hero="(home|page)"/.test(hero) || !/class="hero__bg"/.test(hero))) fails.push(`${r}: hero is not the shared home-hero pattern`);
     if (/ph__img|class="ph /.test(html)) fails.push(`${r}: old inner hero / side image`);
     if (/reviews on Google/i.test(visibleText(hero))) fails.push(`${r}: Google reviews line still in the hero`);
   }

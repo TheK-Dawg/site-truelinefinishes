@@ -11,7 +11,7 @@ const dist = new URL('../dist/', import.meta.url).pathname;
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png' };
 const server = createServer((req, res) => { let f = join(dist, decodeURIComponent(new URL(req.url, 'http://x').pathname)); if (existsSync(f) && statSync(f).isDirectory()) f = join(f, 'index.html'); if (!existsSync(f)) { res.writeHead(404); res.end(); return; } res.writeHead(200, { 'content-type': types[extname(f)] || 'application/octet-stream' }); res.end(readFileSync(f)); });
 await new Promise((r) => server.listen(4418, r));
-const routes = ['/', '/painting-and-decorating/', '/exterior-painting/', '/wallpapering/', '/about/', '/contact/', '/gallery/', '/reviews/', '/privacy/', '/resources/painting-and-decorating-baildon/', '/thank-you/'];
+const routes = ['/', '/painting-and-decorating/', '/exterior-painting/', '/wallpapering/', '/about/', '/contact/', '/gallery/', '/reviews/', '/privacy/', '/resources/painting-and-decorating-baildon/', '/thank-you/', ...process.argv.slice(2)];
 const b = await chromium.launch({ executablePath: '/root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell' });
 const fails = new Set();
 for (const w of [1440, 390]) for (const r of routes) {
