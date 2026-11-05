@@ -123,3 +123,88 @@ photo and claim is TrueLine's. Rule conflicts and what won: `DECISIONS.md`.
     stub (or the engine's replacement) with Brandon, then publish with `--publish`.
 11. **Kirkstall, Bramley, Farsley** and the YouTube channel's spelling ("Trueline"): Brandon's call, per the plan.
 12. Watch both videos in full before launch (plan, Video).
+
+## OVERHAUL (operator verdict "really bad, complete overhaul", 5 Nov 2026)
+
+Brief: `TRUELINE-OVERHAUL-BRIEF.md`. The home page and footer were rebuilt on the Buildings for Life
+structure (`/root/projects/lead-gen-websites/buildingsforlifeltd/site`), keeping TrueLine's own words,
+photos, colours and claims. Every override is recorded in `DECISIONS.md` O1-O10.
+
+| | |
+|---|---|
+| Commits | `950a22d` (overhaul), `a0b7968` (home map + Cookie Policy), then this report. Push verified with `git ls-remote` |
+| Version | 1.1.0 (`package.json`) |
+| Deploy | worker `site-truelinefinishes` through the deploy guard, version `a6460634-e7a5-4dd0-9308-a03071534500` |
+| URL | https://site-truelinefinishes.small-bird-3273.workers.dev (real domain still not attached) |
+
+### What changed, fix by fix
+1. **Logo**: now only in the black header bar (logo left, nav right). The big wordmark in the hero is gone.
+2. **Hero = BFL hero**: Brandon's bay-window living room under the black overlay, H1, lead, Quick Quote
+   Online + Call 07949 484274, "Read Brandon's reviews on Google" line, three info cards (Over eight
+   years' experience / Brandon on every job / Fully insured). **No video and no form in the hero.** The
+   kitchen Short moved to `/about/`, beside Brandon's story (VideoObject schema moved with it). The house
+   video is unchanged on Painting and Decorating + Interior Painting.
+3. **Form**: the Formlane embed (`data-lead-form="f_5ELbk5JcKfFh2EEaclT6"`) in its own black section,
+   LAST on every page, white card, field styling and blue button. The preview's earlier form was already
+   the Formlane embed, styled to the site (checked: it rendered Brandon's six dropdown options). It just
+   sat in the hero. Every Quick Quote Online button scrolls to it.
+4. **Before-and-after slider: deleted** from home, the three hubs and the gallery; the component is
+   removed. The gallery shows the finished "after" shots in their room/exterior groups and does not show
+   the "before" shots. The freed home slot is BFL's Our Work section.
+5. **Services** on BFL's ServicesGrid (five cards in one row, first card black, the title is the only
+   link, "Not sure which of these your job falls under? Quick Quote Online"). "Why people choose us" became
+   BFL's statement slab + trust-badge row.
+6. **No underlined links anywhere**: every underline rule removed (cards, prose, article sidebar,
+   breadcrumbs, footer bar, credit, contact, sitemap, thank-you). Links read by colour and weight and
+   change colour on hover. Enforced by the audit (compiled CSS + page HTML) and by a computed-style
+   Playwright check on every visible link.
+7. **Reviews section** directly under the hero on every page (home included), BFL layout, slot marked
+   `data-trustindex-todo="TODO-TrustIndex-ID"` + an HTML comment. Until the widget id arrives it links to
+   the Google listing. No reviews, rating or count were invented. `/reviews/` unchanged.
+8. **Pages**: `/faq/` (built; the plan's own Q&A only: the home questions + each hub's, de-duplicated,
+   FAQPage schema) and `/services/` (built; all five hubs, CollectionPage schema). `/gallery/`,
+   `/reviews/`, `/resources/` checked, all 200. The home page now carries the resources preview in BFL's
+   position. With no article published yet it shows an honest "being written" line, never a draft link.
+   No `/areas/` or town pages (plan).
+9. **Footer = BFL footer**: logo + "A room, the whole house or business premises to decorate?" + Quick
+   Quote Online. Then four columns: About Us (with **"Proud to support A Child's Wish, a children's
+   charity."**), Our Services (5 + All services), Company, Quick Contact (call button, email, WhatsApp,
+   the hours). Bottom bar: © year, Privacy / Terms / Cookie Policy / Site map, and the LMB credit
+   "Painting and decorating websites by Local Map Booster" (one nofollow link, on the keyword). No address.
+10. **Nav**: Home, Services (now opens `/services/`; the dropdown lists all five hubs + All services),
+    Gallery, Reviews, About, Resources, Contact + phone. The burger is used below 1180px, as before.
+- Home order now: hero → reviews → statement → trust badges → about block → services → our work → the
+  three tiles (BFL craft row: Specialist Wallcoverings / Interior & Exterior Work / Domestic & Commercial)
+  → how a job runs → areas (map + Brandon's places) → resources → FAQ → quote form.
+- **Home areas map** is an area map centred on Baildon, with no business pin. The Business Profile
+  (CID) embed's Google card prints the street address, which the plan forbids on the site.
+
+### Verification (final deploy)
+- `node scripts/audit.mjs`: 20 pages, **0 fails** (selftest passes). New checks: the kitchen Short only on
+  /about/; no iframe/video/form/logo inside any hero; no slider; no underline in page HTML or compiled CSS;
+  footer LMB credit; the TODO-TrustIndex-ID marker; /faq/, /services/, /gallery/, /reviews/, /resources/
+  exist. **Each one was proven by breaking dist on purpose first (31 fails raised), then re-run clean.**
+- `node scripts/token-gate.mjs`: PASS. `node scripts/contrast.mjs`: 0 fails.
+- `node scripts/check.mjs <worker URL>` (Playwright, 1440×900 + 390×844, all 19 routes): **0 fails**.
+  New rendered checks: no underlined visible link (computed style), no video/form/logo in the hero, form
+  inside its own quote-form section, no slider, footer charity line + LMB credit, the logo only in the
+  header, the dropdown lists ≥5 links. The Formlane form rendered Brandon's fields on every page.
+- **Harness fix:** the old overflow test compared the page to `innerWidth`. Under mobile emulation
+  `innerWidth` widens with the page, so a 14px overflow from the new trust tiles was not caught. The
+  test now compares against the viewport width (390/1440). It was proven on a page broken on purpose
+  (31px caught) after the tiles were fixed.
+- `node scripts/cookies.mjs <worker URL>` (now including /about/): no cookies, no first-party storage on
+  any page. Cookie Policy updated: the Google map is on the home and Contact pages.
+- Live read-back: `/`, `/faq/`, `/services/`, `/gallery/`, `/reviews/`, `/resources/`, `/about/`, hubs all 200.
+- Screenshots: `/root/work/tl-shots/overhaul/` (desktop + mobile, every route, + the home areas map).
+- **NOT RUN:** `astro check` (it wants to install `@astrojs/check`; no install on this server).
+  `astro build` is clean. No test lead was sent.
+
+### Open items added by the overhaul
+13. **The Contact page map still prints the address.** It is the CID embed ordered by the original
+    brief (D14), and Google's listing card shows Brandon's street address. That conflicts with "address
+    never shown". It is outside this overhaul's fixes, so it was left as built. Operator: switch
+    /contact/ to the same area map as home (one-line change: `<MapEmbed area="Baildon, Shipley" />`)?
+14. **LMB credit on a client site**: added because the overhaul brief orders BFL's footer "LMB credit".
+    The fleet branding split says client sites carry none, so confirm it stays.
+15. **Trustindex widget id** (open item 1) is now the only thing between the review section and live reviews.
