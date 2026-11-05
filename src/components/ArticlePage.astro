@@ -55,6 +55,9 @@ const body = `${intro}${sections.join('\n')}`;
 
 const sameHub = articles.filter((a) => a.hub === article.hub && a.slug !== article.slug).slice(0, 6);
 const sameTown = articles.filter((a) => a.town === article.town && a.slug !== article.slug);
+// Interlinking (operator, 5 Nov 2026): every article links across to 1 or 2 others. When no article shares its hub or
+// town yet, the nearest other published articles stand in.
+const others = sameHub.length || sameTown.length ? [] : articles.filter((a) => a.slug !== article.slug && a.status === 'published').slice(0, 2);
 const schema = [
   { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(hero.src, business.url).href, author: { '@type': 'Person', name: business.owner }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` } },
   ...(article.faqs.length ? [{ '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: article.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) }] : []),
@@ -81,6 +84,7 @@ const schema = [
             {article.faqs.map((f) => <details class="art__q" open><summary>{f.q}</summary><div set:html={f.a} /></details>)}
           </section>
         )}
+        <p class="art__next">More on <a href={`/${svc.slug}/`} data-link="hub">{svc.name.toLowerCase()} from Brandon</a>, every <a href="/resources/">TrueLine Finishes resource</a> and the <a href="/faq/">frequently asked questions</a>. Ready to go? Send a <a href="#contact">Quick Quote Online</a> or see <a href="/contact/">Brandon's contact details</a>.</p>
       </article>
       <aside class="art__aside">
         {toc.length > 0 && (
@@ -98,11 +102,12 @@ const schema = [
       </aside>
     </div>
   </section>
-  {(sameHub.length > 0 || sameTown.length > 0) && (
+  {(sameHub.length > 0 || sameTown.length > 0 || others.length > 0) && (
     <section class="art__rel section section--panel" data-section="related-articles">
       <div class="container art__rel-grid">
         {sameHub.length > 0 && <div><h2 class="art__rel-h">{svc.name} in other towns</h2><ul>{sameHub.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
         {sameTown.length > 0 && <div><h2 class="art__rel-h">More in {article.town}</h2><ul>{sameTown.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
+        {others.length > 0 && <div><h2 class="art__rel-h">More from TrueLine Finishes</h2><ul>{others.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
       </div>
     </section>
   )}
@@ -122,6 +127,9 @@ const schema = [
   .art__main :global(.art__fig + h2) { margin-top: 0.7em; }
   .art__main :global(.art__fig img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
   .art__faq { margin-top: 2.4em; }
+  .art__next { margin-top: 2em; font-weight: var(--fw-semibold); }
+  .art__next a { color: var(--brand-text); }
+  .art__next a:hover { color: var(--brand-primary); }
   .art__q { border-top: 1px solid var(--border-default); padding: var(--space-4) 0; }
   .art__q summary { cursor: pointer; font-weight: var(--fw-semibold); color: var(--text-heading); }
   .art__q div { margin-top: var(--space-2); }

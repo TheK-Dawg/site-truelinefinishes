@@ -183,6 +183,29 @@ for (const vp of sizes) {
   }
   await ctx.close();
 }
+// STD-PAGES round (operator, 5 Nov 2026): the article sidebar CTA stays in view while the article scrolls (desktop),
+// and every internal link on every page resolves (redirects followed).
+{
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  for (const r of routes.filter((x) => /^\/resources\/.+/.test(x))) {
+    await page.goto(base + r, { waitUntil: 'load' });
+    for (const f of [0.4, 0.7]) {
+      await page.evaluate((f) => { const m = document.querySelector('.art__main'); window.scrollTo(0, m.getBoundingClientRect().top + scrollY + m.offsetHeight * f - 300); }, f);
+      await page.waitForTimeout(250);
+      const b = await page.evaluate(() => { const c = document.querySelector('.art__cta').getBoundingClientRect(); return { top: c.top, bottom: c.bottom }; });
+      if (b.top < 0 || b.bottom > 900) fails.push(`${r} desktop: sidebar CTA out of view at ${f * 100}% (top ${Math.round(b.top)}, bottom ${Math.round(b.bottom)})`);
+    }
+  }
+  const targets = new Set();
+  for (const r of routes) {
+    await page.goto(base + r, { waitUntil: 'domcontentloaded' });
+    for (const h of await page.evaluate(() => [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href').split('#')[0]).filter(Boolean))) targets.add(h);
+  }
+  for (const h of targets) { const res = await ctx.request.get(base + h, { maxRedirects: 3 }); if (res.status() !== 200) fails.push(`link ${h} -> ${res.status()}`); }
+  console.log(`internal link targets: ${targets.size}`);
+  await ctx.close();
+}
 await browser.close();
 server?.close();
 if (args.includes('--log')) { heroLog.forEach((l) => console.log('  hero', l)); const seen = new Set(); btnLog.forEach((l) => { const k = l.replace(/^\S+ \S+ /, (x) => x.split(' ')[0] + ' '); if (!seen.has(k)) { seen.add(k); console.log('  btn', l); } }); }
