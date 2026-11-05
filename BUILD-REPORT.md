@@ -252,6 +252,17 @@ round works through the operator's remaining points.
 - Screenshots: `/root/work/tl-shots/round2/` (desktop + mobile, every route).
 - **NOT RUN:** `astro check` (needs an install; `astro build` is clean). No test lead.
 
+### Fix 11 on Cumbria Spas (separate repo, done by a delegated agent)
+Checkout `cumbriaspires/site-cumbriaspas-build` (TheK-Dawg/site-cumbriaspas), worker `site-cumbriaspires-preview2`. Commits `6e0d03c` (fix), `ff139bf` + `fd439f9` (that repo's BUILD-REPORT "BUTTON CENTRING" section), pushed (`fd439f9` confirmed on origin); deploy `701bb09b-39bc-4d8b-9cbf-c74660485a2a`.
+- **Cause:** an earlier fix moved about 0.075em of padding from the bottom to the top of every button, assuming Figtree sits its capitals high. Pixel measurement shows Figtree's capitals are already centred, so that nudge pushed the labels about 1px low (worst +2.25px; 223/251 buttons at 1440 and 271/271 at 390 were over 1px).
+- **Fix:** nudge removed; padding set by pixel measurement: 14.25px / 13.75px on `.btn`, the sticky bar and the Formlane submit, 12.5px / 9.5px on the 14px header pill.
+- **Live re-measure:** worst +0.39px at 1440 (0/267 over 1px) and +0.19px at 390 (0/284 over 1px). Pixel checks at densities 1-3: within ±0.44px.
+- **Not verified on Cumbria:** Safari/Firefox (Chromium only); the repo's own `qa.mjs --url` against live (its local run is 0 fails); operator acceptance.
+- **The two sites use different methods on purpose:** TrueLine uses `text-box` on a label span, which works with any system font (TrueLine has no webfont). Cumbria uses padding measured for its one webfont, a CSS-only change.
+
+### Handoff note for the STANDARD-PAGES session (STD-PAGES-ROUND-BRIEF)
+That brief was written before this round and says TrueLine lacks company facts, complaints and accessibility, and that only one article exists. **This round has already added `/company-facts/`, `/complaints-procedure/` (not `/complaints/`), `/accessibility/` and `/find-us-online/`, and published all three articles.** All are linked from the footer and the site map. Extend these rather than duplicating them. If the operator wants `/complaints/` as the URL, make it a 301 to the existing page or a rename, not a second page. Company facts already omits the legal entity type, as that brief asks.
+
 ### Open items after round 2
 1. **Trustindex widget ids** (main section + optional slim hero widget): set `slots.trustindexReviews` / `slots.trustindexStrip` in `src/data/site.ts`. Until then the review section is a heading, its lead and an empty marked slot.
 2. **Home and contact maps show the address and rating in Google's own card** (fix 8 above): operator's call.
