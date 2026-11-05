@@ -75,6 +75,10 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__secure :global(.icon) { color: var(--brand-text); flex-shrink: 0; margin-top: 1px; }
   /* The Formlane form (form.js) in the site's field and button styling. */
   .qf__form :global(.lf-f) { gap: var(--space-3); }
+  /* Every field full width and stacked (house form law), so the dropdown text never truncates. */
+  .qf__form :global(.lf-f > .lf-w) { grid-column: 1 / -1; }
+  /* Formlane's own privacy line is replaced by the brief's security line under the card. */
+  .qf__form :global(.lf-k) { display: none; }
   .qf__form :global(.lf-i) { min-height: var(--input-h); padding: var(--space-3) var(--space-4); font: inherit; font-size: var(--fs-base); color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--input-radius); }
   .qf__form :global(textarea.lf-i) { min-height: calc(var(--space-30) - var(--space-4)); resize: vertical; }
   .qf__form :global(.lf-i::placeholder) { color: var(--text-muted); opacity: 1; }

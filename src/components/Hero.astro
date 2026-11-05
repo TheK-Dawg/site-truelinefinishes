@@ -68,6 +68,10 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .hero__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); line-height: var(--lh-normal); }
   .hero__secure :global(.icon) { color: var(--brand-text); flex-shrink: 0; margin-top: 1px; }
   .hero__form :global(.lf-f) { gap: var(--space-3); }
+  /* Every field full width and stacked (house form law), so the dropdown text never truncates. */
+  .hero__form :global(.lf-f > .lf-w) { grid-column: 1 / -1; }
+  /* Formlane's own privacy line is replaced by the brief's security line under the card. */
+  .hero__form :global(.lf-k) { display: none; }
   .hero__form :global(.lf-i) { min-height: var(--input-h); padding: var(--space-3) var(--space-4); font: inherit; font-size: var(--fs-base); color: var(--text-primary); background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--input-radius); }
   .hero__form :global(textarea.lf-i) { min-height: calc(var(--space-20) + var(--space-4)); resize: vertical; }
   .hero__form :global(.lf-i::placeholder) { color: var(--text-muted); opacity: 1; }
