@@ -1,62 +1,77 @@
 ---
 /**
- * HOME HERO (Buildings for Life hero, operator overhaul 5 Nov 2026). Full-bleed photograph of
+ * HERO, ONE PATTERN ON EVERY PAGE (Buildings for Life hero; operator round 2, 5 Nov 2026: the
+ * homepage hero "is perfect", use that same hero on every page). Full-bleed photograph of
  * Brandon's own work under the black overlay; H1, lead, Quick Quote Online (scrolls to the quote
- * form section at the END of the page) + the Call button, the slim Google reviews line, then three
- * glass info cards on the bottom edge (the middle one highlighted, as on BFL).
- * OPERATOR OVERRIDES (DECISIONS O1-O3): no logo in the hero (the logo lives in the header bar
- * only), no video in the hero, no form in the hero.
+ * form section at the END of the page) + the Call button, then the slim Trustindex slot.
+ * Home (`compact` off) adds the three glass info cards on the bottom edge. Sub-pages use
+ * `compact`: the same background, overlay, container and headline placement, a smaller height,
+ * no info cards. Inner pages reach it through PageHero.astro.
+ * REVIEWS LINE (round 2 fix 1): the old "Read Brandon's reviews on Google" line is gone. Its place
+ * is the slim Trustindex slot, marked TODO-TrustIndex-ID until the operator supplies the widget
+ * (slots.trustindexStrip); nothing renders there until then. No count, no rating, nothing faked.
+ * OPERATOR OVERRIDES (DECISIONS O1-O3): no logo, no video and no form in any hero.
  */
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-import { business } from '../data/site';
-interface Props { h1: string; lead: string; image: { src: string; alt: string; width: number; height: number } }
-const { h1, lead, image } = Astro.props;
+import { business, slots } from '../data/site';
+interface Props { h1: string; lead: string; image: { src: string; alt: string; width: number; height: number }; compact?: boolean; formless?: boolean; showCta?: boolean }
+const { h1, lead, image, compact = false, formless = false, showCta = true } = Astro.props;
+const ti = slots.trustindexStrip;
 ---
-<section class="hero on-dark section-hero" data-section="hero">
+<section class:list={['hero on-dark section-hero', compact && 'hero--compact']} data-section="hero" data-hero={compact ? 'page' : 'home'}>
   <img class="hero__bg" src={image.src} alt="" width={image.width} height={image.height} fetchpriority="high" decoding="async" />
   <div class="hero__inner container">
     <div class="hero__copy">
       <h1 class="hero__h1">{h1}</h1>
       <p class="hero__lead">{lead}</p>
-      <div class="hero__actions">
-        <a href="#contact" class="btn btn-primary hero__btn" data-cta="hero-quote">Quick Quote Online</a>
-        <CallButton cta="hero-call" class="hero__btn" />
+      {showCta && (
+        <div class="hero__actions">
+          <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary hero__btn" data-cta="hero-quote"><span class="btn__t">Quick Quote Online</span></a>
+          <CallButton cta="hero-call" class="hero__btn" />
+        </div>
+      )}
+      <Fragment set:html={`<!-- TODO-TrustIndex-ID: slim Trustindex widget (white text) for Google CID ${business.gbp.cid}. Set slots.trustindexStrip in src/data/site.ts. -->`} />
+      <div class:list={['hero__ti', ti && 'hero__ti--live']} data-trustindex-slot="slim-hero" data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
+        {ti && <script is:inline defer async src={ti}></script>}
       </div>
-      <p class="hero__strip"><span class="hero__g" aria-hidden="true">G</span><a href={business.gbp.mapsUrl} target="_blank" rel="noopener" data-cta="hero-reviews">Read Brandon's reviews on Google</a></p>
     </div>
-    <ul class="hero__cards">
-      <li class="hero__card"><span class="hero__ic"><Icon name="clock" /></span><div><h2>Over Eight Years' Experience</h2><p>Painting and decorating for homes and businesses.</p></div></li>
-      <li class="hero__card hero__card--on"><span class="hero__ic"><Icon name="user" /></span><div><h2>Brandon on Every Job</h2><p>The owner carries out the work and oversees every job.</p></div></li>
-      <li class="hero__card"><span class="hero__ic"><Icon name="shield" /></span><div><h2>Fully Insured</h2><p>Friendly and reliable, with a free quotation for every job.</p></div></li>
-    </ul>
+    {!compact && (
+      <ul class="hero__cards">
+        <li class="hero__card"><span class="hero__ic"><Icon name="clock" /></span><div><h2>Over Eight Years' Experience</h2><p>Painting and decorating for homes and businesses.</p></div></li>
+        <li class="hero__card hero__card--on"><span class="hero__ic"><Icon name="user" /></span><div><h2>Brandon on Every Job</h2><p>The owner carries out the work and oversees every job.</p></div></li>
+        <li class="hero__card"><span class="hero__ic"><Icon name="shield" /></span><div><h2>Fully Insured</h2><p>Friendly and reliable, with a free quotation for every job.</p></div></li>
+      </ul>
+    )}
   </div>
 </section>
 
 <style>
   .hero { position: relative; isolation: isolate; overflow: hidden; background: var(--bg-inverse-deep); color: var(--text-inverse-muted); padding-top: calc(var(--header-h) + var(--space-24)); }
+  .hero--compact { padding-top: calc(var(--header-h) + var(--space-20)); padding-bottom: var(--space-20); }
   .hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-hero); }
   .hero__copy { max-width: var(--copy-max); }
   .hero__h1 { color: var(--text-inverse); font-size: var(--fs-6xl); line-height: 1.08; margin-bottom: var(--space-6); }
+  .hero--compact .hero__h1 { font-size: var(--fs-5xl); }
   .hero__lead { font-size: var(--fs-lg); max-width: 56ch; margin-bottom: var(--space-8); }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  .hero__strip { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-5); font-size: var(--fs-md); font-weight: var(--fw-semibold); }
-  .hero__strip a { color: var(--text-inverse); transition: color 0.2s var(--ease); }
-  .hero__strip a:hover { color: var(--accent-on-dark); }
-  .hero__g { display: grid; place-items: center; width: var(--space-6); height: var(--space-6); border-radius: var(--badge-radius); background: var(--bg-card); color: var(--brand-text); font-size: var(--fs-sm); font-weight: var(--fw-bold); }
+  /* Pending: takes no space. Live: reserve the slim widget's height so nothing jumps on first input. */
+  .hero__ti--live { min-height: var(--space-8); margin-top: var(--space-4); max-width: 100%; overflow: hidden; }
+  .hero__ti :global(.ti-widget) { text-align: left !important; }
   .hero__cards { list-style: none; padding: 0; margin-top: var(--space-24); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); }
-  .hero__card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-8) var(--space-6); background: var(--glass-card); border-top: 2px solid var(--border-inverse); backdrop-filter: blur(4px); }
-  .hero__card--on { border-top-color: var(--accent-on-dark); }
+  .hero__card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-8) var(--space-6); background: var(--glass-card); border: 1px solid var(--border-inverse); backdrop-filter: blur(4px); }
+  .hero__card--on { border-color: var(--accent-on-dark); }
   .hero__card h2 { font-size: var(--fs-xl); margin-bottom: var(--space-1); }
   .hero__card p { font-size: var(--fs-md); }
   .hero__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); flex-shrink: 0; border-radius: var(--badge-radius); background: var(--glass-strong); color: var(--text-inverse); }
   .hero__card--on .hero__ic { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
-  @media (max-width: 1023px) { .hero__h1 { font-size: var(--fs-5xl); } .hero__cards { grid-template-columns: 1fr; gap: var(--space-3); margin-top: var(--space-16); } }
+  @media (max-width: 1023px) { .hero__h1 { font-size: var(--fs-5xl); } .hero--compact .hero__h1 { font-size: var(--fs-4xl); } .hero__cards { grid-template-columns: 1fr; gap: var(--space-3); margin-top: var(--space-16); } }
   @media (max-width: 640px) {
     .hero { padding-top: calc(var(--header-h) + var(--space-10)); }
-    .hero__h1 { font-size: var(--fs-3xl); }
+    .hero--compact { padding-top: calc(var(--header-h) + var(--space-10)); padding-bottom: var(--space-12); }
+    .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-3xl); }
     .hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
     .hero__actions { gap: var(--space-3); }
     .hero__actions :global(.hero__btn) { width: 100%; }

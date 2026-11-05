@@ -1,0 +1,18 @@
+---
+/**
+ * /find-us-online/ (house standard page, operator round 2, 5 Nov 2026). Only profiles evidenced
+ * as the business's own (plan): the Google Business Profile (CID 8023434379390696838) and
+ * Brandon's YouTube channel. Plain text links, nofollow, no badges or logos.
+ */
+import LegalPage from '../components/LegalPage.astro';
+import { business } from '../data/site';
+const profiles = [
+  { name: 'Google Business Profile', href: business.gbp.mapsUrl, line: 'the TrueLine Finishes map listing, with its Google reviews.', key: 'gbp' },
+  { name: 'YouTube', href: business.youtube, line: 'Brandon’s own videos from his jobs.', key: 'youtube' },
+];
+---
+<LegalPage title="Find TrueLine Finishes Online: Google and YouTube | TrueLine Finishes" description="Where to find TrueLine Finishes online: the Google Business Profile with its reviews, and Brandon's YouTube channel." h1="Find Us Online" page="find-us-online" lead="The places TrueLine Finishes is listed online, so you can check the reviews and videos for yourself.">
+  <h2>Profiles</h2>
+  <ul>{profiles.map((p) => <li><a href={p.href} rel="nofollow noopener" target="_blank" data-cta={`profile-${p.key}`}>{p.name}</a>: {p.line}</li>)}</ul>
+  <p>The business details are on <a href="/company-facts/">company facts</a>.</p>
+</LegalPage>

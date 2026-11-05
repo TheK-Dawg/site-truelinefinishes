@@ -1,0 +1,25 @@
+---
+/**
+ * /accessibility/ (house standard page, operator round 2, 5 Nov 2026; the 5 Star standard
+ * wording). "How we test" names what scripts/check.mjs and scripts/contrast.mjs actually run.
+ */
+import LegalPage from '../components/LegalPage.astro';
+import { business } from '../data/site';
+---
+<LegalPage title="Accessibility Statement | TrueLine Finishes" description="How the TrueLine Finishes website is built to be usable by as many people as possible, and how to tell us if something gets in your way." h1="Accessibility Statement" page="accessibility" lead="How this website is built to be usable by as many people as possible, and how to tell us if something gets in your way.">
+  <h2>Our commitment</h2>
+  <p>TrueLine Finishes wants everyone to be able to find out about Brandon's work and ask for a quotation. This website aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.</p>
+  <h2>How we test</h2>
+  <ul>
+    <li>Pages are checked in a browser at phone and desktop widths.</li>
+    <li>Text and button colours are measured against what sits behind them.</li>
+    <li>Every page has a skip link straight to the main content, proper headings, labelled form fields and descriptive link text.</li>
+    <li>If your device is set to reduce motion, the scroll animations are switched off.</li>
+  </ul>
+  <h2>Known limitations</h2>
+  <p>Our logo is an image of text; its name is given to screen readers. The quote form is loaded from the form service and needs JavaScript; without it, the page gives Brandon's phone number instead.</p>
+  <h2>Third-party content</h2>
+  <p>The maps are embedded from Google. Their own controls are outside our control.</p>
+  <h2>Report a problem</h2>
+  <p>If any part of this website is hard to use, or you need information in another format, ring <a href={business.phoneHref} data-cta="a11y-call">{business.phone}</a> and say which page and what got in the way. We will help directly and fix what we can.</p>
+</LegalPage>

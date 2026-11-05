@@ -5,8 +5,8 @@
  * the usable claims only (over eight years' experience, fully insured, the charity). He has NO
  * accreditations, qualifications, memberships, guarantees or warranties, so none is shown.
  * The charity line is words only: no link, logo, charity number or cover image.
- * Brandon's kitchen Short sits beside the story (operator overhaul, 5 Nov 2026: out of the home
- * hero; "if it has a home at all, ... on the About page").
+ * A photograph of Brandon's own work sits beside the story. The kitchen Short that was here came
+ * off with every other YouTube embed (operator round 2, fix 13); its caption stays in site.ts.
  */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
@@ -14,14 +14,13 @@ import Reviews from '../components/Reviews.astro';
 import OurWork from '../components/OurWork.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
-import VideoEmbed from '../components/VideoEmbed.astro';
 import { business, image, charityLine } from '../data/site';
 const pageUrl = `${business.url}/about/`;
 const schema = [
   { '@type': 'AboutPage', '@id': `${pageUrl}#about`, url: pageUrl, name: `About ${business.name}`, about: { '@id': `${business.url}/#business` } },
-  { '@type': 'VideoObject', name: 'Full kitchen renovation', embedUrl: 'https://www.youtube-nocookie.com/embed/v3g1Kdja0gk', contentUrl: 'https://youtube.com/shorts/v3g1Kdja0gk', thumbnailUrl: 'https://i.ytimg.com/vi/v3g1Kdja0gk/hqdefault.jpg', uploadDate: '2026-11-03', description: 'Full kitchen renovation, from Brandon’s YouTube channel.' },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'About', item: pageUrl }] },
 ];
+const story = image('grey-living-room-0142');
 const creds = [
   { icon: 'clock', title: "Over eight years' experience", text: 'Painting and decorating for homes and businesses.' },
   { icon: 'shield', title: 'Fully insured', text: 'Friendly and reliable, and fully insured.' },
@@ -30,23 +29,23 @@ const creds = [
 ];
 ---
 <Base title="About Brandon Dawson, Painter and Decorator | TrueLine Finishes" description="TrueLine Finishes is Brandon Dawson's painting and decorating business. Brandon carries out and oversees every job. Over eight years' experience, fully insured." page="about" schema={schema}>
-  <PageHero h1="About TrueLine Finishes and Brandon Dawson" lead="A painting and decorating business where the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
+  <PageHero h1="Who Will Be Painting Your Home? Meet Brandon Dawson" lead="TrueLine Finishes is Brandon’s painting and decorating business, and the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
   <Reviews />
   <section class="ab section section-story" data-section="story">
     <div class="container ab__inner">
       <div class="ab__copy prose" data-motion="reveal">
-        <h2>Brandon's business, Brandon's standards</h2>
+        <h2>Brandon’s Business, Brandon’s Standards</h2>
         <p>TrueLine Finishes is Brandon Dawson's painting and decorating business: interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.</p>
         <p>Brandon, the owner, carries out the work and oversees every job. When you call 07949 484274 you have a direct line to him, so the conversation about your job is with the person who will prepare the walls and lay on the finish.</p>
         <p>We take pride in attention to detail, lasting finishes and treating your property with care. Sanding, filling and caulking come with everything, because the preparation is what decides how good the paint looks and how long it lasts.</p>
         <p>Bedrooms and living rooms are the jobs Brandon enjoys most, and the same care goes into kitchens, hallways, stairs, exteriors and business premises.</p>
       </div>
-      <div class="ab__vid" data-motion="reveal"><VideoEmbed which="kitchen" /></div>
+      <figure class="ab__img" data-motion="reveal"><img src={story.sm} alt={story.alt} width={story.width} height={story.height} loading="lazy" decoding="async" /></figure>
     </div>
   </section>
   <section class="cr section section--panel section-credentials" data-section="credentials">
     <div class="container">
-      <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">What you can count on</h2></div>
+      <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">What You Can Count On</h2></div>
       <ul class="cr__grid">
         {creds.map((c, i) => (
           <li class="cr__item" data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
@@ -64,9 +63,10 @@ const creds = [
 <style>
   .ab__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-16); align-items: center; }
   .ab__copy h2 { margin-top: 0; }
-  .ab__vid { width: 100%; max-width: var(--video-portrait-w); justify-self: center; border-top: 3px solid var(--brand-primary); }
+  .ab__img { margin: 0; }
+  .ab__img img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
   .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
-  .cr__item { background: var(--bg-card); padding: var(--card-pad); border-top: 2px solid var(--brand-primary); }
+  .cr__item { background: var(--bg-card); padding: var(--card-pad); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); }
   .cr__item h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
   .cr__item p { color: var(--text-primary); font-size: var(--fs-md); }
   .cr__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }

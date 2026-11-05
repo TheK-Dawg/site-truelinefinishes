@@ -42,7 +42,7 @@ const route = (file) => '/' + relative(dist, file).replace(/index\.html$/, '').r
 const exists = (href) => { const p = href.split('#')[0].split('?')[0]; if (!p || p === '/') return true; const f = join(dist, p); return existsSync(join(f, 'index.html')) || existsSync(f); };
 const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
 const slotTodo = (html) => /data-trustindex-state="live"/.test(html) || /data-trustindex-todo="TODO-TrustIndex-ID"/.test(html);
-for (const need of ['/faq/', '/services/', '/gallery/', '/reviews/', '/resources/']) if (!existsSync(join(dist, need, 'index.html'))) fails.push(`${need}: page missing`);
+for (const need of ['/faq/', '/services/', '/gallery/', '/reviews/', '/resources/', '/sitemap/', '/privacy/', '/terms/', '/cookie-policy/', '/company-facts/', '/complaints-procedure/', '/accessibility/', '/find-us-online/']) if (!existsSync(join(dist, need, 'index.html'))) fails.push(`${need}: page missing`);
 const cssFiles = []; const walkCss = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walkCss(p) : f.endsWith('.css') && cssFiles.push(p); } }; walkCss(dist);
 for (const f of cssFiles) if (/text-decoration(-line)?:\s*underline/.test(readFileSync(f, 'utf8'))) fails.push(`${relative(dist, f)}: underline in compiled CSS`);
 
@@ -73,8 +73,11 @@ for (const file of pages) {
       if ((biz.openingHoursSpecification || []).length !== 2) fails.push(`${r}: openingHoursSpecification`);
       if ((biz.areaServed || []).length !== 116) fails.push(`${r}: areaServed has ${(biz.areaServed || []).length} towns, plan has 116`);
       if (!biz.sameAs?.includes('https://www.youtube.com/@TruelineFinishes')) fails.push(`${r}: sameAs YouTube`);
+      if (!biz.sameAs?.includes('https://maps.app.goo.gl/47CXTvHKMybPQHkR9')) fails.push(`${r}: sameAs Google listing share link`);
+      if (!/cid=8023434379390696838/.test(biz.hasMap || '')) fails.push(`${r}: hasMap is not the Google listing`);
     }
     if (isArticle && !j['@graph'].some((n) => n['@type'] === 'Article')) fails.push(`${r}: no Article schema`);
+    if (/VideoObject/.test(m[1])) fails.push(`${r}: VideoObject schema (no video is embedded)`);
   }
   const text = visibleText(html);
   for (const f of copyFails(text, isArticle)) fails.push(`${r}: ${f}`);
@@ -103,22 +106,36 @@ for (const file of pages) {
     if (/^(the|in|our|a|on|to|here|at|click here)$/i.test(anchor)) fails.push(`${r}: weak anchor "${anchor}"`);
   }
   if (/src="https:\/\/www\.youtube\.com\/embed/.test(html)) fails.push(`${r}: YouTube embed not on youtube-nocookie`);
-  // OPERATOR OVERHAUL (5 Nov 2026, DECISIONS O1-O8): the kitchen Short lives on /about/ only; no
-  // logo, video or form inside any hero; no before-and-after slider; no underlined links; footer
-  // carries the charity line + LMB credit; the reviews slot carries the TODO-TrustIndex-ID marker.
-  if (r === '/about/' && (html.match(/data-video="kitchen"/g) || []).length !== 1) fails.push('/about/: kitchen Short must appear once');
-  if (r !== '/about/' && /data-video="kitchen"/.test(html)) fails.push(`${r}: kitchen Short outside the About page`);
+  // OPERATOR OVERHAUL (5 Nov 2026, DECISIONS O1-O8) + ROUND 2 (DECISIONS R2-*): no YouTube embed
+  // anywhere; every page's hero is the home hero pattern (background photo, no side image, no
+  // logo / video / form); no before-and-after slider; no underlined links; footer charity line +
+  // LMB credit; the reviews slot keeps its TODO-TrustIndex-ID marker; no Google-reviews line in
+  // the hero; the home map is the Google listing (CID); list-of-services H2s are banned.
+  if (/youtube(-nocookie)?\.com\/embed|data-video=/.test(html)) fails.push(`${r}: YouTube embed (round 2: none anywhere)`);
   const hero = (html.match(/<section[^>]*data-section="hero"[\s\S]*?<\/section>/) || [''])[0];
   if (/<iframe|data-video=|data-lead-form|<form\b|\/brand\/logo/.test(hero)) fails.push(`${r}: hero carries a video, a form or the logo`);
+  if (!/404|thank-you/.test(r)) {
+    if (!/class="hero on-dark section-hero[^"]*"[^>]*data-hero="(home|page)"/.test(hero) || !/class="hero__bg"/.test(hero)) fails.push(`${r}: hero is not the shared home-hero pattern`);
+    if (/ph__img|class="ph /.test(html)) fails.push(`${r}: old inner hero / side image`);
+    if (/reviews on Google/i.test(visibleText(hero))) fails.push(`${r}: Google reviews line still in the hero`);
+  }
+  for (const m of html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)) if (/^interior painting, exterior painting and wallpapering$/i.test(visibleText(m[1]).trim())) fails.push(`${r}: banned list heading "${visibleText(m[1]).trim()}"`);
+  if (r === '/' && !/data-section="areas"[\s\S]*?data-map="gbp"[\s\S]*?src="https:\/\/www\.google\.com\/maps\?cid=8023434379390696838&amp;output=embed"/.test(html)) fails.push('/: areas map is not the Google listing CID embed');
   if (/data-ba\b|before-and-after|class="ba[ _]/i.test(html)) fails.push(`${r}: before-and-after slider`);
   if (/text-decoration:\s*underline|text-decoration-line:\s*underline/.test(html)) fails.push(`${r}: underline style in the page`);
   if (!/data-footer-credit/.test(html) || !/href="https:\/\/localmapbooster\.com\/" rel="nofollow noopener"/.test(html)) fails.push(`${r}: footer LMB credit missing`);
   if (!utility && !slotTodo(html)) fails.push(`${r}: reviews slot lost its TODO-TrustIndex-ID marker`);
-  if (['/painting-and-decorating/', '/interior-painting/'].includes(r) && (html.match(/data-video="house"/g) || []).length !== 1) fails.push(`${r}: house video must appear once`);
+  if (!utility && !/<h2 class="rv__h2"[^>]*>What customers say about us<\/h2>/.test(html)) fails.push(`${r}: reviews heading is not "What customers say about us"`);
 }
-for (const a of articles) if (['painting-and-decorating', 'interior-painting'].includes(a.hub)) {
-  const html = readFileSync(join(dist, 'resources', a.slug, 'index.html'), 'utf8');
-  if (!/data-video="house"/.test(html)) fails.push(`/resources/${a.slug}/: house video missing`);
+const published = articles.filter((a) => a.status === 'published');
+if (published.length < 3) fails.push(`only ${published.length} published articles (operator: three)`);
+for (const a of published) {
+  const f = join(dist, 'resources', a.slug, 'index.html');
+  if (!existsSync(f)) { fails.push(`/resources/${a.slug}/: not built`); continue; }
+  const html = readFileSync(f, 'utf8');
+  const h2s = (html.match(/<h2 id=/g) || []).length; const figs = (html.match(/<figure class="art__fig">/g) || []).length;
+  if (figs < h2s - 1) fails.push(`/resources/${a.slug}/: ${figs} photos for ${h2s} H2s (one above every content H2)`);
+  if (!/"@type":"FAQPage"/.test(html)) fails.push(`/resources/${a.slug}/: no FAQPage schema`);
 }
 console.log(`audit: ${pages.length} pages, ${fails.length} fails, ${warns.length} warnings`);
 warns.forEach((w) => console.log('  warn', w));

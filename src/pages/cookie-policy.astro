@@ -2,23 +2,21 @@
 /**
  * COOKIE POLICY (plan, Legal pages): must match what the build actually sets. Verified in a real
  * browser against the built site (scripts/cookies.mjs, see BUILD-REPORT.md): the site itself sets
- * NO cookies; YouTube videos are embedded from youtube-nocookie.com; the home and Contact page maps
- * are Google Maps embeds; the quote form is loaded from the form service's own domain.
+ * NO cookies; no YouTube video is embedded (operator round 2, 5 Nov 2026); the home and Contact
+ * page maps are Google Maps embeds of the Business Profile; the quote form is loaded from the form service's own domain.
  */
 import LegalPage from '../components/LegalPage.astro';
 ---
-<LegalPage title="Cookie Policy | TrueLine Finishes" description="Which cookies the TrueLine Finishes website uses: none of its own, no analytics and no advertising. Embedded YouTube videos and the Google map are explained here." h1="Cookie Policy" page="cookie-policy" lead="What this website stores on your device, and what the content embedded from other websites may store.">
+<LegalPage title="Cookie Policy | TrueLine Finishes" description="Which cookies the TrueLine Finishes website uses: none of its own, no analytics and no advertising. The embedded Google map is explained here." h1="Cookie Policy" page="cookie-policy" lead="What this website stores on your device, and what the content embedded from other websites may store.">
   <p>Last updated: 5 November 2026.</p>
   <h2>Cookies set by this website</h2>
   <p>None. The TrueLine Finishes website does not set its own cookies. It uses no analytics, tracking or advertising cookies, so there is nothing to accept or turn off.</p>
-  <h2>Embedded YouTube videos</h2>
-  <p>Brandon's videos are embedded from YouTube in its privacy-enhanced mode (youtube-nocookie.com). YouTube does not set cookies when the page loads. When you press play, YouTube (Google) may store cookies or similar data on your device, for example to remember your playback settings and to count views. This is controlled by Google: see Google's privacy policy at policies.google.com.</p>
   <h2>The Google map on the home and Contact pages</h2>
   <p>The home page and the Contact page show a Google Maps embed of the TrueLine Finishes Business Profile. Google may set cookies when the map loads, under Google's own privacy policy.</p>
   <h2>The quote form</h2>
   <p>The quote form is provided by an enquiry form service and loads from that service's website. It is used only to send your enquiry to us and is not used for advertising.</p>
   <h2>Managing cookies</h2>
-  <p>You can block or delete cookies in your browser's settings. Blocking cookies from YouTube or Google may stop the videos or the map from working, but the rest of the site, including the quote form and phone number, will work as normal.</p>
+  <p>You can block or delete cookies in your browser's settings. Blocking cookies from Google may stop the map from working, but the rest of the site, including the quote form and phone number, will work as normal.</p>
   <h2>Questions</h2>
   <p>Contact Brandon on 07949 484274 or at <a href="mailto:Brandon@truelinefinishes.com">Brandon@truelinefinishes.com</a>. Our <a href="/privacy/">Privacy Policy</a> explains how we use the details you send us.</p>
 </LegalPage>

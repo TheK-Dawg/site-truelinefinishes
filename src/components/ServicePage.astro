@@ -1,10 +1,11 @@
 ---
 /**
- * SERVICE HUB PAGE (plan, Layout, Hub pages), in this order: hero with the hub's picture; the
+ * SERVICE HUB PAGE (plan, Layout, Hub pages), in this order: the home-style hero with the hub's
+ * picture as its background (operator round 2, fix 12: no right-hand image); the
  * reviews section (template: directly under the hero on every page); intro; what the job covers
  * (the seed's sections, each photo above its H2) and the `sectors:` line; how a job runs (no
- * before-and-after slider anywhere: operator, 5 Nov 2026, "I never do before and after"); "<hub> in pictures"; Brandon's house video on the two
- * hubs that carry it; the other hubs as related links; FAQ; the quote form; further reading (the
+ * before-and-after slider anywhere: operator, 5 Nov 2026, "I never do before and after"); "<hub> in pictures";
+ * the other hubs as related links (NO YouTube embed: operator round 2, fix 13); FAQ; the quote form; further reading (the
  * hub's town articles). Landing page, never article-styled.
  */
 import Base from '../layouts/Base.astro';
@@ -13,7 +14,6 @@ import Reviews from './Reviews.astro';
 import ServiceBody from './ServiceBody.astro';
 import Steps from './Steps.astro';
 import PicturesGrid from './PicturesGrid.astro';
-import VideoEmbed from './VideoEmbed.astro';
 import RelatedServices from './RelatedServices.astro';
 import Faq from './Faq.astro';
 import QuoteForm from './QuoteForm.astro';
@@ -43,19 +43,8 @@ const schema = [
   <ServiceBody intro={content.intro} sections={content.sections} sectorsLine={content.sectorsLine} />
   <Steps heading={content.process.heading} lead={content.process.lead} steps={steps} photo={content.sections[0].image} />
   <PicturesGrid heading={content.pictures.heading} lead={content.pictures.lead} images={content.pictures.images} />
-  {content.video && (
-    <section class="hv section section--panel section-video" data-section="video">
-      <div class="container hv__inner">
-        <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">{content.video.heading}</h2><p class="sec-head__lead">{content.video.lead}</p></div>
-        <VideoEmbed which="house" />
-      </div>
-    </section>
-  )}
   <RelatedServices picks={content.related} heading="Other services from TrueLine Finishes" />
   <Faq items={content.faqs} heading={`${svc.name}: questions people ask`} />
   <QuoteForm heading={content.quote.heading} lead={content.quote.lead} />
   <FurtherReading hub={content.slug} hubName={svc.name} />
 </Base>
-<style>
-  .hv__inner { max-width: var(--narrow); }
-</style>

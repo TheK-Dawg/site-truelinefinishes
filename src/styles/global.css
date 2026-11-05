@@ -54,6 +54,12 @@ ul, ol { margin: 0; }
   font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight);
   cursor: pointer; text-align: center; transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
+/* OPTICAL CENTRING (operator round 2, 5 Nov 2026: "Quick Quote Online isn't vertically centred").
+   Uppercase labels sat about 2 pixels high: the line box reserves descender room under capitals. Every
+   label is wrapped in .btn__t and trimmed to its cap height and baseline, so the flex centring
+   centres the capitals themselves, whatever the system font (measured by scripts/check.mjs).
+   Browsers without text-box (Firefox today) keep the plain line-box centring. */
+.btn__t { text-box: trim-both cap alphabetic; }
 .btn-primary { background: var(--brand-primary); color: var(--brand-fg); }
 .btn-primary:hover { background: var(--brand-hover); }
 /* On black the primary button is chrome blue with black text (never royal blue on black). */

@@ -18,11 +18,11 @@ const schema = [
 ];
 ---
 <Base title="Contact Brandon About Painting and Decorating | TrueLine Finishes" description="Call Brandon on 07949 484274, email Brandon@truelinefinishes.com, WhatsApp, or use the quote form. Open Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm." page="contact" schema={schema}>
-  <PageHero h1="Contact TrueLine Finishes" lead="Get a free quotation: call Brandon on 07949 484274 or use the quote form. A call is a direct line to Brandon." image={image('white-sash-window-stone-0029')} />
+  <PageHero h1="A Room or a House That Needs Decorating? Talk to Brandon" lead="Get a free quotation: call Brandon on 07949 484274 or use the quote form. A call is a direct line to Brandon." image={image('white-sash-window-stone-0029')} />
   <Reviews />
   <section class="ct section section-nap" data-section="nap">
     <div class="container">
-      <h2 class="ct__h2">{business.name}</h2>
+      <h2 class="ct__h2">Four Ways to Reach Brandon</h2>
       <ul class="ct__cards">
         <li class="ct__card ct__card--on on-dark"><span class="ct__ic"><Icon name="phone" size={24} /></span><h3>Call Brandon</h3><p><a href={business.phoneHref} data-cta="contact-call">{business.phone}</a></p></li>
         <li class="ct__card"><span class="ct__ic"><Icon name="mail" size={24} /></span><h3>Email</h3><p><a href={`mailto:${business.email}`} data-cta="contact-email">{business.email}</a></p></li>
@@ -37,9 +37,9 @@ const schema = [
 <style>
   .ct__h2 { font-size: var(--fs-3xl); margin-bottom: var(--space-6); }
   .ct__cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
-  .ct__card { padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--border-strong); overflow-wrap: anywhere; }
+  .ct__card { padding: var(--card-pad); background: var(--bg-panel); border: 1px solid var(--border-default); overflow-wrap: anywhere; }
   .ct__card p + p { margin-top: var(--space-2); }
-  .ct__card--on { background: var(--bg-inverse); border-top-color: var(--accent-on-dark); color: var(--text-inverse-muted); }
+  .ct__card--on { background: var(--bg-inverse); border-color: var(--bg-inverse); color: var(--text-inverse-muted); }
   .ct__card h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
   .ct__card a { font-weight: var(--fw-semibold); color: var(--brand-text); }
   .ct__card--on h3, .ct__card.ct__card--on a { color: var(--text-inverse); }

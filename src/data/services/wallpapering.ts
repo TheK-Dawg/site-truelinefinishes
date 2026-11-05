@@ -7,45 +7,45 @@ const content: ServiceContent = {
   slug: 'wallpapering',
   metaTitle: 'Wallpapering in Baildon, Ilkley & Guiseley | TrueLine Finishes',
   description: 'Wallpapering in Baildon, Ilkley, Guiseley and Shipley: feature walls and whole rooms, hung on walls prepared properly first. Free quotations from Brandon.',
-  h1: 'Wallpapering, From a Feature Wall to a Whole Room',
-  lead: 'Want a feature wall that stops people in the doorway, or a whole room in paper? TrueLine Finishes hangs wallpaper on walls that are filled, sanded and lined where they need it, with the pattern matched at every join.',
+  h1: 'Want a Feature Wall, or a Whole Room Papered? Wallpapering',
+  lead: 'One papered wall behind the bed, or every wall in the room: TrueLine Finishes hangs wallpaper on walls that are filled, sanded and lined where they need it, with the pattern matched at every join.',
   heroImage: 'leaf-pattern-feature-wall-0026',
   intro: [
     'Wallpaper shows every flaw in the wall underneath, so the preparation matters as much as the hanging. Brandon Dawson, the owner, carries out the work and oversees every job, for homes and businesses.',
   ],
   sections: [
     {
-      h2: 'Professional Wallpaper Hanging',
+      h2: 'Wallpaper Hung Straight, Matched and Smooth',
       lead: 'Paper hung straight, plumb and tight to the ceiling and skirting, with clean cuts around sockets, switches and frames. A single feature wall or every wall in the room.',
       points: ['Feature walls', 'Whole rooms', 'Clean cuts at ceilings, skirting and frames', 'For homes and businesses'],
       image: 'leaf-pattern-feature-wall-0026',
     },
     {
-      h2: 'Wall Preparation',
+      h2: 'Getting the Wall Right Before the First Drop',
       lead: 'Holes and cracks are filled and sanded flat, and lining paper goes up first where a wall needs it, so the finished paper lies smooth.',
       points: ['Filling and sanding', 'Lining paper where a wall needs it', 'Walls sized and ready before hanging', 'A sound, even surface to paper onto'],
       image: 'bedroom-filled-0020',
     },
     {
-      h2: 'Wallpaper, Vinyl and Specialist Wallcoverings',
+      h2: 'Papers, Vinyls and Specialist Wallcoverings',
       lead: 'Standard papers, vinyls that wipe clean, textured papers and lining paper each hang a little differently. The paste and the method suit the paper you have chosen.',
       points: ['Standard wallpaper', 'Vinyl wallcoverings', 'Textured papers', 'Lining paper'],
       image: 'room-before-patched-0139',
     },
     {
-      h2: 'Precision Hanging and Seam Finishing',
+      h2: 'Joins You Cannot See, Patterns That Line Up',
       lead: 'Patterns are matched drop by drop, seams are butted tight and rolled flat, and excess paste is cleaned off before it dries.',
       points: ['Pattern matched across every drop', 'Tight, flat seams', 'Paste cleaned from the face', 'Straight first drop set from a plumb line'],
       image: 'skirting-detail-0080',
     },
     {
-      h2: 'Feature Walls, Ceilings and Awkward Spaces',
+      h2: 'Chimney Breasts, Alcoves and the Awkward Corners',
       lead: 'Chimney breasts, alcoves, sloping ceilings and stairwells take more planning than a flat wall. The cuts are worked out before the first drop goes up.',
       points: ['Chimney breasts and alcoves', 'Sloping ceilings', 'Around windows and doors', 'Stairwells and landings'],
       image: 'lounge-alcoves-prepared-0099',
     },
     {
-      h2: 'Wallpapering for Homes and Businesses',
+      h2: 'Paper for Homes and for Business Premises',
       lead: 'A bedroom feature wall at home or a reception wall at work: the same preparation and the same care with the finish. Painting the rest of the room is covered on our <a href="/interior-painting/">interior painting</a> page.',
       points: ['Living rooms and bedrooms', 'Hallways and landings', 'Offices and reception areas', 'Paint and paper in one job'],
       image: 'bedroom-fresh-walls-0156',
@@ -74,6 +74,6 @@ const content: ServiceContent = {
     { q: 'Can you paint the rest of the room too?', a: 'Yes. Wallpapering and painting can be done as one job, with the ceiling, the other walls and the woodwork painted to finish the room.' },
   ],
   related: ['interior-painting', 'painting-and-decorating'],
-  quote: { heading: 'Talk to Brandon about your wallpaper', lead: 'Choose the room, add your postcode and a line about the wall and the paper. Brandon will give you a free quotation.' },
+  quote: { heading: 'Talk to Brandon About Your Wallpaper', lead: 'Leave your details and postcode, with a line about the wall and the paper you have in mind. Brandon will give you a free quotation.' },
 };
 export default content;

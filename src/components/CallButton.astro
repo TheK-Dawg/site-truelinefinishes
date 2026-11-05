@@ -10,4 +10,4 @@ import { business } from '../data/site';
 interface Props { cta: string; tone?: 'dark' | 'light'; class?: string }
 const { cta, tone = 'dark', class: cls } = Astro.props;
 ---
-<a href={business.phoneHref} class:list={['btn', 'btn-call', `btn-call--${tone}`, cls]} data-cta={cta}><Icon name="phone" size={18} /><span>Call {business.phone}</span></a>
+<a href={business.phoneHref} class:list={['btn', 'btn-call', `btn-call--${tone}`, cls]} data-cta={cta}><Icon name="phone" size={18} /><span class="btn__t">Call {business.phone}</span></a>

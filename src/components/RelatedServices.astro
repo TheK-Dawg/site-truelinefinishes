@@ -30,8 +30,8 @@ const list = picks.map((slug) => services.find((s) => s.slug === slug)).filter((
   .rl__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
   .rl__grid--2 { grid-template-columns: repeat(2, 1fr); }
   .rl__grid--4 { grid-template-columns: repeat(4, 1fr); }
-  .rl__card { display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--border-strong); padding-bottom: var(--space-6); }
-  .rl__card:hover { border-top-color: var(--brand-primary); }
+  .rl__card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); padding-bottom: var(--space-6); transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+  .rl__card:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-raised); }
   .rl__img { aspect-ratio: 16 / 10; overflow: hidden; }
   .rl__img img { width: 100%; height: 100%; object-fit: cover; }
   .rl__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); margin: calc(-1 * var(--space-6)) 0 0 var(--space-6); position: relative; border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }

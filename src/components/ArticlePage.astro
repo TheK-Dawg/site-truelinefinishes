@@ -2,10 +2,11 @@
 /**
  * SEO ARTICLE (plan, Layout): a header band; breadcrumbs (under the hero, never in it); the WHITE
  * reading column (#FFFFFF, ink text) and a sidebar with "On this page" and a "Need a quote?" card;
- * Brandon's house video at the position its hub's rotation gives (src/data/articles.ts); one real
- * pool photo directly above every content H2 (FAQ excluded); the FAQ in the body; related articles
+ * one real pool photo directly above every content H2 (FAQ excluded); NO YouTube embed (operator
+ * round 2, fix 13: every hand-placed video came off; the rotation rule stays in articles.ts for
+ * when video returns through the operator's widgets); the FAQ in the body; related articles
  * (the same hub in other towns, other hubs in the same town); the quote form.
- * The body is the engine's HTML, rendered as-is apart from the figures, the video and H2 ids.
+ * The body is the engine's HTML, rendered as-is apart from the figures and H2 ids.
  * Article + FAQPage + BreadcrumbList schema. Articles not yet published are noindex.
  */
 import Base from '../layouts/Base.astro';
@@ -13,8 +14,8 @@ import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import QuoteForm from './QuoteForm.astro';
 import Icon from './Icon.astro';
-import { articles, articleUrl, videoPosition } from '../data/articles';
-import { business, services, image, images, videos } from '../data/site';
+import { articles, articleUrl } from '../data/articles';
+import { business, services, image, images } from '../data/site';
 import { stripTags } from '../lib/links';
 
 interface Props { article: import('../data/articles').Article }
@@ -40,10 +41,6 @@ const slugify = (s: string) => s.toLowerCase().replace(/<[^>]+>/g, '').replace(/
 const parts = article.bodyHtml.split(/(?=<h2[\s>])/);
 const intro = parts[0].startsWith('<h2') ? '' : parts.shift()!;
 const toc: { id: string; text: string }[] = [];
-const pos = videoPosition(article);
-const vid = videos.house;
-const videoHtml = `<figure class="art__video" data-video="house" data-video-pos="${pos}"><div class="art__video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${vid.id}?rel=0&amp;modestbranding=1&amp;playsinline=1" title="Brandon's video: ${vid.caption}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><figcaption>Brandon’s own video: ${vid.caption}</figcaption></figure>`;
-const mid = Math.max(1, Math.floor(parts.length / 2));
 const sections = parts.map((p, n) => {
   const m = p.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/);
   const text = m ? stripTags(m[1]) : '';
@@ -52,15 +49,14 @@ const sections = parts.map((p, n) => {
   toc.push({ id, text });
   const img = pool[n % Math.max(pool.length, 1)];
   const fig = img ? `<figure class="art__fig"><img src="${img.src}" alt="${img.alt}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async" /></figure>` : '';
-  const before = (pos === 'top' && n === 0) || (pos === 'mid' && n === mid) ? videoHtml : '';
-  return `${before}${fig}${p.replace(/^<h2[^>]*>/, `<h2 id="${id}">`)}`;
+  return `${fig}${p.replace(/^<h2[^>]*>/, `<h2 id="${id}">`)}`;
 });
-const body = `${intro}${sections.join('\n')}${pos === 'end' ? videoHtml : ''}`;
+const body = `${intro}${sections.join('\n')}`;
 
 const sameHub = articles.filter((a) => a.hub === article.hub && a.slug !== article.slug).slice(0, 6);
 const sameTown = articles.filter((a) => a.town === article.town && a.slug !== article.slug);
 const schema = [
-  { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(hero.src, business.url).href, author: { '@type': 'Person', name: business.owner }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` }, ...(pos ? { video: { '@type': 'VideoObject', name: vid.caption, embedUrl: `https://www.youtube.com/embed/${vid.id}`, contentUrl: vid.url, thumbnailUrl: `https://i.ytimg.com/vi/${vid.id}/hqdefault.jpg`, uploadDate: '2026-11-03' } } : {}) },
+  { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(hero.src, business.url).href, author: { '@type': 'Person', name: business.owner }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` } },
   ...(article.faqs.length ? [{ '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: article.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) }] : []),
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` },
@@ -96,7 +92,7 @@ const schema = [
         <div class="art__cta on-dark">
           <p class="art__cta-h">Need a quote?</p>
           <p>Get a free quotation: call Brandon on <a href={business.phoneHref} data-cta="article-aside-call">{business.phone}</a> or use the quote form.</p>
-          <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote">Quick Quote Online</a>
+          <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote"><span class="btn__t">Quick Quote Online</span></a>
           <a href={business.whatsappHref} class="art__wa" target="_blank" rel="noopener" data-cta="article-aside-whatsapp"><Icon name="whatsapp" size={18} /> WhatsApp Brandon</a>
         </div>
       </aside>
@@ -125,10 +121,6 @@ const schema = [
   .art__main :global(.art__fig) { margin: 2em 0 0; }
   .art__main :global(.art__fig + h2) { margin-top: 0.7em; }
   .art__main :global(.art__fig img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-  .art__main :global(.art__video) { margin: 2em 0 0; }
-  .art__main :global(.art__video-frame) { position: relative; aspect-ratio: 16 / 9; background: var(--bg-inverse); }
-  .art__main :global(.art__video-frame iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .art__main :global(.art__video figcaption) { margin-top: var(--space-2); font-size: var(--fs-md); color: var(--text-muted); }
   .art__faq { margin-top: 2.4em; }
   .art__q { border-top: 1px solid var(--border-default); padding: var(--space-4) 0; }
   .art__q summary { cursor: pointer; font-weight: var(--fw-semibold); color: var(--text-heading); }
@@ -140,7 +132,7 @@ const schema = [
   .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); }
   .art__toc a { color: var(--brand-text); }
   .art__toc a:hover { color: var(--brand-primary); }
-  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); border-top: 3px solid var(--accent-on-dark); }
+  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); border: 1px solid var(--border-inverse); }
   .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-inverse); }
   .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); }
   .art__cta .btn { width: 100%; }

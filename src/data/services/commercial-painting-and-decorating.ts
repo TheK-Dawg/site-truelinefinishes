@@ -7,7 +7,7 @@ const content: ServiceContent = {
   slug: 'commercial-painting-and-decorating',
   metaTitle: 'Commercial Painting and Decorating, Baildon & Leeds | TrueLine Finishes',
   description: 'Commercial painting and decorating for offices, restaurants, schools, hotels and local businesses across Baildon, Shipley, Leeds and Ilkley. Free quotations.',
-  h1: 'Commercial Painting and Decorating for Business Premises',
+  h1: 'Premises Looking Worn? Commercial Painting and Decorating',
   lead: 'Premises looking tired in front of customers or staff? TrueLine Finishes brings the same careful painting and decorating to offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
   heroImage: 'office-navy-feature-wall-0178',
   intro: [
@@ -15,31 +15,31 @@ const content: ServiceContent = {
   ],
   sections: [
     {
-      h2: 'Every Kind of Business Premises',
+      h2: 'Offices, Restaurants, Schools, Hotels and More',
       lead: 'Offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large. One room, one floor or the whole building.',
       points: ['Offices and reception areas', 'Restaurants and hotels', 'Schools, spas and leisure centres', 'Shops and local businesses'],
       image: 'office-navy-feature-wall-0177',
     },
     {
-      h2: 'Interior Walls, Ceilings and Woodwork',
+      h2: 'Walls, Ceilings and Woodwork Inside the Building',
       lead: 'Walls, ceilings, doors and trims, prepared and painted. Feature walls in a brand colour, or a clean neutral finish throughout. The detail is on our <a href="/interior-painting/">interior painting</a> page.',
       points: ['Walls and ceilings', 'Doors, frames and skirting', 'Feature walls', 'Wallpapered walls'],
       image: 'office-prepared-0171',
     },
     {
-      h2: 'Exterior Painting for Business Premises',
+      h2: 'The Outside, Where Customers Look First',
       lead: 'Painted masonry, windows, doors and railings on the outside of the building, the first thing customers see. See <a href="/exterior-painting/">exterior painting</a> for what is covered.',
       points: ['Painted render, brick and stone', 'Windows and doors', 'Railings and exterior woodwork', 'Shop fronts and entrances'],
       image: 'painted-railings-0180',
     },
     {
-      h2: 'Hard-Wearing Finishes for Busy Areas',
+      h2: 'Finishes That Stand Up to Busy Corridors',
       lead: 'Corridors, receptions and kitchens take knocks and need cleaning. Wipeable eggshell and satin finishes, and gloss on woodwork, hold up to daily use.',
       points: ['Wipeable wall finishes', 'Durable finishes on doors and trims', 'Finishes chosen for how each area is used', 'Clean, straight lines throughout'],
       image: 'exhibition-stand-burgundy-0194',
     },
     {
-      h2: 'Planning the Work Around Your Business',
+      h2: 'Work Planned Around How Your Building Is Used',
       lead: 'The work is planned with you around how the building is used, and the premises are protected while it is done. When the work itself happens is arranged with Brandon.',
       points: ['Planned with you before work starts', 'Floors, furniture and fittings protected', 'Areas worked through in a sensible order', 'Protection kept in place until the finish'],
       image: 'office-prepared-0173',
@@ -68,6 +68,6 @@ const content: ServiceContent = {
     { q: 'Are you insured for commercial work?', a: 'Yes. TrueLine Finishes is fully insured.' },
   ],
   related: ['painting-and-decorating', 'interior-painting', 'exterior-painting'],
-  quote: { heading: 'Talk to Brandon about your premises', lead: 'Tell us the premises and the postcode, and give a short description of the work. Brandon will give you a free quotation.' },
+  quote: { heading: 'Talk to Brandon About Your Premises', lead: 'Leave your details and the postcode of the premises, with a short description of the work. Brandon will give you a free quotation.' },
 };
 export default content;

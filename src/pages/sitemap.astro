@@ -10,7 +10,7 @@ const groups = [
   { h: 'Main pages', links: [{ href: '/', label: 'Home' }, { href: '/about/', label: 'About' }, { href: '/contact/', label: 'Contact' }, { href: '/gallery/', label: 'Gallery' }, { href: '/reviews/', label: 'Reviews' }, { href: '/resources/', label: 'Resources' }, { href: '/faq/', label: 'FAQ' }, { href: '/services/', label: 'All services' }] },
   { h: 'Services', links: services.map((s) => ({ href: `/${s.slug}/`, label: s.name })) },
   ...(articles.length ? [{ h: 'Resources', links: articles.map((a) => ({ href: articleUrl(a), label: a.title })) }] : []),
-  { h: 'Legal', links: [{ href: '/privacy/', label: 'Privacy Policy' }, { href: '/terms/', label: 'Terms and Conditions' }, { href: '/cookie-policy/', label: 'Cookie Policy' }] },
+  { h: 'Company and legal', links: [{ href: '/company-facts/', label: 'Company Facts' }, { href: '/find-us-online/', label: 'Find Us Online' }, { href: '/complaints-procedure/', label: 'Complaints Procedure' }, { href: '/accessibility/', label: 'Accessibility' }, { href: '/privacy/', label: 'Privacy Policy' }, { href: '/terms/', label: 'Terms and Conditions' }, { href: '/cookie-policy/', label: 'Cookie Policy' }] },
 ];
 ---
 <Base title="Site Map: Painting and Decorating Pages | TrueLine Finishes" description="Every page on the TrueLine Finishes website: painting and decorating services, the gallery, reviews, resources, contact details and the legal pages." page="sitemap">

@@ -55,13 +55,21 @@ export const charityLine = "Proud to support A Child's Wish, a children's charit
  *  - trustindexReviews: the TrueLine Trustindex review-section widget loader
  *    (https://cdn.trustindex.io/loader.js?<id>), keyed on Google CID 8023434379390696838.
  *    TODO(operator): no TrueLine widget id exists yet. Do NOT invent one and do NOT reuse
- *    another client's id. Until it is set, the reviews section links to the Google listing.
+ *    another client's id. Until it is set the reviews section shows its heading and the marked,
+ *    empty slot (round 2: no "read our reviews on Google" line in its place); /reviews/ alone
+ *    keeps a link to the Google listing.
  */
 export const slots = {
   trustindexReviews: '',
+  // The slim white-text Trustindex widget for the hero (optional; same TODO rule as above).
+  trustindexStrip: '',
 };
 
-/** Brandon's two YouTube videos (plan, Video). */
+/**
+ * Brandon's two YouTube videos (plan, Video). NOT EMBEDDED ANYWHERE (operator round 2, 5 Nov 2026,
+ * fix 13: every hand-placed YouTube embed came off; the operator will supply auto-updating
+ * widgets). Kept, with their captions, for that later use. The channel stays in schema sameAs.
+ */
 export const videos = {
   kitchen: { id: 'v3g1Kdja0gk', url: 'https://youtube.com/shorts/v3g1Kdja0gk', caption: 'Full kitchen renovation', portrait: true },
   house: { id: 'mNwdUtQedkc', url: 'https://youtu.be/mNwdUtQedkc', caption: 'Full house painting and decorating', portrait: false },

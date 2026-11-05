@@ -1,17 +1,20 @@
 ---
 /**
  * GOOGLE MAP EMBED. Auto-loads (no click-to-load facade, no image placeholder).
- * Default: TrueLine Finishes' Business Profile keyed on its CID (plan flag 4), used on /contact/.
- * `area`: a plain area map centred on the named place, NO business pin (home Areas section). The
- * CID embed's Google listing card prints the street address, and the site never shows the address
- * (standing prohibition 10), so the home page uses the area map (operator overhaul, 5 Nov 2026).
+ * Default: TrueLine Finishes' REAL Google Business Profile, embedded by its CID (plan flag 4):
+ * the home "Where to find us" section and /contact/ (operator round 2, 5 Nov 2026, fix 8: "Home
+ * page map = his REAL Google listing map via CID embed"). `area`: a plain area map centred on the
+ * named place, no business pin (kept for any later use; no page uses it now).
+ * NOTE (DECISIONS R2-8): Google's listing card inside the CID embed can print the listing's
+ * street address; the operator ordered the listing map on home knowing the contact page does
+ * the same. The site's own text and schema still never carry the address.
  */
 import { business } from '../data/site';
 interface Props { area?: string }
 const { area } = Astro.props;
 const src = area
   ? `https://maps.google.com/maps?q=${encodeURIComponent(area)}&z=11&output=embed`
-  : `https://maps.google.com/maps?cid=${business.gbp.cid}&z=11&output=embed`;
+  : `https://www.google.com/maps?cid=${business.gbp.cid}&output=embed`;
 ---
 <div class="map" data-map={area ? 'area' : 'gbp'} data-gbp-cid={area ? undefined : business.gbp.cid}>
   <iframe src={src} title={area ? `Map of ${area} and the towns around it` : `${business.name} on Google Maps`} loading="eager" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>

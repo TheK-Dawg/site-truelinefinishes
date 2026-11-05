@@ -14,14 +14,14 @@ const { heading, line } = Astro.props;
       <p class="cb__line">{line}</p>
     </div>
     <div class="btn-row cb__btns">
-      <a href="#contact" class="btn btn-primary" data-cta="band-quote">Quick Quote Online</a>
+      <a href="#contact" class="btn btn-primary" data-cta="band-quote"><span class="btn__t">Quick Quote Online</span></a>
       <CallButton cta="band-call" />
     </div>
   </div>
 </section>
 
 <style>
-  .cb { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: var(--section-pad-sm) 0; border-top: 3px solid var(--accent-on-dark); }
+  .cb { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: var(--section-pad-sm) 0; }
   .cb__inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); align-items: center; }
   .cb__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-3); color: var(--text-inverse); }
   .cb__line { font-size: var(--fs-lg); max-width: 60ch; }

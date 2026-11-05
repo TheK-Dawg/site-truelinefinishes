@@ -23,6 +23,8 @@ const company = [
   { label: 'FAQ', href: '/faq/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'Contact', href: '/contact/' },
+  { label: 'Company Facts', href: '/company-facts/' },
+  { label: 'Find Us Online', href: '/find-us-online/' },
 ];
 ---
 <footer class="ft on-dark" data-section="footer">
@@ -30,7 +32,7 @@ const company = [
     <div class="ft__top">
       <a href="/" class="ft__brand" aria-label={`${business.name}, home`}><img src="/brand/logo.webp" alt={business.name} width="960" height="252" loading="lazy" /></a>
       <p class="ft__ask">A room, the whole house or business premises to decorate?</p>
-      <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="footer-quote">Quick Quote Online</a>
+      <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="footer-quote"><span class="btn__t">Quick Quote Online</span></a>
     </div>
     <div class="ft__cols">
       <div class="ft__col ft__col--about">
@@ -62,7 +64,7 @@ const company = [
     <div class="ft__bar">
       <p>© {year} {business.name}</p>
       <div class="ft__bar-end">
-        <nav aria-label="Legal"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a><a href="/cookie-policy/">Cookie Policy</a><a href="/sitemap/">Site map</a></nav>
+        <nav aria-label="Legal"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a><a href="/cookie-policy/">Cookie Policy</a><a href="/complaints-procedure/">Complaints Procedure</a><a href="/accessibility/">Accessibility</a><a href="/sitemap/">Site map</a></nav>
         <p class="ft__credit"><FooterCredit anchorText="Painting and decorating websites" anchorHref="https://localmapbooster.com/" rel="nofollow noopener" cta="footer-credit" /></p>
       </div>
     </div>

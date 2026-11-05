@@ -1,0 +1,19 @@
+---
+/**
+ * /complaints-procedure/ (house standard small-trade page, operator round 2, 5 Nov 2026; the
+ * 5 Star standard wording, in TrueLine's terms). No response times, no guarantee, no trade-body
+ * route: Brandon has stated none (plan, prohibitions 4 and 5).
+ */
+import LegalPage from '../components/LegalPage.astro';
+import { business } from '../data/site';
+---
+<LegalPage title="Complaints Procedure | TrueLine Finishes" description="What to do if you are not happy with a painting and decorating job from TrueLine Finishes, and what happens next." h1="Complaints Procedure" page="complaints-procedure" lead="What to do if you are not happy with a job, and what happens next.">
+  <h2>How to complain</h2>
+  <p>Ring Brandon on <a href={business.phoneHref} data-cta="complaints-call">{business.phone}</a>, email <a href={`mailto:${business.email}`} data-cta="complaints-email">{business.email}</a>, or send the quote form with "complaint" in the message. Say which job it is about, when it was done, what has gone wrong and what you would like done about it. Photos help.</p>
+  <h2>What happens next</h2>
+  <p>Brandon carries out and oversees every job, so your complaint comes straight to the person who did the work. He will talk it through with you, come back to look at the job where that is needed, and agree with you how it will be put right.</p>
+  <h2>If we cannot agree</h2>
+  <p>Your statutory rights are not affected. Citizens Advice can explain your consumer rights and the options open to you.</p>
+  <h2>Records</h2>
+  <p>The details of a complaint are kept with the job record, as described in the <a href="/privacy/">privacy policy</a>.</p>
+</LegalPage>

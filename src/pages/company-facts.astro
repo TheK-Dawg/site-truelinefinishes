@@ -1,0 +1,35 @@
+---
+/**
+ * /company-facts/ (house standard small-trade page, operator round 2, 5 Nov 2026; structure from
+ * the 5 Star / Vision Plumbing standard). One fact sheet from facts the site already states (the
+ * approved plan's nap.json usps, site.ts). NOT stated, because nothing on record evidences them
+ * or the plan forbids them: an address or base (never shown), a company or VAT number, insurance
+ * values, guarantees, accreditations, a founding date, team size.
+ */
+import LegalPage from '../components/LegalPage.astro';
+import { business, services, hours, mainPlaces, charityLine } from '../data/site';
+---
+<LegalPage title="Company Facts: Painter and Decorator | TrueLine Finishes" description="TrueLine Finishes company facts: who runs it, what it does, the places served, opening hours and how to get in touch with Brandon Dawson." h1="Company Facts" page="company-facts" lead="The key facts about TrueLine Finishes in one place: who does the work, what it covers, where and how to get in touch.">
+  <p>TrueLine Finishes is Brandon Dawson's painting and decorating business, for homes and businesses, from individual rooms to full property redecorations.</p>
+  <h2>The business</h2>
+  <ul>
+    <li><strong>Name:</strong> {business.name}</li>
+    <li><strong>Owner:</strong> {business.owner}, who carries out the work and oversees every job</li>
+    <li><strong>Trade:</strong> painter and decorator</li>
+    <li><strong>Experience:</strong> over eight years' experience</li>
+    <li><strong>Insurance:</strong> fully insured</li>
+    <li><strong>Quotations:</strong> free</li>
+    <li><strong>Charity:</strong> {charityLine}</li>
+  </ul>
+  <h2>Services</h2>
+  <ul>{services.map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}</ul>
+  <h2>Places served</h2>
+  <p>{mainPlaces.slice(0, -1).join(', ')} and {mainPlaces.at(-1)}, and the towns around them.</p>
+  <h2>Contact and opening hours</h2>
+  <ul>
+    <li><strong>Phone and WhatsApp:</strong> <a href={business.phoneHref} data-cta="facts-call">{business.phone}</a></li>
+    <li><strong>Email:</strong> <a href={`mailto:${business.email}`} data-cta="facts-email">{business.email}</a></li>
+    {hours.map((h) => <li><strong>{h.days}:</strong> {h.time}</li>)}
+  </ul>
+  <p>Reviews are on the <a href="/reviews/">reviews page</a>, our profiles are listed on <a href="/find-us-online/">find us online</a>, and the <a href="/complaints-procedure/">complaints procedure</a> explains what to do if a job is not right.</p>
+</LegalPage>

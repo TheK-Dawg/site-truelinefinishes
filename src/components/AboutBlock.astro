@@ -38,7 +38,7 @@ const { heading, body, image, rows, features, button = null, contactLine = true 
       </ul>
       {(button || contactLine) && (
         <div class="ab__foot">
-          {button && <a href={button.href} class="btn btn-primary" data-cta="about-more">{button.label}</a>}
+          {button && <a href={button.href} class="btn btn-primary" data-cta="about-more"><span class="btn__t">{button.label}</span></a>}
           {contactLine && <p class="ab__more">Looking for more information? <a href="/contact/" class="text-link" data-cta="about-contact">Contact Brandon</a></p>}
         </div>
       )}

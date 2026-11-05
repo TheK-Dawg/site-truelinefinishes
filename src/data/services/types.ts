@@ -17,7 +17,6 @@ export interface ServiceContent {
   sectorsLine: string; // the seed's `sectors:` section: one line on who the work is for
   process: { heading: string; lead: string; steps: [ServiceStep, ServiceStep, ServiceStep] };
   pictures: { heading: string; lead: string; images: string[] };
-  video?: { heading: string; lead: string }; // the house video (Painting and Decorating, Interior Painting)
   faqs: { q: string; a: string }[];
   related: string[];
   quote: { heading: string; lead: string };

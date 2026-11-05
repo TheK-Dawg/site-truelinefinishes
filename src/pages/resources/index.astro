@@ -15,12 +15,12 @@ const schema = [
 ];
 ---
 <Base title="Painting and Decorating Resources | TrueLine Finishes" description="Resources from TrueLine Finishes on painting and decorating, interior and exterior painting, wallpapering and commercial work, town by town." page="resources" schema={schema}>
-  <PageHero h1="Painting and Decorating Resources" lead="Answers to the questions people ask before a room, a house or business premises is decorated." image={image('room-dust-sheets-0085')} />
+  <PageHero h1="Planning Some Decorating? Start With These Resources" lead="Answers to the questions people ask before a room, a house or business premises is decorated." image={image('room-dust-sheets-0085')} />
   <Reviews />
   {articles.length > 0
     ? <ArticlesPreview heading="All resources" lead="Service by service and town by town." limit={999} />
     : <section class="section"><div class="container"><p class="rs__empty">The first resources are being written. In the meantime, the service pages below explain each kind of work and how a job runs.</p></div></section>}
-  <ServicesGrid heading="The work these resources are about" showCall={false} />
+  <ServicesGrid heading="The Five Services These Resources Cover" showCall={false} />
   <QuoteForm />
 </Base>
 <style>.rs__empty { max-width: 70ch; font-size: var(--fs-lg); color: var(--text-primary); }</style>

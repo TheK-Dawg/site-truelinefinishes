@@ -7,7 +7,7 @@ const content: ServiceContent = {
   slug: 'exterior-painting',
   metaTitle: 'Exterior Painting in Baildon, Shipley & Otley | TrueLine Finishes',
   description: 'Exterior painting in Baildon, Shipley, Otley and Ilkley: masonry paint on render, brick and stone, windows, doors and woodwork. Free quotations.',
-  h1: 'Exterior Painting That Lifts the Whole House',
+  h1: 'Flaking Paint on the Walls, Windows or Front Door? Exterior Painting',
   lead: 'Faded masonry, flaking windows or a front door that has seen better days? Exterior painting from TrueLine Finishes covers painted render, brick and stone, windows, doors and exterior woodwork, prepared properly first.',
   heroImage: 'semi-detached-after-0125',
   intro: [
@@ -16,31 +16,31 @@ const content: ServiceContent = {
   ],
   sections: [
     {
-      h2: 'Masonry Painting on Render, Brick and Stone',
+      h2: 'Masonry Paint for Render, Brick and Stone',
       lead: 'Render, brick or stone that has already been painted or rendered is cleaned down, prepared and painted in masonry paint. A fresh colour on a gable or a whole house changes how the property looks from the street.',
       points: ['Previously painted render', 'Painted brickwork', 'Stone that has already been painted', 'Gable walls and whole elevations'],
       image: 'gable-wall-after-0004',
     },
     {
-      h2: 'Windows, Doors and Exterior Woodwork',
+      h2: 'Windows, Doors and the Woodwork That Takes the Weather',
       lead: 'Mullion, sash and wooden windows, front doors and garage doors are sanded, filled and caulked, then painted so the finish sheds water instead of soaking it up.',
       points: ['Sash and mullion windows', 'Wooden window frames and sills', 'Front doors and garage doors', 'Exterior woodwork and railings'],
       image: 'white-sash-window-stone-0030',
     },
     {
-      h2: 'Oil Varnishing, Oil and Water-Based Finishes',
+      h2: 'Oil Varnish, Oil-Based or Water-Based: What Suits Your Timber',
       lead: 'Bare or previously varnished exterior timber can be oil varnished to bring out the grain. Painted woodwork takes oil-based or water-based paint, chosen for the surface and what it is already coated with.',
       points: ['Oil varnishing of exterior woodwork', 'Oil-based paints for woodwork', 'Water-based paints where they suit', 'The right primer for the surface'],
       image: 'stone-terrace-sage-door-0191',
     },
     {
-      h2: 'Preparation, Weather and Drying',
+      h2: 'Why Outside Work Waits for Dry Weather',
       lead: 'Exterior paint needs a dry surface and the right conditions to cure. Walls and woodwork are prepared first, and painting is planned around the weather so each coat can dry properly.',
       points: ['Sanding, filling and caulking', 'Hairline cracks filled before painting', 'Dry surfaces before every coat', 'Plants, paths and windows protected'],
       image: 'window-prepared-0031',
     },
     {
-      h2: 'Fascias and Soffits as Part of a Full Exterior',
+      h2: 'Fascias and Soffits, Painted With the Rest of the House',
       lead: 'Fascia boards and soffits are painted as part of a full exterior, alongside the walls, windows and doors, so the whole house is finished together.',
       points: ['Part of a full exterior repaint', 'Prepared and painted to match', 'Finished at the same time as the walls', 'Gutters are not included'],
       image: 'mock-tudor-house-0071',
@@ -70,6 +70,6 @@ const content: ServiceContent = {
     { q: 'Do you paint front doors and garage doors?', a: 'Yes, front doors and garage doors, along with mullion, sash and wooden windows and other exterior woodwork.' },
   ],
   related: ['painting-and-decorating', 'interior-painting', 'commercial-painting-and-decorating'],
-  quote: { heading: 'Ask Brandon about your exterior', lead: 'Choose Exterior work, add your postcode and a short description of the walls, windows or doors. Brandon will give you a free quotation.' },
+  quote: { heading: 'Ask Brandon About the Outside of Your House', lead: 'Leave your details and postcode, with a short description of the walls, windows or doors. Brandon will talk it through and give you a free quotation.' },
 };
 export default content;

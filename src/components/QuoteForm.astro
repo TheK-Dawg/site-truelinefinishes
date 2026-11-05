@@ -7,9 +7,9 @@
  * public id f_5ELbk5JcKfFh2EEaclT6, Live, allowed on truelinefinishes.com, www and the
  * workers.dev preview). form.js from api.formlane.uk renders the fields; the token is public
  * and cannot read leads. New site, so no old-form fallback.
- * FIELDS, exactly Brandon's WhatsApp list of 28 Oct 2026 (plan, Contact): the work dropdown
- * (Exterior work / Bedroom / Living room / Kitchen / Hallway / Bathroom), Home owner or tenant,
- * Postcode, Short description, then name, phone and email. Nothing else. Labels are visually
+ * FIELDS: the DEFAULT quick-quote form (operator round 2, 5 Nov 2026, overriding Brandon's 28 Oct
+ * list; DECISIONS R2-10): name, email, phone (below email), postcode, short description of the
+ * job. No "Type of work" or "Home owner or tenant" dropdowns. Set in Formlane (form version 3). Labels are visually
  * hidden (placeholders show), the house pattern. Leads go to the agency inbox only for now.
  * After sending, Formlane redirects to /thank-you/ with the first name.
  * The slot carries id="contact", so every #contact link lands on the form itself.
@@ -20,7 +20,7 @@ import { business, hours, ctaLine } from '../data/site';
 interface Props { heading?: string; lead?: string }
 const {
   heading = 'Tell Brandon about the job',
-  lead = 'Pick the room or the exterior work, add your postcode and a line or two about the job. Brandon will talk it through with you and give you a free quotation.',
+  lead = 'Leave your name, email, phone number and postcode, with a line or two about the job. Brandon will talk it through with you and give you a free quotation.',
 } = Astro.props;
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
 const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
@@ -38,7 +38,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       </ul>
       <div class="qf__call">
         <CallButton cta="form-call" />
-        <a href={business.whatsappHref} class="btn btn-call btn-call--dark qf__wa" data-cta="form-whatsapp" target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /><span>WhatsApp Brandon</span></a>
+        <a href={business.whatsappHref} class="btn btn-call btn-call--dark qf__wa" data-cta="form-whatsapp" target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /><span class="btn__t">WhatsApp Brandon</span></a>
       </div>
       <p class="qf__hours"><Icon name="clock" size={16} /> Open {hours.map((h) => `${h.days} ${h.time}`).join(', ')}</p>
     </div>
@@ -66,7 +66,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__wa :global(.icon) { color: var(--whatsapp); }
   .qf__hours { display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-5); font-size: var(--fs-md); }
   .qf__hours :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
-  .qf__card { background: var(--bg-card); color: var(--text-primary); padding: var(--space-8); border-top: 3px solid var(--accent-on-dark); }
+  .qf__card { background: var(--bg-card); color: var(--text-primary); padding: var(--space-8); box-shadow: var(--shadow-overlay); }
   .qf__form-h { font-size: var(--fs-2xl); color: var(--text-heading); margin-bottom: var(--space-5); }
   .qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .qf__nojs { color: var(--text-primary); }
@@ -83,7 +83,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__form :global(textarea.lf-i) { min-height: calc(var(--space-30) - var(--space-4)); resize: vertical; }
   .qf__form :global(.lf-i::placeholder) { color: var(--text-muted); opacity: 1; }
   .qf__form :global(.lf-i:focus) { outline: 2px solid var(--brand-primary); outline-offset: 1px; border-color: var(--brand-primary); }
-  .qf__form :global(.lf-b) { width: 100%; min-height: var(--btn-h-lg); border: 0; border-radius: var(--btn-radius); background: var(--brand-primary); color: var(--brand-fg); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; cursor: pointer; }
+  .qf__form :global(.lf-b) { width: 100%; min-height: var(--btn-h-lg); border: 0; border-radius: var(--btn-radius); background: var(--brand-primary); color: var(--brand-fg); font: inherit; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight); text-box: trim-both cap alphabetic; cursor: pointer; }
   .qf__form :global(.lf-b:hover) { background: var(--brand-hover); }
   .qf__form :global(.lf-x), .qf__form :global(.lf-e) { color: var(--status-negative); }
   @media (max-width: 1023px) { .qf__inner { grid-template-columns: 1fr; } .qf__card { max-width: none; } }

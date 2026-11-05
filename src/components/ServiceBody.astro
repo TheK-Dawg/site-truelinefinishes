@@ -52,7 +52,7 @@ const cards = sections.map((s) => ({ ...s, photo: poolImage(s.image) }));
   .sb3__copy :global(a), .sb3__lead :global(a) { color: var(--brand-text); font-weight: var(--fw-semibold); }
   .sb3__copy .sb3__first { font-size: var(--fs-xl); line-height: var(--lh-normal); }
   .sb3__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
-  .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--brand-primary); }
+  .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); }
   .sb3__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); overflow: hidden; }
   .sb3__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.5s var(--ease); }
   .sb3__shot:hover img { transform: scale(1.03); }

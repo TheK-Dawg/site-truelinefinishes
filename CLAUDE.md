@@ -25,6 +25,9 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
   noindex and unlinked.
 - Royal blue never on black; chrome blue never on white. All raw colours live in `src/styles/tokens.css`.
 - Images: Brandon's own photos from R2 only (`npm run images`), never generated.
+- Round 2 (DECISIONS R2-*): the DEFAULT quote form everywhere (name, email, phone, postcode, short
+  description) unless the operator says otherwise; no YouTube embed anywhere; one hero pattern
+  (Hero.astro) on every page; no lone top borders on cards.
 
 ## Commands
 - `npm run build` · `node scripts/audit.mjs` (+ `--selftest`) · `node scripts/token-gate.mjs`

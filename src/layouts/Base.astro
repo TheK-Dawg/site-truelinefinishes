@@ -5,7 +5,7 @@
  * the mobile WhatsApp button, motion, and the Quick Quote anchor law.
  * SCHEMA (plan, Contact): HousePainter with the name, phone, URL, the five services, areaServed
  * = the plan's towns, openingHoursSpecification (Mo-Fr 07:00-19:00, Sa-Su 08:00-18:00),
- * sameAs the YouTube channel, hasMap the Google listing. NO address (addressDisplay "no").
+ * sameAs the YouTube channel and the Google listing (share link + CID), hasMap the listing. NO address (addressDisplay "no").
  */
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -48,7 +48,7 @@ const graph: Record<string, unknown>[] = [
     openingHoursSpecification: hoursSchema,
     areaServed: towns.map((t) => ({ '@type': 'Place', name: t.name })),
     hasMap: business.gbp.cidUrl,
-    sameAs: [business.youtube, business.gbp.cidUrl],
+    sameAs: [business.youtube, business.gbp.mapsUrl, business.gbp.cidUrl],
     knowsAbout: services.map((s) => s.name),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',

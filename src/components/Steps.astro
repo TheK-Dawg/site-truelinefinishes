@@ -1,7 +1,8 @@
 ---
 /**
- * HOW A JOB RUNS (template block). Pale panel on the left with the centred head and three blocks
- * (white / royal blue / black), a full-height photograph on the right. Kept to what the sources
+ * HOW A JOB RUNS (template block). Pale panel on the left with the head, three blocks (white /
+ * royal blue / black) and the Quick Quote Online line, all LEFT-aligned (operator round 2, fix 6),
+ * and a full-height photograph on the right, flush against the panel: no gap between them. Kept to what the sources
  * support (plan, Layout): get in touch, a free quotation, the work done with preparation first.
  * No timings, response times, site-visit or start-date promises.
  */
@@ -15,7 +16,7 @@ const img = image(photo);
   <div class="hw__grid">
     <div class="hw__panel">
       <div class="hw__inner">
-        <div class="sec-head sec-head--center" data-motion="reveal">
+        <div class="sec-head hw__head" data-motion="reveal">
           <h2 class="sec-head__h2">{heading}</h2>
           <p class="sec-head__lead">{lead}</p>
         </div>
@@ -28,7 +29,7 @@ const img = image(photo);
             </li>
           ))}
         </ol>
-        <p class="more-line">Ready to talk it through? <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>
+        <p class="more-line hw__more">Ready to talk it through? <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>
       </div>
     </div>
     <div class="hw__photo"><img src={img.sm} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /></div>
@@ -36,11 +37,14 @@ const img = image(photo);
 </section>
 
 <style>
-  .hw__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); gap: var(--space-5); }
-  .hw__panel { background: var(--bg-panel); padding: var(--section-pad) var(--gutter); display: flex; justify-content: flex-end; }
+  .hw__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); gap: 0; }
+  .hw__head { grid-template-columns: 1fr; text-align: left; justify-items: start; }
+  .hw__head .sec-head__lead { max-width: 60ch; }
+  .hw__more { text-align: left; }
+  .hw__panel { background: var(--bg-panel); padding: var(--section-pad) var(--space-12) var(--section-pad) max(var(--gutter), calc((100vw - var(--container)) / 2)); display: flex; justify-content: flex-start; }
   .hw__inner { width: 100%; max-width: calc(var(--container) * 0.64); }
   .hw__steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
-  .hw__step { padding: var(--space-8) var(--space-6); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+  .hw__step { padding: var(--space-8) var(--space-6); text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); }
   .hw__step h3 { font-size: var(--fs-xl); font-weight: var(--fw-medium); }
   .hw__step p { font-size: var(--fs-md); }
   .hw__step--0 { background: var(--bg-card); color: var(--text-primary); }
@@ -56,6 +60,7 @@ const img = image(photo);
   .hw__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 1023px) {
     .hw__grid { grid-template-columns: 1fr; gap: 0; }
+    .hw__panel { padding-inline: var(--gutter); }
     .hw__inner { max-width: none; }
     .hw__photo { display: none; }
   }

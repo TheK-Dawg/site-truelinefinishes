@@ -9,8 +9,8 @@ import Icon from './Icon.astro';
 import { business } from '../data/site';
 ---
 <div class="sb on-dark" data-sticky-cta hidden>
-  <a class="sb__quote" href="#contact" data-cta="sticky-quote">Quick Quote</a>
-  <a class="sb__call" href={business.phoneHref} data-cta="sticky-call"><Icon name="phone" size={18} />{business.phone}</a>
+  <a class="sb__quote" href="#contact" data-cta="sticky-quote"><span class="btn__t">Quick Quote</span></a>
+  <a class="sb__call" href={business.phoneHref} data-cta="sticky-call"><Icon name="phone" size={18} /><span class="btn__t">{business.phone}</span></a>
 </div>
 
 <style>

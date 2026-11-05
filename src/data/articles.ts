@@ -5,6 +5,9 @@
  * STATUS GATE: test articles go to Brandon for comments first (23 Oct call). Anything not
  * `published` builds at its URL for review but is noindex, out of the sitemap, the listings and
  * every internal link.
+ * VIDEO: NOT EMBEDDED (operator round 2, 5 Nov 2026, fix 13: every hand-placed YouTube embed
+ * came off; ArticlePage.astro renders none). The plan's rotation rule is kept below, unused, for
+ * when video returns through the operator's widgets.
  * VIDEO ROTATION (plan, Video; both hubs' content notes): the house video goes in EVERY
  * Painting and Decorating and Interior Painting article; by the town's publish order the 1st,
  * 4th, 7th ... article has it just above the first H2, the 2nd, 5th, 8th ... mid-article between

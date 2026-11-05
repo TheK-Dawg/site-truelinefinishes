@@ -5,8 +5,9 @@
  * the TrustIndex slot -> statement slab -> trust badges -> about block -> services grid -> our
  * work -> the inside-and-out section (BFL's craft row; here the three tiles from Brandon's
  * reference) -> how a job runs -> areas -> resources preview -> FAQ -> quote form LAST.
- * OPERATOR OVERRIDES (DECISIONS O1-O6): no logo, video or form in the hero; no before-and-after
- * slider anywhere; the kitchen Short lives on /about/; links are never underlined.
+ * OPERATOR OVERRIDES (DECISIONS O1-O6, R2-1..R2-16): no logo, video or form in the hero; no
+ * before-and-after slider anywhere; no YouTube embed anywhere; links are never underlined; the
+ * areas section ("Where to Find Us") is plain text over Brandon's Google listing map (CID).
  * Home blueprint headings (seed homePage.sections): "Professional painting and decorating for every
  * property" = the H1; "Residential and commercial decorating services" = the tiles row; "A
  * quality-led service from preparation to completion" = the about block; contact-cta = the form.
@@ -41,15 +42,15 @@ const tiles = [
 ---
 <Base title={seo.title} description={seo.description} page="home" schema={schema}>
   <Hero
-    h1="Professional Painting and Decorating for Every Property"
-    lead="Rooms looking tired, or the outside of the house letting it down? TrueLine Finishes offers painting and decorating for homes and businesses, from individual rooms to full property redecorations, with careful preparation on every job."
+    h1="Rooms Looking Tired? Painting and Decorating by Brandon, Start to Finish"
+    lead="Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation."
     image={image('bay-window-living-room-0054')}
   />
   <Reviews />
   <Statement html="A painting and decorating business where <b>the person you call is the person who does the work</b>: Brandon prepares every surface properly, <b>sanding, filling and caulking come with everything</b>, and the finish is <b>made to last</b>." />
   <TrustBadges />
   <AboutBlock
-    heading="A quality-led service from preparation to completion"
+    heading="Preparation First, and a Finish That Lasts"
     body={[
       'TrueLine Finishes is Brandon Dawson’s painting and decorating business: interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.',
       'Brandon, the owner, carries out the work and oversees every job. We take pride in attention to detail, lasting finishes and treating your property with care.',
@@ -67,12 +68,12 @@ const tiles = [
     ]}
     button={{ href: '/about/', label: 'About Brandon' }}
   />
-  <ServicesGrid heading="Interior painting, exterior painting and wallpapering" lead="Interior painting and preparation, exterior painting, wallpapering and specialist wallcoverings, and the same work for business premises." />
+  <ServicesGrid heading="What Brandon Can Paint and Paper for You" lead="Rooms inside, the outside of the house, wallpaper and business premises: pick the job you have in mind." />
   <OurWork />
   <section class="cr section section--panel section-craft" data-section="craft">
     <div class="container">
       <div class="sec-head" data-motion="reveal">
-        <h2 class="sec-head__h2">Residential and commercial decorating services</h2>
+        <h2 class="sec-head__h2">For Homes and Business Premises, Inside and Out</h2>
         <p class="sec-head__lead">Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out.</p>
       </div>
       <ul class="cr__grid">
@@ -97,18 +98,18 @@ const tiles = [
     ]}
   />
   <Areas
-    heading="Baildon, Shipley, Ilkley and the towns around them"
+    heading="Where to Find Us"
     body={`Painting and decorating for homes and businesses in ${mainPlaces.slice(0, -1).join(', ')} and ${mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.`}
   />
-  <ArticlesPreview always heading="Painting and decorating resources" lead="Answers to the questions people ask before a room, a house or business premises is decorated." />
+  <ArticlesPreview always heading="Worth Reading Before the Dust Sheets Go Down" lead="Painting and decorating, explained town by town: preparation, finishes and what to expect." />
   <Faq items={faqs} heading="Questions people ask before they call" lead="Straight answers about the work, the quotation and who does the job." allLink />
   <QuoteForm />
 </Base>
 
 <style>
   .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .cr__item { background: var(--bg-card); padding: var(--card-pad); border-top: 2px solid var(--border-strong); transition: border-color 0.2s var(--ease); }
-  .cr__item:hover { border-top-color: var(--brand-primary); }
+  .cr__item { background: var(--bg-card); padding: var(--card-pad); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+  .cr__item:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-raised); }
   .cr__item h3 { font-size: var(--fs-xl); margin: var(--space-5) 0 var(--space-3); }
   .cr__item p { color: var(--text-muted); font-size: var(--fs-md); }
   .cr__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }

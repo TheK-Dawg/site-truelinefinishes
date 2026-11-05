@@ -5,7 +5,10 @@
 // Checks: no horizontal overflow; one visible H1; hero CTA above the fold; mobile header = logo +
 // call + burger, desktop nav visible; mobile WhatsApp button bottom-right (hidden on desktop);
 // sticky bar hidden at top, shown mid-page, hidden over the form; footer hours; reviews slot
-// present with the TODO state; the form renders Brandon's fields (live only); no console errors
+// present with the TODO state; the form renders the five default fields (live only); round 2:
+// no YouTube iframe, one hero pattern aligned to the page container, no lone top borders, home
+// map = the Google listing CID, areas boxless, how a job runs left-aligned with the photo flush,
+// every button's label optically centred (cap box, |delta| <= 1.5px); no console errors
 // from our own code. Exit 1 on any failure.
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
@@ -31,10 +34,32 @@ if (!live) {
     if (!existsSync(f)) { res.writeHead(404, { 'content-type': 'text/html' }); res.end(readFileSync(join(dist, '404.html'))); return; }
     res.writeHead(200, { 'content-type': types[extname(f)] || 'application/octet-stream' }); res.end(readFileSync(f));
   });
-  await new Promise((r) => server.listen(4417, r));
-  base = 'http://localhost:4417';
+  await new Promise((r) => server.listen(0, r));
+  base = `http://localhost:${server.address().port}`;
 }
-const fails = [];
+const measureButtons = (sel) => {
+          const vis = (el) => { const s = getComputedStyle(el); const b = el.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && b.width > 0 && b.height > 0; };
+          // Optical vertical centring: the CAP box (baseline - cap height) of the label against the
+          // button's border box. A Range over the label gives its inline box; canvas gives the font metrics.
+          const cv = document.createElement('canvas').getContext('2d'); const out = [];
+          for (const b of document.querySelectorAll(sel)) {
+            if (!vis(b)) continue;
+            const walker = document.createTreeWalker(b, NodeFilter.SHOW_TEXT, { acceptNode: (n) => n.textContent.trim() ? 1 : 2 });
+            const tn = walker.nextNode(); if (!tn) continue;
+            const host = tn.parentElement; const cs = getComputedStyle(host);
+            cv.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+            const t = cs.textTransform === 'uppercase' ? tn.textContent.trim().toUpperCase() : tn.textContent.trim();
+            const mt = cv.measureText(t);
+            // The text's inline box spans the font's ascent + descent; its top + the ascent is the baseline.
+            const rg = document.createRange(); rg.selectNodeContents(tn); const rr = rg.getClientRects()[0] || rg.getBoundingClientRect();
+            const base = rr.top + mt.fontBoundingBoxAscent; const capTop = base - mt.actualBoundingBoxAscent; const glyphBottom = base + (/[gjpqy,]/.test(t) ? mt.actualBoundingBoxDescent : 0);
+            const bb = b.getBoundingClientRect(); const bs = getComputedStyle(b);
+            const top = capTop - (bb.top + parseFloat(bs.borderTopWidth)); const bottom = (bb.bottom - parseFloat(bs.borderBottomWidth)) - glyphBottom;
+            out.push({ label: t.slice(0, 30), cls: (b.className || '').toString().split(' ')[0], top: +top.toFixed(1), bottom: +bottom.toFixed(1), delta: +(top - bottom).toFixed(1) });
+          }
+          return out;
+        };
+const fails = []; const btnLog = []; const heroLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
 const sizes = [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 844 }];
 for (const vp of sizes) {
@@ -77,8 +102,24 @@ for (const vp of sizes) {
         credit: !!document.querySelector('footer [data-footer-credit] a[href="https://localmapbooster.com/"]'),
         logos: [...document.querySelectorAll('img[src*="/brand/logo"]')].filter((i) => vis(i) && !i.closest('footer')).map((i) => i.closest('header') ? 'header' : 'other'),
         dropHubs: document.querySelectorAll('.hd__drop a').length,
+        // ROUND 2 (5 Nov 2026): no YouTube anywhere; one hero pattern on every page; no lone top
+        // borders; the home map is the Google listing; areas boxless; steps left + image flush.
+        youtube: [...document.querySelectorAll('iframe')].filter((f) => /youtube/.test(f.src)).length,
+        heroPattern: (() => {
+          const h = document.querySelector('[data-section="hero"]'); if (!h || !h.dataset.hero) return { ok: false, why: 'no shared hero' };
+          const bg = h.querySelector('.hero__bg'); const hb = h.getBoundingClientRect(); const bb = bg?.getBoundingClientRect();
+          const h1 = h.querySelector('h1').getBoundingClientRect();
+          const ref = document.querySelector('[data-section="reviews"] .container, main section:not([data-section="hero"]) .container');
+          const cs = ref ? getComputedStyle(ref) : null; const refLeft = ref ? ref.getBoundingClientRect().left + parseFloat(cs.paddingLeft) : null;
+          return { ok: !!bb && Math.abs(bb.width - hb.width) < 2 && Math.abs(bb.height - hb.height) < 2, side: !!h.querySelector('.ph__img'), h1Left: Math.round(h1.left), refLeft: refLeft == null ? null : Math.round(refLeft), height: Math.round(hb.height), kind: h.dataset.hero };
+        })(),
+        topBorders: [...document.querySelectorAll('main *')].filter((e) => { const c = getComputedStyle(e); return vis(e) && parseFloat(c.borderTopWidth) >= 2 && parseFloat(c.borderBottomWidth) === 0 && parseFloat(c.borderLeftWidth) === 0; }).map((e) => e.className).slice(0, 5),
+        homeMap: document.querySelector('[data-section="areas"] iframe')?.getAttribute('src') || null,
+        areasBoxed: [...document.querySelectorAll('[data-section="areas"] li, [data-section="areas"] .ar__copy')].filter((e) => { const c = getComputedStyle(e); return c.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(c.borderTopWidth) > 0 || parseFloat(c.borderLeftWidth) > 0; }).length,
+        steps: (() => { const s = document.querySelector('[data-section="process"]'); if (!s) return null; const h2 = s.querySelector('h2'); const more = s.querySelector('.more-line'); const p = s.querySelector('.hw__panel').getBoundingClientRect(); const ph = s.querySelector('.hw__photo'); const pb = ph && vis(ph) ? ph.getBoundingClientRect() : null; return { h2: getComputedStyle(h2).textAlign, more: more ? getComputedStyle(more).textAlign : null, gap: pb ? Math.round(pb.left - p.right) : null, step: getComputedStyle(s.querySelector('.hw__step')).textAlign }; })(),
       };
     }, vp.width);
+    m.buttons = await page.evaluate(measureButtons, '.btn, .lf-b, button[type="submit"]');
     if (m.overflow > 0) fails.push(`${tag}: horizontal overflow ${m.overflow}px`);
     if (m.h1s !== 1) fails.push(`${tag}: ${m.h1s} visible H1s`);
     if (!m.utility && (!m.ctaVisible || m.ctaTop > vp.height)) fails.push(`${tag}: hero Quick Quote not above the fold (top ${Math.round(m.ctaTop)})`);
@@ -101,16 +142,31 @@ for (const vp of sizes) {
     if (m.dropHubs < 5) fails.push(`${tag}: services dropdown lists ${m.dropHubs} links`);
     if (!m.utility && m.reviews !== 'pending-widget-id' && m.reviews !== 'live') fails.push(`${tag}: reviews slot missing`);
     if (live && !m.utility) {
-      const want = ['Exterior work', 'Bedroom', 'Living room', 'Kitchen', 'Hallway', 'Bathroom'];
-      if (!m.formFields || m.formFields.length < 6) fails.push(`${tag}: Formlane form did not render (${JSON.stringify(m.formFields)})`);
-      else if (!want.every((w) => m.formSelect.includes(w))) fails.push(`${tag}: work dropdown options ${JSON.stringify(m.formSelect)}`);
+      // ROUND 2: the DEFAULT form, exactly these five fields in this order, no dropdowns.
+      const want = ['Your name', 'Email address', 'Phone number', 'Postcode', 'Short description of the job'];
+      if (!m.formFields) fails.push(`${tag}: Formlane form did not render`);
+      else if (JSON.stringify(m.formFields) !== JSON.stringify(want)) fails.push(`${tag}: form fields ${JSON.stringify(m.formFields)} (want the five defaults)`);
+      if (m.formSelect.length) fails.push(`${tag}: form still has a dropdown ${JSON.stringify(m.formSelect.slice(0, 4))}`);
       if (m.visibleLabels) fails.push(`${tag}: ${m.visibleLabels} visible form labels`);
+      if (!m.buttons.some((x) => x.cls === 'lf-b')) fails.push(`${tag}: form submit button not measured`);
     }
+    if (m.youtube) fails.push(`${tag}: ${m.youtube} YouTube iframe(s)`);
+    if (!m.utility) {
+      if (!m.heroPattern.ok || m.heroPattern.side) fails.push(`${tag}: hero not the home pattern ${JSON.stringify(m.heroPattern)}`);
+      if (m.heroPattern.refLeft != null && Math.abs(m.heroPattern.h1Left - m.heroPattern.refLeft) > 2) fails.push(`${tag}: hero H1 left ${m.heroPattern.h1Left} vs page container ${m.heroPattern.refLeft}`);
+      heroLog.push(`${tag} ${m.heroPattern.kind} h=${m.heroPattern.height} h1x=${m.heroPattern.h1Left} cx=${m.heroPattern.refLeft}`);
+    }
+    if (m.topBorders.length) fails.push(`${tag}: lone top borders ${JSON.stringify(m.topBorders)}`);
+    if (r === '/' && m.homeMap !== 'https://www.google.com/maps?cid=8023434379390696838&output=embed') fails.push(`${tag}: home map ${m.homeMap}`);
+    if (m.areasBoxed) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
+    if (m.steps && (m.steps.h2 !== 'left' && m.steps.h2 !== 'start' || !['left', 'start'].includes(m.steps.more) || !['left', 'start'].includes(m.steps.step) || (m.steps.gap !== null && m.steps.gap !== 0))) fails.push(`${tag}: how a job runs ${JSON.stringify(m.steps)}`);
+    for (const x of m.buttons) { btnLog.push(`${tag} ${x.cls} "${x.label}" top ${x.top} bottom ${x.bottom} delta ${x.delta}`); if (Math.abs(x.delta) > 1.5) fails.push(`${tag}: button "${x.label}" (${x.cls}) not centred: top ${x.top} / bottom ${x.bottom}`); }
     if (vp.name === 'mobile' && !m.utility) {
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));
       await page.waitForTimeout(400);
       const mid = await page.evaluate(() => { const b = document.querySelector('[data-sticky-cta]'); const f = document.querySelector('[data-quote-card]')?.getBoundingClientRect(); const ft = document.querySelector('footer').getBoundingClientRect(); const over = (f && f.top < innerHeight && f.bottom > 0) || ft.top < innerHeight; return { shown: b && !b.hidden, over }; });
       if (!mid.over && !mid.shown) fails.push(`${tag}: sticky bar not shown mid-page`);
+      if (mid.shown) for (const x of await page.evaluate(measureButtons, '[data-sticky-cta] a')) { btnLog.push(`${tag} sticky "${x.label}" top ${x.top} bottom ${x.bottom} delta ${x.delta}`); if (Math.abs(x.delta) > 1.5) fails.push(`${tag}: sticky button "${x.label}" not centred: top ${x.top} / bottom ${x.bottom}`); }
       await page.evaluate(() => document.querySelector('[data-quote-card]')?.scrollIntoView({ block: 'center' }));
       await page.waitForTimeout(400);
       if (await page.evaluate(() => !document.querySelector('[data-sticky-cta]').hidden)) fails.push(`${tag}: sticky bar shown over the form`);
@@ -129,6 +185,9 @@ for (const vp of sizes) {
 }
 await browser.close();
 server?.close();
+if (args.includes('--log')) { heroLog.forEach((l) => console.log('  hero', l)); const seen = new Set(); btnLog.forEach((l) => { const k = l.replace(/^\S+ \S+ /, (x) => x.split(' ')[0] + ' '); if (!seen.has(k)) { seen.add(k); console.log('  btn', l); } }); }
+const worst = btnLog.map((l) => Math.abs(+l.split('delta ')[1])).reduce((a, b) => Math.max(a, b), 0);
+console.log(`buttons measured: ${btnLog.length}, worst |delta| ${worst}px`);
 console.log(`check: ${routes.length} routes x ${sizes.length} widths against ${base}, ${fails.length} fails`);
 fails.forEach((f) => console.log('  FAIL', f));
 process.exit(fails.length ? 1 : 0);

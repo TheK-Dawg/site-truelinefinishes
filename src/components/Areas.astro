@@ -1,9 +1,10 @@
 ---
 /**
- * AREAS (Buildings for Life areas section, home page). Heading and copy full width, Brandon's
- * Google Business Profile map as a wide band under them (embedded, auto-loads, zoomed out: the
- * address is never shown), then Brandon's close-to-home places as plain text. The plan wants NO
- * Areas page and no town pages, so nothing here links to one.
+ * WHERE TO FIND US (home areas section; operator round 2, 5 Nov 2026). Plain text on the page:
+ * no box, no border, no card background, the places as a plain sentence-style list. The map is
+ * Brandon's REAL Google listing, embedded by CID (MapEmbed default, the same embed as /contact/),
+ * full width and auto-loading. The plan wants NO Areas page and no town pages, so nothing here
+ * links to one.
  */
 import MapEmbed from './MapEmbed.astro';
 import { mainPlaces } from '../data/site';
@@ -15,9 +16,9 @@ const { heading, body } = Astro.props;
     <div class="ar__copy" data-motion="reveal">
       <h2 class="ar__h2">{heading}</h2>
       <p class="ar__body">{body}</p>
+      <ul class="ar__list" aria-label="Main places served">{mainPlaces.map((t) => <li>{t}</li>)}</ul>
     </div>
-    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed area="Baildon, Shipley" /></div>
-    <ul class="ar__list">{mainPlaces.map((t) => <li>{t}</li>)}</ul>
+    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed /></div>
   </div>
 </section>
 
@@ -25,8 +26,8 @@ const { heading, body } = Astro.props;
   .ar__inner { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
   .ar__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }
   .ar__body { color: var(--text-muted); max-width: 80ch; }
-  .ar__map { width: 100%; height: calc(var(--space-30) * 3); border-top: 3px solid var(--brand-primary); }
-  .ar__list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .ar__list li { font-size: var(--fs-md); padding: var(--space-1) var(--space-3); background: var(--bg-subtle); border: 1px solid var(--border-default); color: var(--text-secondary); }
-  @media (max-width: 900px) { .ar__h2 { font-size: var(--fs-3xl); } .ar__map { height: calc(var(--space-30) * 2); } }
+  .ar__map { width: 100%; height: calc(var(--space-30) * 3.5); }
+  .ar__list { list-style: none; padding: 0; margin-top: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-1) 0; font-weight: var(--fw-semibold); color: var(--text-primary); }
+  .ar__list li:not(:last-child)::after { content: '·'; margin: 0 var(--space-3); color: var(--text-muted); }
+  @media (max-width: 900px) { .ar__h2 { font-size: var(--fs-3xl); } .ar__map { height: calc(var(--space-30) * 2.5); } }
 </style>

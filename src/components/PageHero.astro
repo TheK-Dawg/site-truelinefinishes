@@ -1,58 +1,15 @@
 ---
 /**
- * INNER PAGE HERO (template inner banner, in TrueLine's black band). H1 and lead left, the two
- * CTAs (Quick Quote Online + Call Brandon) and the usable USPs under them; the page's own photo
- * (Brandon's, from the pool) on the right. No breadcrumbs in heroes (build brief); articles carry
- * their breadcrumbs under the hero instead.
+ * INNER PAGE HERO (operator round 2, 5 Nov 2026): the HOME hero pattern on every page, through
+ * Hero.astro in `compact` mode: the page's photo as the full-bleed background under the same
+ * overlay, the same container and headline placement, H1, lead, Quick Quote Online + Call, the
+ * slim Trustindex slot. Smaller than the home hero and without the info cards. No side image
+ * (the hub pages' right-hand photo became the background). Pages with no photo of their own
+ * (legal, site map, company pages) take Brandon's dust-sheeted room. No breadcrumbs in heroes.
  */
-import Icon from './Icon.astro';
-import CallButton from './CallButton.astro';
+import Hero from './Hero.astro';
+import { image as poolImage } from '../data/site';
 interface Props { h1: string; lead: string; image?: { src: string; alt: string; width: number; height: number }; showCta?: boolean; formless?: boolean }
 const { h1, lead, image, showCta = true, formless = false } = Astro.props;
 ---
-<section class:list={['ph on-dark section-hero', !image && 'ph--plain']} data-section="hero">
-  <div class="container ph__inner">
-    <div class="ph__copy">
-      <h1 class="ph__h1">{h1}</h1>
-      <p class="ph__lead">{lead}</p>
-      {showCta && (
-        <div class="btn-row ph__cta">
-          <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="hero-quote">Quick Quote Online</a>
-          <CallButton cta="hero-call" />
-        </div>
-      )}
-      <ul class="ph__usps">
-        <li><Icon name="check" size={18} /> Over eight years' experience</li>
-        <li><Icon name="check" size={18} /> Fully insured</li>
-        <li><Icon name="check" size={18} /> Free quotations</li>
-      </ul>
-    </div>
-    {image && (
-      <div class="ph__img"><img src={image.src} alt={image.alt} width={image.width} height={image.height} fetchpriority="high" decoding="async" /></div>
-    )}
-  </div>
-</section>
-
-<style>
-  .ph { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-16); }
-  .ph__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
-  .ph--plain .ph__inner { grid-template-columns: minmax(0, 1fr); max-width: var(--narrow); margin-inline: 0; }
-  .ph__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-5); }
-  .ph__lead { font-size: var(--fs-lg); max-width: 58ch; }
-  .ph__cta { margin-top: var(--space-8); }
-  .ph__usps { list-style: none; padding: 0; margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--text-inverse); font-size: var(--fs-md); }
-  .ph__usps li { display: flex; gap: var(--space-2); align-items: center; }
-  .ph__usps :global(.icon) { color: var(--accent-on-dark); }
-  .ph__img { border-top: 3px solid var(--accent-on-dark); }
-  .ph__img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-  @media (max-width: 900px) {
-    .ph { padding-top: calc(var(--header-h) + var(--space-8)); padding-bottom: var(--space-10); }
-    .ph__inner { grid-template-columns: 1fr; gap: var(--space-8); }
-    .ph__h1 { font-size: var(--fs-4xl); }
-  }
-  @media (max-width: 640px) {
-    .ph__h1 { font-size: var(--fs-3xl); }
-    .ph__lead { font-size: var(--fs-base); }
-    .ph__cta :global(.btn) { width: 100%; }
-  }
-</style>
+<Hero compact h1={h1} lead={lead} image={image ?? poolImage('room-dust-sheets-0086')} showCta={showCta} formless={formless} />
