@@ -1,7 +1,7 @@
 {
   "name": "site-truelinefinishes",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "TrueLine Finishes (truelinefinishes.com): client site on the Buildings for Life v4 template structure, TrueLine's own brand. Static Astro build served by a Cloudflare Worker (static assets only); quote form via Formlane direct embed.",
   "scripts": {

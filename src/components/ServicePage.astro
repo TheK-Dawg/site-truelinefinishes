@@ -2,8 +2,8 @@
 /**
  * SERVICE HUB PAGE (plan, Layout, Hub pages), in this order: hero with the hub's picture; the
  * reviews section (template: directly under the hero on every page); intro; what the job covers
- * (the seed's sections, each photo above its H2) and the `sectors:` line; a before-and-after
- * slider where a pair fits; how a job runs; "<hub> in pictures"; Brandon's house video on the two
+ * (the seed's sections, each photo above its H2) and the `sectors:` line; how a job runs (no
+ * before-and-after slider anywhere: operator, 5 Nov 2026, "I never do before and after"); "<hub> in pictures"; Brandon's house video on the two
  * hubs that carry it; the other hubs as related links; FAQ; the quote form; further reading (the
  * hub's town articles). Landing page, never article-styled.
  */
@@ -11,7 +11,6 @@ import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import ServiceBody from './ServiceBody.astro';
-import BeforeAfter from './BeforeAfter.astro';
 import Steps from './Steps.astro';
 import PicturesGrid from './PicturesGrid.astro';
 import VideoEmbed from './VideoEmbed.astro';
@@ -42,7 +41,6 @@ const schema = [
   <PageHero h1={content.h1} lead={content.lead} image={hero} />
   <Reviews />
   <ServiceBody intro={content.intro} sections={content.sections} sectorsLine={content.sectorsLine} />
-  {content.slider && <BeforeAfter pairs={content.slider} panel={false} />}
   <Steps heading={content.process.heading} lead={content.process.lead} steps={steps} photo={content.sections[0].image} />
   <PicturesGrid heading={content.pictures.heading} lead={content.pictures.lead} images={content.pictures.images} />
   {content.video && (

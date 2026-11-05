@@ -49,7 +49,7 @@ const cards = sections.map((s) => ({ ...s, photo: poolImage(s.image) }));
   .sb3__copy { max-width: 70ch; }
   .sb3__copy p { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }
   .sb3__copy p + p { margin-top: 1em; }
-  .sb3__copy :global(a), .sb3__lead :global(a) { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .sb3__copy :global(a), .sb3__lead :global(a) { color: var(--brand-text); font-weight: var(--fw-semibold); }
   .sb3__copy .sb3__first { font-size: var(--fs-xl); line-height: var(--lh-normal); }
   .sb3__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
   .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--brand-primary); }

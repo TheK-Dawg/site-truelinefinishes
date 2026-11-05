@@ -93,7 +93,7 @@ export const mainPlaces = ['Baildon', 'Guiseley', 'Menston', 'Ilkley', 'Shipley'
 
 export const nav = [
   { label: 'Home', href: '/' },
-  { label: 'Services', href: '/painting-and-decorating/', drop: true },
+  { label: 'Services', href: '/services/', drop: true },
   { label: 'Gallery', href: '/gallery/' },
   { label: 'Reviews', href: '/reviews/' },
   { label: 'About', href: '/about/' },

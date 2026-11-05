@@ -1,6 +1,7 @@
 ---
 /**
- * REVIEWS. The one review component on the site, directly under the hero on every page,
+ * REVIEWS (Buildings for Life position and layout: head above, the TrustIndex widget full width
+ * under it). The one review component on the site, directly under the hero on every page,
  * byte-identical everywhere (takes only a `full` flag for the /reviews/ page).
  * SOURCE: Brandon's Google Business Profile, CID 8023434379390696838 (plan flag 4), through the
  * operator's standard Trustindex review-section widget (slots.trustindexReviews).
@@ -21,8 +22,8 @@ const ti = slots.trustindexReviews;
       <h2 class="rv__h2">What customers say about Brandon's work</h2>
       <p class="rv__lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
     </div>
-    <Fragment set:html={`<!-- TODO(operator): Trustindex review widget for Google CID ${business.gbp.cid}. Set slots.trustindexReviews in src/data/site.ts. -->`} />
-    <div class="rv__widget" data-trustindex-slot="reviews" data-trustindex-cid={business.gbp.cid} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
+    <Fragment set:html={`<!-- TODO-TrustIndex-ID: Trustindex review widget for Google CID ${business.gbp.cid}. Set slots.trustindexReviews in src/data/site.ts and the widget renders here. -->`} />
+    <div class:list={['rv__widget', ti && 'rv__widget--ti']} data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-slot="reviews" data-trustindex-cid={business.gbp.cid} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
       {ti ? <script is:inline defer async src={ti}></script> : (
         <div class="rv__pending" data-motion="reveal">
           <span class="rv__g" aria-hidden="true"><Icon name="star" size={26} /></span>
@@ -36,14 +37,15 @@ const ti = slots.trustindexReviews;
 
 <style>
   .rv { background: var(--bg-card); }
-  .rv__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--space-8) var(--space-16); align-items: center; }
-  .rv--full .rv__inner { grid-template-columns: 1fr; }
+  .rv__inner { display: grid; grid-template-columns: 1fr; gap: var(--space-10); }
+  /* TrustIndex renders on first user input: reserve its height so nothing below jumps. */
+  .rv__widget--ti { min-height: calc(var(--space-30) * 3); }
   .rv__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }
   .rv__lead { color: var(--text-muted); max-width: 52ch; }
-  .rv__pending { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4) var(--space-5); align-items: center; padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--brand-primary); }
+  .rv__pending { display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-4) var(--space-6); align-items: center; padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--brand-primary); }
   .rv__pending p { color: var(--text-primary); }
-  .rv__pending .btn { grid-column: 1 / -1; justify-self: start; }
+  @media (max-width: 900px) { .rv__pending { grid-template-columns: auto 1fr; } .rv__pending .btn { grid-column: 1 / -1; justify-self: start; } }
   .rv__g { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }
-  @media (max-width: 900px) { .rv__inner { grid-template-columns: 1fr; } .rv__h2 { font-size: var(--fs-3xl); } }
+  @media (max-width: 900px) { .rv__h2 { font-size: var(--fs-3xl); } }
   @media (max-width: 520px) { .rv__pending .btn { justify-self: stretch; } }
 </style>

@@ -15,7 +15,6 @@ export interface ServiceContent {
   intro: string[]; // 1-2 short paragraphs, light inline HTML
   sections: { h2: string; lead: string; points: string[]; image: string }[];
   sectorsLine: string; // the seed's `sectors:` section: one line on who the work is for
-  slider?: ('bedroom' | 'bathroom' | 'gable' | 'house')[];
   process: { heading: string; lead: string; steps: [ServiceStep, ServiceStep, ServiceStep] };
   pictures: { heading: string; lead: string; images: string[] };
   video?: { heading: string; lead: string }; // the house video (Painting and Decorating, Interior Painting)

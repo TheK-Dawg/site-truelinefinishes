@@ -117,7 +117,7 @@ const schema = [
   .art__crumbs { padding-top: var(--space-5); padding-bottom: var(--space-1); }
   .art__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; }
   .art__crumbs li + li::before { content: '/'; margin-right: var(--space-3); color: var(--text-muted); }
-  .art__crumbs a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+  .art__crumbs a { color: var(--brand-text); }
   .art__crumbs [aria-current] { color: var(--text-primary); }
   .art__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--aside-w); gap: var(--space-16); align-items: start; }
   .art__main { max-width: 72ch; background: var(--bg-card); color: var(--text-primary); }
@@ -139,17 +139,17 @@ const schema = [
   .art__toc summary::-webkit-details-marker { display: none; }
   .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); }
   .art__toc a { color: var(--brand-text); }
-  .art__toc a:hover { text-decoration: underline; }
+  .art__toc a:hover { color: var(--brand-primary); }
   .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); border-top: 3px solid var(--accent-on-dark); }
   .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-inverse); }
-  .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--accent-on-dark); text-underline-offset: 3px; }
+  .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); }
   .art__cta .btn { width: 100%; }
   .art__wa { display: inline-flex; gap: var(--space-2); align-items: center; }
   .art__wa :global(.icon) { color: var(--whatsapp); }
   .art__rel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-10); }
   .art__rel-h { font-size: var(--fs-2xl); margin-bottom: var(--space-4); }
   .art__rel ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
-  .art__rel a { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
+  .art__rel a { color: var(--brand-text); font-weight: var(--fw-semibold); }
   @media (max-width: 1023px) {
     .art__inner { grid-template-columns: 1fr; gap: var(--space-8); }
     .art__aside { position: static; order: -1; }

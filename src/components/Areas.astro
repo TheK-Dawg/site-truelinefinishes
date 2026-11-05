@@ -1,0 +1,32 @@
+---
+/**
+ * AREAS (Buildings for Life areas section, home page). Heading and copy full width, Brandon's
+ * Google Business Profile map as a wide band under them (embedded, auto-loads, zoomed out: the
+ * address is never shown), then Brandon's close-to-home places as plain text. The plan wants NO
+ * Areas page and no town pages, so nothing here links to one.
+ */
+import MapEmbed from './MapEmbed.astro';
+import { mainPlaces } from '../data/site';
+interface Props { heading: string; body: string }
+const { heading, body } = Astro.props;
+---
+<section class="ar section section-areas" data-section="areas">
+  <div class="ar__inner container">
+    <div class="ar__copy" data-motion="reveal">
+      <h2 class="ar__h2">{heading}</h2>
+      <p class="ar__body">{body}</p>
+    </div>
+    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed /></div>
+    <ul class="ar__list">{mainPlaces.map((t) => <li>{t}</li>)}</ul>
+  </div>
+</section>
+
+<style>
+  .ar__inner { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  .ar__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }
+  .ar__body { color: var(--text-muted); max-width: 80ch; }
+  .ar__map { width: 100%; height: calc(var(--space-30) * 3); border-top: 3px solid var(--brand-primary); }
+  .ar__list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .ar__list li { font-size: var(--fs-md); padding: var(--space-1) var(--space-3); background: var(--bg-subtle); border: 1px solid var(--border-default); color: var(--text-secondary); }
+  @media (max-width: 900px) { .ar__h2 { font-size: var(--fs-3xl); } .ar__map { height: calc(var(--space-30) * 2); } }
+</style>

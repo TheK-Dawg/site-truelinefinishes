@@ -1,23 +1,27 @@
 ---
-/** GALLERY (standard page): every one of Brandon's categorised job photos from R2 (interiors, exteriors, before and after, wallpapering, commercial), site-matched grid, root Lightbox. */
+/**
+ * GALLERY (standard page): Brandon's categorised job photos from R2 (interiors, exteriors,
+ * wallpapering, commercial), site-matched grid, root Lightbox. No before-and-after anywhere
+ * (operator, 5 Nov 2026): the finished "after" shots join their room or exterior group and the
+ * "before" shots are not shown.
+ */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Reviews from '../components/Reviews.astro';
-import BeforeAfter from '../components/BeforeAfter.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import { images, image } from '../data/site';
+const afterCat = (key: string) => (/gable|semi-detached/.test(key) ? 'exterior' : 'interior');
+const shown = images.filter((i) => !/-before-/.test(i.key)).map((i) => (i.cat === 'before-after' ? { ...i, cat: afterCat(i.key) } : i));
 const groups = [
   { cat: 'interior', h: 'Interiors' },
   { cat: 'exterior', h: 'Exteriors' },
-  { cat: 'before-after', h: 'Before and after' },
   { cat: 'wallpapering', h: 'Wallpapering' },
   { cat: 'commercial', h: 'Commercial' },
-].map((g) => ({ ...g, list: images.filter((i) => i.cat === g.cat) }));
+].map((g) => ({ ...g, list: shown.filter((i) => i.cat === g.cat) }));
 ---
 <Base title="Painting and Decorating Gallery, Brandon's Own Jobs | TrueLine Finishes" description="Photographs from TrueLine Finishes' own painting and decorating jobs: bedrooms, living rooms, kitchens, hallways, stairs, exteriors, wallpaper and business premises." page="gallery">
   <PageHero h1="Gallery of Brandon's Work" lead="Photographs from Brandon's own jobs, taken on site: preparation, protection and the finished rooms and exteriors." image={image('kitchen-hall-tiled-floor-0144')} />
   <Reviews />
-  <BeforeAfter pairs={['bedroom', 'bathroom', 'gable', 'house']} />
   {groups.map((g) => (
     <section class="gl section" data-section="gallery">
       <div class="container">

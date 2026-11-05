@@ -1,82 +1,110 @@
 ---
 /**
- * FOOTER (template structure, on black). Plan, Layout: the five hubs, quick links, contact (phone,
- * email, WhatsApp, the opening hours exactly as the Google listing; NO address), the charity line
- * and the legal pages. Bottom bar: business name + auto year. Client site: no agency credit, and
- * no CTA in the footer (template law).
+ * FOOTER (Buildings for Life footer, operator overhaul 5 Nov 2026: "footer not the way we do it").
+ * Top row: logo + a one-line question + Quick Quote Online. Four columns: About (with the charity
+ * line, required by the plan), Our Services (the five hubs + all services), Company (every page),
+ * Quick Contact (call button, email, WhatsApp, the opening hours exactly as the Google listing;
+ * NO address, ever). Bottom bar: copyright + auto year on the left; the legal links and the
+ * keyword build credit on the right (the operator's brief orders the LMB credit, DECISIONS O9).
+ * formless: the page has no quote form (thank-you, 404), so Quick Quote goes to /contact/#contact.
+ * Links are never underlined.
  */
 import { business, services, hours, charityLine } from '../data/site';
 import Icon from './Icon.astro';
+import CallButton from './CallButton.astro';
+import FooterCredit from './FooterCredit.astro';
+const { formless = false } = Astro.props;
 const year = new Date().getFullYear();
-const quick = [
+const company = [
   { label: 'Home', href: '/' },
   { label: 'About Brandon', href: '/about/' },
   { label: 'Gallery', href: '/gallery/' },
   { label: 'Reviews', href: '/reviews/' },
+  { label: 'FAQ', href: '/faq/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'Contact', href: '/contact/' },
-  { label: 'Site map', href: '/sitemap/' },
 ];
 ---
 <footer class="ft on-dark" data-section="footer">
   <div class="container">
     <div class="ft__top">
       <a href="/" class="ft__brand" aria-label={`${business.name}, home`}><img src="/brand/logo.webp" alt={business.name} width="960" height="252" loading="lazy" /></a>
-      <p class="ft__ask">Painting and decorating for homes and businesses, from individual rooms to full property redecorations.</p>
+      <p class="ft__ask">A room, the whole house or business premises to decorate?</p>
+      <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="footer-quote">Quick Quote Online</a>
     </div>
     <div class="ft__cols">
-      <div class="ft__col">
-        <h2 class="ft__h">Services</h2>
-        <ul>{services.map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}</ul>
+      <div class="ft__col ft__col--about">
+        <h2 class="ft__h">About Us</h2>
+        <p>{business.name} is {business.owner}'s painting and decorating business: homes and businesses, from individual rooms to full property redecorations. Over eight years' experience, fully insured.</p>
+        <p class="ft__charity"><Icon name="heart" size={18} /> <span>{charityLine}</span></p>
+        <p class="ft__google"><span class="ft__g" aria-hidden="true">G</span><a href={business.gbp.mapsUrl} target="_blank" rel="noopener" data-cta="footer-google">Brandon's reviews on Google</a></p>
       </div>
       <div class="ft__col">
-        <h2 class="ft__h">Quick links</h2>
-        <ul>{quick.map((q) => <li><a href={q.href}>{q.label}</a></li>)}</ul>
+        <h2 class="ft__h">Our Services</h2>
+        <ul>
+          {services.map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
+          <li><a href="/services/">All services</a></li>
+        </ul>
       </div>
       <div class="ft__col">
-        <h2 class="ft__h">Contact Brandon</h2>
-        <p class="ft__line"><Icon name="phone" size={16} /> <a href={business.phoneHref} data-cta="footer-call">{business.phone}</a></p>
+        <h2 class="ft__h">Company</h2>
+        <ul>{company.map((q) => <li><a href={q.href}>{q.label}</a></li>)}</ul>
+      </div>
+      <div class="ft__col">
+        <h2 class="ft__h">Quick Contact</h2>
+        <p>Questions about a job, or want Brandon to come and look?</p>
+        <div class="ft__phone"><CallButton cta="footer-call" /></div>
         <p class="ft__line"><Icon name="mail" size={16} /> <a href={`mailto:${business.email}`} data-cta="footer-email">{business.email}</a></p>
         <p class="ft__line"><Icon name="whatsapp" size={16} /> <a href={business.whatsappHref} target="_blank" rel="noopener" data-cta="footer-whatsapp">WhatsApp {business.phone}</a></p>
-      </div>
-      <div class="ft__col">
-        <h2 class="ft__h">Opening hours</h2>
-        <ul class="ft__hours">{hours.map((h) => <li><span>{h.days}</span><span>{h.time}</span></li>)}</ul>
-        <p class="ft__charity"><Icon name="heart" size={16} /> {charityLine}</p>
+        <ul class="ft__hours" aria-label="Opening hours">{hours.map((h) => <li><Icon name="clock" size={16} /><span>{h.days}</span> <span>{h.time}</span></li>)}</ul>
       </div>
     </div>
     <div class="ft__bar">
       <p>© {year} {business.name}</p>
-      <nav aria-label="Legal"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a><a href="/cookie-policy/">Cookie Policy</a></nav>
+      <div class="ft__bar-end">
+        <nav aria-label="Legal"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms and Conditions</a><a href="/cookie-policy/">Cookie Policy</a><a href="/sitemap/">Site map</a></nav>
+        <p class="ft__credit"><FooterCredit anchorText="Painting and decorating websites" anchorHref="https://localmapbooster.com/" rel="nofollow noopener" cta="footer-credit" /></p>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
   .ft { background: var(--bg-inverse); color: var(--text-inverse-muted); padding-top: var(--space-20); font-size: var(--fs-md); border-top: 1px solid var(--border-inverse); }
-  .ft__top { display: grid; grid-template-columns: auto 1fr; gap: var(--space-8); align-items: center; padding-bottom: var(--space-12); border-bottom: 1px solid var(--border-inverse); }
+  .ft__top { display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-8); align-items: center; padding-bottom: var(--space-12); border-bottom: 1px solid var(--border-inverse); }
   .ft__brand img { width: var(--logo-w); }
-  .ft__ask { color: var(--text-inverse); font-size: var(--fs-lg); text-align: right; }
-  .ft__cols { display: grid; grid-template-columns: 1.3fr 1fr 1.3fr 1.2fr; gap: var(--space-10); padding: var(--space-12) 0 var(--space-16); }
-  .ft__h { font-size: var(--fs-lg); color: var(--text-inverse); margin-bottom: var(--space-5); }
+  .ft__ask { color: var(--text-inverse); font-size: var(--fs-xl); font-weight: var(--fw-semibold); text-align: right; }
+  .ft__cols { display: grid; grid-template-columns: 1.4fr 1.2fr 0.9fr 1.3fr; gap: var(--space-10); padding: var(--space-12) 0 var(--space-16); }
+  .ft__h { font-size: var(--fs-xl); color: var(--text-inverse); margin-bottom: var(--space-5); }
+  .ft__col p + p { margin-top: var(--space-3); }
   .ft__col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .ft__col a { transition: color 0.2s var(--ease); }
   .ft__col a:hover { color: var(--accent-on-dark); }
+  .ft__charity { display: flex; align-items: flex-start; gap: var(--space-2); color: var(--text-inverse); font-weight: var(--fw-semibold); margin-top: var(--space-5) !important; }
+  .ft__charity :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; margin-top: 3px; }
+  .ft__google { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-5) !important; color: var(--text-inverse); font-weight: var(--fw-semibold); }
+  .ft__g { display: grid; place-items: center; width: var(--space-6); height: var(--space-6); border-radius: var(--badge-radius); background: var(--bg-card); color: var(--brand-text); font-size: var(--fs-sm); font-weight: var(--fw-bold); }
+  .ft__phone { margin: var(--space-5) 0; }
   .ft__line { display: flex; align-items: center; gap: var(--space-2); overflow-wrap: anywhere; }
-  .ft__line + .ft__line { margin-top: var(--space-3); }
-  .ft__line :global(.icon), .ft__charity :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
-  .ft__hours li { display: flex; justify-content: space-between; gap: var(--space-4); }
+  .ft__line + .ft__line { margin-top: var(--space-3) !important; }
+  .ft__line :global(.icon), .ft__hours :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  .ft__hours { margin-top: var(--space-4); gap: var(--space-2) !important; }
+  .ft__hours li { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
   .ft__hours li span:last-child { color: var(--text-inverse); }
-  .ft__charity { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-6); color: var(--text-inverse); }
-  .ft__charity :global(.icon) { margin-top: 3px; }
-  .ft__bar { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; padding: var(--space-6) 0; border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); }
-  .ft__bar nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
-  .ft__bar a { text-decoration: underline; text-underline-offset: 3px; }
+  .ft__bar { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; background: var(--glass); padding: var(--space-6); font-size: var(--fs-sm); }
+  .ft__bar-end { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+  .ft__bar nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2) var(--space-6); }
+  .ft__bar a { transition: color 0.2s var(--ease); }
   .ft__bar a:hover { color: var(--accent-on-dark); }
+  /* Below the desktop breakpoint the fixed sticky call bar owns the bottom edge: clear its height. */
   @media (max-width: 1023px) { .ft { padding-bottom: calc(var(--btn-h-md) + var(--space-4) + 1px + env(safe-area-inset-bottom)); } }
   @media (max-width: 900px) {
-    .ft__top { grid-template-columns: 1fr; }
+    .ft__top { grid-template-columns: 1fr; justify-items: start; }
     .ft__ask { text-align: left; }
     .ft__cols { grid-template-columns: 1fr 1fr; }
+    .ft__col--about { grid-column: 1 / -1; }
+    .ft__bar-end { align-items: flex-start; }
+    .ft__bar nav { justify-content: flex-start; }
   }
   @media (max-width: 520px) { .ft__cols { grid-template-columns: 1fr; } .ft__brand img { width: var(--logo-w-sm); } }
 </style>

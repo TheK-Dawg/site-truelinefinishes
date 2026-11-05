@@ -1,18 +1,19 @@
 ---
 /**
  * ARTICLES PREVIEW (template "latest articles"): image cards, the article title is the card's
- * ONLY link. Published articles only (src/data/articles.ts status gate). Renders nothing when
- * there are none yet. Never "blog", never "guides": the section is Resources.
+ * ONLY link. Published articles only (src/data/articles.ts status gate). Never "blog", never
+ * "guides": the section is Resources. `always` (home page, BFL order): when nothing is published
+ * yet the section still renders, with an honest line and the Resources link, never a draft link.
  */
 import { articles, articleUrl } from '../data/articles';
 import { image, services } from '../data/site';
-interface Props { heading?: string; lead?: string; exclude?: string; limit?: number; hub?: string; town?: string }
-const { heading = 'Latest resources', lead = 'Painting and decorating, explained place by place.', exclude = '', limit = 3, hub = '', town = '' } = Astro.props;
+interface Props { heading?: string; lead?: string; exclude?: string; limit?: number; hub?: string; town?: string; always?: boolean }
+const { heading = 'Latest resources', lead = 'Painting and decorating, explained place by place.', exclude = '', limit = 3, hub = '', town = '', always = false } = Astro.props;
 const showAll = Astro.url.pathname !== '/resources/';
 const list = articles.filter((a) => a.slug !== exclude && (!hub || a.hub === hub) && (!town || a.town === town)).slice(0, limit);
 const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
 ---
-{list.length > 0 && (
+{(list.length > 0 || always) && (
 <section class="ap section section-articles" id="resources" data-section="articles">
   <div class="container">
     <div class="sec-head" data-motion="reveal">
@@ -22,6 +23,7 @@ const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ??
         {showAll && <a href="/resources/" class="text-link" data-cta="articles-all">All resources</a>}
       </div>
     </div>
+    {list.length === 0 && <p class="ap__empty">Brandon's first resources on painting and decorating, room by room and town by town, are being written. They will appear here as they are published.</p>}
     <ul class="ap__grid">
       {list.map((a, i) => {
         const img = image(a.hero);
@@ -45,7 +47,10 @@ const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ??
   .ap__img img { width: 100%; height: 100%; object-fit: cover; }
   .ap__chip { position: absolute; left: 0; bottom: 0; background: var(--bg-inverse); color: var(--text-inverse); font-size: var(--fs-xs); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; padding: var(--space-2) var(--space-3); }
   .ap__title { font-size: var(--fs-xl); }
-  .ap__title a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 4px; }
+  .ap__empty { padding: var(--card-pad); background: var(--bg-panel); border-top: 2px solid var(--brand-primary); color: var(--text-primary); }
+  .ap__grid:empty { display: none; }
+  .ap__title a { color: var(--text-heading); transition: color 0.2s var(--ease); }
+  .ap__title a:hover { color: var(--brand-primary); }
   .ap__body { font-size: var(--fs-md); color: var(--text-muted); }
   @media (max-width: 900px) { .ap__grid { grid-template-columns: 1fr; gap: var(--space-10); } }
 </style>

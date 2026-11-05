@@ -1,0 +1,47 @@
+---
+/**
+ * TRUST BADGES (Buildings for Life trust-badge row; replaces the old "why people choose us" grid,
+ * operator overhaul 5 Nov 2026). Each tile is an affirmed fact from nap.json usps. Text + line
+ * icon only. The Google tile links to Brandon's listing and shows NO rating and NO count
+ * (standing prohibition 2) until the Trustindex widget is live.
+ */
+import Icon from './Icon.astro';
+import { business } from '../data/site';
+interface Props { heading?: string }
+const { heading = 'Why people choose TrueLine Finishes' } = Astro.props;
+const tiles = [
+  { icon: 'user', strong: 'Brandon on every job', text: 'The owner does the work' },
+  { icon: 'shield', strong: 'Fully insured', text: 'Friendly and reliable' },
+  { icon: 'clock', strong: "Over eight years' experience", text: 'Homes and businesses' },
+  { icon: 'brush', strong: 'Preparation included', text: 'Sanding, filling, caulking' },
+];
+---
+<section class="tb section-trust" data-section="trust">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-motion="reveal">
+      <h2 class="sec-head__h2">{heading}</h2>
+    </div>
+    <ul class="tb__grid">
+      <li class="tb__tile tb__tile--on on-dark" data-motion="reveal"><span class="tb__g" aria-hidden="true">G</span><span><strong><a href={business.gbp.mapsUrl} target="_blank" rel="noopener" data-cta="trust-google">Google reviews</a></strong>In customers' own words</span></li>
+      {tiles.map((t, i) => (
+        <li class="tb__tile" data-motion="reveal" style={`--reveal-delay: ${(i + 1) * 60}ms`}><Icon name={t.icon} size={30} /><span><strong>{t.strong}</strong>{t.text}</span></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tb { padding: var(--space-12) 0 var(--section-pad); }
+  .tb .sec-head__h2 { font-size: var(--fs-4xl); }
+  .tb__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-4); }
+  .tb__tile { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-4); color: var(--text-muted); background: var(--bg-subtle); border: 1px solid var(--border-default); font-size: var(--fs-md); line-height: var(--lh-normal); }
+  .tb__tile :global(.icon) { color: var(--brand-text); flex-shrink: 0; }
+  .tb__tile > span { min-width: 0; }
+  .tb__tile strong { display: block; color: var(--text-heading); font-size: var(--fs-base); }
+  .tb__tile--on { background: var(--bg-inverse); border-color: var(--bg-inverse); color: var(--text-inverse-muted); }
+  .tb__tile--on strong, .tb__tile--on a { color: var(--text-inverse); }
+  .tb__tile--on a:hover { color: var(--accent-on-dark); }
+  .tb__g { display: grid; place-items: center; width: var(--space-8); height: var(--space-8); flex-shrink: 0; border-radius: var(--badge-radius); background: var(--bg-card); color: var(--brand-text); font-weight: var(--fw-bold); }
+  @media (max-width: 1100px) { .tb__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .tb__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tb__tile { padding: var(--space-4) var(--space-3); overflow-wrap: anywhere; } .tb__tile--on { grid-column: 1 / -1; } .tb .sec-head__h2 { font-size: var(--fs-2xl); } }
+</style>

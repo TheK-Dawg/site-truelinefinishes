@@ -1,0 +1,55 @@
+---
+/**
+ * Footer credit: "[keyword] by [logo]" (Vince, 27 Oct 2026: "Construction websites by Local Map
+ * Booster"). The fleet component (Oliver's, under SiteBuilder v4 D-176, the 20 Oct one-link ruling).
+ *
+ * ONE link, on the keyword phrase only, rel nofollow noopener. "by", the logo and the name "Local
+ * Map Booster" are plain text: no link, no tabindex, no role. The name stays in the HTML and is only
+ * clipped by max-width. It slides out (250ms) on desktop hover over the logo, or when the keyword
+ * link has keyboard focus, and only under (hover: hover) and (pointer: fine). A touch screen keeps
+ * it hidden, with nothing to tap. Reduced motion drops the slide. CSS only.
+ *
+ * The logo is the supplied mark, inlined: ../assets/brand/local-map-booster-mark.svg (the unmodified
+ * original and the provenance are in the same folder). Fixed fills: it is multi-colour.
+ */
+import mark from '../assets/brand/local-map-booster-mark.svg?raw';
+
+interface Props {
+  anchorText: string;
+  anchorHref: string;
+  rel?: string;
+  /** data-cta name for click tracking. */
+  cta?: string;
+}
+const { anchorText, anchorHref, rel, cta } = Astro.props;
+const brand = 'Local Map Booster';
+---
+<span class="footer-credit" data-footer-credit><a href={anchorHref} rel={rel} class="footer-credit__link" data-cta={cta}>{anchorText}</a> by <span class="footer-credit__brand" data-credit-brand><span class="footer-credit__mark" set:html={mark} /><span class="footer-credit__name">{brand}</span></span></span>
+
+<style>
+  .footer-credit { white-space: nowrap; }
+  /* The footer bar's link look (Footer.astro .ft__bar a). */
+  .footer-credit__link { color: inherit; display: inline-flex; align-items: center; min-height: 24px; }
+  .footer-credit__link:hover { color: var(--accent-on-dark); }
+  .footer-credit__brand { white-space: nowrap; }
+  /* Text height, its foot on the baseline of the words beside it. */
+  .footer-credit__mark { display: inline-block; width: 1.3em; height: 1.3em; vertical-align: -0.25em; }
+  .footer-credit__mark :global(svg) { display: block; width: 100%; height: 100%; }
+  .footer-credit__name {
+    display: inline-block; overflow: hidden; vertical-align: bottom;
+    max-width: 0; opacity: 0; margin-left: 0;
+    transition: max-width 250ms ease, opacity 250ms ease, margin-left 250ms ease;
+  }
+  /* overflow: hidden moves an inline-block's baseline to its bottom edge; clip keeps the name on the text baseline. */
+  @supports (overflow: clip) {
+    .footer-credit__name { overflow: clip; vertical-align: baseline; }
+  }
+  /* Desktop only. Finite bound: "Local Map Booster" is about 9.5em wide. */
+  @media (hover: hover) and (pointer: fine) {
+    .footer-credit__brand:hover .footer-credit__name,
+    .footer-credit__link:focus-visible ~ .footer-credit__brand .footer-credit__name { max-width: 11em; opacity: 1; margin-left: 0.35em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer-credit__name { transition: none; }
+  }
+</style>

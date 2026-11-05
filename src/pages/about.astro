@@ -5,6 +5,8 @@
  * the usable claims only (over eight years' experience, fully insured, the charity). He has NO
  * accreditations, qualifications, memberships, guarantees or warranties, so none is shown.
  * The charity line is words only: no link, logo, charity number or cover image.
+ * Brandon's kitchen Short sits beside the story (operator overhaul, 5 Nov 2026: out of the home
+ * hero; "if it has a home at all, ... on the About page").
  */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
@@ -12,10 +14,12 @@ import Reviews from '../components/Reviews.astro';
 import OurWork from '../components/OurWork.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
 import { business, image, charityLine } from '../data/site';
 const pageUrl = `${business.url}/about/`;
 const schema = [
   { '@type': 'AboutPage', '@id': `${pageUrl}#about`, url: pageUrl, name: `About ${business.name}`, about: { '@id': `${business.url}/#business` } },
+  { '@type': 'VideoObject', name: 'Full kitchen renovation', embedUrl: 'https://www.youtube-nocookie.com/embed/v3g1Kdja0gk', contentUrl: 'https://youtube.com/shorts/v3g1Kdja0gk', thumbnailUrl: 'https://i.ytimg.com/vi/v3g1Kdja0gk/hqdefault.jpg', uploadDate: '2026-11-03', description: 'Full kitchen renovation, from Brandon’s YouTube channel.' },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'About', item: pageUrl }] },
 ];
 const creds = [
@@ -24,7 +28,6 @@ const creds = [
   { icon: 'clipboard', title: 'Free quotations', text: 'Brandon talks every job through and gives you a free quotation.' },
   { icon: 'heart', title: "A Child's Wish", text: charityLine },
 ];
-const story = image('hallway-white-staircase-0155');
 ---
 <Base title="About Brandon Dawson, Painter and Decorator | TrueLine Finishes" description="TrueLine Finishes is Brandon Dawson's painting and decorating business. Brandon carries out and oversees every job. Over eight years' experience, fully insured." page="about" schema={schema}>
   <PageHero h1="About TrueLine Finishes and Brandon Dawson" lead="A painting and decorating business where the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
@@ -38,7 +41,7 @@ const story = image('hallway-white-staircase-0155');
         <p>We take pride in attention to detail, lasting finishes and treating your property with care. Sanding, filling and caulking come with everything, because the preparation is what decides how good the paint looks and how long it lasts.</p>
         <p>Bedrooms and living rooms are the jobs Brandon enjoys most, and the same care goes into kitchens, hallways, stairs, exteriors and business premises.</p>
       </div>
-      <figure class="ab__img" data-motion="reveal"><img src={story.src} alt={story.alt} width={story.width} height={story.height} loading="lazy" decoding="async" /></figure>
+      <div class="ab__vid" data-motion="reveal"><VideoEmbed which="kitchen" /></div>
     </div>
   </section>
   <section class="cr section section--panel section-credentials" data-section="credentials">
@@ -61,8 +64,7 @@ const story = image('hallway-white-staircase-0155');
 <style>
   .ab__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-16); align-items: center; }
   .ab__copy h2 { margin-top: 0; }
-  .ab__img { margin: 0; border-top: 3px solid var(--brand-primary); }
-  .ab__img img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .ab__vid { width: 100%; max-width: var(--video-portrait-w); justify-self: center; border-top: 3px solid var(--brand-primary); }
   .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
   .cr__item { background: var(--bg-card); padding: var(--card-pad); border-top: 2px solid var(--brand-primary); }
   .cr__item h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }

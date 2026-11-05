@@ -1,0 +1,39 @@
+---
+/**
+ * SERVICES INDEX (Buildings for Life services page, operator overhaul 5 Nov 2026): all five hubs
+ * as cards, how a job runs, Brandon's work, a short FAQ, the quote form last. The hubs stay at
+ * their locked root URLs; this page only lists them.
+ */
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Reviews from '../../components/Reviews.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+import Steps from '../../components/Steps.astro';
+import OurWork from '../../components/OurWork.astro';
+import Faq from '../../components/Faq.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { business, services, image } from '../../data/site';
+import { generalFaqs } from '../../data/faq';
+import { stripTags } from '../../lib/links';
+
+const faqs = generalFaqs.filter((f) => ['What does TrueLine Finishes do?', 'Who will carry out the work?', 'Is preparation included?'].includes(f.q));
+const pageUrl = `${business.url}/services/`;
+const schema = [
+  { '@type': 'CollectionPage', '@id': `${pageUrl}#collection`, name: 'Painting and decorating services', url: pageUrl, hasPart: services.map((s) => ({ '@type': 'Service', name: s.name, url: `${business.url}/${s.slug}/` })) },
+  { '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
+  { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Services', item: pageUrl }] },
+];
+---
+<Base title="Painting and Decorating Services in Baildon and Shipley | TrueLine Finishes" description="Painting and decorating, interior painting, exterior painting, wallpapering and commercial work from TrueLine Finishes, with Brandon carrying out every job." page="services" schema={schema}>
+  <PageHero h1="Painting and Decorating Services, Inside and Out" lead="Five kinds of work, one standard of preparation and finish. Pick the job below to see how Brandon does it, or send the details for a free quotation." image={image('white-staircase-spindles-0162')} />
+  <Reviews />
+  <ServicesGrid heading="Pick the job you have in mind" lead="Every card below is work Brandon carries out himself, for homes and for business premises." />
+  <Steps heading="How a job runs" lead="The same three steps whether it is one room or the whole house." photo="living-room-sheeted-0138" steps={[
+    { icon: 'chat', title: 'Get in touch', text: 'Call Brandon directly, use the quote form or send a WhatsApp message.' },
+    { icon: 'clipboard', title: 'A free quotation', text: 'Brandon talks the job through with you and gives you a free quotation.' },
+    { icon: 'roller', title: 'The work, done properly', text: 'Preparation first, floors and surfaces protected, with Brandon carrying out the work and overseeing the job.' },
+  ]} />
+  <OurWork />
+  <Faq items={faqs} heading="About the services" allLink />
+  <QuoteForm />
+</Base>

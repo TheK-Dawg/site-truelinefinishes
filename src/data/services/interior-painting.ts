@@ -52,7 +52,6 @@ const content: ServiceContent = {
     },
   ],
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
-  slider: ['bedroom', 'bathroom'],
   process: {
     heading: 'The Painting and Decorating Process',
     lead: 'Three steps, with Brandon on the job from the first call to the finish.',

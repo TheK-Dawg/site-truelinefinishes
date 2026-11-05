@@ -47,7 +47,6 @@ const content: ServiceContent = {
     },
   ],
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
-  slider: ['gable', 'house'],
   process: {
     heading: 'How an Exterior Job Runs',
     lead: 'Three steps, and a call is a direct line to Brandon.',

@@ -1,0 +1,49 @@
+---
+/**
+ * STATEMENT SLAB (Buildings for Life statement pattern). Inset black panel, a large statement with
+ * the key phrases picked out, a rule, three plain facts (words, never figures: "Over eight years'
+ * experience" is the only years claim) and Brandon's name where BFL had the owner's signature.
+ * Affirmed facts only (nap.json usps).
+ */
+import { business } from '../data/site';
+interface Props { html: string }
+const { html } = Astro.props;
+const stats = [
+  { n: "Over eight years' experience", label: 'Painting and decorating for homes and businesses' },
+  { n: 'Fully insured', label: 'Friendly and reliable on every job' },
+  { n: 'Free quotation', label: 'Brandon talks every job through first' },
+];
+---
+<section class="st section-statement" data-section="statement">
+  <div class="container">
+    <div class="st__panel on-dark" data-motion="reveal">
+      <p class="st__text" set:html={html} />
+      <div class="st__row">
+        <ul class="st__stats">
+          {stats.map((s) => <li><span class="st__n">{s.n}</span><span class="st__l">{s.label}</span></li>)}
+        </ul>
+        <p class="st__sig"><span>{business.owner}</span>Owner, {business.name}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .st { padding: var(--space-4) 0 var(--space-12); }
+  .st__panel { background: var(--bg-inverse); border-top: 3px solid var(--accent-on-dark); padding: var(--space-20) var(--space-16); }
+  .st__text { font-family: var(--font-heading); font-size: var(--fs-4xl); line-height: 1.3; color: var(--text-inverse-muted); }
+  .st__text :global(b) { color: var(--text-inverse); font-weight: var(--fw-semibold); }
+  .st__row { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-8); margin-top: var(--space-12); padding-top: var(--space-12); border-top: 1px solid var(--border-inverse); flex-wrap: wrap; }
+  .st__stats { list-style: none; padding: 0; display: flex; gap: var(--space-16); flex-wrap: wrap; }
+  .st__stats li { display: flex; flex-direction: column; gap: var(--space-1); }
+  .st__n { font-family: var(--font-heading); font-size: var(--fs-2xl); font-variant-caps: small-caps; color: var(--accent-on-dark); font-weight: var(--fw-semibold); line-height: 1.1; }
+  .st__l { font-size: var(--fs-md); color: var(--text-inverse-muted); }
+  .st__sig { text-align: right; font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-inverse-muted); }
+  .st__sig span { display: block; font-family: var(--font-heading); font-style: italic; text-transform: none; letter-spacing: 0; font-size: var(--fs-3xl); color: var(--text-inverse); margin-bottom: var(--space-1); }
+  @media (max-width: 900px) {
+    .st__panel { padding: var(--space-12) var(--space-6); }
+    .st__text { font-size: var(--fs-2xl); }
+    .st__stats { gap: var(--space-8); }
+    .st__sig { text-align: left; }
+  }
+</style>

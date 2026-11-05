@@ -47,7 +47,7 @@ for (const vp of sizes) {
     const tag = `${vp.name} ${r}`;
     if (!res || res.status() !== 200) fails.push(`${tag}: HTTP ${res?.status()}`);
     await page.waitForTimeout(live ? 2500 : 300);
-    const m = await page.evaluate(() => {
+    const m = await page.evaluate((vpw) => {
       const vis = (el) => { if (!el) return false; const s = getComputedStyle(el); const b = el.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && b.width > 0 && b.height > 0; };
       const h1s = [...document.querySelectorAll('h1')].filter(vis).length;
       const cta = document.querySelector('[data-cta="hero-quote"]');
@@ -57,7 +57,7 @@ for (const vp of sizes) {
       const ft = document.querySelector('footer')?.innerText || '';
       const form = document.querySelector('[data-lead-form]');
       return {
-        overflow: document.documentElement.scrollWidth - window.innerWidth,
+        overflow: Math.max(document.documentElement.scrollWidth, window.innerWidth) - vpw,
         h1s, ctaTop: ctaB ? ctaB.top + window.scrollY : null, ctaVisible: vis(cta),
         burger: vis(document.querySelector('[data-burger]')), nav: vis(document.querySelector('.hd__nav')), mcall: vis(document.querySelector('.hd__mcall')),
         wa: vis(wa), waRight: waB ? window.innerWidth - waB.right : null, waBottom: waB ? window.innerHeight - waB.bottom : null,
@@ -67,8 +67,18 @@ for (const vp of sizes) {
         formSelect: form ? [...form.querySelectorAll('select option')].map((o) => o.textContent.trim()) : [],
         visibleLabels: form ? [...form.querySelectorAll('label')].filter((l) => vis(l) && l.getBoundingClientRect().height > 4 && l.innerText.trim() && !l.querySelector('input[type=radio],input[type=checkbox]')).length : 0,
         utility: /thank-you|404/.test(location.pathname),
+        // OPERATOR OVERHAUL (5 Nov 2026): computed styles, not source.
+        underlined: [...document.querySelectorAll('a')].filter((a) => vis(a) && getComputedStyle(a).textDecorationLine.includes('underline')).map((a) => a.innerText.trim().slice(0, 40)),
+        heroBad: (() => { const h = document.querySelector('[data-section="hero"]'); return h ? [...h.querySelectorAll('iframe, form, [data-lead-form], [data-video], img[src*="/brand/logo"]')].map((e) => e.tagName + (e.className ? '.' + e.className : '')) : []; })(),
+        formInHero: !!document.querySelector('[data-quote-card]')?.closest('[data-section="hero"]'),
+        formSection: !!document.querySelector('[data-quote-card]')?.closest('[data-section="quote-form"]'),
+        slider: !!document.querySelector('[data-ba], .ba'),
+        charity: ft.includes("Proud to support A Child's Wish, a children's charity."),
+        credit: !!document.querySelector('footer [data-footer-credit] a[href="https://localmapbooster.com/"]'),
+        logos: [...document.querySelectorAll('img[src*="/brand/logo"]')].filter((i) => vis(i) && !i.closest('footer')).map((i) => i.closest('header') ? 'header' : 'other'),
+        dropHubs: document.querySelectorAll('.hd__drop a').length,
       };
-    });
+    }, vp.width);
     if (m.overflow > 0) fails.push(`${tag}: horizontal overflow ${m.overflow}px`);
     if (m.h1s !== 1) fails.push(`${tag}: ${m.h1s} visible H1s`);
     if (!m.utility && (!m.ctaVisible || m.ctaTop > vp.height)) fails.push(`${tag}: hero Quick Quote not above the fold (top ${Math.round(m.ctaTop)})`);
@@ -80,6 +90,15 @@ for (const vp of sizes) {
       if (m.wa) fails.push(`${tag}: WhatsApp float visible on desktop`);
     }
     if (!m.hours) fails.push(`${tag}: footer hours missing`);
+    if (m.underlined.length) fails.push(`${tag}: underlined links ${JSON.stringify(m.underlined.slice(0, 5))}`);
+    if (m.heroBad.length) fails.push(`${tag}: hero carries ${m.heroBad.join(', ')}`);
+    if (m.formInHero) fails.push(`${tag}: quote form inside the hero`);
+    if (!m.utility && !m.formSection) fails.push(`${tag}: quote form not in its own section`);
+    if (m.slider) fails.push(`${tag}: before-and-after slider present`);
+    if (!m.charity) fails.push(`${tag}: footer charity line missing`);
+    if (!m.credit) fails.push(`${tag}: footer LMB credit missing`);
+    if (m.logos.some((l) => l !== 'header') || m.logos.length !== 1) fails.push(`${tag}: logo outside the header bar ${JSON.stringify(m.logos)}`);
+    if (m.dropHubs < 5) fails.push(`${tag}: services dropdown lists ${m.dropHubs} links`);
     if (!m.utility && m.reviews !== 'pending-widget-id' && m.reviews !== 'live') fails.push(`${tag}: reviews slot missing`);
     if (live && !m.utility) {
       const want = ['Exterior work', 'Bedroom', 'Living room', 'Kitchen', 'Hallway', 'Bathroom'];

@@ -41,6 +41,10 @@ const fails = []; const warns = [];
 const route = (file) => '/' + relative(dist, file).replace(/index\.html$/, '').replace(/\.html$/, '/');
 const exists = (href) => { const p = href.split('#')[0].split('?')[0]; if (!p || p === '/') return true; const f = join(dist, p); return existsSync(join(f, 'index.html')) || existsSync(f); };
 const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
+const slotTodo = (html) => /data-trustindex-state="live"/.test(html) || /data-trustindex-todo="TODO-TrustIndex-ID"/.test(html);
+for (const need of ['/faq/', '/services/', '/gallery/', '/reviews/', '/resources/']) if (!existsSync(join(dist, need, 'index.html'))) fails.push(`${need}: page missing`);
+const cssFiles = []; const walkCss = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walkCss(p) : f.endsWith('.css') && cssFiles.push(p); } }; walkCss(dist);
+for (const f of cssFiles) if (/text-decoration(-line)?:\s*underline/.test(readFileSync(f, 'utf8'))) fails.push(`${relative(dist, f)}: underline in compiled CSS`);
 
 for (const file of pages) {
   const r = route(file);
@@ -99,8 +103,17 @@ for (const file of pages) {
     if (/^(the|in|our|a|on|to|here|at|click here)$/i.test(anchor)) fails.push(`${r}: weak anchor "${anchor}"`);
   }
   if (/src="https:\/\/www\.youtube\.com\/embed/.test(html)) fails.push(`${r}: YouTube embed not on youtube-nocookie`);
-  if (r === '/' && !/data-video="kitchen"/.test(html)) fails.push('/: kitchen Short missing from hero');
-  if (r !== '/' && /data-video="kitchen"/.test(html)) fails.push(`${r}: kitchen Short outside the home page`);
+  // OPERATOR OVERHAUL (5 Nov 2026, DECISIONS O1-O8): the kitchen Short lives on /about/ only; no
+  // logo, video or form inside any hero; no before-and-after slider; no underlined links; footer
+  // carries the charity line + LMB credit; the reviews slot carries the TODO-TrustIndex-ID marker.
+  if (r === '/about/' && (html.match(/data-video="kitchen"/g) || []).length !== 1) fails.push('/about/: kitchen Short must appear once');
+  if (r !== '/about/' && /data-video="kitchen"/.test(html)) fails.push(`${r}: kitchen Short outside the About page`);
+  const hero = (html.match(/<section[^>]*data-section="hero"[\s\S]*?<\/section>/) || [''])[0];
+  if (/<iframe|data-video=|data-lead-form|<form\b|\/brand\/logo/.test(hero)) fails.push(`${r}: hero carries a video, a form or the logo`);
+  if (/data-ba\b|before-and-after|class="ba[ _]/i.test(html)) fails.push(`${r}: before-and-after slider`);
+  if (/text-decoration:\s*underline|text-decoration-line:\s*underline/.test(html)) fails.push(`${r}: underline style in the page`);
+  if (!/data-footer-credit/.test(html) || !/href="https:\/\/localmapbooster\.com\/" rel="nofollow noopener"/.test(html)) fails.push(`${r}: footer LMB credit missing`);
+  if (!utility && !slotTodo(html)) fails.push(`${r}: reviews slot lost its TODO-TrustIndex-ID marker`);
   if (['/painting-and-decorating/', '/interior-painting/'].includes(r) && (html.match(/data-video="house"/g) || []).length !== 1) fails.push(`${r}: house video must appear once`);
 }
 for (const a of articles) if (['painting-and-decorating', 'interior-painting'].includes(a.hub)) {

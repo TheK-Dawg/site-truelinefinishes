@@ -14,6 +14,7 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
+a:hover, a:focus-visible { text-decoration: none; }
 button { font: inherit; }
 h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-family: var(--font-heading); font-weight: var(--fw-semibold); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); text-wrap: balance; }
 h1, h2 { text-transform: uppercase; }
@@ -80,9 +81,12 @@ ul, ol { margin: 0; }
 .btn-row .btn:nth-child(2)::after { animation-delay: 0.7s; }
 @keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
 
-/* Inline text link (Electrix "Contact Us" underline). */
-.text-link { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
-.on-dark .text-link { color: var(--text-inverse); }
+/* Inline text link. NEVER underlined (operator, 5 Nov 2026: "we don't underline links"): colour + weight, hover colour. */
+.text-link { color: var(--brand-text); font-weight: var(--fw-semibold); }
+.text-link { transition: color 0.2s var(--ease); }
+.text-link:hover { color: var(--brand-primary); }
+.on-dark .text-link { color: var(--accent-on-dark); }
+.on-dark .text-link:hover { color: var(--text-inverse); }
 .more-line { font-size: var(--fs-md); color: var(--text-muted); text-align: center; margin-top: var(--space-10); }
 
 /* Section shells. */
@@ -97,7 +101,8 @@ ul, ol { margin: 0; }
 .prose h3 { font-size: var(--fs-xl); margin-top: 1.4em; }
 .prose ul, .prose ol { padding-left: 1.2em; }
 .prose li + li { margin-top: 0.4em; }
-.prose a { color: var(--brand-text); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.prose a { color: var(--brand-text); font-weight: var(--fw-semibold); }
+.prose a:hover { color: var(--brand-primary); }
 .prose strong { color: var(--text-primary); }
 @media (max-width: 760px) { .prose h2 { font-size: var(--fs-2xl); } }
 

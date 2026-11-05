@@ -53,7 +53,6 @@ const content: ServiceContent = {
     },
   ],
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
-  slider: ['bedroom', 'bathroom', 'gable'],
   process: {
     heading: 'Project Management and Site Working',
     lead: 'Three steps, and you deal with Brandon from the first call to the last coat.',

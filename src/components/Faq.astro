@@ -3,15 +3,16 @@
  * FAQ (template accordion). Native <details>, first open, every item can stay open.
  * Answers are plain text / light HTML. The page emits the FAQPage schema.
  */
-interface Props { items: { q: string; a: string }[]; heading: string; lead?: string; id?: string }
-const { items, heading, lead = '', id = 'faq' } = Astro.props;
+interface Props { items: { q: string; a: string }[]; heading: string; lead?: string; id?: string; allLink?: boolean; call?: boolean }
+const { items, heading, lead = '', id = 'faq', allLink = false, call = true } = Astro.props;
 ---
 <section class="fq section section-faq" id={id} data-section="faq">
   <div class="fq__inner container">
     <div class="fq__head" data-motion="reveal">
       <h2 class="fq__h2">{heading}</h2>
       {lead && <p class="fq__lead">{lead}</p>}
-      <p class="fq__more">Question not here? Call Brandon on <a href="tel:+447949484274" class="text-link" data-cta="faq-call">07949 484274</a>.</p>
+      {call && <p class="fq__more">Question not here? Call Brandon on <a href="tel:+447949484274" class="text-link" data-cta="faq-call">07949 484274</a>.</p>}
+      {allLink && <p class="fq__more"><a href="/faq/" class="text-link" data-cta="faq-all">All questions and answers</a></p>}
     </div>
     <div class="fq__list">
       {items.map((f, i) => (
@@ -30,6 +31,7 @@ const { items, heading, lead = '', id = 'faq' } = Astro.props;
   .fq__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }
   .fq__lead { color: var(--text-muted); margin-bottom: var(--space-4); }
   .fq__more { font-size: var(--fs-md); color: var(--text-muted); }
+  .fq__more + .fq__more { margin-top: var(--space-2); }
   .fq__all { margin-top: var(--space-2); }
   .fq__list { border-top: 1px solid var(--border-default); }
   .fq__item { border-bottom: 1px solid var(--border-default); }
