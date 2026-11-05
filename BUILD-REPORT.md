@@ -268,3 +268,22 @@ That brief was written before this round and says TrueLine lacks company facts, 
 2. **Home and contact maps show the address and rating in Google's own card** (fix 8 above): operator's call.
 3. **Form destination spelling** apexai vs apexia (unchanged, D4).
 4. Earlier open items 2-12 and 14 still stand. Item 13 (contact map address) is now the same question as item 2 here.
+
+## STANDARD-PAGES round (operator's review 2, 5 Nov 2026)
+Brief: `STD-PAGES-ROUND-BRIEF.md`. This round started after the fix-2 session had committed and pushed its work
+(`32cf361`, with its handoff note). Commits `0b69dd1` and `1a7457c`. Worker `site-truelinefinishes`, version
+`a148d5b3-4cd9-486c-bb46-3f08da8594b6`. Rollback to fix-2: `npx wrangler rollback 6940b3e2-9d4c-40e1-9b84-9a561f211c95`.
+
+| # | Item | Result |
+|---|---|---|
+| 1 | **Standard page set** | **Already complete; no duplicate pages were made.** Fix-2 had built `/company-facts/`, `/complaints-procedure/`, `/accessibility/` and `/find-us-online/`. With About, Contact, Reviews, Gallery, FAQ, Resources, Sitemap, Privacy, Terms and Cookie Policy, all 13 standard pages exist and return 200. Company Facts omits the entity type, as the brief asks, and the plan's open item is unchanged. The footer links every one: the Company column plus the legal row in the bottom bar. |
+| 1 | **`/complaints/` URL** | **Not live.** A `public/_redirects` 301 to `/complaints-procedure/` was deployed, but wrangler 3.114 does not apply `_redirects` to Workers static assets, so it returned 404. It was removed. **Operator:** if `/complaints/` is wanted, either upgrade wrangler to v4 and restore the one-line `_redirects`, or rename the page. |
+| 1 | **Charity line** | Stays plain text ("Proud to support A Child's Wish, a children's charity."). There is a `TODO(operator, charity link)` in `Footer.astro`: link it `rel="nofollow noopener"` once the operator supplies the URL. |
+| 3 | **Sticky sidebar CTA** | **Already working** (`.art__aside` is a sticky grid item). Playwright at 1440×900 on Guiseley and Ilkley: the CTA box sits at about 1340 to 1380px on load, then stays at about 495 to 503px from scroll 1200 to 3600. `check.mjs` now asserts the CTA is in view at 40% and 70% through every article. |
+| 4 | **Interlinking** | Every article now ends with links to its hub, Resources, the FAQ, the form (`#contact`) and Contact. Related articles fall back to other published articles when none share the hub or town: Ilkley (interior painting) had no related links and now links Baildon and Guiseley. Hubs already list their town articles (painting-and-decorating → Baildon and Guiseley; interior-painting → Ilkley). Exterior painting and wallpapering have no articles yet. |
+| 5 | **Three articles** | Verified live: Baildon, Guiseley and Ilkley are published, render, and appear in the sitemap and on their hubs. |
+
+### Verification
+- `npm run build` gives 26 pages. `audit.mjs`: 0 fails. `token-gate.mjs`: PASS.
+- `check.mjs`, run locally and against the live worker: 25 routes × 2 widths, **0 fails**. This includes no underlined links, the footer, the sticky CTA on all 3 articles, and all 24 internal link targets returning 200. The new link crawl was added this round.
+- Click depth (a BFS crawl of `dist/` from `/`): every page is **1 click** from home, except `/thank-you/`, which is reached after a form submit.
