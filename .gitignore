@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+shots/
+
+# Local secrets for wrangler dev. Never committed.
+.dev.vars

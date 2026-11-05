@@ -1,0 +1,25 @@
+---
+/**
+ * MOBILE REVIEW STRIP (REV3 item 9). A white slim band directly under the
+ * header row, phone widths only, text centred: the TrustIndex SLIM DARK
+ * widget, which is the same review data as the slim white strip in the hero,
+ * quote form and footer (slots.trustindexSlimDark), in the dark-text version
+ * that reads on white. Its slot name deliberately does NOT start with "slim-":
+ * that prefix is TiSlim's white-widget mirror set, and this is its own widget. It is part of the fixed header, so --header-h carries
+ * its height on mobile and nothing hides underneath it.
+ */
+import ReviewStrip from './ReviewStrip.astro';
+import { slots } from '../data/site';
+const src = slots.trustindexSlimDark;
+---
+<div class="hrv" data-section="header-reviews" data-trustindex-slot="dark-slim-header" data-trustindex-src={src}>
+  {src ? <script is:inline defer async src={src}></script> : <ReviewStrip tone="light" />}
+</div>
+
+<style>
+  .hrv { display: none; height: var(--header-strip-h); align-items: center; justify-content: center; background: var(--bg-card); border-bottom: 1px solid var(--border-default); text-align: center; overflow: hidden; }
+  /* TrustIndex left-aligns inside its own container; centre it in the strip. */
+  .hrv :global(.ti-widget) { text-align: center !important; max-width: 100%; }
+  .hrv :global(.ti-widget .ti-widget-container) { margin: 0 auto !important; }
+  @media (max-width: 1023px) { .hrv { display: flex; } }
+</style>

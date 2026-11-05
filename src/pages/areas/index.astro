@@ -1,0 +1,36 @@
+---
+/**
+ * AREAS WE SERVE. The ONE areas page (operator walkthrough 25 Sep, E1): every
+ * plan town (36, red-line map, publish order) as plain text, no town pages,
+ * beside Pete's Google Business Profile map (E2).
+ */
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Reviews from '../../components/Reviews.astro';
+import Areas from '../../components/Areas.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+import Faq from '../../components/Faq.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { business, towns, image } from '../../data/site';
+import { stripTags } from '../../lib/links';
+
+const faqs = [
+  { q: 'Do you work outside the towns listed?', a: 'The list follows the area Pete works in: north to Winchester and New Alresford, west to Romsey and Totton, south to the Hamble and Warsash, east to Titchfield. If your job sits just outside it, ask on the Quick Quote form and we will say straight away whether we can take it on.' },
+  { q: 'Is the service the same in every town?', a: 'Yes. The same team and the same written quote, whether the job is in Hedge End or Kings Worthy.' },
+  { q: 'Which council handles planning for my house?', a: 'It depends on the town: Eastleigh Borough Council covers Hedge End, West End, Botley, Chandlers Ford and Eastleigh; Southampton City Council covers the city; Winchester City Council covers Winchester and Bishops Waltham; Test Valley covers Romsey; New Forest District Council covers Totton and Hythe.' },
+];
+const pageUrl = `${business.url}/areas/`;
+const schema = [
+  { '@type': 'CollectionPage', '@id': `${pageUrl}#areas`, name: 'Areas covered', url: pageUrl, about: towns.map((t) => ({ '@type': 'Place', name: `${t.name}, Hampshire` })) },
+  { '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
+  { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Areas', item: pageUrl }] },
+];
+---
+<Base title="Areas We Cover: Hedge End to Winchester | Buildings For Life" description="Family-run builders covering 36 towns and villages across south Hampshire from Hedge End: Southampton, Winchester, Romsey, Eastleigh, Totton and the Hamble." page="areas" schema={schema}>
+  <PageHero eyebrow="Areas We Serve" h1="Builders across Hedge End, Southampton and south Hampshire" lead="Thirty-six towns and villages inside the area Pete works, from Winchester down to Warsash and across from Titchfield to Totton." image={image('garden-wall-piers')} crumbs={[{ label: 'Areas' }]} />
+  <Reviews />
+  <Areas heading="Every town and village we cover" body="Listed in the order Pete's own map puts them: his priority towns first, then outward from Hedge End. Every town gets the same team and the same written quote. The map shows where we are based." />
+  <ServicesGrid heading="What we build across the area" lead="The same ten kinds of work in every town on the list." showCall={false} />
+  <Faq items={faqs} heading="Questions about where we work" />
+  <QuoteForm />
+</Base>

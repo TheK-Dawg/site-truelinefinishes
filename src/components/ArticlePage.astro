@@ -1,0 +1,101 @@
+---
+/**
+ * ARTICLE. Body is the SEO engine's HTML, rendered as-is (ANCHOR-LAW 6: article
+ * links are the engine's business). 60/40 layout: body left, sticky aside with
+ * an auto ToC (from the engine's H2s), Quick Quote block and more resources.
+ * Article + FAQPage + BreadcrumbList schema. No dates.
+ */
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Reviews from './Reviews.astro';
+import QuoteForm from './QuoteForm.astro';
+import { articles } from '../data/articles';
+import { business, services, image } from '../data/site';
+import { stripTags, linkedSlugs } from '../lib/links';
+
+interface Props { article: import('../data/articles').Article }
+const { article } = Astro.props;
+const svc = services.find((s) => s.slug === article.related);
+const toc = [...article.bodyHtml.matchAll(/<h2[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)].map((m) => ({ id: m[1], text: stripTags(m[2]) }));
+const others = articles.filter((a) => a.slug !== article.slug);
+const pageUrl = `${business.url}/${article.slug}/`;
+// ANCHOR-LAW 4: an article the engine body already links is listed as plain text in the aside.
+const bodyLinked = linkedSlugs(article.bodyHtml);
+const schema = [
+  { '@type': 'Article', '@id': `${pageUrl}#article`, headline: article.title, description: article.description, image: new URL(article.hero, business.url).href, author: { '@type': 'Organization', name: business.name }, publisher: { '@id': `${business.url}/#business` }, mainEntityOfPage: pageUrl, inLanguage: 'en-GB', ...(svc ? { about: { '@type': 'Service', name: svc.name, url: `${business.url}/${svc.slug}/` } } : {}) },
+  ...(article.faqs.length ? [{ '@type': 'FAQPage', '@id': `${pageUrl}#faq`, mainEntity: article.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) }] : []),
+  { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Resources', item: `${business.url}/resources/` },
+    { '@type': 'ListItem', position: 3, name: article.title, item: pageUrl },
+  ] },
+];
+---
+<Base title={article.metaTitle} description={article.description} page={`article-${article.slug}`} schema={schema} ogImage={article.hero}>
+  <PageHero eyebrow={article.topic} h1={article.title} lead={article.summary} image={{ src: article.hero, alt: article.heroAlt }} crumbs={[{ label: 'Resources', href: '/resources/' }, { label: article.topic }]} service={svc?.name} />
+  <Reviews />
+  <section class="art section section-article-body" data-section="article-body">
+    <div class="art__inner container">
+      <article class="art__main prose" data-motion="reveal" set:html={article.bodyHtml} />
+      <aside class="art__aside" data-motion="reveal" style="--reveal-delay: 80ms">
+        {toc.length > 0 && (
+          <details class="art__toc" open>
+            <summary>In this article</summary>
+            <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.text}</a></li>)}</ol>
+          </details>
+        )}
+        <div class="art__cta on-dark">
+          <p class="eyebrow">Quick Quote Online</p>
+          <p>Read enough to know what the job needs? Send the details for a written quote.</p>
+          <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote" data-service={svc?.name}>Quick Quote Online</a>
+        </div>
+        {others.length > 0 && (
+          <div class="art__more">
+            <p class="art__more-h">More resources</p>
+            <ul>{others.map((a) => <li>{bodyLinked.has(a.slug) ? <span>{a.title}</span> : <a href={`/${a.slug}/`} data-link="card">{a.title}</a>}</li>)}</ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </section>
+  <div class="art__contact"><QuoteForm service={svc?.name ?? ''} /></div>
+</Base>
+
+<style>
+  .art__inner { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--space-16); align-items: start; }
+  .art__main :global(h2) { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
+  /* The engine's own blocks (takeaways, CTA line, FAQ), styled to the tokens. Inline styles the engine
+     ships (accent border, call-button fill) are overridden to the palette, never edited in the bytes. */
+  .art__main :global(.lmb-takeaways) { background: var(--bg-panel); padding: var(--space-5) var(--space-6); border-left: 2px solid var(--brand-primary) !important; margin: var(--space-6) 0; }
+  .art__main :global(.lmb-takeaways__heading) { font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-heading); margin: 0 0 var(--space-2); }
+  .art__main :global(.lmb-takeaways__list) { margin: 0; }
+  .art__main :global(.lmb-cta) { background: var(--bg-inverse); color: var(--text-inverse); padding: var(--space-6); margin: var(--space-8) 0; }
+  .art__main :global(.lmb-cta__line) { color: var(--text-inverse); margin: 0 0 var(--space-4); }
+  .art__main :global(.lmb-cta__line strong) { color: var(--text-inverse); }
+  .art__main :global(.lmb-cta__action) { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: 0; }
+  .art__main :global(.lmb-cta__button) { display: inline-flex !important; align-items: center; min-height: var(--btn-h-md); padding: var(--space-3) var(--space-6); font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; text-decoration: none !important; }
+  .art__main :global(.lmb-cta__button--quote) { background: var(--brand-primary); color: var(--brand-fg) !important; }
+  .art__main :global(.lmb-cta__button--call) { background: transparent !important; color: var(--text-inverse) !important; box-shadow: inset 0 0 0 1px var(--border-inverse); }
+  .art__main :global(.faq-item) { border-top: 1px solid var(--border-default); padding-top: var(--space-3); }
+  .art__main :global(img) { width: 100%; height: auto; margin: var(--space-6) 0; }
+  .art__main :global(table) { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
+  .art__main :global(th), .art__main :global(td) { border: 1px solid var(--border-default); padding: var(--space-2) var(--space-3); text-align: left; }
+  .art__main :global(blockquote) { margin: var(--space-6) 0; padding: var(--space-5) var(--space-6); background: var(--bg-panel); border-left: 2px solid var(--brand-primary); }
+  .art__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); display: flex; flex-direction: column; gap: var(--space-5); }
+  .art__toc { background: var(--bg-panel); padding: var(--space-6); }
+  .art__toc summary { cursor: pointer; list-style: none; font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: var(--fw-semibold); color: var(--text-heading); }
+  .art__toc summary::-webkit-details-marker { display: none; }
+  .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); counter-reset: toc; }
+  .art__toc li { counter-increment: toc; display: flex; gap: var(--space-3); }
+  .art__toc li::before { content: counter(toc, decimal-leading-zero); color: var(--brand-text); font-weight: var(--fw-bold); }
+  .art__toc a:hover { color: var(--text-heading); }
+  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); }
+  .art__cta .btn { width: 100%; }
+  .art__more-h { font-size: var(--fs-sm); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: var(--fw-semibold); color: var(--text-heading); margin-bottom: var(--space-3); }
+  .art__more ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); font-weight: var(--fw-semibold); color: var(--text-heading); }
+  .art__more a:hover { color: var(--brand-text); }
+  @media (max-width: 1023px) {
+    .art__inner { grid-template-columns: 1fr; }
+    .art__aside { position: static; order: -1; }
+  }
+</style>

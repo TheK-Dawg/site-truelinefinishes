@@ -1,0 +1,43 @@
+---
+/**
+ * TRUST BADGES. Sits where Electrix had its client-logo wall ("We have worked
+ * with..."). Each tile is a fact from the plan: the BBC feature, the real
+ * Google rating, the new-build warranty, family-run, natural stone. Text +
+ * line icon only: no third-party logos are reproduced.
+ */
+import Icon from './Icon.astro';
+import Stars from './Stars.astro';
+import { reviewStats, slots } from '../data/site';
+interface Props { eyebrow?: string; heading?: string }
+const { eyebrow = 'Why homeowners pick us', heading = 'Built on a trade, not a sales pitch' } = Astro.props;
+---
+<section class="tb section-trust" data-section="trust">
+  <div class="container">
+    <div class="sec-head sec-head--center" data-motion="reveal">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="sec-head__h2">{heading}</h2>
+    </div>
+    <ul class="tb__grid">
+      <li class="tb__tile tb__tile--bbc" data-motion="reveal" data-bbc-link={slots.bbcVideoUrl}><Icon name="tv" size={30} /><span><strong>{slots.bbcVideoUrl ? <a href={slots.bbcVideoUrl} data-cta="trust-bbc" target={/^https?:/.test(slots.bbcVideoUrl) ? '_blank' : undefined} rel={/^https?:/.test(slots.bbcVideoUrl) ? 'noopener' : undefined}>As seen on BBC</a> : 'As seen on BBC'}</strong>Building Dream Homes</span></li>
+      <li class="tb__tile" data-motion="reveal" style="--reveal-delay: 60ms"><span class="tb__g" aria-hidden="true">G</span><span><strong>{reviewStats.average} on Google</strong><Stars size={14} /></span></li>
+      <li class="tb__tile" data-motion="reveal" style="--reveal-delay: 120ms"><Icon name="shield" size={30} /><span><strong>10-year warranty</strong>On new builds</span></li>
+      <li class="tb__tile" data-motion="reveal" style="--reveal-delay: 180ms"><Icon name="family" size={30} /><span><strong>Family-run</strong>Hedge End, Hampshire</span></li>
+      <li class="tb__tile" data-motion="reveal" style="--reveal-delay: 240ms"><Icon name="stone" size={30} /><span><strong>Natural stone</strong>15 years of stone work</span></li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tb { padding: var(--space-12) 0 var(--section-pad); }
+  .tb .sec-head__h2 { font-size: var(--fs-4xl); }
+  .tb__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
+  .tb__tile { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-4); color: var(--text-muted); background: var(--bg-subtle); border: 1px solid var(--border-default); font-size: var(--fs-md); line-height: var(--lh-normal); }
+  .tb__tile :global(.icon) { color: var(--forest-500); flex-shrink: 0; }
+  .tb__tile strong { display: block; color: var(--text-heading); font-size: var(--fs-base); }
+  .tb__tile--bbc { background: var(--bg-inverse); border-color: var(--bg-inverse); color: var(--text-inverse-muted); }
+  .tb__tile--bbc strong { color: var(--text-inverse); }
+  .tb__tile--bbc :global(.icon) { color: var(--accent-on-dark); }
+  .tb__g { display: grid; place-items: center; width: var(--space-8); height: var(--space-8); flex-shrink: 0; border-radius: var(--badge-radius); background: var(--bg-card); border: 1px solid var(--border-strong); color: var(--text-heading); font-weight: var(--fw-bold); }
+  @media (max-width: 1100px) { .tb__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .tb__grid { grid-template-columns: 1fr 1fr; } .tb__tile--bbc { grid-column: 1 / -1; } .tb .sec-head__h2 { font-size: var(--fs-2xl); } }
+</style>

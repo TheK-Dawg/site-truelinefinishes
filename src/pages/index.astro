@@ -1,0 +1,118 @@
+---
+/**
+ * HOME. Electrix section order, adapted: hero (+ info cards), reviews / the
+ * TrustIndex slot (operator walkthrough 25 Sep: directly under the hero),
+ * statement slab (the family firm story), trust badges (where the client-logo
+ * wall sat), about + milestones, services, OUR WORK (operator correction 3), the
+ * home-blueprint joinery/kitchens/renovation sections, how it works, areas,
+ * articles, FAQ, quote form (last). The TrustIndex slim + corner widgets come
+ * from the hero, footer and Base, the same as every page (pass 2).
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Statement from '../components/Statement.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import AboutBlock from '../components/AboutBlock.astro';
+import Reviews from '../components/Reviews.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import OurWork from '../components/OurWork.astro';
+import Steps from '../components/Steps.astro';
+import Areas from '../components/Areas.astro';
+import ArticlesPreview from '../components/ArticlesPreview.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import Icon from '../components/Icon.astro';
+import { business, image, seo } from '../data/site';
+import { stripTags } from '../lib/links';
+
+const faqs = [
+  { q: 'What kind of building work do you take on?', a: 'Whole building jobs: new builds, house extensions, loft and basement conversions, renovations, structural work and groundworks, brickwork and natural stone, patios, garden walls, hard landscaping, carpentry, joinery and kitchens.' },
+  { q: 'Which areas do you cover?', a: 'We are based in Hedge End and work across Southampton and the towns around it: Botley, West End, Bishops Waltham, Eastleigh, Chandlers Ford, Romsey and Winchester, down to Hamble-le-Rice, Warsash and across to Totton and Hythe. The full list is on the areas page.' },
+  { q: 'What does the 10-year warranty apply to?', a: 'New builds. The 10-year warranty applies to the new homes we build, and to new builds only.' },
+  { q: 'How do I get a price?', a: 'Use Quick Quote Online or call Pete. Tell us what you want built and where, with any drawings or planning you already have. We arrange a visit, look at the site and the ground, and follow up with a written quote.' },
+  { q: 'Do you handle planning and building regulations?', a: 'We work with your drawings and planning approval, or point you towards an architect or designer if you have neither yet. On site we build to the approved plans and book the building control inspections at each stage so the job is signed off properly.' },
+];
+const schema = [
+  { '@type': 'FAQPage', '@id': `${business.url}/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
+];
+const craft = [
+  { icon: 'saw', h3: 'Fitted Furniture and Joinery', p: 'Alcove units, fitted wardrobes, shelving and cupboards made to fit the room they go in, by the same carpenters who fit the floors, stud walls and roofs on our builds. Scribed to walls that are rarely straight, and finished so the doors still close in five years.' },
+  { icon: 'house', h3: 'Kitchens and Interior Joinery', p: 'Kitchens fitted as part of an extension or a renovation, with the structural work, the walls and the joinery handled by one team. Worktops, units, doors, architraves and skirting all line up because the people fitting them also built the room.' },
+  { icon: 'renovate', h3: 'Renovation and Home Improvements', p: 'Opening up rooms, moving or closing openings, new steels and a proper finish afterwards. We take older houses back to something solid and square, and bring tired post-war houses up to how people live in them now.' },
+];
+---
+<Base title={seo.title} description={seo.description} page="home" schema={schema} ogImage="/brand/og-image.png">
+  <Hero
+    eyebrow="Family-run builders · Hedge End, Hampshire"
+    h1="Builders in Hedge End & Southampton, Built for Life"
+    lead="Extensions, new builds, loft conversions, brickwork and natural stone from a family firm with over 40 years in the trade and a 10-year warranty on new builds."
+    image={image('garden-wall-piers')}
+  />
+  <Reviews />
+  <Statement html="A family building company that <b>started with a trowel</b> over 40 years ago and now <b>builds whole homes</b>, extensions and natural stone work across Hampshire, with <b>a 10-year warranty</b> on new builds." />
+  <TrustBadges />
+  <AboutBlock
+    heading="A builder who learned the trade one brick at a time"
+    body={[
+      'Pete Bartlett started out as a bricklayer more than 40 years ago. The business he runs now, Buildings For Life, is a family company that takes a job from the first spade in the ground to the last coat of paint: groundworks, brickwork, structure, roofs, joinery and finishing.',
+      'The last 15 years have added high-end and natural stone work to the brick, and our work has featured on the BBC programme Building Dream Homes.',
+    ]}
+    image={image('new-build-brickwork')}
+    rows={[
+      { n: '40+', title: 'Years in the trade', text: 'Starting as a bricklayer, then every stage of a build since.' },
+      { n: '15', title: 'Years of natural stone', text: 'High-end stone walls, facings and details alongside the brick.' },
+      { n: '10', title: 'Year new-build warranty', text: 'On the new homes we build.' },
+      { n: 'BBC', title: 'Building Dream Homes', text: 'Our work featured on the BBC programme.' },
+    ]}
+    features={[
+      { icon: 'family', title: 'Family-run', text: 'One family firm from the footings to the finish, not a chain of subcontractors.' },
+      { icon: 'shield', title: 'New-build warranty', text: 'A 10-year warranty on the new homes we build.' },
+    ]}
+    button={{ href: '/about/', label: 'About Buildings For Life' }}
+  />
+  <ServicesGrid />
+  <OurWork />
+  <section class="cr section section--panel section-craft" data-section="craft">
+    <div class="container">
+      <div class="sec-head" data-motion="reveal">
+        <div><p class="eyebrow">Inside the house too</p><h2 class="sec-head__h2">Joinery, kitchens and renovation work</h2></div>
+        <p class="sec-head__lead">The same team that builds the shell fits out the inside, so the structure, the walls and the finish are all one job with one person answerable for it.</p>
+      </div>
+      <ul class="cr__grid">
+        {craft.map((c, i) => (
+          <li class="cr__item" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+            <span class="cr__ic"><Icon name={c.icon} size={26} /></span>
+            <h3>{c.h3}</h3>
+            <p>{c.p}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <Steps
+    heading="Three steps from first call to a finished build"
+    lead="No sales team and no call centre. You deal with the family running the job from the first visit to the sign-off."
+    steps={[
+      { icon: 'chat', title: 'Tell us the job', text: 'Quick Quote Online or a call. What you want built, where, and any drawings or planning you have.' },
+      { icon: 'clipboard', title: 'Visit and written quote', text: 'We look at the house, the access and the ground, then put the price and what it includes in writing.' },
+      { icon: 'hammer', title: 'Build and sign-off', text: 'Our own team on site and building control booked at each stage, through to sign-off at handover.' },
+    ]}
+  />
+  <Areas
+    heading="Hedge End, Southampton and the towns around them"
+    body="From our base in Hedge End we cover 36 towns and villages across south Hampshire: north to Winchester and New Alresford, west to Romsey, Totton and Hythe, and south to Hamble-le-Rice, Warsash and Titchfield."
+  />
+  <ArticlesPreview />
+  <Faq items={faqs} heading="Questions people ask before they call" lead="Straight answers on what we do, where, and the new-build warranty." allLink />
+  <QuoteForm />
+</Base>
+
+<style>
+  .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .cr__item { background: var(--bg-card); padding: var(--card-pad); border-top: 2px solid var(--border-strong); }
+  .cr__item:hover { border-top-color: var(--brand-primary); }
+  .cr__item h3 { font-size: var(--fs-xl); font-weight: var(--fw-medium); margin: var(--space-5) 0 var(--space-3); }
+  .cr__item p { color: var(--text-muted); font-size: var(--fs-md); }
+  .cr__ic { display: grid; place-items: center; width: var(--icon-circle); height: var(--icon-circle); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }
+  @media (max-width: 900px) { .cr__grid { grid-template-columns: 1fr; } }
+</style>

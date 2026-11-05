@@ -1,0 +1,33 @@
+---
+/**
+ * CTA BAND (Electrix about-page "Get in touch" band): dark-to-photo sweep,
+ * sand eyebrow, heading and the two actions. Never directly above the form.
+ */
+import CallButton from './CallButton.astro';
+import { image } from '../data/site';
+interface Props { heading: string; line: string; eyebrow?: string; photo?: string }
+const { heading, line, eyebrow = 'Get in touch', photo = 'rear-extension-glazing' } = Astro.props;
+const img = image(photo);
+---
+<section class="cb on-dark section-cta" data-section="cta">
+  <img class="cb__bg" src={img.src} alt="" width={img.width} height={img.height} loading="lazy" decoding="async" />
+  <div class="container cb__inner" data-motion="reveal">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2 class="cb__h2">{heading}</h2>
+    <p class="cb__line">{line}</p>
+    <div class="btn-row">
+      <a href="#contact" class="btn btn-primary" data-cta="band-quote">Quick Quote Online</a>
+      <CallButton cta="band-call" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cb { position: relative; isolation: isolate; overflow: hidden; background: var(--bg-inverse); color: var(--text-inverse-muted); padding: var(--section-pad) 0; }
+  .cb__bg { position: absolute; right: 0; top: 0; z-index: -2; width: 55%; height: 100%; object-fit: cover; }
+  .cb::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--bg-inverse) 45%, transparent 100%), var(--overlay-inner); background-blend-mode: normal; opacity: 0.96; }
+  .cb__inner > * { max-width: 36em; }
+  .cb__h2 { font-size: var(--fs-5xl); margin-bottom: var(--space-4); }
+  .cb__line { font-size: var(--fs-lg); margin-bottom: var(--space-8); }
+  @media (max-width: 760px) { .cb__h2 { font-size: var(--fs-3xl); } .cb__bg { width: 100%; opacity: 0.3; } .cb :global(.btn) { width: 100%; } }
+</style>

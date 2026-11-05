@@ -1,0 +1,19 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { business } from '../data/site';
+---
+<LegalPage title="Privacy Policy | Buildings For Life Ltd, Hedge End Builders" description="How Buildings For Life Ltd collects, uses and protects the personal details you send through the Quick Quote Online form, by phone or by email." h1="Privacy policy" page="privacy" lead="What we collect when you send a Quick Quote, call or email, why we use it, and how long we keep it.">
+  <p>This policy explains how {business.name} ("we", "us") handles personal information sent to us through this website, by phone or by email. {business.name} is registered in England and Wales, company number {business.companyNumber}, and is the data controller for that information.</p>
+  <h2>What we collect</h2>
+  <p>When you use Quick Quote Online we collect your name, phone number, email address, the postcode of the job, the type of work and the description you give us. If you call or email, we keep the details you give us in that conversation.</p>
+  <h2>Why we use it</h2>
+  <p>We use your details only to reply to your enquiry, arrange a site visit, prepare a quote and, if you go ahead, carry out and manage the work. The lawful basis is taking steps at your request before entering into a contract, and then performing that contract.</p>
+  <h2>Who we share it with</h2>
+  <p>We do not sell or share your details for marketing. Details may be shared where the job requires it, for example with building control or a structural engineer working on your project, and with the providers that host this website and our email.</p>
+  <h2>How long we keep it</h2>
+  <p>Enquiries that do not go ahead are deleted within 12 months. Records for completed jobs are kept for as long as required for tax and legal purposes and, for a new build, for as long as its warranty runs.</p>
+  <h2>Your rights</h2>
+  <p>You can ask to see the information we hold about you, ask us to correct or delete it, or object to how we use it. Email <a href={`mailto:${business.email}`}>{business.email}</a>. If you are unhappy with how we have handled your information you can complain to the Information Commissioner's Office (ico.org.uk).</p>
+  <h2>Cookies and analytics</h2>
+  <p>This website does not use advertising cookies. Visitor numbers are measured with privacy-friendly analytics from our hosting platform, which does not identify you personally.</p>
+</LegalPage>

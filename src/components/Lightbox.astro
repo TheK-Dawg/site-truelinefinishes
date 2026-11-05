@@ -1,0 +1,82 @@
+---
+/**
+ * LIGHTBOX. Mounted once in the root layout. Any [data-lightbox] element that
+ * wraps an <img> opens it; the set is the nearest [data-gallery] scope.
+ * Arrow keys, on-screen chevrons, swipe. Quick Quote Online under the image.
+ */
+import Icon from './Icon.astro';
+/** formless: the page has no quote form (thank-you, 404), so the CTA goes to /contact/#contact. */
+const { formless = false } = Astro.props;
+---
+<dialog class="lb" data-lb aria-label="Photo viewer">
+  <button class="lb__btn lb__close" type="button" data-lb-close aria-label="Close photo viewer"><Icon name="close" size={22} /></button>
+  <button class="lb__btn lb__nav lb__nav--prev" type="button" data-lb-prev aria-label="Previous photo"><Icon name="chevronLeft" size={26} /></button>
+  <button class="lb__btn lb__nav lb__nav--next" type="button" data-lb-next aria-label="Next photo"><Icon name="chevronRight" size={26} /></button>
+  <figure class="lb__figure">
+    <img class="lb__img" alt="" width="1200" height="1200" />
+    <figcaption class="lb__cap" data-lb-cap></figcaption>
+  </figure>
+  <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary lb__cta" data-lb-close data-cta="lightbox-quote">Quick Quote Online</a>
+</dialog>
+
+<style>
+  .lb { position: fixed; inset: 0; margin: 0; border: 0; max-width: none; max-height: none; width: 100vw; height: 100dvh; background: var(--scrim-lightbox); color: var(--text-inverse); display: none; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-4); padding: var(--space-16) var(--space-20) var(--space-6); }
+  .lb[open] { display: flex; }
+  .lb::backdrop { background: transparent; }
+  .lb__figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); min-height: 0; flex: 1; justify-content: center; }
+  .lb__img { max-width: min(100%, var(--lightbox-max)); max-height: calc(100dvh - var(--space-30) - var(--space-24)); width: auto; height: auto; object-fit: contain; }
+  .lb__cap { font-size: var(--fs-md); color: var(--text-inverse-muted); text-align: center; max-width: 60ch; }
+  .lb__btn { position: absolute; z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: var(--btn-h-md); height: var(--btn-h-md); border-radius: var(--badge-radius); border: 1px solid var(--border-inverse); background: var(--glass-strong); color: var(--text-inverse); cursor: pointer; padding: 0; }
+  .lb__btn:hover { background: var(--brand-primary); color: var(--brand-fg); }
+  .lb__close { top: var(--space-4); right: var(--space-4); }
+  .lb__nav { top: 50%; transform: translateY(-50%); }
+  .lb__nav--prev { left: var(--space-4); }
+  .lb__nav--next { right: var(--space-4); }
+  @media (max-width: 640px) {
+    .lb { padding: var(--space-16) var(--space-3) var(--space-4); }
+    .lb__nav { top: auto; bottom: var(--space-20); transform: none; }
+    .lb__cta { width: 100%; }
+  }
+</style>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('dialog[data-lb]');
+  if (dlg) {
+    const img = dlg.querySelector<HTMLImageElement>('.lb__img')!;
+    const cap = dlg.querySelector<HTMLElement>('[data-lb-cap]')!;
+    let items: HTMLImageElement[] = [];
+    let index = 0;
+    const show = (i: number) => {
+      if (!items.length) return;
+      index = (i + items.length) % items.length;
+      const src = items[index];
+      img.src = src.currentSrc || src.src;
+      img.alt = src.alt;
+      cap.textContent = src.alt;
+    };
+    const open = (trigger: HTMLElement) => {
+      const scope = trigger.closest<HTMLElement>('[data-gallery]') ?? document;
+      items = Array.from(scope.querySelectorAll<HTMLElement>('[data-lightbox]')).map((el) => el.querySelector('img')).filter((el): el is HTMLImageElement => !!el);
+      const own = trigger.querySelector('img');
+      show(Math.max(0, items.findIndex((el) => el === own)));
+      dlg.showModal();
+    };
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox]');
+      if (trigger && !dlg.open) { e.preventDefault(); open(trigger); }
+    });
+    dlg.querySelectorAll('[data-lb-close]').forEach((b) => b.addEventListener('click', () => dlg.close()));
+    dlg.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(index - 1));
+    dlg.querySelector('[data-lb-next]')?.addEventListener('click', () => show(index + 1));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(index - 1); if (e.key === 'ArrowRight') show(index + 1); });
+    let startX = 0, startY = 0, tracking = false;
+    dlg.addEventListener('pointerdown', (e) => { startX = e.clientX; startY = e.clientY; tracking = true; });
+    dlg.addEventListener('pointerup', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX, dy = e.clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(dx < 0 ? index + 1 : index - 1);
+    });
+  }
+</script>

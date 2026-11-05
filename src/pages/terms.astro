@@ -1,0 +1,17 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { business } from '../data/site';
+---
+<LegalPage title="Terms of Use | Buildings For Life Ltd, Builders in Hedge End" description="Terms of use for the Buildings For Life Ltd website, and how website information relates to the written quote and contract for your building work." h1="Terms of use" page="terms" lead="How this website works, and how it relates to the written quote and contract for your building work.">
+  <p>These terms cover your use of this website, run by {business.name}, a company registered in England and Wales (company number {business.companyNumber}), based in {business.baseTown}, {business.city}.</p>
+  <h2>Information on this website</h2>
+  <p>The information here is general. Planning, permitted development and building regulations depend on your property and your local council, so always confirm them for your own job. Nothing on this website is a quote or an offer to carry out work.</p>
+  <h2>Quotes and contracts</h2>
+  <p>Work is only agreed through a written quote from us, accepted by you. The written quote sets out the scope, the price and the payment stages. Our 10-year warranty applies to new builds only. If anything on this website differs from your written quote, the written quote applies.</p>
+  <h2>Photographs</h2>
+  <p>Photographs of building work on this website are of our own jobs unless stated otherwise. Please do not reuse them without permission.</p>
+  <h2>Enquiries</h2>
+  <p>Sending a Quick Quote Online enquiry does not commit you to anything. See our <a href="/privacy/">privacy policy</a> for how we handle the details you send.</p>
+  <h2>Contact</h2>
+  <p>Questions about these terms: <a href={`mailto:${business.email}`}>{business.email}</a> or {business.phone}.</p>
+</LegalPage>

@@ -1,0 +1,49 @@
+---
+/**
+ * RELATED SERVICES. Three sibling hubs as cards (same card as ServicesGrid).
+ * ANCHOR LAW (REV3 item 4): the card TITLE is the plain, unlinked service
+ * name; the internal link lives on the card's BUTTON and the button's anchor
+ * text is the EXACT service name, never "Learn more" or any invented CTA.
+ * Every card button is always a link (operator ruling 6 Oct): anchor law 4
+ * governs repeated in-copy anchors, not card buttons.
+ */
+import { services } from '../data/site';
+import Icon from './Icon.astro';
+interface Props { picks: string[]; heading?: string }
+const { picks, heading = 'Work that often goes with this' } = Astro.props;
+const list = picks.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => !!s).slice(0, 3);
+---
+<section class="rl section section--panel section-related" data-section="related">
+  <div class="container">
+    <div class="sec-head" data-motion="reveal"><div><p class="eyebrow">Related Services</p><h2 class="sec-head__h2">{heading}</h2></div></div>
+    <ul class="rl__grid">
+      {list.map((s, i) => (
+        <li class="rl__card" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+          <div class="rl__img"><img src={s.img.src} alt={s.img.alt} width={s.img.width} height={s.img.height} loading="lazy" decoding="async" /></div>
+          <span class="rl__ic"><Icon name={s.icon} size={24} /></span>
+          <h3 class="rl__title">{s.name}</h3>
+          <p class="rl__body">{s.short}</p>
+          <a class="rl__btn" href={`/${s.slug}/`} data-link="card">{s.name}<Icon name="chevronRight" size={16} /></a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rl__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .rl__card { display: flex; flex-direction: column; background: var(--bg-card); border-top: 2px solid var(--border-strong); padding-bottom: var(--space-6); }
+  .rl__card:hover { border-top-color: var(--brand-primary); }
+  .rl__img { aspect-ratio: 16 / 10; overflow: hidden; }
+  .rl__img img { width: 100%; height: 100%; object-fit: cover; }
+  .rl__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); margin: calc(-1 * var(--space-6)) 0 0 var(--space-6); position: relative; border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }
+  .rl__title { font-size: var(--fs-xl); font-weight: var(--fw-medium); padding: var(--space-4) var(--space-6) var(--space-2); }
+  .rl__body { flex: 1; padding: 0 var(--space-6); font-size: var(--fs-md); color: var(--text-muted); }
+  /* The link lives here, and its text is the service name itself (anchor law). */
+  .rl__btn { display: inline-flex; align-items: center; gap: var(--space-2); align-self: flex-start; margin: var(--space-5) var(--space-6) 0; padding: var(--space-2) 0; font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; color: var(--text-heading); border-bottom: 2px solid var(--brand-primary); }
+  a.rl__btn:hover { color: var(--brand-text); }
+  span.rl__btn { color: var(--text-muted); border-bottom-color: var(--border-strong); }
+  .rl__btn :global(.icon) { transition: transform 0.2s var(--ease); }
+  a.rl__btn:hover :global(.icon) { transform: translateX(4px); }
+  @media (max-width: 900px) { .rl__grid { grid-template-columns: 1fr; } }
+</style>

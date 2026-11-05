@@ -1,0 +1,57 @@
+---
+/**
+ * ABOUT (plan: story / credentials / contact-cta). Electrix about page order:
+ * inner hero, reviews (under the hero on every page, pass 2), about block with
+ * milestones, statement slab, trust badges, how we work, CTA band, form.
+ * Affirmed facts only.
+ */
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import AboutBlock from '../components/AboutBlock.astro';
+import Statement from '../components/Statement.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import Reviews from '../components/Reviews.astro';
+import Steps from '../components/Steps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { business, image } from '../data/site';
+const pageUrl = `${business.url}/about/`;
+const schema = [
+  { '@type': 'AboutPage', '@id': `${pageUrl}#about`, url: pageUrl, name: `About ${business.name}`, about: { '@id': `${business.url}/#business` } },
+  { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'About', item: pageUrl }] },
+];
+---
+<Base title="About Buildings For Life | Family-Run Builders in Hedge End" description="Buildings For Life is a family-run building company in Hedge End led by Pete Bartlett: 40+ years in the trade, 15 years on natural stone, featured on the BBC." page="about" schema={schema}>
+  <PageHero eyebrow="About Us" h1="A family building firm with a bricklayer's standards" lead="Pete Bartlett has spent over 40 years in the building trade. Buildings For Life is the family company he runs from Hedge End." image={image('brick-detail')} crumbs={[{ label: 'About' }]} />
+  <Reviews />
+  <AboutBlock
+    eyebrow="Our Story"
+    heading="Started on the tools, still on the tools"
+    body={[
+      'Pete started as a bricklayer, and that shapes how every job is run. Walls go up plumb and level, joints are struck properly, and the work nobody will see once the plaster is on gets the same care as the face brick.',
+      'Over the years the work grew from brickwork into whole builds: foundations and drainage, extensions and loft conversions, new houses from the ground up, and the joinery and finishing inside them. The last 15 years have added high-end and natural stone work.',
+      'Buildings For Life is family-run. When you call, you speak to the family running the job, and the people quoting it are the people building it.',
+    ]}
+    image={image('brick-wall-pointing')}
+    rows={[
+      { n: '40+', title: 'Years in the trade', text: 'Starting as a bricklayer and working every stage of a build since.' },
+      { n: '15', title: 'Years of natural stone', text: 'High-end stone work alongside the brickwork.' },
+      { n: '10', title: 'Year new-build warranty', text: 'On the new homes we build.' },
+      { n: 'BBC', title: 'Building Dream Homes', text: 'Our work has featured on the BBC programme.' },
+    ]}
+    features={[
+      { icon: 'family', title: 'Family-run', text: 'A family company: the people pricing the job are the people building it.' },
+      { icon: 'bricks', title: 'A trade background', text: 'The business grew out of the brickwork, and it still shows in the detail.' },
+    ]}
+    contactLine={false}
+  />
+  <Statement html="We build things to <b>last a lifetime</b>, which is where the name comes from: <b>Buildings For Life</b>. New builds carry <b>a 10-year warranty</b>." />
+  <TrustBadges eyebrow="Credentials" heading="What we can say, and stand behind" />
+  <Steps heading="How we work on your job" lead="Plain dealing from the first visit to the sign-off." steps={[
+    { icon: 'clipboard', title: 'A written quote', text: 'What is included, what is not, and how any unknowns are handled, before anything starts.' },
+    { icon: 'hammer', title: 'Our own team', text: 'Groundworks, brickwork, structure, roofs and joinery done by the firm, not handed down a chain.' },
+    { icon: 'shield', title: 'Signed off properly', text: 'Building control inspections at each stage, and a 10-year warranty on new builds.' },
+  ]} photo="tudor-house-renovation" />
+  <CtaBand heading="Got a build in mind?" line="Tell us about it. We will come and look, then put a price in writing." photo="rear-extension-glazing" />
+  <QuoteForm />
+</Base>

@@ -1,0 +1,201 @@
+/*
+ * TOKENS — Buildings For Life Ltd. The ONLY file allowed to hold raw colour values.
+ *
+ * Pattern: Astryx Warm Admin (inputs/TOKENS.md, Olympus app/TOKENS.md). Primitives -> semantic
+ * -> component. Components read semantic/component tokens only.
+ *
+ * SITE EQUIVALENT (recorded in DECISIONS.md):
+ *  - Astryx warm neutrals kept verbatim (n0..n950).
+ *  - Astryx orange brand swapped for the capture's two-colour system: Electrix pairs a deep
+ *    navy slab with a yellow accent. BFL keeps the structure and trades navy for a deep
+ *    builder green (the logo colour) and warms the yellow towards sandstone.
+ *  - Astryx type scale kept (xs..3xl) and extended upward for marketing display headings
+ *    (4xl..6xl). Space scale kept (0..12) and extended for section rhythm (16..30).
+ *  - Radius: Electrix is square-cornered throughout, so cards/buttons use radius.none.
+ *  - ONE font family: system-ui stack. No webfont (Inter/Geist banned).
+ *
+ * SITE FONT (documented pass 2, 28 Sep): --font-family below is the whole site's type, headings
+ * and body alike. There is no named brand font: system-ui renders the visitor's own OS UI face,
+ * so it shows as San Francisco on iPhone/Mac, Segoe UI on Windows and Roboto on Android/Chrome OS
+ * (Arial as the last resort). That is why it cannot be "identified" from one screen: it differs
+ * per device by design. Weights in use: 400 body, 500 headings, 600 labels/nav, 700 emphasis.
+ * TrustIndex: the slim widgets render in the page DOM and inherit this stack (measured live:
+ * system-ui at 14px), so they match the site. The LARGE widget's review cards set their own
+ * fonts inside TrustIndex's markup; those are theirs and left as-is. Nothing in our CSS
+ * overrides TrustIndex typography.
+ */
+:root {
+  /* ── Primitives: colour ── */
+  --n-0: #FFFFFF;
+  --n-25: #FCFCFB;
+  --n-50: #F8F8F7;
+  --n-100: #F2F1EF;
+  --n-150: #ECE9E5;
+  --n-200: #DDDAD6;
+  --n-300: #C6C1BC;
+  --n-400: #A6A19C;
+  --n-500: #77736F;
+  --n-600: #5D5955;
+  --n-700: #403D3A;
+  --n-800: #242424;
+  --n-900: #171717;
+  --n-950: #101010;
+
+  --forest-50: #F1F5F2;
+  --forest-100: #E2EBE5;
+  --forest-200: #C3D4C9;
+  --forest-300: #93AE9C;
+  --forest-500: #3F6B52;
+  --forest-600: #2C5440;
+  --forest-700: #1F4332;
+  --forest-800: #173427;
+  --forest-900: #11281E;
+  --forest-950: #0B1C15;
+
+  --sand-50: #FFF9EA;
+  --sand-100: #FDF0CB;
+  --sand-300: #F7D77A;
+  --sand-400: #F2C94C;
+  --sand-500: #E4B530;
+  --sand-700: #8A6A12;
+
+  --green-50: #ECFDF3;
+  --green-500: #22B573;
+  --green-600: #15945B;
+  --red-50: #FFF1F1;
+  --red-500: #E95656;
+  --red-600: #CC3F3F;
+  --star: #F2C94C;
+
+  /* ── Primitives: space (Astryx 0..12, site layer 16..30) ── */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+
+  /* ── Primitives: radius ── */
+  --radius-none: 0px;
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-full: 9999px;
+
+  /* ── Primitives: type (Astryx xs..3xl, site display 4xl..6xl) ── */
+  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 12px;
+  --fs-md: 14px;
+  --fs-base: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 30px;
+  --fs-4xl: 36px;
+  --fs-5xl: 44px;
+  --fs-6xl: 56px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --lh-tight: 1.2;
+  --lh-normal: 1.45;
+  --lh-relaxed: 1.6;
+  --ls-eyebrow: 2px;
+  --ls-heading: -0.5px;
+
+  /* ── Semantic ── */
+  --bg-app: var(--n-0);
+  --bg-subtle: var(--n-50);
+  --bg-panel: var(--n-100);
+  --bg-card: var(--n-0);
+  --bg-inverse: var(--forest-900);
+  --bg-inverse-2: var(--forest-800);
+  --bg-inverse-deep: var(--forest-950);
+  --text-primary: var(--n-800);
+  --text-secondary: var(--n-600);
+  --text-muted: var(--n-500);
+  --text-inverse: var(--n-0);
+  --text-inverse-muted: var(--forest-200);
+  --text-heading: var(--forest-900);
+  --border-default: var(--n-150);
+  --border-strong: var(--n-200);
+  --border-inverse: rgba(255, 255, 255, 0.16);
+  --brand-primary: var(--sand-400);
+  --brand-hover: var(--sand-500);
+  --brand-soft: var(--sand-100);
+  --brand-subtle: var(--sand-50);
+  --brand-fg: var(--forest-950);
+  --brand-text: var(--sand-700);
+  --accent-on-dark: var(--sand-400);
+  --status-negative: var(--red-600);
+  --status-negative-soft: var(--red-50);
+  --overlay-hero: linear-gradient(90deg, rgba(11, 28, 21, 0.94) 0%, rgba(11, 28, 21, 0.82) 48%, rgba(11, 28, 21, 0.55) 100%);
+  --overlay-inner: linear-gradient(180deg, rgba(11, 28, 21, 0.78) 0%, rgba(11, 28, 21, 0.9) 100%);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-strong: rgba(255, 255, 255, 0.1);
+  --scrim-lightbox: rgba(11, 28, 21, 0.96);
+  --shadow-card: 0 1px 3px rgba(20, 20, 20, 0.04);
+  --shadow-raised: 0 4px 14px rgba(20, 20, 20, 0.06);
+  --shadow-overlay: 0 10px 30px rgba(20, 20, 20, 0.1);
+  --focus-ring: var(--sand-300);
+
+  /* ── Layout layer (dimensions) ──
+     Breakpoint scale (used literally in @media, enforced by scripts/token-gate.mjs):
+     400 · 520 · 640 · 760 · 900 · 1023/1024 (nav/tablet) · 1100 · 1180 */
+  --copy-max: 45rem;
+  --lightbox-max: 1100px;
+  --logo-w: 264px;
+  --logo-w-sm: 208px;
+  --tap: 44px;
+  --form-w: 460px;
+  --aside-w: 360px;
+  --legal-toc-w: 260px;
+  --legal-card-w: 320px;
+  --container: 1200px;
+  --gutter: 20px;
+  /* Header: the row, plus (mobile only) the white review strip under it.
+     --header-h is the TOTAL, so hero padding and scroll-margin clear both. */
+  --header-row-h: 72px;
+  --header-strip-h: 0px;
+  --header-h: calc(var(--header-row-h) + var(--header-strip-h));
+  --section-pad: var(--space-24);
+  --section-pad-sm: var(--space-16);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* ── Component tokens ── */
+  --btn-h-sm: 36px;
+  --btn-h-md: 48px;
+  --btn-h-lg: 52px;
+  --btn-radius: var(--radius-none);
+  --input-h: 48px;
+  --input-radius: var(--radius-none);
+  --card-radius: var(--radius-none);
+  --card-pad: var(--space-8);
+  --badge-radius: var(--radius-full);
+  --icon-circle: 64px;
+}
+
+/* Mobile carries the review strip under the header row (REV3 item 9). */
+@media (max-width: 1023px) {
+  :root { --header-strip-h: 32px; }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --section-pad: var(--space-16);
+    --section-pad-sm: var(--space-12);
+    --gutter: 16px;
+    --header-row-h: 64px;
+    --card-pad: var(--space-6);
+  }
+}

@@ -1,0 +1,27 @@
+---
+/** 404 (Electrix: full photo hero, big number, back-to-home). Utility: noindex, no sticky bar. */
+import Base from '../layouts/Base.astro';
+import { image } from '../data/site';
+const bg = image('tudor-house-renovation');
+---
+<Base title="Page Not Found | Buildings For Life Ltd" description="That page does not exist. Head back to the Buildings For Life home page, see our building services, or send a Quick Quote Online enquiry." page="404" utility>
+  <section class="nf on-dark section-hero" data-section="hero">
+    <img class="nf__bg" src={bg.src} alt="" width={bg.width} height={bg.height} />
+    <div class="container nf__inner">
+      <p class="nf__n" aria-hidden="true">404</p>
+      <h1 class="nf__h1">Page not found</h1>
+      <p class="nf__p">The page you were looking for is not here. Try one of these instead.</p>
+      <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="404-home">Back to home</a><a href="/services/" class="btn btn-ghost" data-cta="404-services">Our services</a><a href="/contact/#contact" class="btn btn-ghost" data-cta="404-quote">Quick Quote Online</a></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { position: relative; isolation: isolate; overflow: hidden; background: var(--bg-inverse-deep); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 80vh; text-align: center; }
+  .nf__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .nf::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-inner); }
+  .nf__inner { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
+  .nf__n { font-size: calc(var(--fs-6xl) * 2.5); line-height: 1; color: var(--text-inverse); font-weight: var(--fw-medium); }
+  .nf__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); }
+  .nf .btn-row { justify-content: center; margin-top: var(--space-4); }
+  @media (max-width: 640px) { .nf__n { font-size: calc(var(--fs-6xl) * 1.6); } .nf__h1 { font-size: var(--fs-3xl); } }
+</style>

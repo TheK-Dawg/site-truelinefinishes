@@ -1,0 +1,23 @@
+---
+/** THANK YOU (utility: noindex, no sticky bar, no form). */
+import Base from '../layouts/Base.astro';
+import { business } from '../data/site';
+---
+<Base title="Thank You | Buildings For Life Ltd" description="Thank you for your Quick Quote Online enquiry. Buildings For Life will be in touch to arrange a visit and a written quote for your building work." page="thank-you" utility>
+  <section class="ty on-dark section-hero" data-section="hero">
+    <div class="container ty__inner">
+      <p class="eyebrow">Quick Quote Online</p>
+      <h1 class="ty__h1">Thank you. Your enquiry is with us.</h1>
+      <p class="ty__p">We will be in touch to talk through the job and arrange a visit. If it is easier to talk now, call Pete on <a href={business.phoneHref} data-cta="thanks-call">{business.phone}</a>.</p>
+      <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="thanks-home">Back to the home page</a><a href="/services/" class="btn btn-ghost" data-cta="thanks-services">See our services</a></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .ty { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 70vh; }
+  .ty__inner { max-width: 60em; }
+  .ty__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); margin-bottom: var(--space-5); }
+  .ty__p { font-size: var(--fs-lg); margin-bottom: var(--space-8); }
+  .ty__p a { color: var(--text-inverse); font-weight: var(--fw-semibold); text-decoration: underline; }
+  @media (max-width: 640px) { .ty__h1 { font-size: var(--fs-3xl); } }
+</style>

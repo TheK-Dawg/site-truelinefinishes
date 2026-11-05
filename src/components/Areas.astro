@@ -1,0 +1,60 @@
+---
+/**
+ * AREAS (plan: areas-covered). REV3 item 2: the heading and copy run FULL
+ * WIDTH, Pete's Google Business Profile map sits under them as a WIDE
+ * full-width band (never the old small square), and the town list sits UNDER
+ * the map, with a link to the areas page beside it.
+ * AREAS LAW: one areas page, no town pages, so every town is plain text in
+ * publish order (the .built link path stays inert). On /areas/ itself the
+ * section links nothing (no self-link).
+ */
+import { towns } from '../data/site';
+import MapEmbed from './MapEmbed.astro';
+interface Props { heading: string; body: string; eyebrow?: string; mapQuery?: string; current?: string; linkTowns?: boolean; excludeTargets?: string[] }
+const { heading, body, eyebrow = 'Areas We Serve', mapQuery, current = '', linkTowns = true, excludeTargets = [] } = Astro.props;
+const skip = new Set(excludeTargets);
+const onAreasPage = Astro.url.pathname === '/areas/';
+---
+<section class="ar section section-areas" data-section="areas">
+  <div class="ar__inner container">
+    <div class="ar__copy" data-motion="reveal">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="ar__h2">{heading}</h2>
+      <p class="ar__body">{body}</p>
+    </div>
+    <div class="ar__map" data-motion="reveal" style="--reveal-delay: 80ms"><MapEmbed query={mapQuery} /></div>
+    <div class="ar__under">
+      <ul class="ar__list">
+        {towns.map((t) => (
+          <li class:list={[t.built && 'is-built', t.name === current && 'is-current']}>
+            {t.built && linkTowns && t.name !== current && !skip.has(`areas/${t.slug}`) ? <a href={`/areas/${t.slug}/`} data-link="area">{t.name}</a> : <span>{t.name}</span>}
+          </li>
+        ))}
+      </ul>
+      {!onAreasPage && (
+        <p class="ar__all"><a href="/areas/" data-link="areas">areas we cover</a></p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* One column: copy, then the wide map, then the town list under it. */
+  .ar__inner { display: grid; grid-template-columns: 1fr; gap: var(--space-8); }
+  .ar__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }
+  .ar__body { color: var(--text-muted); }
+  .ar__map { width: 100%; height: calc(var(--space-30) * 3); border-top: 2px solid var(--brand-primary); }
+  .ar__under { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-5); }
+  .ar__list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); flex: 1 1 auto; }
+  .ar__list li { font-size: var(--fs-md); padding: var(--space-1) var(--space-3); background: var(--bg-subtle); border: 1px solid var(--border-default); color: var(--text-secondary); }
+  .ar__list li.is-built { background: var(--bg-card); border-color: var(--border-strong); }
+  .ar__list li.is-built a { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .ar__list li.is-current { background: var(--bg-inverse); color: var(--text-inverse); border-color: var(--bg-inverse); }
+  .ar__all { flex: 0 0 auto; font-size: var(--fs-md); font-weight: var(--fw-semibold); }
+  .ar__all a { color: var(--text-heading); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .ar__all a:hover { color: var(--brand-text); }
+  @media (max-width: 900px) {
+    .ar__h2 { font-size: var(--fs-3xl); }
+    .ar__map { height: calc(var(--space-30) * 2); }
+  }
+</style>

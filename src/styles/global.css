@@ -1,0 +1,112 @@
+/*
+ * Global layer. Reads tokens only (no raw colours, no off-scale px).
+ * Electrix rhythm: letter-spaced uppercase eyebrows, tight display headings,
+ * square yellow buttons with uppercase labels, generous section padding.
+ */
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+body {
+  margin: 0; font-family: var(--font-family); font-size: var(--fs-base); line-height: var(--lh-relaxed);
+  color: var(--text-secondary); background: var(--bg-app); -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-weight: var(--fw-medium); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); text-wrap: balance; }
+p { margin: 0; }
+ul, ol { margin: 0; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.skip-link { position: absolute; left: var(--space-4); top: calc(-1 * var(--space-16)); z-index: 200; background: var(--brand-primary); color: var(--brand-fg); padding: var(--space-2) var(--space-4); font-weight: var(--fw-semibold); }
+.skip-link:focus { top: var(--space-4); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.container { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Eyebrow: Electrix "OUR SERVICES" label. Muted on light, sand on dark. */
+.eyebrow { font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--text-muted); margin-bottom: var(--space-4); }
+.on-dark .eyebrow { color: var(--accent-on-dark); }
+
+/* Section heads: heading left, lead (+ action) right, as in the capture. */
+.sec-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-8) var(--space-16); align-items: end; margin-bottom: var(--space-12); }
+.sec-head--center { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+.sec-head--center .sec-head__lead { max-width: 60ch; }
+.sec-head__h2 { font-size: var(--fs-5xl); }
+.sec-head__lead { color: var(--text-muted); font-size: var(--fs-base); }
+.sec-head__side { display: flex; flex-direction: column; gap: var(--space-6); align-items: flex-start; }
+.on-dark .sec-head__h2, .on-dark h2, .on-dark h3 { color: var(--text-inverse); }
+.on-dark .sec-head__lead { color: var(--text-inverse-muted); }
+@media (max-width: 900px) {
+  .sec-head { grid-template-columns: 1fr; gap: var(--space-4); margin-bottom: var(--space-8); }
+  .sec-head__h2 { font-size: var(--fs-3xl); }
+}
+
+/* Buttons: square, uppercase, letter-spaced (Electrix "GET STARTED"). */
+.btn {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: var(--btn-h-md); padding: var(--space-3) var(--space-8); border: 0; border-radius: var(--btn-radius);
+  font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight);
+  cursor: pointer; text-align: center; transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.btn-primary { background: var(--brand-primary); color: var(--brand-fg); }
+.btn-primary:hover { background: var(--brand-hover); }
+.btn-dark { background: var(--bg-inverse); color: var(--text-inverse); }
+.btn-dark:hover { background: var(--bg-inverse-2); }
+.btn-ghost { background: transparent; color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--border-inverse); }
+.btn-ghost:hover { background: var(--glass-strong); }
+/* Call button (CallButton.astro): glass on dark, transparent on light, same box as Quick Quote. */
+.btn-call { white-space: nowrap; }
+.btn-call--dark { background: var(--glass); color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--border-inverse); backdrop-filter: blur(2px); }
+.btn-call--dark:hover { background: var(--glass-strong); }
+.btn-call--dark .icon { color: var(--accent-on-dark); }
+.btn-call--light { background: transparent; color: var(--text-heading); box-shadow: inset 0 0 0 1px var(--border-strong); }
+.btn-call--light:hover { background: var(--bg-subtle); }
+.btn-call--light .icon { color: var(--forest-500); }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+/* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16). */
+.btn::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 30%, var(--glass-strong) 45%, var(--glass-strong) 55%, transparent 70%);
+  transform: translateX(-120%); animation: sheen 4.2s var(--ease) infinite;
+}
+.btn-row .btn:nth-child(2)::after { animation-delay: 0.7s; }
+@keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+
+/* Inline text link (Electrix "Contact Us" underline). */
+.text-link { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-underline-offset: 3px; }
+.on-dark .text-link { color: var(--text-inverse); }
+.more-line { font-size: var(--fs-md); color: var(--text-muted); text-align: center; margin-top: var(--space-10); }
+
+/* Section shells. */
+.section { padding: var(--section-pad) 0; }
+.section--panel { background: var(--bg-panel); }
+.section--dark { background: var(--bg-inverse); color: var(--text-inverse-muted); }
+
+/* Long-form copy. */
+.prose { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }
+.prose > * + *, .prose :where(p, ul, ol, h3, blockquote, table, figure) + :where(p, ul, ol, h3, blockquote, table, figure) { margin-top: 1em; }
+.prose h2 { font-size: var(--fs-3xl); margin-top: 1.8em; margin-bottom: 0.2em; }
+.prose h3 { font-size: var(--fs-xl); margin-top: 1.4em; }
+.prose ul, .prose ol { padding-left: 1.2em; }
+.prose li + li { margin-top: 0.4em; }
+.prose a { color: var(--text-heading); font-weight: var(--fw-semibold); text-decoration: underline; text-decoration-color: var(--brand-primary); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.prose strong { color: var(--text-primary); }
+@media (max-width: 760px) { .prose h2 { font-size: var(--fs-2xl); } }
+
+/* Motion: one-shot reveal. Off under reduced motion. */
+[data-motion='reveal'] { opacity: 0; transform: translateY(var(--space-5)); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); transition-delay: var(--reveal-delay, 0ms); }
+[data-motion='reveal'].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  [data-motion='reveal'] { opacity: 1; transform: none; transition: none; }
+  .btn::after { animation: none; display: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* TrustIndex floating left-corner widget (every page, from Base). TrustIndex appends it to
+   <body> as .ti-widget[data-layout-category="floating, popup"], position fixed.
+   Hidden below the desktop breakpoint, where the sticky call bar owns the bottom edge. */
+@media (max-width: 1023px) {
+  .ti-widget[data-layout-category*='floating'] { display: none !important; }
+}

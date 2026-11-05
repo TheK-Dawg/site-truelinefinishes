@@ -1,0 +1,207 @@
+---
+/**
+ * QUOTE FORM (convert, always the last section) — the STANDARD CLOUDFLARE FORM
+ * (REV3 item 7, LEAD FORM LAW 1 Oct: Cloudflare LeadForms only, form_type
+ * cf_form). Electrix "Get in touch" dark band: copy + the slimline review
+ * strip left, the white form card right.
+ *
+ * FIELDS: name / email / phone / postcode / message, in that order, placeholder
+ * text INSIDE the inputs (never an external label), full width, stacked, all
+ * required including the postcode. The names are not ours to choose: they are
+ * the field_keys configured for this site's form token in oly_form_fields,
+ * read from the engine before this was written
+ * (GET /forms/site/buildingsforlife.com -> token bfl-cf-v1, fields
+ * name, email, phone, postcode, message; honeypot _company).
+ *
+ * NO visible service select and no "choose the option" step (STANDARD LEAD FORM
+ * LAW): the visitor says what they need in the message. The page's service
+ * rides along as a hidden input, with the page URL, referrer and UTM tags.
+ *
+ * ENDPOINT: the site's OWN /api/lead (worker/lead.ts), same origin. That Worker
+ * owns the whole enquiry: it saves it in the site's own D1, emails the client
+ * (and the agency copy) through its own Cloudflare Email Sending binding,
+ * retries anything undelivered, and only then posts a record copy to Olympus.
+ * No step depends on Olympus (fleet order, 27 Oct 2026). See HANDOVER-FORMS.md.
+ *
+ * SPAM STACK: honeypot (_company) + INVISIBLE Turnstile (appearance
+ * interaction-only, so no visitor ever sees "verify you are human") + the
+ * handler's English check, per-IP limit and spam scoring. The sitekey is
+ * fetched from /api/lead so it is never baked into the page, and the widget
+ * loads on first interaction to keep the page light.
+ */
+import TiSlim from './TiSlim.astro';
+import Icon from './Icon.astro';
+import CallButton from './CallButton.astro';
+interface Props { heading?: string; lead?: string; service?: string }
+const {
+  heading = 'Tell us about the job and Pete will come back with a written quote',
+  lead = 'A few lines on what you want built, the postcode, and any drawings or planning you already have. We come back to you to arrange a visit and a written quote.',
+  service = '',
+} = Astro.props;
+const FORM_ENDPOINT = '/api/lead';
+---
+<section class="qf section-quote-form on-dark" id="quote-section" data-section="quote-form" data-ai-skip>
+  <div class="qf__inner container">
+    <div class="qf__copy" data-motion="reveal">
+      <p class="eyebrow">Quick Quote Online</p>
+      <div class="qf__strip"><TiSlim where="form" /></div>
+      <h2 class="qf__h2">{heading}</h2>
+      <p class="qf__p">{lead}</p>
+      <ul class="qf__list">
+        <li><Icon name="check" size={18} /> A written quote before any work starts</li>
+        <li><Icon name="check" size={18} /> 10-year warranty on new builds</li>
+        <li><Icon name="check" size={18} /> Hedge End, Southampton and the towns around them</li>
+      </ul>
+      <div class="qf__call"><p>Rather talk it through?</p><CallButton cta="form-call" /></div>
+    </div>
+    <form class="qf__form" id="contact" method="post" action={FORM_ENDPOINT} data-quote-form data-endpoint={FORM_ENDPOINT} novalidate>
+      <h3 class="qf__form-h">Quick Quote Online</h3>
+      <input type="text" name="name" autocomplete="name" placeholder="Your name" aria-label="Your name" required />
+      <input type="email" name="email" autocomplete="email" placeholder="Email address" aria-label="Email address" required />
+      <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="Phone number" aria-label="Phone number" required />
+      <input type="text" name="postcode" autocomplete="postal-code" placeholder="Town or postcode" aria-label="Town or postcode" required />
+      <textarea name="message" rows="4" placeholder="Tell us what you need" aria-label="Tell us what you need" required></textarea>
+      <input type="hidden" name="service" value={service} />
+      <input type="text" name="_company" class="qf__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="qf__ts" data-turnstile></div>
+      <button type="submit" class="btn btn-primary qf__submit" data-cta="form-submit">Quick Quote Online</button>
+      <p class="qf__secure"><Icon name="shield" size={14} /> Your details are only used to reply about your job, never shared.</p>
+      <p class="qf__err" role="alert" hidden data-error>Please fill in the fields left blank so Pete knows what the job is and where.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .qf { background: linear-gradient(100deg, var(--bg-inverse-deep), var(--bg-inverse-2)); color: var(--text-inverse-muted); padding: var(--section-pad) 0; }
+  .qf__inner { display: grid; grid-template-columns: 1fr var(--form-w); gap: var(--space-12) var(--space-16); align-items: start; }
+  .qf__strip { margin: var(--space-1) 0 var(--space-6); min-height: var(--space-6); }
+  .qf__h2 { font-size: var(--fs-5xl); margin-bottom: var(--space-5); }
+  .qf__p { margin-bottom: var(--space-6); max-width: 56ch; }
+  .qf__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .qf__list li { display: flex; align-items: center; gap: var(--space-3); color: var(--text-inverse); }
+  .qf__list :global(.icon) { color: var(--accent-on-dark); }
+  .qf__call { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); margin-top: var(--space-8); font-size: var(--fs-md); }
+  .qf__form { background: var(--bg-card); color: var(--text-primary); padding: var(--space-8); display: grid; gap: var(--space-3); border-top: 2px solid var(--brand-primary); scroll-margin-top: calc(var(--header-h) + var(--space-2)); }
+  /* F1: the section is .on-dark, which turns h3 white; the card is white, so pin the heading dark. */
+  .qf__form .qf__form-h { font-size: var(--fs-xl); margin-bottom: var(--space-1); color: var(--text-heading); }
+  /* Full width, stacked, placeholders inside (form field law 2 and 4). */
+  .qf__form :is(input, textarea) { width: 100%; min-height: var(--input-h); font: inherit; font-size: var(--fs-base); color: var(--text-primary); background: var(--bg-subtle); border: 1px solid var(--border-strong); border-radius: var(--input-radius); padding: var(--space-3) var(--space-4); }
+  .qf__form textarea { resize: vertical; }
+  .qf__form ::placeholder { color: var(--text-muted); opacity: 1; }
+  .qf__form :is(input, textarea):focus-visible { outline: 2px solid var(--forest-500); outline-offset: 1px; }
+  .qf__form [aria-invalid='true'] { border-color: var(--status-negative); background: var(--status-negative-soft); }
+  .qf__form button[disabled] { opacity: 0.7; cursor: progress; }
+  .qf__hp { position: absolute !important; left: -100vw !important; width: 1px; height: 1px; opacity: 0; }
+  /* Invisible Turnstile: the widget never paints, so it reserves nothing. */
+  .qf__ts:empty { display: none; }
+  .qf__submit { width: 100%; margin-top: var(--space-1); }
+  .qf__secure { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); color: var(--text-muted); }
+  .qf__err { font-size: var(--fs-md); color: var(--status-negative); }
+  @media (max-width: 1023px) { .qf__inner { grid-template-columns: 1fr; } .qf__h2 { font-size: var(--fs-3xl); } }
+  @media (max-width: 640px) { .qf__form { padding: var(--space-5); scroll-margin-top: calc(var(--header-h) + var(--space-1)); } }
+</style>
+
+<script>
+  type Turnstile = {
+    render(el: HTMLElement, opts: Record<string, unknown>): string;
+    getResponse(id: string): string | undefined;
+    reset(id: string): void;
+  };
+  const w = window as Window & { turnstile?: Turnstile };
+
+  const form = document.querySelector<HTMLFormElement>('form[data-quote-form]');
+  if (form) {
+    const error = form.querySelector<HTMLElement>('[data-error]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const missingMsg = error.textContent;
+    // The ordinary field contract the site's handler (worker/leads/) expects.
+    const fields = ['name', 'email', 'phone', 'postcode', 'message'];
+    const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const PHONE = /^[\d\s+()-]{7,20}$/;
+    const get = (k: string) => String(new FormData(form).get(k) || '').trim();
+    const qs = new URLSearchParams(location.search);
+    // One id per filled-in form: a retry after a lost reply is recognised by the
+    // handler as the same enquiry and is not saved or emailed twice.
+    const submissionId = crypto.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+
+    // INVISIBLE TURNSTILE. The sitekey comes from the site's own /api/lead, and
+    // the script is only fetched once the visitor touches the form, so a page
+    // nobody fills in costs nothing. appearance 'interaction-only' means the
+    // widget never shows itself (conversion law: never "verify you are human").
+    let widgetId = '';
+    let loading: Promise<void> | null = null;
+    const loadTurnstile = () =>
+      (loading ??= (async () => {
+        const { sitekey } = await (await fetch('/api/lead')).json();
+        if (!sitekey) throw new Error('no sitekey');
+        await new Promise<void>((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+          s.async = true;
+          s.onload = () => resolve();
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+        widgetId = w.turnstile!.render(form.querySelector<HTMLElement>('[data-turnstile]')!, {
+          sitekey,
+          appearance: 'interaction-only',
+          'refresh-expired': 'auto',
+          action: 'quote',
+        });
+      })().catch(() => { loading = null; }));
+    const token = async () => {
+      await loadTurnstile();
+      for (let i = 0; i < 40 && widgetId; i++) {
+        const t = w.turnstile?.getResponse(widgetId);
+        if (t) return t;
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      return '';
+    };
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (get('_company')) return; // honeypot
+      let missing = false;
+      for (const k of fields) {
+        let bad = !get(k);
+        if (!bad && k === 'email') bad = !EMAIL.test(get(k));
+        if (!bad && k === 'phone') bad = !PHONE.test(get(k));
+        (form.elements.namedItem(k) as HTMLElement | null)?.setAttribute('aria-invalid', bad ? 'true' : 'false');
+        if (bad) missing = true;
+      }
+      if (missing) { error.textContent = missingMsg; error.hidden = false; return; }
+      error.hidden = true;
+      button.disabled = true;
+      try {
+        const res = await fetch(form.dataset.endpoint!, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            ...Object.fromEntries([...fields, 'service', '_company'].map((k) => [k, get(k)])),
+            page_url: location.href,
+            referrer: document.referrer,
+            ...Object.fromEntries(['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'].map((k) => [k, qs.get(k) || ''])),
+            submission_id: submissionId,
+            'cf-turnstile-response': await token(),
+          }),
+        });
+        if (res.status === 422) {
+          button.disabled = false;
+          error.textContent = 'Please write your message in English.';
+          error.hidden = false;
+          return;
+        }
+        if (!res.ok) throw new Error(String(res.status));
+        window.location.assign('/thank-you/');
+        return;
+      } catch {
+        if (widgetId) w.turnstile?.reset(widgetId);
+        button.disabled = false;
+        error.textContent = 'Sorry, that did not send. Please check your connection and press Quick Quote Online again.';
+        error.hidden = false;
+      }
+    });
+  }
+</script>

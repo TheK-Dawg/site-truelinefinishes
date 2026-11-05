@@ -1,0 +1,25 @@
+---
+/**
+ * REVIEW STRIP — the fallback inside TiSlim while the TrustIndex slim slot is
+ * empty. REV3 item 6: it carries NO count and NO average figure. The review
+ * numbers on this site come from one place only, the TrustIndex widgets, so
+ * nothing here can disagree with them.
+ */
+import Stars from './Stars.astro';
+interface Props { tone?: 'dark' | 'light' }
+const { tone = 'dark' } = Astro.props;
+---
+<a class:list={['rs', `rs--${tone}`]} href="#reviews" data-cta="review-strip">
+  <span class="rs__g"><img src="/brand/google-g.svg" alt="Google" width="48" height="48" loading="lazy" decoding="async" /></span>
+  <Stars />
+  <span class="rs__txt">Google reviews</span>
+</a>
+<style>
+  .rs { display: inline-flex; align-items: center; gap: var(--space-3); font-size: var(--fs-md); }
+  .rs--dark { color: var(--text-inverse-muted); }
+  .rs--light { color: var(--text-muted); }
+  /* The real Google "G" on a white disc, so it reads on the dark bands too. */
+  .rs__g { display: grid; place-items: center; width: var(--space-6); height: var(--space-6); border-radius: var(--badge-radius); background: var(--bg-card); flex-shrink: 0; }
+  .rs__g img { width: var(--space-4); height: var(--space-4); }
+  .rs:hover .rs__txt { text-decoration: underline; text-underline-offset: 3px; }
+</style>

@@ -1,0 +1,98 @@
+---
+/**
+ * FOOTER (Electrix). Top row: logo + a Quick Quote line where the template had
+ * its newsletter. Four columns: About (+ the slim white TrustIndex widget,
+ * every page, pass 2), Services (5 + all), Areas (5 + all),
+ * Quick Contact (the only place besides /contact/ where the email appears).
+ * Bottom bar: copyright + company number (linked to its official Companies House record,
+ * verified 27 Oct 2026: BUILDINGS FOR LIFE LIMITED, active, director Peter Jonathan Bartlett)
+ * on the left; the legal links and the build credit on the right.
+ * formless: the page has no quote form (thank-you, 404), so Quick Quote goes to /contact/#contact.
+ */
+import { business, services, facts } from '../data/site';
+import Icon from './Icon.astro';
+import CallButton from './CallButton.astro';
+import TiSlim from './TiSlim.astro';
+import FooterCredit from './FooterCredit.astro';
+const { formless = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="ft on-dark" data-section="footer">
+  <div class="container">
+    <div class="ft__top">
+      <a href="/" class="ft__brand" aria-label={`${business.name}, home`}><img src="/brand/logo-horizontal-white.png" alt={business.name} width="841" height="159" loading="lazy" /></a>
+      <p class="ft__ask">Planning an extension, a new build or a stone wall?</p>
+      <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="footer-quote">Quick Quote Online</a>
+    </div>
+    <div class="ft__cols">
+      <div class="ft__col ft__col--about">
+        <h2 class="ft__h">About Us</h2>
+        <p>A family-run building company in {business.baseTown}, led by {business.owner}. {facts.yearsLine}, and a {facts.guarantee.toLowerCase()}.</p>
+        <p class="ft__bbc"><Icon name="tv" size={18} /> As seen on BBC Building Dream Homes</p>
+        <div class="ft__ti"><TiSlim where="footer" /></div>
+      </div>
+      <div class="ft__col">
+        <h2 class="ft__h">Our Services</h2>
+        <ul>
+          {services.slice(0, 5).map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
+          <li><a href="/services/">All services</a></li>
+        </ul>
+      </div>
+      <div class="ft__col">
+        <h2 class="ft__h">Areas</h2>
+        <ul>
+          {['Hedge End', 'Southampton', 'Eastleigh', 'Winchester', 'Romsey'].map((t) => <li>{t}</li>)}
+          <li><a href="/areas/">All areas covered</a></li>
+        </ul>
+      </div>
+      <div class="ft__col">
+        <h2 class="ft__h">Quick Contact</h2>
+        <p>Questions about a job, or want Pete to come and look?</p>
+        <div class="ft__phone"><CallButton cta="footer-call" /></div>
+        <p class="ft__line"><Icon name="mail" size={16} /> <a href={`mailto:${business.email}`} data-cta="footer-email">{business.email}</a></p>
+        <p class="ft__line"><Icon name="pin" size={16} /> {business.baseTown}, {business.city}</p>
+        <p class="ft__line"><Icon name="clock" size={16} /> {business.hours}</p>
+      </div>
+    </div>
+    <div class="ft__bar">
+      <p>© {year} {business.name} · Registered in England and Wales, <a href={`https://find-and-update.company-information.service.gov.uk/company/${business.companyNumber}`} rel="nofollow noopener" data-cta="footer-company-number">company number {business.companyNumber}</a></p>
+      <div class="ft__bar-end">
+        <nav aria-label="Legal"><a href="/">Home</a><a href="/faq/">FAQ</a><a href="/resources/">Resources</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a></nav>
+        <p class="ft__credit"><FooterCredit anchorText="Construction websites" anchorHref="https://localmapbooster.com/" rel="nofollow noopener" cta="footer-credit" /></p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--bg-inverse-deep); color: var(--text-inverse-muted); padding-top: var(--space-20); font-size: var(--fs-md); }
+  .ft__top { display: grid; grid-template-columns: auto 1fr auto; gap: var(--space-8); align-items: center; padding-bottom: var(--space-12); border-bottom: 1px solid var(--border-inverse); }
+  .ft__brand img { width: var(--logo-w); }
+  .ft__ask { color: var(--text-inverse); font-size: var(--fs-xl); font-weight: var(--fw-semibold); text-align: right; }
+  .ft__cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: var(--space-10); padding: var(--space-12) 0 var(--space-16); }
+  .ft__h { font-size: var(--fs-xl); color: var(--text-inverse); margin-bottom: var(--space-5); }
+  .ft__col p + p { margin-top: var(--space-3); }
+  .ft__col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+  .ft__col a:hover { color: var(--accent-on-dark); }
+  .ft__bbc { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--accent-on-dark); font-weight: var(--fw-semibold); margin-top: var(--space-5) !important; }
+  .ft__ti { margin-top: var(--space-5); }
+  .ft__phone { margin: var(--space-5) 0; }
+  .ft__line { display: flex; align-items: center; gap: var(--space-2); }
+  .ft__line :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  .ft__bar { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; background: var(--glass); padding: var(--space-6); font-size: var(--fs-sm); }
+  .ft__bar-end { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+  .ft__bar nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2) var(--space-6); }
+  .ft__bar a { text-decoration: underline; text-underline-offset: 3px; }
+  /* Below the desktop breakpoint the fixed sticky call bar (StickyCtaBar) owns the bottom edge: clear its height
+     so the last footer row (legal links, build credit) can scroll above it. */
+  @media (max-width: 1023px) { .ft { padding-bottom: calc(var(--btn-h-md) + var(--space-4) + 1px + env(safe-area-inset-bottom)); } }
+  @media (max-width: 900px) {
+    .ft__top { grid-template-columns: 1fr; justify-items: start; }
+    .ft__ask { text-align: left; }
+    .ft__cols { grid-template-columns: 1fr 1fr; }
+    .ft__col--about { grid-column: 1 / -1; }
+    .ft__bar-end { align-items: flex-start; }
+    .ft__bar nav { justify-content: flex-start; }
+  }
+  @media (max-width: 520px) { .ft__cols { grid-template-columns: 1fr; } .ft__brand img { width: var(--logo-w-sm); } }
+</style>

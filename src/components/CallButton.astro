@@ -1,0 +1,13 @@
+---
+/**
+ * CALL BUTTON (operator walkthrough 25 Sep, A1 + C1). The ONE call CTA used
+ * sitewide: same shape and size as the Quick Quote Online button, glass /
+ * transparent fill, label "Call" + the number, no name. tone="dark" on dark
+ * sections (glass), tone="light" on pale sections (transparent, dark line).
+ */
+import Icon from './Icon.astro';
+import { business } from '../data/site';
+interface Props { cta: string; tone?: 'dark' | 'light'; class?: string }
+const { cta, tone = 'dark', class: cls } = Astro.props;
+---
+<a href={business.phoneHref} class:list={['btn', 'btn-call', `btn-call--${tone}`, cls]} data-cta={cta}><Icon name="phone" size={18} /><span>Call {business.phone}</span></a>

@@ -1,0 +1,111 @@
+---
+/**
+ * OUR WORK (operator correction 3, 24 Sep): previous-projects gallery on the
+ * home page with a select-a-project interaction. Built from the capture's own
+ * vocabulary: the About block's numbered milestone rows become the selector
+ * list (left), the selected set shows as a large photo + tiles (right).
+ * Every photo is Pete's own, from his previous site. Groups are by type of
+ * work (not invented job histories); captions describe what is in the photo.
+ * All photos open in the root Lightbox.
+ */
+import { image } from '../data/site';
+interface Props { eyebrow?: string; heading?: string; lead?: string }
+const { eyebrow = 'Our Work', heading = 'Previous projects, photographed on site', lead = 'Pick a type of work to see it. These are our own photographs, taken on jobs, not stock images.' } = Astro.props;
+const groups = [
+  { title: 'Extensions and new builds', line: 'Rear extensions, porches and new homes', imgs: ['rear-extension-glazing', 'new-build-brickwork', 'brick-porch', 'extension-groundworks'] },
+  { title: 'Brickwork and stone', line: 'Walls, piers, detailing and a brick well', imgs: ['garden-wall-piers', 'brick-detail', 'brick-wall-pointing', 'oak-and-brick-well'] },
+  { title: 'Patios and paving', line: 'Porcelain, slabs and the base beneath them', imgs: ['porcelain-patio', 'patio-slabs', 'paving-preparation', 'paving-delivery'] },
+  { title: 'Renovations', line: 'Whole-house work on older properties', imgs: ['tudor-house-renovation', 'timber-clad-renovation', 'structural-opening'] },
+  { title: 'Groundworks and structure', line: 'Drainage, digging out and opening up', imgs: ['groundworks-drainage', 'extension-groundworks', 'structural-opening'] },
+  { title: 'Roofs and timber', line: 'Loft insulation, oak framing, cladding', imgs: ['loft-insulation', 'oak-and-brick-well', 'timber-clad-renovation'] },
+].map((g) => ({ ...g, imgs: g.imgs.map(image) }));
+---
+<section class="ow section section-gallery" id="our-work" data-section="gallery" data-ai-skip>
+  <div class="container">
+    <div class="sec-head" data-motion="reveal">
+      <div>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="sec-head__h2">{heading}</h2>
+      </div>
+      <p class="sec-head__lead">{lead}</p>
+    </div>
+    <div class="ow__wrap" data-ow>
+      <div class="ow__list" role="tablist" aria-label="Type of work">
+        {groups.map((g, i) => (
+          <button type="button" class="ow__tab" role="tab" id={`ow-tab-${i}`} aria-controls={`ow-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            <span class="ow__n">{String(i + 1).padStart(2, '0')}</span>
+            <span><strong>{g.title}</strong><span class="ow__line">{g.line}</span></span>
+          </button>
+        ))}
+      </div>
+      <div class="ow__panels" data-gallery>
+        {groups.map((g, i) => (
+          <div class="ow__panel" role="tabpanel" id={`ow-panel-${i}`} aria-labelledby={`ow-tab-${i}`} hidden={i !== 0}>
+            {g.imgs.map((im, k) => (
+              <button type="button" class:list={['ow__shot', k === 0 && 'ow__shot--main']} data-lightbox aria-label={`Open larger: ${im.alt}`}>
+                <img src={im.src} alt={im.alt} width={im.width} height={im.height} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
+      <a href="#contact" class="btn btn-primary ow__cta" data-cta="gallery-quote">Quick Quote Online</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Quick Quote sits in the list column, full width, directly under the last row (walkthrough 25 Sep, D2). */
+  .ow__wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); grid-template-rows: auto 1fr; grid-template-areas: 'list panels' 'cta panels'; gap: 0 var(--space-10); align-items: start; }
+  .ow__list { grid-area: list; }
+  .ow__panels { grid-area: panels; }
+  .ow__cta { grid-area: cta; width: 100%; margin-top: var(--space-6); }
+  .ow__list { display: flex; flex-direction: column; border-top: 1px solid var(--border-default); }
+  .ow__tab { display: grid; grid-template-columns: var(--space-12) 1fr; gap: var(--space-4); align-items: baseline; padding: var(--space-5) var(--space-4); text-align: left; background: none; border: 0; border-bottom: 1px solid var(--border-default); border-left: 2px solid transparent; cursor: pointer; color: var(--text-muted); transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease); }
+  .ow__tab:hover { background: var(--bg-subtle); }
+  .ow__tab[aria-selected='true'] { background: var(--bg-inverse); border-left-color: var(--brand-primary); color: var(--text-inverse-muted); }
+  .ow__n { font-size: var(--fs-2xl); font-weight: var(--fw-medium); color: var(--text-heading); }
+  .ow__tab[aria-selected='true'] .ow__n { color: var(--accent-on-dark); }
+  .ow__tab strong { display: block; font-size: var(--fs-lg); font-weight: var(--fw-semibold); color: var(--text-heading); }
+  .ow__tab[aria-selected='true'] strong { color: var(--text-inverse); }
+  .ow__line { font-size: var(--fs-md); }
+  .ow__panel { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .ow__panel[hidden] { display: none; }
+  .ow__shot { display: block; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
+  .ow__shot--main { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+  .ow__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .ow__shot:hover img { transform: scale(1.04); }
+  @media (max-width: 900px) {
+    .ow__wrap { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: 'list' 'panels' 'cta'; gap: var(--space-5); }
+    .ow__cta { margin-top: 0; }
+    .ow__list { flex-direction: row; overflow-x: auto; border-top: 0; gap: var(--space-2); scrollbar-width: none; }
+    .ow__tab { flex: 0 0 auto; grid-template-columns: auto; border: 1px solid var(--border-default); padding: var(--space-3) var(--space-4); }
+    .ow__n, .ow__line { display: none; }
+    .ow__tab strong { font-size: var(--fs-md); white-space: nowrap; }
+    .ow__panel { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ow]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, n) => {
+        const on = n === i;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls')!);
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+      tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (['ArrowDown', 'ArrowRight'].includes(e.key)) { e.preventDefault(); select((i + 1) % tabs.length, true); }
+        if (['ArrowUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+      });
+    });
+  });
+</script>

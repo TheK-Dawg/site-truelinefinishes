@@ -1,0 +1,14 @@
+# Buildings For Life — Pete's factual corrections (19 Oct 2026)
+
+Pete's actual message, supplied by Vince:
+> Yes the only bits were the bit about what i dont do i would rather that out 
+> And the warranty only applies to new builds 10year so if you could that change
+
+## Scope and destination
+This is a correction of the existing pre-launch Buildings For Life website, **not** approval to move `buildingsforlifeltd.com`, alter IONOS/DNS/email, send Pete a message or generate a logo. Use the existing site repo and deploy only its existing `site-buildingsforlifeltd-v3-test` preview worker, retaining noindex. The current public domain remains untouched. No test lead without Vince's order.
+
+## Required corrections
+1. Remove the public-facing section/list or passages describing work Pete *does not do*. Search the entire rendered page set, shared FAQ/source data, service pages, articles, metadata, schema and regenerators. In particular the homepage FAQ and FAQ data have negative service lists. Do not replace with another list of exclusions, and do not erase ordinary factual qualifiers unrelated to that section. Keep the positive description of the services Pete does offer. Do not silently add excluded work as a promised service.
+2. The **10-year warranty/guarantee applies only to new builds**. Correct every public claim that suggests it covers all structural work, extensions, lofts, basements, brickwork, carpentry or every job. This includes homepage, about, areas, services, FAQ, terms, quote reassurance, shared facts, article content and generated metadata/structured/AI files. Be careful with non-new-build pages: remove a warranty claim there rather than imply those jobs are covered. Do not invent new warranty terms, definition of coverage or a guarantee for other work. Pete said 'warranty'; choose truthful wording that accurately reflects only the stated scope and don't invent a policy. Keep unrelated copy and design unchanged.
+3. Identify exact affected source-of-truth files and any generator/engine copy that could restore wrong claims. If the site's approved planner/SEO content owns a conflicting statement, report the owner and correct it through the appropriate authorised repository workflow rather than hiding the contradiction.
+4. Inspect Git state first (current main was clean at dispatch); read project rules/briefs. Build and run relevant gates, inspect rendered HTML across routes including service articles and metadata. Fix until these two factual points pass, preserving the existing visual treatment and form operation. Commit/push coherent changes to TheK-Dawg/site-buildingsforlifeltd-com `main`, read back remote SHA, deploy only the existing BFL test Worker and verify served pages/copy and noindex. Report precise residuals, not blanket certification. Avoid client-facing actions or public-domain changes.
