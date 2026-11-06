@@ -287,3 +287,31 @@ Brief: `STD-PAGES-ROUND-BRIEF.md`. This round started after the fix-2 session ha
 - `npm run build` gives 26 pages. `audit.mjs`: 0 fails. `token-gate.mjs`: PASS.
 - `check.mjs`, run locally and against the live worker: 25 routes × 2 widths, **0 fails**. This includes no underlined links, the footer, the sticky CTA on all 3 articles, and all 24 internal link targets returning 200. The new link crawl was added this round.
 - Click depth (a BFS crawl of `dist/` from `/`): every page is **1 click** from home, except `/thank-you/`, which is reached after a form submit.
+
+## TRUSTINDEX round (6 Nov 2026, brief TRUELINE-TRUSTINDEX-FOUR-WIDGETS)
+Vince's four TrueLine loaders, live on the preview Worker. Code commit `6fdf93b` (pushed, `git ls-remote` = `6fdf93b`).
+Worker `site-truelinefinishes`, version **`f723a343-eb10-4085-83c2-5ce97462be12`**. Rollback: `npx wrangler rollback 7165baf2-0046-4f39-9abb-91eca729d2e4`.
+The real domain is not attached (unchanged). Decisions: DECISIONS T1-T7.
+
+| Role | Id | Where |
+|---|---|---|
+| CORNER | `750bdd38520519524a16f32074e` | Every page (Base), fixed bottom-left; hidden below 1024px |
+| MAIN | `980be2f8585419540236d6075d0` | The reviews section, the first section after the hero, on every page except /reviews/ (incl. /home-2/, /home-3/, /thank-you/, 404) |
+| REVIEW PAGE | `77dcbf385600195a22468d47c59` | /reviews/ only, in the same section, instead of MAIN |
+| SLIMLINE | `c4b35ec858641953835667d83d1` | Every hero, and every quote-form section under the form heading (the same loader twice per page: each renders in place) |
+
+### Verification
+- `npm run build` (28 pages), `token-gate.mjs` PASS, `audit.mjs --selftest` (Trustindex gate: 10 cases, 8 broken on purpose, all caught), `audit.mjs` 0 fails. Breaking two real built pages on purpose (an id swapped on /about/, the form slimline removed on /reviews/) gave exactly those 2 fails.
+- `check.mjs` (Playwright Chromium, 1440×900 and 390×844) on 28 routes, including a missing URL for the 404 page: local **0 fails**; **live preview 0 fails**. On every route and both widths it checks that each slot holds its OWN rendered widget (by Trustindex id, height above 0, after a first interaction), that MAIN / REVIEW PAGE fills the reviews section and the order is hero > reviews, the slimline's place and text contrast (21:1 white on the black heroes, 17.4:1 / 13.4:1 on the variants' navy, 21:1 dark on the white form cards), that the corner is fixed bottom-left on desktop and not visible on mobile, and that the corner never obscures a control: no fixed control under it, no control that is covered at every scroll position where it is on screen, and no form field covered after the Quick Quote jump. Live, it also checks the Formlane form's five default fields.
+- Gate proof for `check.mjs`: a broken copy of `dist` (dark-ground override removed, corner mobile hiding removed, the /about/ form slimline removed, /reviews/ given MAIN instead of the grid) failed every one: black hero text 56/56, corner visible on mobile 28/28, the /about/ form slimline missing, and /reviews/ "reviews widget [main] (want one reviewPage)".
+- Served HTML read back on all 28 routes: one corner each; MAIN once on 27 and 0 on /reviews/; REVIEW PAGE once on /reviews/ only; a hero slimline on all of them; a form slimline on all 26 with a form. Robots: /home-2/ and /home-3/ `noindex, nofollow` meta, still out of the sitemap; whole preview host `X-Robots-Tag: noindex, nofollow`.
+- Network: every loader and `widgets/<id>/content.html` returns 200 from cdn.trustindex.io. Trustindex's own `companies/.../richsnippet.json` returns 404 (its rich-snippet add-on is not enabled for this account; nothing is injected). Page errors from our own code: none. The site has no CSP header, so no CSP conflicts.
+- `cookies.mjs` live (6 routes): no cookies on any domain and no first-party storage. The Cookie Policy now names Trustindex.
+
+### Remaining limitations / for the operator
+1. **Widget look is set in Trustindex, not here.** All four use Trustindex's light set. On dark grounds the site turns the slimline's text white with a CSS override, and that override depends on Trustindex's current class names. If Trustindex changes them, `check.mjs` fails on contrast rather than going quiet.
+2. **Live review text**: one Google review says "Brandon and his team". That is a customer's own words shown by the widget, not site copy (the no-team-claims audit covers site copy only).
+3. **Corner badge while scrolling**: on desktop it passes over left-column content (gallery thumbnails, card links) as the page scrolls. It never permanently hides a control (checked above), but it does sit over content for a moment.
+4. The article breadcrumb strip (D6) sits between the hero and the reviews section; reviews is still the first section.
+5. Chromium only (no Safari/Firefox run). `astro check` was not run: it needs `@astrojs/check` installed, and no install was approved.
+6. The 404 page now carries the slimline and the reviews section (brief: "every page"). Its only actions are still Home and Call.
