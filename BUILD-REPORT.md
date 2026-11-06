@@ -315,3 +315,83 @@ The real domain is not attached (unchanged). Decisions: DECISIONS T1-T7.
 4. The article breadcrumb strip (D6) sits between the hero and the reviews section; reviews is still the first section.
 5. Chromium only (no Safari/Firefox run). `astro check` was not run: it needs `@astrojs/check` installed, and no install was approved.
 6. The 404 page now carries the slimline and the reviews section (brief: "every page"). Its only actions are still Home and Call.
+
+## ROUND-3 (operator live review 3, 6 Nov 2026, brief TRUELINE-LIVE-REVIEW-ROUND3-20261106)
+Code commit `11ebe8c` (pushed, `git ls-remote` = `11ebe8c`). Worker `site-truelinefinishes`, version **`2bafda5d-4c81-487a-bf6e-5715f931414e`**.
+Rollback: `npx wrangler rollback f723a343-eb10-4085-83c2-5ce97462be12`. Real domain still not attached. Decisions: DECISIONS R3-1 to R3-11.
+States: built and checked (below), deployed to the preview Worker and read back. **Operator visual acceptance: NOT RUN (Vince's). The site is not accepted.**
+
+### Per point (the operator's attachment, in order)
+1. Quote-section review widget sat in the form card: **done**. It is now in the left column, under the selling points, above the Call / WhatsApp buttons, on every page (R3-2).
+2. Hero review widget under the buttons: **done**. It now sits under the paragraph and above the buttons in every hero (R3-1).
+3. Sidebar opens when the widget is clicked; other review section, /reviews/, company facts: **kept** as they are (approvals, no change).
+4. Service page: the lone "If a wall has already been rendered..." box and the unheaded sections: **done** on all five hubs (R3-4). The intro has an H2 and a photo, the cards have an H2, and the cards are H3s.
+5. Empty space after the five cards: **done**. Exterior and Commercial (the two hubs with 5 cards) get a photo + black "Who the Work Is For" card in that cell. The other three hubs have 6 cards and no gap.
+6. Gallery, other services, hub page, About: **kept**.
+7. Why the homepage shows 3 scrolling reviews and other pages show 6: **explained, no change** (R3-10). Every page except /reviews/ has the same MAIN slider, which fits as many cards as the width allows (measured 3 to 4 at desktop widths). /reviews/ has the REVIEW PAGE grid, which shows 6 at once. Cards per view and autoplay are Trustindex settings.
+8. Resources hub: **kept**.
+9. Articles: big gap after reviews, no quick rundown, gulf between body and sidebar, WhatsApp in "Need a quote?", breadcrumb gap: **done** (R3-5).
+10. "You didn't use the SEO engine" and three links in one paragraph: **confirmed true**. Links are now spread one per paragraph in the section each belongs to, and the five-link "More on..." line is removed. The articles are **still not engine output** and are not labelled as such (R3-6). **GATED**: see "Engine pass" below.
+11. Home 2 hero font: **Outfit**, self-hosted (R3-7).
+12. Home 2 review section background: **white**.
+13. Home 2 "Preparation First" gap / off-centre: **done**. The tall photo spans the copy's height, the copy is centred, and the trailing gap is reduced.
+14. "What Brandon Can Paint and Paper for You" copy: **DEFERRED by Vince**, kept unchanged.
+15. View All Services colour: **royal blue pill**.
+16. Where to Find Us not updated: **done**. Round-2 fix 7 (plain text, plain dotted list, no box, map kept) is now applied on Home 2, plus day-by-day hours.
+17. Specialist Wallcoverings / Interior and Exterior Work / Domestic and Commercial: **done**. All three are the same card, each with a full-width photo. The middle card gets `stone-farmhouse-0092`.
+18. "Rooms looking tired": **done**. The services are removed and the buttons are the hero's pair (chrome Quick Quote Online + white Call).
+19. Worth Reading button colour and unequal cards: **done** (royal pill; all three photos are the same height, so the cards are equal).
+20. Form too tall: **done**. The "Leave your name..." paragraph is removed and the contact card is moved to the top of the photo and made compact. The form still works (live check below).
+21. All Questions and Answers colour: **royal pill**.
+22. Footer bottom bar grey: **done** on Home 2 (and Home 3, same footer): now the deeper navy (ink-800).
+23. Hours as Google shows them: **done site-wide**. Every day is listed separately (R3-3).
+24. Home 3 review section with a second background: **done**. It is now the site's own Reviews section.
+25. "Branding Paper" section: **kept**.
+26. "The person you call..." CTA: **done**. It now has both buttons and one of Brandon's photos under the navy overlay.
+27. Preparation block with the circle: **kept**.
+28. Gallery: **done**. Added a visible heading plus a line saying it shows six photos, and a See the Gallery button. The six photos are the sharpest finished-work photos in the pool, measured, then checked by eye.
+29. "Homes and Business Premises Inside and Out": **done**. It lists all five services.
+30. Home 3 Worth Reading: **kept**.
+31. Home 3 form: **done**. WhatsApp button removed, the slimline moved to the left column, and "put the IRs correctly" read as **hours**, so the hours are now day by day (R3-3, interpretation recorded).
+
+### Engine pass (the three articles): GATED, needs Vince
+- Approved route: SEO engine (TheK-Dawg/claude-seo-engine) → drip D1 → drip worker (law: zeus-brain-2 `10-laws/sitebuilder-ARTICLE-PUBLISHING-LAW.md`). Before launch the seed exception allows baking articles into the build via `scripts/import-articles.mjs`. The importer's field contract matches a real engine output (rank mode only).
+- **Blockers:**
+  - The only engine checkout on this server (`/root/audit/claude-seo-engine`, HEAD 5 Sep) is stale. `git fetch` fails, and the newer engine (decisions dated Oct/Nov) is not here.
+  - There is no `clients/truelinefinishes.com` brief or matrix. The handoff (`site-planner/scripts/handoff.mjs`) has fields still marked KIERAN-INPUT-REQUIRED.
+  - Town research exists only for Baildon and Harrogate.
+  - Brain CANON still lists "Anthropic API key for article batches (operator owes)".
+- **Cost if run:**
+  - Writing: Anthropic Batch, Opus, measured about **$0.057 per article** (engine `docs/SPEC.md`), so about $0.17 for three.
+  - Research: Perplexity Sonar plus DataForSEO for SERP, PAA and town lookups for Guiseley and Ilkley, estimated **$0.10 to $0.30** (unverified). The engine needs a `--dry-run` max-spend figure before any paid call.
+- **Nothing was run, and no provider was called.** To proceed, Vince's GO is needed on: the spend cap, which engine copy to use, and the brief inputs.
+- **Security note for Vince:** the stale engine checkout's `origin` URL embeds a GitHub token (not repeated here). It should be rotated or removed.
+
+### Verification (after the final edits)
+- `npm run build` (28 pages), `token-gate.mjs` PASS, `audit.mjs --selftest` PASS (incl. the round-3 cases), `audit.mjs` 0 fails / 0 warnings. The address (street, postcode) is not in `dist`, and 07706 215917 is absent.
+- `check.mjs` local: 28 routes × 1440/390, the only fails were a 1px-high "See the Gallery" label on /home-3/ (fixed: descender lift). **Live** (`check.mjs <workers.dev>`): **28 routes × 2 widths, 0 fails**, 494 buttons measured, worst offset 1.5px; every Trustindex slot rendered its own widget; Formlane renders the five default fields on every page with a form.
+- Live read-back (curl): every route 200 (404 for a missing URL); /home-2/ and /home-3/ still `noindex, nofollow`, not in the sitemap and linked from nowhere; 0 "Monday to Friday" on any page; day-by-day hours on every page; Quick Rundown on the article; the sectors card on Exterior and Commercial; no WhatsApp in the article quote card; `/fonts/outfit-latin.woff2` 200 `font/woff2`; preview host `X-Robots-Tag: noindex, nofollow`.
+- Screenshots (before = live, round 2; after = local + live, 1440 and 390): `/tmp/tl-r3/before/`, `/tmp/tl-r3/after/`, `/tmp/tl-r3/live/` (full pages for all 28 routes).
+
+### Gates added (and proven by breaking them)
+- `audit.mjs` round-3 gates:
+  - hours are one row per day matching nap.json, and no "Monday to Friday" anywhere;
+  - the hero slimline follows the paragraph and sits before the buttons;
+  - the quote slimline sits between the selling points and the form card;
+  - no WhatsApp in the article quote card or the Home 3 form;
+  - articles have a Quick Rundown, no paragraph with more than one internal link, no link-dump line, and breadcrumbs between reviews and the article;
+  - service intro has an H2 and a photo, the cards have an H2, and the card count is even;
+  - Home 2 and Home 3 structure.
+- `--selftest` covers 10 broken synthetic cases, all caught. A mutated copy of the real `dist` with 8 breaks gave exactly those 8 categories of fail (10 lines) and nothing else.
+- `check.mjs` rendered gates:
+  - hero slimline geometry (between the paragraph and the buttons; gaps 16 and 24px);
+  - quote slimline left of the card on desktop and above it on mobile, never inside it;
+  - footer hours day by day;
+  - Home 2 h1 in loaded Outfit, royal buttons, navy footer bar, white reviews background, equal resource-card heights, full-width tile photos.
+- The rendered gates were run on a broken copy (`CHECK_ROUTES` limits the routes): 10 of 10 expected fails, nothing else.
+
+### Not changed / for Vince
+- The shared quote section still has a "WhatsApp Brandon" button beside Call (not flagged on the main pages). **NEEDS VINCE**: remove it everywhere? (R3-11)
+- The Exterior Painting "how a job runs" step 1 still says "use the quote form (choose Exterior work)". The default form has no such choice since round 2. Out of scope this round (minimal-change law); a one-line fix on his word.
+- The Commercial intro photo is `office-prepared-0172` (a prepared office) because the only finished office photos are already the hero and the first card.
+- Chromium only. `astro check` not run (`@astrojs/check` not installed; no install approved).
