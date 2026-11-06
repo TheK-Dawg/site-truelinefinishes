@@ -1,6 +1,7 @@
 ---
 /**
- * SEO ARTICLE (plan, Layout): a header band; breadcrumbs (under the hero, never in it); the WHITE
+ * SEO ARTICLE (plan, Layout): a header band; the reviews section; breadcrumbs (round 3: directly
+ * above the article, never in the hero); a Quick Rundown box at the top of the body; the WHITE
  * reading column (#FFFFFF, ink text) and a sidebar with "On this page" and a "Need a quote?" card;
  * one real pool photo directly above every content H2 (FAQ excluded); NO YouTube embed (operator
  * round 2, fix 13: every hand-placed video came off; the rotation rule stays in articles.ts for
@@ -51,7 +52,8 @@ const sections = parts.map((p, n) => {
   const fig = img ? `<figure class="art__fig"><img src="${img.src}" alt="${img.alt}" width="${img.width}" height="${img.height}" loading="lazy" decoding="async" /></figure>` : '';
   return `${fig}${p.replace(/^<h2[^>]*>/, `<h2 id="${id}">`)}`;
 });
-const body = `${intro}${sections.join('\n')}`;
+// House law (30 Sep): no left-border accents. The engine's takeaways box carries an inline border-left; strip it at render.
+const body = `${intro}${sections.join('\n')}`.replace(/\s*border-left:[^;"]*;?/gi, '');
 
 const sameHub = articles.filter((a) => a.hub === article.hub && a.slug !== article.slug).slice(0, 6);
 const sameTown = articles.filter((a) => a.town === article.town && a.slug !== article.slug);
@@ -70,13 +72,19 @@ const schema = [
 ---
 <Base title={article.metaTitle} description={article.description} page={`article-${article.slug}`} schema={schema} ogImage={hero.src} noindex={article.status !== 'published'}>
   <PageHero h1={article.title} lead={article.summary} image={hero} />
+  <Reviews tight />
   <nav class="art__crumbs container" aria-label="Breadcrumb">
     <ol><li><a href="/">Home</a></li><li><a href={`/${svc.slug}/`}>{svc.name}</a></li><li><span aria-current="page">{article.title}</span></li></ol>
   </nav>
-  <Reviews />
   <section class="art section section-article-body on-white" data-section="article-body">
     <div class="art__inner container">
       <article class="art__main prose">
+        {article.rundown && article.rundown.length > 0 && (
+          <div class="art__rd" data-rundown>
+            <p class="art__rd-h">Quick Rundown</p>
+            <ul>{article.rundown.map((r) => <li><Icon name="check" size={18} /><span set:html={r} /></li>)}</ul>
+          </div>
+        )}
         <Fragment set:html={body} />
         {article.faqs.length > 0 && (
           <section class="art__faq" aria-labelledby="faq">
@@ -84,7 +92,6 @@ const schema = [
             {article.faqs.map((f) => <details class="art__q" open><summary>{f.q}</summary><div set:html={f.a} /></details>)}
           </section>
         )}
-        <p class="art__next">More on <a href={`/${svc.slug}/`} data-link="hub">{svc.name.toLowerCase()} from Brandon</a>, every <a href="/resources/">TrueLine Finishes resource</a> and the <a href="/faq/">frequently asked questions</a>. Ready to go? Send a <a href="#contact">Quick Quote Online</a> or see <a href="/contact/">Brandon's contact details</a>.</p>
       </article>
       <aside class="art__aside">
         {toc.length > 0 && (
@@ -97,7 +104,6 @@ const schema = [
           <p class="art__cta-h">Need a quote?</p>
           <p>Get a free quotation: call Brandon on <a href={business.phoneHref} data-cta="article-aside-call">{business.phone}</a> or use the quote form.</p>
           <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote"><span class="btn__t">Quick Quote Online</span></a>
-          <a href={business.whatsappHref} class="art__wa" target="_blank" rel="noopener" data-cta="article-aside-whatsapp"><Icon name="whatsapp" size={18} /> WhatsApp Brandon</a>
         </div>
       </aside>
     </div>
@@ -115,21 +121,27 @@ const schema = [
 </Base>
 
 <style>
-  .art__crumbs { padding-top: var(--space-5); padding-bottom: var(--space-1); }
+  /* Round 3 (operator: big gaps around the breadcrumbs and before the article): the crumbs sit
+     directly above the article, under the reviews section, with tight spacing either side. */
+  .art__crumbs { padding-top: 0; padding-bottom: 0; }
+  .art.section { padding-top: var(--space-6); }
   .art__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; }
   .art__crumbs li + li::before { content: '/'; margin-right: var(--space-3); color: var(--text-muted); }
   .art__crumbs a { color: var(--brand-text); }
   .art__crumbs [aria-current] { color: var(--text-primary); }
-  .art__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--aside-w); gap: var(--space-16); align-items: start; }
-  .art__main { max-width: 72ch; background: var(--bg-card); color: var(--text-primary); }
+  /* Round 3: the body runs the full column up to the sidebar (no 72ch cap leaving a gulf). */
+  .art__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--aside-w); gap: var(--space-10); align-items: start; }
+  .art__main { background: var(--bg-card); color: var(--text-primary); }
+  .art__rd { margin-bottom: var(--space-8); padding: var(--space-6) var(--space-8); background: var(--bg-panel); border: 1px solid var(--border-default); }
+  .art__rd-h { font-family: var(--font-heading); font-size: var(--fs-xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-heading); margin-bottom: var(--space-3); }
+  .art__rd ul { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
+  .art__rd li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; }
+  .art__rd :global(.icon) { color: var(--brand-primary); margin-top: 3px; }
   .art__main :global(h2) { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
   .art__main :global(.art__fig) { margin: 2em 0 0; }
   .art__main :global(.art__fig + h2) { margin-top: 0.7em; }
   .art__main :global(.art__fig img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
   .art__faq { margin-top: 2.4em; }
-  .art__next { margin-top: 2em; font-weight: var(--fw-semibold); }
-  .art__next a { color: var(--brand-text); }
-  .art__next a:hover { color: var(--brand-primary); }
   .art__q { border-top: 1px solid var(--border-default); padding: var(--space-4) 0; }
   .art__q summary { cursor: pointer; font-weight: var(--fw-semibold); color: var(--text-heading); }
   .art__q div { margin-top: var(--space-2); }
@@ -144,8 +156,6 @@ const schema = [
   .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-inverse); }
   .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); }
   .art__cta .btn { width: 100%; }
-  .art__wa { display: inline-flex; gap: var(--space-2); align-items: center; }
-  .art__wa :global(.icon) { color: var(--whatsapp); }
   .art__rel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-10); }
   .art__rel-h { font-size: var(--fs-2xl); margin-bottom: var(--space-4); }
   .art__rel ul { list-style: none; padding: 0; display: grid; gap: var(--space-2); }

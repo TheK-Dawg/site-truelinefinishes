@@ -3,7 +3,8 @@
  * HERO, ONE PATTERN ON EVERY PAGE (Buildings for Life hero; operator round 2, 5 Nov 2026: the
  * homepage hero "is perfect", use that same hero on every page). Full-bleed photograph of
  * Brandon's own work under the black overlay; H1, lead, Quick Quote Online (scrolls to the quote
- * form section at the END of the page) + the Call button, then the slim Trustindex slot.
+ * form section at the END of the page) + the Call button. The slim Trustindex slot sits between
+ * the lead and the buttons (operator round 3, 6 Nov 2026: "above the buttons, right under the paragraph").
  * Home (`compact` off) adds the three glass info cards on the bottom edge. Sub-pages use
  * `compact`: the same background, overlay, container and headline placement, a smaller height,
  * no info cards. Inner pages reach it through PageHero.astro.
@@ -24,13 +25,13 @@ const { h1, lead, image, compact = false, formless = false, showCta = true } = A
     <div class="hero__copy">
       <h1 class="hero__h1">{h1}</h1>
       <p class="hero__lead">{lead}</p>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" class="hero__ti" />
       {showCta && (
         <div class="hero__actions">
           <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary hero__btn" data-cta="hero-quote"><span class="btn__t">Quick Quote Online</span></a>
           <CallButton cta="hero-call" class="hero__btn" />
         </div>
       )}
-      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" class="hero__ti" />
     </div>
     {!compact && (
       <ul class="hero__cards">
@@ -50,11 +51,12 @@ const { h1, lead, image, compact = false, formless = false, showCta = true } = A
   .hero__copy { max-width: var(--copy-max); }
   .hero__h1 { color: var(--text-inverse); font-size: var(--fs-6xl); line-height: 1.08; margin-bottom: var(--space-6); }
   .hero--compact .hero__h1 { font-size: var(--fs-5xl); }
-  .hero__lead { font-size: var(--fs-lg); max-width: 56ch; margin-bottom: var(--space-8); }
+  .hero__lead { font-size: var(--fs-lg); max-width: 56ch; margin-bottom: var(--space-4); }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  /* The slimline widget, 16px under the buttons (house spacing law: comfortable, not a chasm). */
-  .hero__copy :global(.hero__ti) { margin-top: var(--space-4); }
+  /* The slimline widget directly under the paragraph, ABOVE the buttons (operator round 3): the lead's own
+     bottom margin is 16px so paragraph, widget and buttons read as one block. */
+  .hero__copy :global(.hero__ti) { margin-bottom: var(--space-6); }
   .hero__cards { list-style: none; padding: 0; margin-top: var(--space-24); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); }
   .hero__card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-8) var(--space-6); background: var(--glass-card); border: 1px solid var(--border-inverse); backdrop-filter: blur(4px); }
   .hero__card--on { border-color: var(--accent-on-dark); }
@@ -67,7 +69,7 @@ const { h1, lead, image, compact = false, formless = false, showCta = true } = A
     .hero { padding-top: calc(var(--header-h) + var(--space-10)); }
     .hero--compact { padding-top: calc(var(--header-h) + var(--space-10)); padding-bottom: var(--space-12); }
     .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-3xl); }
-    .hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
+    .hero__lead { font-size: var(--fs-base); }
     .hero__actions { gap: var(--space-3); }
     .hero__actions :global(.hero__btn) { width: 100%; }
     .hero__card { padding: var(--space-5) var(--space-4); }

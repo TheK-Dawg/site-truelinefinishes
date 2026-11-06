@@ -31,6 +31,8 @@ const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); if
 walk(dist);
 const NOT_FOUND = '/404-check-trustindex/';
 routes.push(NOT_FOUND);
+// CHECK_ROUTES=/a/,/b/ limits the run to those routes (gate proofs on a broken copy); default: every route.
+if (process.env.CHECK_ROUTES) { const keep = process.env.CHECK_ROUTES.split(','); routes.splice(0, routes.length, ...routes.filter((x) => keep.includes(x))); }
 let base = live, server;
 if (!live) {
   const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.xml': 'application/xml', '.ico': 'image/x-icon' };
@@ -103,7 +105,28 @@ for (const vp of sizes) {
         h1s, ctaTop: ctaB ? ctaB.top + window.scrollY : null, ctaVisible: vis(cta),
         burger: vis(document.querySelector('[data-burger]')), nav: vis(document.querySelector('.hd__nav')), mcall: vis(document.querySelector('.hd__mcall')),
         wa: vis(wa), waRight: waB ? window.innerWidth - waB.right : null, waBottom: waB ? window.innerHeight - waB.bottom : null,
-        hours: /Monday to Friday/.test(ft) && /7am to 7pm/.test(ft) && /8am to 6pm/.test(ft),
+        // ROUND 3: hours day by day (Monday ... Sunday, one row each), never "Monday to Friday" anywhere on the page.
+        hours: (() => { const dl = document.querySelector('footer dl[data-hours]'); const days = dl ? [...dl.querySelectorAll('dt')].filter(vis).map((d) => d.innerText.trim()) : []; return JSON.stringify(days) === JSON.stringify(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']) && !/Monday to Friday|Saturday and Sunday/.test(document.body.innerText); })(),
+        // ROUND 3: geometry of the slimlines. Hero: below the paragraph, above the buttons. Quote section:
+        // in the left copy column (left of the form card on desktop, above it on mobile), never inside the card.
+        r3: (() => {
+          const out = {};
+          const h = document.querySelector('[data-section="hero"]'); const hs = h?.querySelector('[data-trustindex-slot="slim-hero"]');
+          const lead = hs?.previousElementSibling; const btn = h?.querySelector('a.btn');
+          if (hs && btn) { const sb = hs.getBoundingClientRect(); out.hero = { leadAbove: !!lead && lead.tagName === 'P' && lead.getBoundingClientRect().bottom <= sb.top + 1, gapLead: lead ? Math.round(sb.top - lead.getBoundingClientRect().bottom) : null, btnBelow: btn.getBoundingClientRect().top >= sb.bottom - 1, gapBtn: Math.round(btn.getBoundingClientRect().top - sb.bottom) }; }
+          const q = document.querySelector('[data-section="quote-form"]'); const qs = q?.querySelector('[data-trustindex-slot="slim-form"]'); const card = q?.querySelector('.qf__card, .dm-qf__card');
+          if (qs && card) { const sb = qs.getBoundingClientRect(); const cb = card.getBoundingClientRect(); out.form = { inCard: card.contains(qs), leftOfCard: sb.right <= cb.left + 1, aboveCard: sb.bottom <= cb.top + 1 }; }
+          if (location.pathname === '/home-2/') {
+            const ff = getComputedStyle(document.querySelector('h1')).fontFamily; out.font = { family: ff, loaded: document.fonts.check('500 40px Outfit') };
+            out.royal = ['services-all', 'articles-all', 'faq-all'].map((c) => getComputedStyle(document.querySelector(`[data-cta="${c}"]`)).backgroundColor);
+            out.bar = getComputedStyle(document.querySelector('.ft__bar')).backgroundColor;
+            out.rvBg = getComputedStyle(document.querySelector('[data-section="reviews"]')).backgroundImage + '|' + getComputedStyle(document.querySelector('[data-section="reviews"]')).backgroundColor;
+            const cards = [...document.querySelectorAll('.fx-ap__card')].map((c) => Math.round(c.getBoundingClientRect().height)); out.apHeights = cards;
+            const imgs = [...document.querySelectorAll('.fx-ap__img')].map((c) => Math.round(c.getBoundingClientRect().height)); out.apImgs = imgs;
+            const tl = [...document.querySelectorAll('.fx-tl__card')].map((c) => { const i = c.querySelector('.fx-tl__img'); return i ? Math.round(c.getBoundingClientRect().width - i.getBoundingClientRect().width) : -1; }); out.tlGap = tl;
+          }
+          return out;
+        })(),
         ti: (() => {
           const lum = (c) => { const v = (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
           const bgOf = (el) => { for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; const a = (c.match(/[\d.]+/g) || [])[3]; if (c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent' && (a === undefined || +a > 0.5)) return c; } return 'rgb(255, 255, 255)'; };
@@ -158,7 +181,19 @@ for (const vp of sizes) {
       if (m.burger || !m.nav) fails.push(`${tag}: desktop header wrong`);
       if (m.wa) fails.push(`${tag}: WhatsApp float visible on desktop`);
     }
-    if (!m.hours) fails.push(`${tag}: footer hours missing`);
+    if (!m.hours) fails.push(`${tag}: footer hours not day by day (Monday ... Sunday), or "Monday to Friday" on the page`);
+    // ROUND 3 rendered gates.
+    if (m.r3.hero && (!m.r3.hero.leadAbove || !m.r3.hero.btnBelow || m.r3.hero.gapLead > 24 || m.r3.hero.gapBtn > 32)) fails.push(`${tag}: hero slimline not between the paragraph and the buttons ${JSON.stringify(m.r3.hero)}`);
+    if (m.r3.form && (m.r3.form.inCard || (vp.name === 'desktop' ? !m.r3.form.leftOfCard : !m.r3.form.aboveCard))) fails.push(`${tag}: quote-section slimline not in the left column ${JSON.stringify(m.r3.form)}`);
+    if (r === '/home-2/') {
+      const x = m.r3;
+      if (!/^"?Outfit/.test(x.font.family) || !x.font.loaded) fails.push(`${tag}: home-2 headings not in Outfit ${JSON.stringify(x.font)}`);
+      if (x.royal.some((c) => c !== 'rgb(1, 82, 155)')) fails.push(`${tag}: home-2 View All / All Resources / All Questions buttons not royal blue ${JSON.stringify(x.royal)}`);
+      if (x.bar !== 'rgb(16, 35, 58)') fails.push(`${tag}: home-2 footer legal bar ${x.bar} (want the navy ink-800)`);
+      if (x.rvBg !== 'none|rgb(255, 255, 255)') fails.push(`${tag}: home-2 reviews background ${x.rvBg} (want white)`);
+      if (vp.name === 'desktop' && (Math.max(...x.apHeights) - Math.min(...x.apHeights) > 2 || Math.max(...x.apImgs) - Math.min(...x.apImgs) > 1)) fails.push(`${tag}: home-2 resource cards not equal height ${JSON.stringify([x.apHeights, x.apImgs])}`);
+      if (x.tlGap.some((g) => g < 0 || g > 32)) fails.push(`${tag}: home-2 tiles: photo missing or not full width ${JSON.stringify(x.tlGap)}`);
+    }
     if (m.underlined.length) fails.push(`${tag}: underlined links ${JSON.stringify(m.underlined.slice(0, 5))}`);
     if (m.heroBad.length) fails.push(`${tag}: hero carries ${m.heroBad.join(', ')}`);
     if (m.formInHero) fails.push(`${tag}: quote form inside the hero`);

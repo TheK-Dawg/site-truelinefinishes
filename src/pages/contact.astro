@@ -10,14 +10,15 @@ import Reviews from '../components/Reviews.astro';
 import MapEmbed from '../components/MapEmbed.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
-import { business, hours, image } from '../data/site';
+import { business, image } from '../data/site';
+import Hours from '../components/Hours.astro';
 const pageUrl = `${business.url}/contact/`;
 const schema = [
   { '@type': 'ContactPage', '@id': `${pageUrl}#contact-page`, url: pageUrl, name: `Contact ${business.name}`, about: { '@id': `${business.url}/#business` } },
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Contact', item: pageUrl }] },
 ];
 ---
-<Base title="Contact Brandon About Painting and Decorating | TrueLine Finishes" description="Call Brandon on 07949 484274, email Brandon@truelinefinishes.com, WhatsApp, or use the quote form. Open Monday to Friday 7am to 7pm, Saturday and Sunday 8am to 6pm." page="contact" schema={schema}>
+<Base title="Contact Brandon About Painting and Decorating | TrueLine Finishes" description="Call Brandon on 07949 484274, email Brandon@truelinefinishes.com, WhatsApp, or use the quote form. Open seven days a week." page="contact" schema={schema}>
   <PageHero h1="A Room or a House That Needs Decorating? Talk to Brandon" lead="Get a free quotation: call Brandon on 07949 484274 or use the quote form. A call is a direct line to Brandon." image={image('white-sash-window-stone-0029')} />
   <Reviews />
   <section class="ct section section-nap" data-section="nap">
@@ -27,7 +28,7 @@ const schema = [
         <li class="ct__card ct__card--on on-dark"><span class="ct__ic"><Icon name="phone" size={24} /></span><h3>Call Brandon</h3><p><a href={business.phoneHref} data-cta="contact-call">{business.phone}</a></p></li>
         <li class="ct__card"><span class="ct__ic"><Icon name="mail" size={24} /></span><h3>Email</h3><p><a href={`mailto:${business.email}`} data-cta="contact-email">{business.email}</a></p></li>
         <li class="ct__card"><span class="ct__ic"><Icon name="whatsapp" size={24} /></span><h3>WhatsApp</h3><p><a href={business.whatsappHref} target="_blank" rel="noopener" data-cta="contact-whatsapp">Message Brandon on WhatsApp</a></p></li>
-        <li class="ct__card" id="hours"><span class="ct__ic"><Icon name="clock" size={24} /></span><h3>Opening hours</h3>{hours.map((h) => <p>{h.days}<br /><strong>{h.time}</strong></p>)}</li>
+        <li class="ct__card" id="hours"><span class="ct__ic"><Icon name="clock" size={24} /></span><h3>Opening hours</h3><Hours class="ct__hrs" /></li>
       </ul>
       <div class="ct__map" data-motion="reveal"><MapEmbed /></div>
     </div>

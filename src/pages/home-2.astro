@@ -20,7 +20,8 @@ import Base from '../layouts/Base.astro';
 import TrustindexSlot from '../components/TrustindexSlot.astro';
 import Icon from '../components/Icon.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { business, seo, image, services, mainPlaces, hours } from '../data/site';
+import Hours from '../components/Hours.astro';
+import { business, seo, image, services, mainPlaces } from '../data/site';
 import { articles, articleUrl } from '../data/articles';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
@@ -43,7 +44,7 @@ const usps = [
 const chips = ["Over eight years' experience", 'Preparation on every job', 'Floors and furniture protected', 'A free quotation', 'Brandon on every job', 'Fully insured'];
 const tiles = [
   { img: image('leaf-pattern-feature-wall-0026'), h3: 'Specialist Wallcoverings', html: 'Feature walls and whole rooms in paper, hung on walls prepared properly first. See <a href="/wallpapering/" data-link="tile">Wallpapering</a>.' },
-  { img: null, h3: 'Interior & Exterior Work', html: 'Walls, ceilings, stairs and woodwork inside with <a href="/interior-painting/" data-link="tile">Interior Painting</a>; masonry, windows and doors outside with <a href="/exterior-painting/" data-link="tile">Exterior Painting</a>.' },
+  { img: image('stone-farmhouse-0092'), h3: 'Interior & Exterior Work', html: 'Walls, ceilings, stairs and woodwork inside with <a href="/interior-painting/" data-link="tile">Interior Painting</a>; masonry, windows and doors outside with <a href="/exterior-painting/" data-link="tile">Exterior Painting</a>.' },
   { img: image('office-navy-feature-wall-0178'), h3: 'Domestic & Commercial', html: 'Homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses. See <a href="/commercial-painting-and-decorating/" data-link="tile">Commercial Painting and Decorating</a>.' },
 ];
 const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
@@ -59,11 +60,11 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       <div class="fx-hero__copy">
         <h1 class="fx-hero__h1">Tired Rooms? Painting and Decorating by Brandon</h1>
         <p class="fx-hero__lead">Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation.</p>
+        <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="fx-hero__ti" />
         <div class="fx-hero__actions">
           <a href="#contact" class="btn fx-pill fx-pill--chrome" data-cta="hero-quote"><span class="fx-pill__dot"><Icon name="arrow" size={14} /></span><span class="btn__t">Quick Quote Online</span></a>
           <a href={business.phoneHref} class="btn fx-pill fx-pill--white" data-cta="hero-call"><span class="fx-pill__dot fx-pill__dot--ink"><Icon name="phone" size={14} /></span><span class="btn__t">Call {business.phone}</span></a>
         </div>
-        <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="fx-hero__ti" />
       </div>
       <ul class="fx-hero__bar">
         {usps.map((u) => (
@@ -120,7 +121,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
           </li>
         ))}
       </ul>
-      <div class="fx-center"><a href="/services/" class="btn fx-pill fx-pill--sky" data-cta="services-all"><span class="btn__t">View All Services</span></a></div>
+      <div class="fx-center"><a href="/services/" class="btn fx-pill fx-pill--royal" data-cta="services-all"><span class="btn__t">View All Services</span></a></div>
     </div>
   </section>
 
@@ -142,25 +143,27 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     </div>
   </section>
 
-  <!-- WHERE TO FIND US (Flexora "Common Areas" tinted panel) + the strip under it (here: opening hours, where the reference lists insurers). -->
+  <!-- WHERE TO FIND US: the operator's round-2 fix 7, now applied here too (round 3: "you didn't change it on this one"):
+       plain text on the page, the places as a plain dotted list, no box, border or background; the map kept.
+       Opening hours day by day, as the Google listing shows them (round 3). -->
   <section class="fx-sec fx-ar" data-section="areas">
-    <div class="container">
-      <div class="fx-ar__panel">
-        <div class="fx-ar__copy" data-motion="reveal">
-          <h2 class="fx-h2">Where to Find Us</h2>
-          <p>Painting and decorating for homes and businesses in {mainPlaces.slice(0, -1).join(', ')} and {mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.</p>
-          <ul class="fx-tags">
-            {mainPlaces.map((p) => <li class="fx-tag"><Icon name="pin" size={14} />{p}</li>)}
-          </ul>
-          <a href="#contact" class="btn fx-pill fx-pill--white" data-cta="areas-quote"><span class="btn__t">Quick Quote Online</span></a>
+    <div class="container fx-ar__grid">
+      <div class="fx-ar__copy" data-motion="reveal">
+        <h2 class="fx-h2">Where to Find Us</h2>
+        <p>Painting and decorating for homes and businesses in {mainPlaces.slice(0, -1).join(', ')} and {mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.</p>
+        <ul class="fx-ar__places">
+          {mainPlaces.map((p) => <li>{p}</li>)}
+        </ul>
+        <div class="fx-ar__hours">
+          <p class="fx-ar__hours-h"><Icon name="clock" size={18} /> Opening hours</p>
+          <Hours class="fx-ar__hrs" />
         </div>
-        <div class="fx-ar__map"><MapEmbed /></div>
+        <div class="fx-btns">
+          <a href="#contact" class="btn fx-pill fx-pill--royal" data-cta="areas-quote"><span class="btn__t">Quick Quote Online</span></a>
+          <a href={business.phoneHref} class="btn fx-pill fx-pill--line" data-cta="areas-call"><Icon name="phone" size={16} /><span class="btn__t">Call {business.phone}</span></a>
+        </div>
       </div>
-      <div class="fx-ar__strip">
-        <span class="fx-ar__strip-h"><span class="fx-ar__strip-ic"><Icon name="clock" size={18} /></span>Opening hours</span>
-        {hours.map((h) => <span class="fx-ar__strip-i"><strong>{h.days}</strong> {h.time}</span>)}
-        <a href={business.phoneHref} class="fx-ar__strip-phone" data-cta="areas-call"><Icon name="phone" size={16} />{business.phone}</a>
-      </div>
+      <div class="fx-ar__map"><MapEmbed /></div>
     </div>
   </section>
 
@@ -169,30 +172,28 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     <div class="container">
       <ul class="fx-tl__grid">
         {tiles.map((t, i) => (
-          <li class:list={['fx-tl__card', !t.img && 'fx-tl__card--grad']} data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+          <li class="fx-tl__card" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
+            <div class="fx-tl__img"><img src={t.img.sm} alt={t.img.alt} width={t.img.width} height={t.img.height} loading="lazy" decoding="async" /></div>
             <h3 class="fx-tl__h3">{t.h3}</h3>
             <p class="fx-tl__p" set:html={t.html} />
-            {t.img && <div class="fx-tl__img"><img src={t.img.sm} alt={t.img.alt} width={t.img.width} height={t.img.height} loading="lazy" decoding="async" /></div>}
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <!-- PHOTO BANNER (Flexora "Are You Struggling with:"): rounded full-width photo, big serif line, label chips, two pills. -->
+  <!-- PHOTO BANNER (Flexora "Are You Struggling with:"): a call to action only (round 3: the service chips came off),
+       with the hero's own button pair (chrome Quick Quote Online + white Call). -->
   <section class="fx-sec fx-bn on-dark" data-section="cta-banner">
     <div class="container">
       <div class="fx-bn__card">
         <img class="fx-bn__bg" src={bannerImg.src} alt="" width={bannerImg.width} height={bannerImg.height} loading="lazy" decoding="async" />
         <div class="fx-bn__copy" data-motion="reveal">
           <p class="fx-bn__big">Rooms looking tired, or the outside letting the house down?</p>
-          <ul class="fx-bn__chips">
-            {services.slice(1).map((s) => <li><Icon name={s.icon} size={14} />{s.name}</li>)}
-          </ul>
         </div>
         <div class="fx-bn__actions">
-          <a href={business.phoneHref} class="btn fx-pill fx-pill--glass" data-cta="banner-call"><Icon name="phone" size={16} /><span class="btn__t">{business.phone}</span></a>
-          <a href="#contact" class="btn fx-pill fx-pill--white" data-cta="banner-quote"><span class="btn__t">Quick Quote Online</span></a>
+          <a href="#contact" class="btn fx-pill fx-pill--chrome" data-cta="banner-quote"><span class="fx-pill__dot"><Icon name="arrow" size={14} /></span><span class="btn__t">Quick Quote Online</span></a>
+          <a href={business.phoneHref} class="btn fx-pill fx-pill--white" data-cta="banner-call"><span class="fx-pill__dot fx-pill__dot--ink"><Icon name="phone" size={14} /></span><span class="btn__t">Call {business.phone}</span></a>
         </div>
       </div>
     </div>
@@ -203,7 +204,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     <div class="container">
       <div class="fx-head fx-head--row" data-motion="reveal">
         <h2 class="fx-h2">Worth Reading Before the Dust Sheets Go Down</h2>
-        <a href="/resources/" class="btn fx-pill fx-pill--sky" data-cta="articles-all"><span class="btn__t">All Resources</span></a>
+        <a href="/resources/" class="btn fx-pill fx-pill--royal" data-cta="articles-all"><span class="btn__t">All Resources</span></a>
       </div>
       <ul class="fx-ap__grid">
         {list.map((a, i) => {
@@ -227,7 +228,6 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
         <div class="fx-qf__panel on-dark">
           <h2 class="fx-h2">Tell Brandon About the Job</h2>
           <TrustindexSlot role="slimline" place="slim-form" ground="dark" class="fx-qf__ti" />
-          <p class="fx-qf__lead">Leave your name, email, phone number and postcode, with a line or two about the job. Brandon will talk it through with you and give you a free quotation.</p>
           <div class="fx-qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
             <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
           </div>
@@ -242,7 +242,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
             </div>
             <div class="fx-qf__glass-cols">
               <div><span class="fx-qf__k">WhatsApp</span><a href={business.whatsappHref} class="fx-qf__wa" target="_blank" rel="noopener" data-cta="form-whatsapp">Message Brandon</a></div>
-              <div><span class="fx-qf__k">Opening hours</span>{hours.map((h) => <span class="fx-qf__h">{h.days}: {h.time}</span>)}</div>
+              <div><span class="fx-qf__k">Opening hours</span><Hours class="fx-qf__hrs" /></div>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       <div class="fx-fq__head" data-motion="reveal">
         <h2 class="fx-h2">Questions People Ask Before They Call</h2>
         <p class="fx-lead">Straight answers about the work, the quotation and who does the job.</p>
-        <a href="/faq/" class="btn fx-pill fx-pill--sky" data-cta="faq-all"><span class="btn__t">All Questions and Answers</span></a>
+        <a href="/faq/" class="btn fx-pill fx-pill--royal" data-cta="faq-all"><span class="btn__t">All Questions and Answers</span></a>
       </div>
       <div class="fx-fq__list">
         {faqs.map((f, i) => (
@@ -294,7 +294,9 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     --input-radius: var(--radius-md);
   }
   body[data-page='home-2'] h1, body[data-page='home-2'] h2, body[data-page='home-2'] h3, body[data-page='home-2'] h4 { text-transform: none; letter-spacing: 0; font-variant-caps: normal; }
-  body[data-page='home-2'] h1, body[data-page='home-2'] h2 { font-weight: var(--fw-regular); }
+  body[data-page='home-2'] h1, body[data-page='home-2'] h2 { font-weight: var(--fw-medium); }
+  /* Round 3: the footer's legal bar on the navy footer is a deeper navy, not the main site's light glass grey. */
+  body[data-page='home-2'] .ft__bar { background: var(--v-ink-800); }
   body[data-page='home-2'] h3, body[data-page='home-2'] h4 { font-family: var(--font-family); font-weight: var(--fw-semibold); }
   body[data-page='home-2'] .btn { text-transform: none; letter-spacing: 0; font-weight: var(--fw-semibold); }
   /* The logo carries its own black ground: lighten lets the navy header show through it. */
@@ -324,14 +326,10 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-pill--white:hover { background: var(--v-mist-100); }
   .fx-pill--royal { background: var(--v-royal); color: var(--v-white); }
   .fx-pill--royal:hover { background: var(--v-royal-hover); }
-  .fx-pill--sky { background: var(--v-sky-100); color: var(--v-ink-900); }
-  .fx-pill--sky:hover { background: var(--v-mist-200); }
   .fx-pill--line { background: var(--v-white); color: var(--v-ink-900); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
   .fx-pill--line:hover { box-shadow: inset 0 0 0 1px var(--v-royal); }
-  .fx-pill--glass { background: var(--v-glass-light); color: var(--v-white); box-shadow: inset 0 0 0 1px var(--v-glass-line); backdrop-filter: blur(6px); }
   /* Mixed-case labels with descenders: lift the cap box 1px so cap top and descender bottom balance (scripts/check.mjs). */
   .fx-pill--desc .btn__t { transform: translateY(-1px); }
-  .fx-pill--glass :global(.icon) { color: var(--v-chrome); }
 
   /* HERO */
   .fx-hero { padding: calc(var(--header-h) + var(--space-5)) var(--space-5) 0; background: var(--v-white); }
@@ -340,9 +338,9 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-hero__card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-centre); }
   .fx-hero__copy { max-width: calc(var(--space-30) * 7); text-align: center; display: flex; flex-direction: column; align-items: center; padding-bottom: var(--space-12); }
   .fx-hero__h1 { color: var(--v-white); font-size: var(--fs-8xl); line-height: 1.04; margin-bottom: var(--space-6); }
-  .fx-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 60ch; margin-bottom: var(--space-8); }
+  .fx-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 60ch; margin-bottom: var(--space-4); }
   .fx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
-  .fx-hero__copy :global(.fx-hero__ti) { margin-top: var(--space-5); }
+  .fx-hero__copy :global(.fx-hero__ti) { margin-bottom: var(--space-6); }
   /* The cut-out bar: a white tab rising out of the bottom edge with concave shoulders (Flexora's signature shape). */
   .fx-hero__bar { position: relative; list-style: none; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); width: min(100%, calc(var(--space-30) * 8)); padding: var(--space-6) var(--space-10) var(--space-5); background: var(--v-white); border-radius: var(--v-radius-lg) var(--v-radius-lg) 0 0; }
   .fx-hero__bar::before, .fx-hero__bar::after { content: ''; position: absolute; bottom: 0; width: var(--v-radius-lg); height: var(--v-radius-lg); }
@@ -354,17 +352,23 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-hero__ic { display: grid; place-items: center; flex-shrink: 0; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--v-sky-100); color: var(--v-royal); }
 
   /* MEET BRANDON */
-  .fx-meet__grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--space-16); align-items: end; }
-  .fx-meet__tall { position: relative; margin: 0; border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 4 / 5; }
+  /* Round 3: the tall photo runs the full height of the copy column (no empty gap above it), the copy
+     column is vertically centred on it, and the wide photo closes the column with no trailing gap. */
+  .fx-meet { padding-bottom: var(--section-pad-sm); }
+  .fx-meet__grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--space-12); align-items: stretch; }
+  .fx-meet__tall { position: relative; margin: 0; border-radius: var(--v-radius-card); overflow: hidden; min-height: calc(var(--space-30) * 4); }
+  .fx-meet__tall img { position: absolute; inset: 0; }
+  .fx-meet__copy { display: flex; flex-direction: column; justify-content: center; }
   .fx-meet__tall img, .fx-meet__wide img { width: 100%; height: 100%; object-fit: cover; }
   .fx-meet__name { position: absolute; left: var(--space-4); bottom: var(--space-4); display: flex; flex-direction: column; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--v-white); font-size: var(--fs-sm); color: var(--v-slate-600); line-height: var(--lh-normal); }
   .fx-meet__name strong { color: var(--v-ink-900); font-size: var(--fs-md); }
   .fx-meet__copy p { color: var(--text-secondary); max-width: 64ch; }
   .fx-meet__copy p + p { margin-top: var(--space-4); }
-  .fx-meet__wide { border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 16 / 9; }
+  .fx-meet__wide { border-radius: var(--v-radius-card); overflow: hidden; aspect-ratio: 16 / 8; }
+  .fx-meet .fx-btns { margin: var(--space-6) 0; }
 
   /* REVIEWS */
-  .fx-rv { background: linear-gradient(180deg, var(--v-mist-50), var(--v-white)); }
+  .fx-rv { background: var(--v-white); }
   .fx-rv__head { display: flex; flex-direction: column; gap: var(--space-4); }
   .fx-rv .rv__h2 { font-size: var(--fs-5xl); line-height: 1.12; }
   .fx-rv :global(.fx-rv__widget) { margin-top: var(--space-10); }
@@ -400,32 +404,31 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-chip { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-radius: var(--radius-full); background: var(--v-mist-50); color: var(--v-ink-900); font-size: var(--fs-md); font-weight: var(--fw-semibold); }
   .fx-chip :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
 
-  /* AREAS */
-  .fx-ar__panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-10); padding: var(--space-16); border-radius: var(--v-radius-card) var(--v-radius-card) 0 0; background: var(--v-sky-100); }
+  /* AREAS: plain text, no panel, border or background (round-2 fix 7). */
+  .fx-ar__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-12); align-items: stretch; }
   .fx-ar__copy p { color: var(--v-ink-700); max-width: 52ch; }
-  .fx-tags { list-style: none; padding: 0; margin: var(--space-6) 0 var(--space-8); display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .fx-tag { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-ink-900); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
-  .fx-tag :global(.icon) { color: var(--v-royal); }
-  .fx-ar__map { border-radius: var(--v-radius-card); overflow: hidden; min-height: calc(var(--space-30) * 3); }
-  .fx-ar__strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4) var(--space-8); padding: var(--space-6) var(--space-16); border-radius: 0 0 var(--v-radius-card) var(--v-radius-card); background: var(--v-mist-100); color: var(--v-ink-700); font-size: var(--fs-md); }
-  .fx-ar__strip-h { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--v-ink-900); font-weight: var(--fw-semibold); font-size: var(--fs-lg); }
-  .fx-ar__strip-ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-royal); }
-  .fx-ar__strip-i strong { color: var(--v-ink-900); }
-  .fx-ar__strip-phone { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--fw-bold); font-size: var(--fs-lg); color: var(--v-ink-900); transition: color 0.2s var(--ease); }
-  .fx-ar__strip-phone:hover { color: var(--v-royal); }
-  .fx-ar__strip-phone :global(.icon) { color: var(--v-royal); }
+  .fx-ar__places { list-style: none; padding: 0; margin: var(--space-5) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-1) 0; color: var(--v-ink-900); font-weight: var(--fw-semibold); }
+  .fx-ar__places li:not(:last-child)::after { content: '·'; margin: 0 var(--space-3); color: var(--v-royal); }
+  .fx-ar__hours { margin-top: var(--space-6); }
+  .fx-ar__hours-h { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--v-ink-900); font-weight: var(--fw-semibold); }
+  .fx-ar__hours-h :global(.icon) { color: var(--v-royal); }
+  .fx-ar__hours :global(.fx-ar__hrs) { color: var(--v-ink-700); max-width: 20em; }
+  .fx-ar__hours :global(.fx-ar__hrs dd) { color: var(--v-ink-900); }
+  .fx-ar .fx-btns { margin-bottom: 0; }
+  .fx-ar .fx-pill--line :global(.icon) { color: var(--v-royal); }
+  .fx-ar__map { border-radius: var(--v-radius-card); overflow: hidden; min-height: calc(var(--space-30) * 4); }
 
   /* THREE TILES */
   .fx-tl { padding-top: 0; }
   .fx-tl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
-  .fx-tl__card { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-8); border-radius: var(--v-radius-card); background: var(--v-mist-50); }
-  .fx-tl__card--grad { background: linear-gradient(160deg, var(--v-white) 0%, var(--v-sky-100) 100%); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
-  .fx-tl__h3 { font-family: var(--font-heading) !important; font-weight: var(--fw-regular) !important; font-size: var(--fs-3xl); line-height: 1.15; }
-  .fx-tl__card--grad .fx-tl__h3 { font-size: var(--fs-4xl); }
+  /* Round 3: the three cards are one pattern: a full-width photo on top (no gap beside it), title, text. */
+  .fx-tl__card { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-3) var(--space-3) var(--space-8); border-radius: var(--v-radius-card); background: var(--v-mist-50); }
+  .fx-tl__card > :not(.fx-tl__img) { padding: 0 var(--space-5); }
+  .fx-tl__h3 { font-family: var(--font-heading) !important; font-weight: var(--fw-medium) !important; font-size: var(--fs-3xl); line-height: 1.15; margin-top: var(--space-2); }
   .fx-tl__p { color: var(--v-slate-600); font-size: var(--fs-md); }
   .fx-tl__p :global(a) { color: var(--v-royal); font-weight: var(--fw-semibold); transition: color 0.2s var(--ease); }
   .fx-tl__p :global(a:hover) { color: var(--v-ink-900); }
-  .fx-tl__img { margin-top: auto; width: 60%; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; }
+  .fx-tl__img { width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; }
   .fx-tl__img img { width: 100%; height: 100%; object-fit: cover; }
 
   /* PHOTO BANNER */
@@ -433,17 +436,16 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-bn__card { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; min-height: calc(var(--space-30) * 4); padding: var(--space-12); border-radius: var(--v-radius-card); background: var(--v-ink-900); }
   .fx-bn__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
   .fx-bn__card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-band); }
-  .fx-bn__big { font-family: var(--font-heading); color: var(--v-white); font-size: var(--fs-6xl); line-height: 1.08; max-width: 16ch; margin-bottom: var(--space-6); }
-  .fx-bn__chips { list-style: none; padding: var(--space-2); margin: 0; display: inline-flex; flex-wrap: wrap; gap: var(--space-2); border-radius: var(--radius-full); background: var(--v-glass-light); backdrop-filter: blur(6px); }
-  .fx-bn__chips li { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); background: var(--v-white); color: var(--v-ink-900); font-size: var(--fs-sm); font-weight: var(--fw-semibold); }
-  .fx-bn__chips :global(.icon) { color: var(--v-royal); }
+  .fx-bn__big { font-family: var(--font-heading); font-weight: var(--fw-medium); color: var(--v-white); font-size: var(--fs-6xl); line-height: 1.08; max-width: 16ch; }
   .fx-bn__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
   /* RESOURCES */
-  .fx-ap__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); }
+  /* Round 3: the three cards are the same height: every photo is the same fixed height, the title
+     block under it the same reserved height (two lines), whatever the card's width. */
+  .fx-ap__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); align-items: stretch; }
   .fx-ap__card { display: flex; flex-direction: column; gap: var(--space-2); }
-  .fx-ap__img { aspect-ratio: 3 / 4; border-radius: var(--v-radius-card); overflow: hidden; margin-bottom: var(--space-3); }
-  .fx-ap__card--big .fx-ap__img { aspect-ratio: auto; height: 100%; max-height: calc(var(--space-30) * 3 + var(--space-24)); min-height: 0; flex: 1; }
+  .fx-ap__img { height: calc(var(--space-30) * 3); border-radius: var(--v-radius-card); overflow: hidden; margin-bottom: var(--space-3); }
+  .fx-ap__title { min-height: calc(2 * 1.3em); line-height: 1.3; }
   .fx-ap__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
   .fx-ap__card:hover .fx-ap__img img { transform: scale(1.03); }
   .fx-ap__cat { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--v-royal); }
@@ -454,24 +456,25 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   /* QUOTE FORM */
   .fx-qf { padding-top: 0; }
   .fx-qf__card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: var(--v-radius-card); overflow: hidden; background: var(--v-ink-700); }
-  .fx-qf__panel { padding: var(--space-16) var(--space-12); background: var(--v-ink-700); color: var(--v-mist-300); }
+  .fx-qf__panel { padding: var(--space-12); background: var(--v-ink-700); color: var(--v-mist-300); }
   .fx-qf__panel .fx-h2 { color: var(--v-white); margin-bottom: var(--space-4); }
-  .fx-qf__panel :global(.fx-qf__ti) { margin-bottom: var(--space-5); }
-  .fx-qf__lead { margin-bottom: var(--space-8); max-width: 52ch; }
+  .fx-qf__panel :global(.fx-qf__ti) { margin-bottom: var(--space-6); }
   .fx-qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .fx-qf__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-mist-300); }
   .fx-qf__secure :global(.icon) { color: var(--v-chrome); flex-shrink: 0; margin-top: 1px; }
-  .fx-qf__photo { position: relative; min-height: calc(var(--space-30) * 5); }
+  /* Round 3 ("too tall"): the photo takes the form panel's height, nothing more, and the contact card sits higher and tighter. */
+  .fx-qf__photo { position: relative; min-height: calc(var(--space-30) * 4); }
   .fx-qf__photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .fx-qf__glass { position: absolute; left: var(--space-8); right: var(--space-8); bottom: var(--space-8); padding: var(--space-6); border-radius: var(--v-radius-card); background: var(--v-glass-dark); border: 1px solid var(--v-glass-line); backdrop-filter: blur(10px); color: var(--v-mist-100); }
-  .fx-qf__glass-top { display: flex; gap: var(--space-4); align-items: center; padding-bottom: var(--space-5); margin-bottom: var(--space-5); border-bottom: 1px solid var(--v-glass-line); }
+  .fx-qf__glass { position: absolute; left: var(--space-8); right: var(--space-8); top: var(--space-8); padding: var(--space-5) var(--space-6); border-radius: var(--v-radius-card); background: var(--v-glass-dark); border: 1px solid var(--v-glass-line); backdrop-filter: blur(10px); color: var(--v-mist-100); }
+  .fx-qf__glass-top { display: flex; gap: var(--space-4); align-items: center; padding-bottom: var(--space-4); margin-bottom: var(--space-4); border-bottom: 1px solid var(--v-glass-line); }
   .fx-qf__glass-ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--radius-full); background: var(--v-chrome); color: var(--v-ink-900); }
-  .fx-qf__glass-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .fx-qf__glass-cols { display: grid; grid-template-columns: auto 1fr; gap: var(--space-8); }
+  .fx-qf__glass :global(.fx-qf__hrs) { font-size: var(--fs-sm); color: var(--v-mist-100); }
+  .fx-qf__glass :global(.fx-qf__hrs dd) { color: var(--v-white); }
   .fx-qf__k { display: block; font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--v-mist-300); margin-bottom: var(--space-1); }
   .fx-qf__v { font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--v-white); }
   .fx-qf__wa { font-weight: var(--fw-semibold); color: var(--v-white); transition: color 0.2s var(--ease); }
   .fx-qf__v:hover, .fx-qf__wa:hover { color: var(--v-chrome); }
-  .fx-qf__h { display: block; font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-white); }
   /* Formlane form.js fields, Flexora's tinted rounded inputs. */
   .fx-qf__form :global(.lf-f) { gap: var(--space-3); }
   .fx-qf__form :global(.lf-f > .lf-w) { grid-column: 1 / -1; }
@@ -504,23 +507,21 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     .fx-hero__h1 { font-size: var(--fs-7xl); }
   }
   @media (max-width: 1023px) {
-    .fx-meet__grid, .fx-why__grid, .fx-fq__grid, .fx-ar__panel, .fx-qf__card { grid-template-columns: 1fr; }
-    .fx-meet__tall { aspect-ratio: 4 / 3; }
+    .fx-meet__grid, .fx-why__grid, .fx-fq__grid, .fx-ar__grid, .fx-qf__card { grid-template-columns: 1fr; }
+    .fx-meet__tall { min-height: 0; aspect-ratio: 4 / 3; }
     .fx-why__img { aspect-ratio: 4 / 3; }
     .fx-fq__head { position: static; }
     .fx-tl__grid, .fx-ap__grid { grid-template-columns: 1fr; }
-    .fx-ap__card--big .fx-ap__img { aspect-ratio: 4 / 3; height: auto; flex: none; }
-    .fx-ap__img { aspect-ratio: 4 / 3; }
+    .fx-ap__img { aspect-ratio: 4 / 3; height: auto; }
+    .fx-ap__title { min-height: 0; }
     .fx-hero__h1 { font-size: var(--fs-6xl); }
-    .fx-ar__panel { padding: var(--space-10); }
-    .fx-ar__strip { padding: var(--space-6) var(--space-10); }
   }
   @media (max-width: 760px) {
     .fx-hero { padding: calc(var(--header-h) + var(--space-2)) var(--space-2) 0; }
     .fx-hero__card { padding: var(--space-12) var(--space-4) 0; border-radius: var(--v-radius-card); min-height: 0; }
     .fx-hero__copy { padding-bottom: var(--space-8); }
     .fx-hero__h1 { font-size: var(--fs-4xl); }
-    .fx-hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
+    .fx-hero__lead { font-size: var(--fs-base); }
     .fx-hero__actions { width: 100%; flex-direction: column; }
     .fx-hero__actions .fx-pill { width: 100%; }
     .fx-hero__bar { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-6) var(--space-5) var(--space-5); width: calc(100% - 2 * var(--space-6)); }
@@ -530,18 +531,16 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     .fx-sv__img { aspect-ratio: 4 / 3; }
     .fx-chips { grid-template-columns: 1fr; }
     .fx-head--row { flex-direction: column; align-items: flex-start; }
-    .fx-ar__panel { padding: var(--space-6); }
-    .fx-ar__strip { padding: var(--space-5) var(--space-6); flex-direction: column; align-items: flex-start; }
-    .fx-tl__card { padding: var(--space-6); }
+    .fx-ar .fx-btns .fx-pill { width: 100%; }
+    .fx-tl__card > :not(.fx-tl__img) { padding: 0 var(--space-3); }
     .fx-bn__card { padding: var(--space-6); min-height: calc(var(--space-30) * 4); }
     .fx-bn__big { font-size: var(--fs-3xl); }
-    .fx-bn__chips { border-radius: var(--v-radius-card); }
     .fx-bn__actions { width: 100%; flex-direction: column; }
     .fx-bn__actions .fx-pill { width: 100%; }
-    .fx-qf__panel { padding: var(--space-10) var(--space-5); }
+    .fx-qf__panel { padding: var(--space-8) var(--space-5); }
     .fx-qf__form :global(.lf-b) { width: 100%; }
-    .fx-qf__photo { min-height: calc(var(--space-30) * 4); }
-    .fx-qf__glass { left: var(--space-4); right: var(--space-4); bottom: var(--space-4); padding: var(--space-5); }
+    .fx-qf__photo { min-height: 0; padding: var(--space-4); }
+    .fx-qf__glass { position: relative; left: auto; right: auto; top: auto; padding: var(--space-5); }
     .fx-qf__glass-cols { grid-template-columns: 1fr; gap: var(--space-4); }
     .fx-fq__item summary { font-size: var(--fs-base); padding: var(--space-4) var(--space-5); }
   }

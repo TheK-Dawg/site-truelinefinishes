@@ -56,6 +56,101 @@ const tiFails = (r, html) => {
   return f;
 };
 
+// ROUND 3 (operator live review 3, 6 Nov 2026; DECISIONS R3-*): machine gates for this round's rulings.
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const NAP_HOURS = JSON.parse(readFileSync(new URL('../site-plan/nap.json', import.meta.url), 'utf8')).hours;
+const sectionOf = (html, name) => (html.match(new RegExp(`<section[^>]*data-section="${name}"[\\s\\S]*?</section>`)) || [''])[0];
+function r3Fails(r, html, text, isArticle) {
+  const f = [];
+  // Hours: day by day, as the Google listing shows them; never "Monday to Friday" / "Saturday and Sunday".
+  const dls = [...html.matchAll(/<dl[^>]*data-hours[^>]*>([\s\S]*?)<\/dl>/g)];
+  if (!dls.length) f.push('no day-by-day opening hours (footer)');
+  for (const [, dl] of dls) {
+    const rows = [...dl.matchAll(/<dt[^>]*>([^<]*)<\/dt><dd[^>]*>([^<]*)<\/dd>/g)].map((m) => [m[1], m[2]]);
+    const want = DAYS.map((d) => [d, NAP_HOURS[d].replace(/^(\w+)-(\w+)$/, '$1 to $2')]);
+    if (JSON.stringify(rows) !== JSON.stringify(want)) f.push(`opening hours not Monday to Sunday one per day as nap.json: ${JSON.stringify(rows)}`);
+  }
+  if (/Monday to Friday|Saturday and Sunday|Mon(day)?\s*[-–]\s*Fri/i.test(text)) f.push('compressed opening hours ("Monday to Friday") in the page');
+  // Hero: the slimline directly under the paragraph and ABOVE the buttons.
+  const hero = sectionOf(html, 'hero');
+  const slim = hero.search(/data-trustindex-slot="slim-hero"/); const btn = hero.search(/<a[^>]*class="btn\b/);
+  if (slim < 0) f.push('no hero slimline');
+  else {
+    if (btn >= 0 && slim > btn) f.push('hero slimline sits below the buttons (want under the paragraph, above the buttons)');
+    const before = hero.slice(0, hero.lastIndexOf('<div', slim)).trimEnd();
+    if (!before.endsWith('</p>')) f.push('hero slimline does not follow the hero paragraph directly');
+  }
+  // Quote section: the slimline in the LEFT intro column under the selling points, never in the form card.
+  const qf = sectionOf(html, 'quote-form');
+  if (qf && r !== '/home-2/') {
+    const s2 = qf.search(/data-trustindex-slot="slim-form"/); const list = qf.search(/class="(qf__list|dm-qf__list)"/); const card = qf.search(/class="(qf__card|dm-qf__card)"/);
+    if (s2 < 0 || list < 0 || card < 0 || !(s2 > list && s2 < card)) f.push(`quote-section slimline not in the left column under the selling points (slot ${s2}, list ${list}, card ${card})`);
+  }
+  // WhatsApp branding removed where the operator flagged it.
+  if (isArticle && /article-aside-whatsapp|art__wa/.test(html)) f.push('WhatsApp in the article "Need a quote?" card');
+  if (r === '/home-3/' && /data-cta="form-whatsapp"/.test(html)) f.push('WhatsApp button in the quote section');
+  // Articles: Quick Rundown; internal links spread out (no paragraph with more than one); no link-dump line.
+  if (isArticle) {
+    const body = (html.match(/<article class="art__main[\s\S]*?<\/article>/) || [''])[0];
+    if (!/data-rundown/.test(body)) f.push('no Quick Rundown box');
+    for (const m of body.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)) if ((m[1].match(/<a\b[^>]*href="\//g) || []).length > 1) f.push(`a paragraph carries ${(m[1].match(/<a\b/g) || []).length} internal links: "${visibleText(m[1]).slice(0, 60)}..."`);
+    if (/class="art__next"/.test(html)) f.push('the "More on..." link-dump line');
+    const crumbs = html.search(/class="art__crumbs/); const rv = html.search(/data-section="reviews"/); const art = html.search(/data-section="article-body"/);
+    if (!(rv < crumbs && crumbs < art)) f.push('breadcrumbs are not between the reviews section and the article');
+  }
+  // Service pages: the intro has its own H2 and photo; the cards have an H2 over them; no empty grid cell.
+  if (/data-section="service-intro"/.test(html)) {
+    const intro = sectionOf(html, 'service-intro'); const grid = sectionOf(html, 'service-sections');
+    if (!/<h2\b/.test(intro) || !/<figure class="sb3__ifig[^"]*"[^>]*>\s*<img/.test(intro)) f.push('service intro without its own H2 and photo');
+    if (!/<h2 class="sb3__gh2/.test(grid)) f.push('service section cards have no H2 over them');
+    const cards = (grid.match(/<article class="sb3__card/g) || []).length;
+    if (cards % 2) f.push(`service grid ends on an empty cell (${cards} cards in two columns)`);
+  }
+  // Variants.
+  if (r === '/home-2/') {
+    if (/class="fx-bn__chips"/.test(html)) f.push('services repeated in the "Rooms looking tired" CTA');
+    for (const cta of ['services-all', 'articles-all', 'faq-all']) if (!new RegExp(`class="btn fx-pill fx-pill--royal" data-cta="${cta}"`).test(html)) f.push(`${cta} button is not the royal-blue pill`);
+    const tiles = sectionOf(html, 'craft');
+    if ((tiles.match(/<li class="fx-tl__card/g) || []).length !== 3 || (tiles.match(/class="fx-tl__img"/g) || []).length !== 3) f.push('the three tiles are not all photo cards');
+    if (/class="fx-ar__panel"|class="fx-tag"/.test(html)) f.push('Where to Find Us still boxed / chips');
+    if (/class="fx-qf__lead"/.test(html)) f.push('the "Leave your name..." paragraph is still in the form');
+  }
+  if (r === '/home-3/') {
+    const rv = sectionOf(html, 'reviews');
+    if (!/class="rv section section-reviews/.test(rv) || /<img/.test(rv)) f.push('reviews is not the site review section (bespoke photo band)');
+    const band = sectionOf(html, 'cta-band');
+    if (!/<img class="dm-band__bg"/.test(band) || !/data-cta="band-quote"/.test(band) || !/data-cta="band-call"/.test(band)) f.push('CTA band needs a photo and both buttons');
+    const gl = sectionOf(html, 'gallery');
+    if (!/<h2 class="dm-h2"/.test(gl) || (gl.match(/data-lightbox/g) || []).length !== 6) f.push('gallery needs a visible introduction and six photos');
+    if ((sectionOf(html, 'craft').match(/<li class="dm-tl__card/g) || []).length !== 5) f.push('"Homes and business premises" does not list all five services');
+  }
+  return f;
+}
+function r3Selftest() {
+  // Each case breaks one round-3 rule on an otherwise good minimal page and must fail; the good page must pass.
+  const hrs = `<dl class="hrs" data-hours>${DAYS.map((d) => `<div class="hrs__row"><dt>${d}</dt><dd>${NAP_HOURS[d].replace(/^(\w+)-(\w+)$/, '$1 to $2')}</dd></div>`).join('')}</dl>`;
+  const page = ({ hours = hrs, hero = '<p class="hero__lead">Lead</p>\n<div class="ti-slot" data-trustindex-slot="slim-hero"></div><div class="hero__actions"><a href="#contact" class="btn btn-primary">Q</a></div>', form = '<ul class="qf__list"><li>x</li></ul><div data-trustindex-slot="slim-form"></div><div class="qf__card"><div data-lead-form></div></div>', extra = '' } = {}) =>
+    `<section data-section="hero">${hero}</section><section data-section="quote-form">${form}</section>${extra}<footer>${hours}</footer>`;
+  const ok = (html, r = '/x/') => r3Fails(r, html, visibleText(html), false).length === 0;
+  const bad = [];
+  if (!ok(page())) bad.push(`good page fails: ${r3Fails('/x/', page(), visibleText(page()), false)}`);
+  const cases = [
+    ['compressed hours', page({ hours: '<p>Monday to Friday 7am to 7pm</p>' })],
+    ['six days', page({ hours: hrs.replace(/<div class="hrs__row"><dt>Sunday[\s\S]*?<\/div>/, '') })],
+    ['slim under buttons', page({ hero: '<p>Lead</p><div class="hero__actions"><a href="#contact" class="btn x">Q</a></div><div data-trustindex-slot="slim-hero"></div>' })],
+    ['slim in form card', page({ form: '<ul class="qf__list"></ul><div class="qf__card"><div data-trustindex-slot="slim-form"></div><div data-lead-form></div></div>' })],
+    ['slim above USPs', page({ form: '<div data-trustindex-slot="slim-form"></div><ul class="qf__list"></ul><div class="qf__card"></div>' })],
+    ['odd service grid', page({ extra: '<section data-section="service-intro"><h2>I</h2><figure class="sb3__ifig"><img alt=""></figure></section><section data-section="service-sections"><h2 class="sb3__gh2">S</h2><article class="sb3__card"></article></section>' })],
+  ];
+  for (const [name, html] of cases) if (ok(html)) bad.push(`not caught: ${name}`);
+  const art = '<section data-section="reviews"></section><nav class="art__crumbs"></nav><section data-section="article-body"><article class="art__main prose"><div data-rundown></div><p>One <a href="/a/">a</a></p></article></section>';
+  if (r3Fails('/resources/x/', page({ extra: art }), '', true).length) bad.push('good article fails');
+  if (!r3Fails('/resources/x/', page({ extra: art.replace('<p>One <a href="/a/">a</a></p>', '<p><a href="/a/">a</a> and <a href="/b/">b</a></p>') }), '', true).length) bad.push('not caught: two links in one article paragraph');
+  if (!r3Fails('/resources/x/', page({ extra: art.replace('<div data-rundown></div>', '') }), '', true).length) bad.push('not caught: no rundown');
+  if (!r3Fails('/resources/x/', page({ extra: art + '<a class="art__wa" data-cta="article-aside-whatsapp"></a>' }), '', true).length) bad.push('not caught: article WhatsApp');
+  return bad;
+}
+
 if (process.argv.includes('--selftest')) {
   // Trustindex mapping gate: a correct page passes; swapped ids, a missing slot, main on /reviews/
   // and reviews below another section each fail.
@@ -80,6 +175,9 @@ if (process.argv.includes('--selftest')) {
   const falsePos = good.filter((g) => copyFails(g, false).length > 0);
   if (missed.length || falsePos.length) { console.error('SELFTEST FAIL', { missed, falsePos: falsePos.map((g) => [g, copyFails(g, false)]) }); process.exit(1); }
   console.log(`selftest: ${bad.length} bad strings caught, ${good.length} good strings pass`);
+  const r3 = r3Selftest();
+  if (r3.length) { console.error('SELFTEST FAIL (round 3)', r3); process.exit(1); }
+  console.log('selftest: round-3 gates, 10 broken cases caught, the good page and good article pass');
   process.exit(0);
 }
 
@@ -138,7 +236,7 @@ for (const file of pages) {
   for (const f of copyFails(text, isArticle)) fails.push(`${r}: ${f}`);
   if (/class="eyebrow"/.test(html)) fails.push(`${r}: eyebrow label`);
   if (!text.includes('07949 484274')) fails.push(`${r}: phone missing`);
-  if (!/Monday to Friday 7am to 7pm/.test(text) || !/Saturday and Sunday 8am to 6pm/.test(text)) fails.push(`${r}: footer hours missing`);
+  for (const f of r3Fails(r, html, text, isArticle)) fails.push(`${r}: round 3: ${f}`);
   if (!text.includes("Proud to support A Child's Wish, a children's charity.")) fails.push(`${r}: charity line missing from footer`);
   if (!html.includes('href="https://wa.me/447949484274"')) fails.push(`${r}: WhatsApp link missing`);
   const contactIds = (html.match(/id="contact"/g) || []).length;

@@ -177,10 +177,12 @@
  *   ink-900 on mist-50 16.0:1 · slate-600 on white 7.0:1 / on mist-50 6.6:1 / on mist-100 6.0:1 ·
  *   royal on mist-50 7.3:1 · deep on mist-100 9.9:1.
  * FONTS (self-hosted, SIL OFL, latin subset, from Google Fonts' static files; no runtime dependency):
- *   Flexora pair = Ovo (serif headings, as the reference) + Manrope (the reference's body sans);
+ *   Flexora pair = Outfit headings (operator round 3, 6 Nov 2026: the Ovo serif hero "doesn't fit the
+ *   site, the font should be Outfit from Google"; fonts.gstatic.com/s/outfit/v15, variable 300-700)
+ *   + Manrope (the reference's body sans);
  *   Dom pair = Lexend Deca (headings) + Kumbh Sans (body), as the reference.
  */
-@font-face { font-family: 'Ovo'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/ovo-latin.woff2') format('woff2'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/outfit-latin.woff2') format('woff2'); }
 @font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/manrope-latin.woff2') format('woff2'); }
 @font-face { font-family: 'Lexend Deca'; font-style: normal; font-weight: 300 600; font-display: swap; src: url('/fonts/lexend-deca-latin.woff2') format('woff2'); }
 @font-face { font-family: 'Kumbh Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/kumbh-sans-latin.woff2') format('woff2'); }
@@ -212,7 +214,7 @@
   --v-shadow-lift: 0 16px 40px rgba(14, 27, 42, 0.16);
   --v-radius-card: 20px;
   --v-radius-lg: 32px;
-  --v-font-flex-head: 'Ovo', 'Iowan Old Style', Georgia, serif;
+  --v-font-flex-head: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --v-font-flex-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --v-font-dom-head: 'Lexend Deca', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --v-font-dom-body: 'Kumbh Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;

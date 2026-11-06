@@ -9,6 +9,9 @@ const content: ServiceContent = {
   h1: 'Walls Marked and Woodwork Chipped? Interior Painting, Room by Room',
   lead: 'Interior painting from TrueLine Finishes covers every room, the stairs and landings and all the woodwork, with sanding, filling and caulking before any paint goes on.',
   heroImage: 'green-bedroom-0136',
+  introH2: 'Every Room, the Stairs and All the Woodwork',
+  introImage: 'sage-kitchen-0011',
+  sectionsH2: 'What Interior Painting Covers',
   intro: [
     'From one bedroom to a whole house, interior painting is walls and ceilings, every room, stairs and landings, and all aspects of woodwork. Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to him.',
     'Bedrooms and living rooms are the jobs Brandon enjoys most, and kitchens, bathrooms and hallways get the same care. The work is for homes and businesses alike.',

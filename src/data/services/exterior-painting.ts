@@ -10,6 +10,9 @@ const content: ServiceContent = {
   h1: 'Flaking Paint on the Walls, Windows or Front Door? Exterior Painting',
   lead: 'Exterior painting from TrueLine Finishes covers painted render, brick and stone, windows, doors and exterior woodwork, prepared properly first.',
   heroImage: 'semi-detached-after-0125',
+  introH2: 'Already Painted or Rendered? It Can Be Painted Again',
+  introImage: 'navy-front-door-stone-0032',
+  sectionsH2: 'What Goes Into Exterior Painting',
   intro: [
     'If a wall has already been rendered or painted, it can be painted again, even if it is stone. Exterior painting covers masonry, exterior woodwork, mullion, sash and wooden windows, front and garage doors, and oil varnishing. Brandon Dawson, the owner, carries out the work and oversees every job.',
     'The work is for homes and businesses. Preparation comes with everything: sanding, filling, caulking and fixing hairline cracks before a coat goes on.',
@@ -47,6 +50,7 @@ const content: ServiceContent = {
     },
   ],
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
+  sectorsImage: 'stone-farmhouse-0093',
   process: {
     heading: 'How an Exterior Job Runs',
     lead: 'Three steps, and a call is a direct line to Brandon.',

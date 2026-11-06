@@ -29,7 +29,7 @@ import { business, services, hours, mainPlaces, charityLine } from '../data/site
   <ul>
     <li><strong>Phone and WhatsApp:</strong> <a href={business.phoneHref} data-cta="facts-call">{business.phone}</a></li>
     <li><strong>Email:</strong> <a href={`mailto:${business.email}`} data-cta="facts-email">{business.email}</a></li>
-    {hours.map((h) => <li><strong>{h.days}:</strong> {h.time}</li>)}
+    {hours.map((h) => <li><strong>{h.day}:</strong> {h.time}</li>)}
   </ul>
   <p>Reviews are on the <a href="/reviews/">reviews page</a>, our profiles are listed on <a href="/find-us-online/">find us online</a>, and the <a href="/complaints-procedure/">complaints procedure</a> explains what to do if a job is not right.</p>
 </LegalPage>

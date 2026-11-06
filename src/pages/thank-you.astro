@@ -1,5 +1,5 @@
 ---
-/** THANK YOU (utility: noindex, no sticky bar, no form). The plan's words exactly: no response time, no "our team". Formlane redirects here after a send. The slimline and the main Trustindex reviews section sit under the hero as on every page (operator, 6 Nov 2026). */
+/** THANK YOU (utility: noindex, no sticky bar, no form). The plan's words exactly: no response time, no "our team". Formlane redirects here after a send. The slimline sits under the paragraph, above the button (round 3), and the main Trustindex reviews section under the hero, as on every page (operator, 6 Nov 2026). */
 import Base from '../layouts/Base.astro';
 import Reviews from '../components/Reviews.astro';
 import TrustindexSlot from '../components/TrustindexSlot.astro';
@@ -10,8 +10,8 @@ import { business } from '../data/site';
     <div class="container ty__inner">
       <h1 class="ty__h1">Thanks: we've got your enquiry and Brandon will be in touch.</h1>
       <p class="ty__p">Want to talk now? Call Brandon on <a href={business.phoneHref} data-cta="thanks-call">{business.phone}</a>.</p>
-      <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="thanks-home"><span class="btn__t">Back to the home page</span></a></div>
       <TrustindexSlot role="slimline" place="slim-hero" ground="dark" class="ty__ti" />
+      <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="thanks-home"><span class="btn__t">Back to the home page</span></a></div>
     </div>
   </section>
   <Reviews />
@@ -20,8 +20,8 @@ import { business } from '../data/site';
   .ty { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 70vh; }
   .ty__inner { max-width: 60em; }
   .ty__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); margin-bottom: var(--space-5); }
-  .ty__p { font-size: var(--fs-xl); margin-bottom: var(--space-8); }
-  .ty :global(.ty__ti) { margin-top: var(--space-5); }
+  .ty__p { font-size: var(--fs-xl); margin-bottom: var(--space-4); }
+  .ty :global(.ty__ti) { margin-bottom: var(--space-6); }
   .ty__p a { color: var(--text-inverse); font-weight: var(--fw-semibold); }
   @media (max-width: 640px) { .ty__h1 { font-size: var(--fs-3xl); } }
 </style>

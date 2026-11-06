@@ -12,10 +12,11 @@
  * Never the Rated People reviews: those are another business called TrueLine, in Eastbourne.
  */
 import TrustindexSlot from './TrustindexSlot.astro';
-interface Props { full?: boolean }
-const { full = false } = Astro.props;
+interface Props { full?: boolean; tight?: boolean }
+// tight: articles (round 3), the breadcrumbs and the article follow straight on, so the bottom padding is small.
+const { full = false, tight = false } = Astro.props;
 ---
-<section class:list={['rv section section-reviews', full && 'rv--full']} id="reviews" data-section="reviews" data-ai-skip>
+<section class:list={['rv section section-reviews', full && 'rv--full', tight && 'rv--tight']} id="reviews" data-section="reviews" data-ai-skip>
   <div class="container rv__inner">
     <div class="rv__head" data-motion="reveal">
       <h2 class="rv__h2">What customers say about us</h2>
@@ -27,6 +28,7 @@ const { full = false } = Astro.props;
 
 <style>
   .rv { background: var(--bg-card); }
+  .rv--tight { padding-bottom: var(--space-8); }
   .rv__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
   .rv__head { margin-bottom: 0; }
   .rv__h2 { font-size: var(--fs-4xl); margin-bottom: var(--space-4); }

@@ -10,6 +10,9 @@ const content: ServiceContent = {
   h1: 'Want a Feature Wall, or a Whole Room Papered? Wallpapering',
   lead: 'One papered wall behind the bed, or every wall in the room: TrueLine Finishes hangs wallpaper on walls that are filled, sanded and lined where they need it, with the pattern matched at every join.',
   heroImage: 'leaf-pattern-feature-wall-0026',
+  introH2: 'Why the Wall Matters as Much as the Paper',
+  introImage: 'bedroom-fresh-walls-0158',
+  sectionsH2: 'What Wallpapering Involves',
   intro: [
     'Wallpaper shows every flaw in the wall underneath, so the preparation matters as much as the hanging. Brandon Dawson, the owner, carries out the work and oversees every job, for homes and businesses.',
   ],

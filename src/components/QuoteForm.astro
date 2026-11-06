@@ -13,12 +13,15 @@
  * hidden (placeholders show), the house pattern. Leads go to the agency inbox only for now.
  * After sending, Formlane redirects to /thank-you/ with the first name.
  * The slot carries id="contact", so every #contact link lands on the form itself.
- * Under the card heading: the SLIMLINE Trustindex widget (operator, 6 Nov 2026), dark text on the white card.
+ * SLIMLINE Trustindex widget (operator, 6 Nov 2026; moved round 3): in the LEFT column, under the
+ * selling points and above the Call / WhatsApp buttons, white text on the dark ground. Never inside
+ * the white form card ("you don't put it where the form itself is").
  */
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
 import TrustindexSlot from './TrustindexSlot.astro';
-import { business, hours, ctaLine } from '../data/site';
+import { business, ctaLine } from '../data/site';
+import Hours from './Hours.astro';
 interface Props { heading?: string; lead?: string }
 const {
   heading = 'Tell Brandon about the job',
@@ -38,15 +41,15 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
         <li><Icon name="check" size={18} /> A call is a direct line to Brandon</li>
         <li><Icon name="check" size={18} /> Fully insured, over eight years' experience</li>
       </ul>
+      <TrustindexSlot role="slimline" place="slim-form" ground="dark" class="qf__ti" />
       <div class="qf__call">
         <CallButton cta="form-call" />
         <a href={business.whatsappHref} class="btn btn-call btn-call--dark qf__wa" data-cta="form-whatsapp" target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /><span class="btn__t">WhatsApp Brandon</span></a>
       </div>
-      <p class="qf__hours"><Icon name="clock" size={16} /> Open {hours.map((h) => `${h.days} ${h.time}`).join(', ')}</p>
+      <div class="qf__hours"><p class="qf__hours-h"><Icon name="clock" size={16} /> Opening hours</p><Hours class="qf__hrs" /></div>
     </div>
     <div class="qf__card">
       <h3 class="qf__form-h">Quick Quote Online</h3>
-      <TrustindexSlot role="slimline" place="slim-form" class="qf__ti" />
       <div class="qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
         <noscript><p class="qf__nojs">The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
       </div>
@@ -65,13 +68,16 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
   .qf__list li { display: flex; gap: var(--space-3); align-items: center; color: var(--text-inverse); }
   .qf__list :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
-  .qf__call { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+  .qf__call { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
   .qf__wa :global(.icon) { color: var(--whatsapp); }
-  .qf__hours { display: flex; gap: var(--space-2); align-items: center; margin-top: var(--space-5); font-size: var(--fs-md); }
-  .qf__hours :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  .qf__hours { margin-top: var(--space-5); }
+  .qf__hours-h { display: flex; gap: var(--space-2); align-items: center; margin-bottom: var(--space-2); color: var(--text-inverse); font-weight: var(--fw-semibold); }
+  .qf__hours-h :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
+  .qf__hours :global(.qf__hrs) { padding-left: calc(16px + var(--space-2)); max-width: 22em; }
+  .qf__hours :global(.qf__hrs dd) { color: var(--text-inverse); }
   .qf__card { background: var(--bg-card); color: var(--text-primary); padding: var(--space-8); box-shadow: var(--shadow-overlay); }
   .qf__form-h { font-size: var(--fs-2xl); color: var(--text-heading); margin-bottom: var(--space-3); }
-  .qf__card :global(.qf__ti) { margin-bottom: var(--space-5); }
+  .qf__copy :global(.qf__ti) { margin-top: var(--space-6); }
   .qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .qf__nojs { color: var(--text-primary); }
   .qf__nojs a { color: var(--brand-text); font-weight: var(--fw-semibold); }

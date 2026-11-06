@@ -19,7 +19,10 @@
 import Base from '../layouts/Base.astro';
 import TrustindexSlot from '../components/TrustindexSlot.astro';
 import Icon from '../components/Icon.astro';
-import { business, seo, image, services, hours } from '../data/site';
+import Reviews from '../components/Reviews.astro';
+import Hours from '../components/Hours.astro';
+import { serviceContent as hubContent } from '../data/services';
+import { business, seo, image, services } from '../data/site';
 import { articles, articleUrl } from '../data/articles';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
@@ -29,19 +32,23 @@ const schema = [
   { '@type': 'FAQPage', '@id': `${business.url}/home-3/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: stripTags(f.a) } })) },
 ];
 const slides = [image('lounge-navy-feature-wall-0037'), image('open-plan-kitchen-diner-0052'), image('mock-tudor-house-0075')];
-const reviewsBg = image('grey-living-room-0134');
+const bandImg = image('lounge-navy-feature-wall-0036');
 const aboutImg = image('white-kitchen-0108');
-const grid = ['green-bedroom-0136', 'victorian-hallway-0067', 'sage-kitchen-0011', 'navy-front-door-stone-0027', 'lounge-dark-arched-alcove-0101', 'stone-terrace-sage-door-0191'].map(image);
+// Round 3: the six best photos in the pool, picked by measured sharpness (Laplacian contrast on the
+// served 1600px files, finished work only, no prep or dust-sheet shots) and then by eye; none repeats the hero slides.
+const grid = ['navy-kitchen-0038', 'victorian-hallway-0066', 'navy-front-door-stone-0032', 'grey-living-room-0133', 'white-sash-window-stone-0030', 'stone-farmhouse-0093'].map(image);
 const usps = [
   { icon: 'clock', title: "Over Eight Years' Experience", text: 'Painting and decorating for homes and businesses.' },
   { icon: 'user', title: 'Brandon on Every Job', text: 'The owner carries out the work and oversees every job.' },
   { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, with a free quotation for every job.' },
 ];
-const tiles = [
-  { img: image('leaf-pattern-feature-wall-0026'), h3: 'Specialist Wallcoverings', html: 'Feature walls and whole rooms in paper, hung on walls prepared properly first. See <a href="/wallpapering/" data-link="tile">Wallpapering</a>.' },
-  { img: image('stone-farmhouse-0092'), h3: 'Interior & Exterior Work', html: 'Walls, ceilings, stairs and woodwork inside with <a href="/interior-painting/" data-link="tile">Interior Painting</a>; masonry, windows and doors outside with <a href="/exterior-painting/" data-link="tile">Exterior Painting</a>.' },
-  { img: image('office-navy-feature-wall-0178'), h3: 'Domestic & Commercial', html: 'Homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses. See <a href="/commercial-painting-and-decorating/" data-link="tile">Commercial Painting and Decorating</a>.' },
-];
+// Round 3 ("you shouldn't just do 3 things, add every service that we do"): all five services, each with
+// its hub's own lead line and a photo other than the one on the tiles above (only one wallpaper photo exists).
+const allServices = services.map((s) => {
+  const hub = hubContent.find((c) => c.slug === s.slug)!;
+  const alt: Record<string, string> = { 'painting-and-decorating': 'landing-wood-spindles-0049', 'interior-painting': 'grey-bedroom-0183', 'exterior-painting': 'stone-farmhouse-0092', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177' };
+  return { ...s, photo: image(alt[s.slug]), lead: hub.lead };
+});
 const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
 const list = articles.slice(0, 4);
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
@@ -57,11 +64,11 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     <div class="dm-hero__copy container">
       <h1 class="dm-hero__h1">Tired Rooms? Painting and Decorating by Brandon</h1>
       <p class="dm-hero__lead">Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation.</p>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="dm-hero__ti" />
       <div class="dm-hero__actions">
         <a href="#contact" class="btn dm-pill dm-pill--chrome" data-cta="hero-quote"><span class="btn__t">Quick Quote Online</span></a>
         <a href={business.phoneHref} class="btn dm-pill dm-pill--glass" data-cta="hero-call"><Icon name="phone" size={16} /><span class="btn__t">Call {business.phone}</span></a>
       </div>
-      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="dm-hero__ti" />
     </div>
     <button type="button" class="dm-hero__arrow dm-hero__arrow--prev" data-slide-prev aria-label="Previous photo"><Icon name="chevronLeft" size={22} /></button>
     <button type="button" class="dm-hero__arrow dm-hero__arrow--next" data-slide-next aria-label="Next photo"><Icon name="chevronRight" size={22} /></button>
@@ -70,18 +77,9 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     </div>
   </section>
 
-  <!-- REVIEWS (Dom testimonials band over a photo), directly under the hero (operator, 6 Nov 2026: the MAIN Trustindex widget under the hero on every page). -->
-  <section class="dm-rv on-dark" id="reviews" data-section="reviews" data-ai-skip>
-    <img class="dm-rv__bg" src={reviewsBg.src} alt="" width={reviewsBg.width} height={reviewsBg.height} loading="lazy" decoding="async" />
-    <div class="container dm-rv__inner">
-      <div class="dm-rv__head" data-motion="reveal">
-        <h2 class="rv__h2">What customers say about us</h2>
-        <p class="dm-rv__lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
-        <a href="/gallery/" class="btn dm-pill dm-pill--chrome" data-cta="reviews-gallery"><span class="btn__t">See Brandon's Work</span></a>
-      </div>
-      <TrustindexSlot role="main" place="reviews" class="dm-rv__widget" />
-    </div>
-  </section>
+  <!-- REVIEWS: the site's own review section (Reviews.astro, the same as every page), directly under the hero.
+       Round 3: the bespoke photo band behind it came off ("we come from a hero that has a background already"). -->
+  <Reviews />
 
   <!-- SERVICES (Dom "We Provide All Types"): centred head + chevron, tall image tiles with the hub name on the photo. -->
   <section class="dm-sec dm-sv" id="services" data-section="services">
@@ -105,11 +103,16 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     </div>
   </section>
 
-  <!-- ACCENT BAND (Dom's full-width colour band): royal blue, line left, pill right. -->
+  <!-- CTA BAND (Dom's full-width band): round 3, one of Brandon's photos under a navy overlay instead of flat blue,
+       and both buttons (Quick Quote Online + Call), as the hero. -->
   <section class="dm-band on-dark" data-section="cta-band">
+    <img class="dm-band__bg" src={bandImg.src} alt="" width={bandImg.width} height={bandImg.height} loading="lazy" decoding="async" />
     <div class="container dm-band__inner">
       <p class="dm-band__line">The person you call is the person who does the work.</p>
-      <a href="#contact" class="btn dm-pill dm-pill--ink" data-cta="band-quote"><span class="btn__t">Quick Quote Online</span></a>
+      <div class="dm-band__actions">
+        <a href="#contact" class="btn dm-pill dm-pill--chrome" data-cta="band-quote"><span class="btn__t">Quick Quote Online</span></a>
+        <a href={business.phoneHref} class="btn dm-pill dm-pill--glass" data-cta="band-call"><Icon name="phone" size={16} /><span class="btn__t">Call {business.phone}</span></a>
+      </div>
     </div>
   </section>
 
@@ -146,7 +149,13 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 
   <!-- PHOTO GRID (Dom's full-bleed 3 x 2 grid): Brandon's own photos, each opens in the root lightbox. -->
   <section class="dm-gl" data-section="gallery" data-ai-skip>
-    <h2 class="visually-hidden">Brandon's work, photographed on the job</h2>
+    <div class="container dm-head dm-head--row dm-gl__head" data-motion="reveal">
+      <div>
+        <h2 class="dm-h2">Brandon's Work, Photographed on the Job</h2>
+        <p class="dm-lead">Six of Brandon's own photos from finished jobs, inside and out. Tap one to see it larger; the gallery page has the rest.</p>
+      </div>
+      <a href="/gallery/" class="btn dm-pill dm-pill--royal dm-pill--desc" data-cta="gallery-all"><span class="btn__t">See the Gallery</span></a>
+    </div>
     <ul class="dm-gl__grid" data-gallery>
       {grid.map((g) => (
         <li><button type="button" class="dm-gl__shot" data-lightbox aria-label={`Open larger: ${g.alt}`}><img src={g.sm} data-full={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" decoding="async" /></button></li>
@@ -154,7 +163,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     </ul>
   </section>
 
-  <!-- THREE TILES (Dom's product grid): centred head, square photos with the title and text under, one pill. -->
+  <!-- EVERY SERVICE (Dom's product grid): centred head, square photos with the title (the one link) and text under, one pill. -->
   <section class="dm-sec dm-tl" data-section="craft">
     <div class="container">
       <div class="dm-head dm-head--c" data-motion="reveal">
@@ -162,11 +171,11 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
         <p class="dm-lead">Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out.</p>
       </div>
       <ul class="dm-tl__grid">
-        {tiles.map((t, i) => (
-          <li class="dm-tl__card" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
-            <div class="dm-tl__img"><img src={t.img.sm} alt={t.img.alt} width={t.img.width} height={t.img.height} loading="lazy" decoding="async" /></div>
-            <h3 class="dm-tl__h3">{t.h3}</h3>
-            <p class="dm-tl__p" set:html={t.html} />
+        {allServices.map((t, i) => (
+          <li class="dm-tl__card" data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
+            <div class="dm-tl__img"><img src={t.photo.sm} alt={t.photo.alt} width={t.photo.width} height={t.photo.height} loading="lazy" decoding="async" /></div>
+            <h3 class="dm-tl__h3"><a href={`/${t.slug}/`} data-link="card">{t.name}</a></h3>
+            <p class="dm-tl__p">{t.lead}</p>
           </li>
         ))}
       </ul>
@@ -208,15 +217,14 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
           <li><Icon name="check" size={16} /> A call is a direct line to Brandon</li>
           <li><Icon name="check" size={16} /> Fully insured, over eight years' experience</li>
         </ul>
+        <TrustindexSlot role="slimline" place="slim-form" class="dm-qf__ti" />
         <div class="dm-qf__call">
           <a href={business.phoneHref} class="btn dm-pill dm-pill--ink" data-cta="form-call"><Icon name="phone" size={16} /><span class="btn__t">Call {business.phone}</span></a>
-          <a href={business.whatsappHref} class="btn dm-pill dm-pill--line dm-pill--desc" target="_blank" rel="noopener" data-cta="form-whatsapp"><Icon name="whatsapp" size={16} /><span class="btn__t">WhatsApp Brandon</span></a>
         </div>
-        <p class="dm-qf__hours"><Icon name="clock" size={16} /> Open {hours.map((h) => `${h.days} ${h.time}`).join(', ')}</p>
+        <div class="dm-qf__hours"><p class="dm-qf__hours-h"><Icon name="clock" size={16} /> Opening hours</p><Hours class="dm-qf__hrs" /></div>
       </div>
       <div class="dm-qf__card">
         <h3 class="dm-qf__form-h">Quick Quote Online</h3>
-        <TrustindexSlot role="slimline" place="slim-form" class="dm-qf__ti" />
         <div class="dm-qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
           <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
         </div>
@@ -279,6 +287,8 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   body[data-page='home-3'] .btn { text-transform: none; letter-spacing: 0; font-family: var(--font-heading); font-weight: var(--fw-medium); }
   /* The logo carries its own black ground: lighten lets the navy header show through it. */
   body[data-page='home-3'] .hd__brand img, body[data-page='home-3'] .ft__brand img { mix-blend-mode: lighten; }
+  /* Round 3: the footer's legal bar on the navy footer is a deeper navy, not the main site's light glass grey. */
+  body[data-page='home-3'] .ft__bar { background: var(--v-ink-800); }
 </style>
 
 <style>
@@ -305,10 +315,8 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-pill--ink :global(.icon) { color: var(--v-chrome); }
   .dm-pill--royal { background: var(--v-royal); color: var(--v-white); }
   .dm-pill--royal:hover { background: var(--v-royal-hover); }
-  .dm-pill--line { background: var(--v-white); color: var(--v-ink-900); box-shadow: inset 0 0 0 1px var(--v-mist-200); }
   /* Mixed-case labels with descenders: lift the cap box 1px so cap top and descender bottom balance (scripts/check.mjs). */
   .dm-pill--desc .btn__t { transform: translateY(-1px); }
-  .dm-pill--line:hover { box-shadow: inset 0 0 0 1px var(--v-royal); }
 
   /* HERO SLIDER */
   .dm-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: min(calc(100vh - var(--space-8)), calc(var(--space-30) * 7)); padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-24); background: var(--v-ink-900); text-align: center; }
@@ -318,9 +326,9 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-slide); }
   .dm-hero__copy { display: flex; flex-direction: column; align-items: center; }
   .dm-hero__h1 { color: var(--v-white); font-size: var(--fs-7xl); line-height: 1.08; max-width: 18ch; margin-bottom: var(--space-6); }
-  .dm-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 58ch; margin-bottom: var(--space-8); }
+  .dm-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 58ch; margin-bottom: var(--space-4); }
   .dm-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
-  .dm-hero__copy :global(.dm-hero__ti) { margin-top: var(--space-5); }
+  .dm-hero__copy :global(.dm-hero__ti) { margin-bottom: var(--space-6); }
   .dm-hero__arrow { position: absolute; top: 50%; z-index: 1; display: grid; place-items: center; width: var(--space-16); height: var(--space-16); padding: 0; border: 0; border-radius: var(--radius-full); background: var(--v-glass-light); color: var(--v-white); backdrop-filter: blur(4px); cursor: pointer; transform: translateY(-50%); transition: background-color 0.2s var(--ease); }
   .dm-hero__arrow:hover { background: var(--v-chrome); color: var(--v-ink-900); }
   .dm-hero__arrow--prev { left: var(--space-16); }
@@ -342,18 +350,11 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-sv__title a:hover { color: var(--v-chrome); }
   .dm-sv__body { font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-mist-100); }
 
-  /* REVIEWS BAND */
-  .dm-rv { position: relative; isolation: isolate; overflow: hidden; padding: var(--section-pad) 0; background: var(--v-ink-800); }
-  .dm-rv__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-  .dm-rv::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-band); }
-  .dm-rv__inner { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-10); align-items: center; }
-  .dm-rv__head { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
-  .dm-rv .rv__h2 { font-size: var(--fs-5xl); line-height: 1.12; color: var(--v-white); }
-  .dm-rv__lead { color: var(--v-mist-100); max-width: 44ch; }
-  .dm-rv :global(.dm-rv__widget) { min-height: calc(var(--space-30) * 3); background: var(--v-white); padding: var(--space-6); }
-
   /* ACCENT BAND */
-  .dm-band { background: var(--v-royal); padding: var(--space-20) 0; }
+  .dm-band { position: relative; isolation: isolate; overflow: hidden; background: var(--v-ink-800); padding: var(--space-24) 0; }
+  .dm-band__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .dm-band::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--v-overlay-band); }
+  .dm-band__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .dm-band__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; }
   .dm-band__line { font-family: var(--font-heading); font-size: var(--fs-5xl); line-height: 1.12; color: var(--v-white); max-width: 22ch; }
 
@@ -383,21 +384,23 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-ab__ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--v-chrome); color: var(--v-ink-900); }
 
   /* PHOTO GRID */
+  .dm-gl__head { margin-bottom: var(--space-10); }
+  .dm-gl__head .dm-h2 { margin-bottom: var(--space-4); }
   .dm-gl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .dm-gl__shot { display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 0; overflow: hidden; cursor: zoom-in; background: var(--v-ink-900); }
   .dm-gl__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease), opacity 0.3s var(--ease); }
   .dm-gl__shot:hover img { transform: scale(1.04); opacity: 0.9; }
 
   /* THREE TILES */
-  .dm-tl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
+  .dm-tl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-6); }
   .dm-tl__card { display: flex; flex-direction: column; align-items: center; text-align: center; }
   .dm-tl__img { width: 100%; aspect-ratio: 1; overflow: hidden; margin-bottom: var(--space-5); background: var(--v-mist-50); }
   .dm-tl__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
   .dm-tl__card:hover .dm-tl__img img { transform: scale(1.04); }
-  .dm-tl__h3 { font-size: var(--fs-xl); margin-bottom: var(--space-2); }
-  .dm-tl__p { font-size: var(--fs-md); color: var(--v-slate-600); max-width: 40ch; }
-  .dm-tl__p :global(a) { color: var(--v-royal); font-weight: var(--fw-semibold); transition: color 0.2s var(--ease); }
-  .dm-tl__p :global(a:hover) { color: var(--v-ink-900); }
+  .dm-tl__h3 { font-size: var(--fs-lg); line-height: 1.25; margin-bottom: var(--space-2); }
+  .dm-tl__h3 a { color: var(--v-ink-900); transition: color 0.2s var(--ease); }
+  .dm-tl__h3 a:hover { color: var(--v-royal); }
+  .dm-tl__p { font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-slate-600); max-width: 40ch; }
 
   /* RESOURCES */
   .dm-ap { padding-top: 0; }
@@ -418,13 +421,16 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-qf__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
   .dm-qf__list li { display: flex; align-items: center; gap: var(--space-3); color: var(--v-ink-900); }
   .dm-qf__list :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
-  .dm-qf__call { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+  .dm-qf__copy :global(.dm-qf__ti) { margin-top: var(--space-6); }
+  .dm-qf__call { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
   .dm-qf__call :global(.icon) { flex-shrink: 0; }
-  .dm-qf__hours { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-5); font-size: var(--fs-md); color: var(--v-slate-600); }
-  .dm-qf__hours :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
+  .dm-qf__hours { margin-top: var(--space-5); }
+  .dm-qf__hours-h { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--v-ink-900); font-weight: var(--fw-semibold); }
+  .dm-qf__hours-h :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
+  .dm-qf__hours :global(.dm-qf__hrs) { padding-left: calc(16px + var(--space-2)); max-width: 22em; color: var(--v-slate-600); }
+  .dm-qf__hours :global(.dm-qf__hrs dd) { color: var(--v-ink-900); }
   .dm-qf__card { padding: var(--space-8); background: var(--v-white); box-shadow: var(--v-shadow-soft); }
   .dm-qf__form-h { font-size: var(--fs-2xl); margin-bottom: var(--space-3); }
-  .dm-qf__card :global(.dm-qf__ti) { margin-bottom: var(--space-5); }
   .dm-qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .dm-qf__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-slate-600); }
   .dm-qf__secure :global(.icon) { color: var(--v-royal); flex-shrink: 0; margin-top: 1px; }
@@ -442,26 +448,31 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 
   @media (max-width: 1180px) {
     .dm-sv__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    /* Five cards: two per row and the fifth full width, so no row ends on an empty cell. */
+    .dm-tl__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dm-tl__card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .dm-tl__card:last-child:nth-child(odd) .dm-tl__img { max-width: calc(50% - var(--space-3)); }
     .dm-hero__arrow--prev { left: var(--space-5); }
     .dm-hero__arrow--next { right: var(--space-5); }
   }
   @media (max-width: 1023px) {
-    .dm-ab__grid, .dm-rv__inner, .dm-qf__grid { grid-template-columns: 1fr; }
-    .dm-tl__grid, .dm-ap__grid { grid-template-columns: 1fr; }
+    .dm-ab__grid, .dm-qf__grid { grid-template-columns: 1fr; }
+    .dm-ap__grid { grid-template-columns: 1fr; }
     .dm-hero__h1 { font-size: var(--fs-5xl); }
     .dm-ab__media { padding-left: 0; }
   }
   @media (max-width: 760px) {
     .dm-hero { min-height: 0; padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-20); }
     .dm-hero__h1 { font-size: var(--fs-4xl); }
-    .dm-hero__lead { font-size: var(--fs-base); margin-bottom: var(--space-6); }
+    .dm-hero__lead { font-size: var(--fs-base); }
     .dm-hero__actions { width: 100%; flex-direction: column; }
     .dm-hero__actions .dm-pill { width: 100%; }
     .dm-hero__arrow { display: none; }
     .dm-hero__dots { bottom: var(--space-5); }
-    .dm-h2, .dm-rv .rv__h2 { font-size: var(--fs-3xl); }
+    .dm-h2 { font-size: var(--fs-3xl); }
     .dm-band__line { font-size: var(--fs-3xl); }
     .dm-band { padding: var(--space-16) 0; }
+    .dm-band__actions { width: 100%; flex-direction: column; }
     .dm-band .dm-pill { width: 100%; }
     .dm-sv__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
     .dm-sv__tile:first-child { grid-column: 1 / -1; aspect-ratio: 4 / 3; }

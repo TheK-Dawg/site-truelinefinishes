@@ -10,6 +10,9 @@ const content: ServiceContent = {
   h1: 'Premises Looking Worn? Commercial Painting and Decorating',
   lead: 'Customers and staff notice tired walls. TrueLine Finishes brings the same careful painting and decorating to offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
   heroImage: 'office-navy-feature-wall-0178',
+  introH2: 'The Same Trade, for Business Premises',
+  introImage: 'office-prepared-0172',
+  sectionsH2: 'What Commercial Work Covers',
   intro: [
     'Commercial work is the same trade as at home: interior painting, exterior painting and wallpapering, for business premises of every kind. Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to him.',
   ],
@@ -46,6 +49,7 @@ const content: ServiceContent = {
     },
   ],
   sectorsLine: 'For business premises of every kind: offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
+  sectorsImage: 'office-navy-feature-wall-0175',
   process: {
     heading: 'How a Commercial Job Runs',
     lead: 'Three steps, and you deal with Brandon directly.',

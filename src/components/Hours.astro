@@ -1,0 +1,22 @@
+---
+/**
+ * OPENING HOURS, one row per day, Monday to Sunday, the way the Google listing shows them
+ * (operator round 3, 6 Nov 2026: "you put every single day, you don't just say Monday to Friday").
+ * Source: site-plan/nap.json `hours` (confirmed off Brandon's Google Business Profile). Opening
+ * hours only: no response time and no promise of when work is done.
+ * Colours come from the place it sits in (dark footer, form band, contact card).
+ */
+import { hours } from '../data/site';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+<dl class:list={['hrs', cls]} aria-label="Opening hours" data-hours>
+  {hours.map((h) => <div class="hrs__row"><dt>{h.day}</dt><dd>{h.time}</dd></div>)}
+</dl>
+
+<style>
+  .hrs { display: grid; gap: var(--space-1); margin: 0; font-size: var(--fs-md); line-height: var(--lh-normal); }
+  .hrs__row { display: grid; grid-template-columns: 7.5em 1fr; gap: var(--space-3); }
+  .hrs dt { margin: 0; }
+  .hrs dd { margin: 0; font-weight: var(--fw-semibold); }
+</style>

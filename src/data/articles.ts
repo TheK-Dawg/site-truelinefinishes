@@ -28,6 +28,7 @@ export interface Article {
   summary: string; // hero lead
   hero: string; // pool image key
   bodyHtml: string; // intro + H2 sections (engine HTML)
+  rundown?: string[]; // "Quick Rundown" box at the top of the body (operator round 3); engine articles carry theirs in the intro
   faqs: { q: string; a: string }[];
   engine: { runId: string; rank?: number; source: string };
 }

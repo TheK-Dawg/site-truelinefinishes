@@ -10,6 +10,9 @@ const content: ServiceContent = {
   h1: 'Looking for a Painter and Decorator Who Does the Work Himself?',
   lead: 'TrueLine Finishes handles all aspects of painting and decorating for homes and businesses, from one tired room to a full property redecoration. Brandon Dawson, the owner, carries out the work, and every job starts with careful preparation.',
   heroImage: 'victorian-hallway-0065',
+  introH2: 'The Whole Trade, From Walls to Woodwork',
+  introImage: 'navy-kitchen-0038',
+  sectionsH2: 'What Painting and Decorating Takes In',
   intro: [
     'Painting and decorating is the whole trade: walls and ceilings, woodwork, exterior masonry, windows and doors, and wallpaper, for homes and for businesses. Brandon Dawson, the owner, carries out the work and oversees every job, so the person you speak to on the phone is the person doing the preparation and the finish.',
     'We take pride in attention to detail, lasting finishes and treating your property with care. Every job starts with the preparation, because that is what decides how the paint looks and how long it lasts.',

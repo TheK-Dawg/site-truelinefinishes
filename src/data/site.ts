@@ -5,6 +5,7 @@
  * The address is NEVER rendered and never goes in schema (nap.json addressDisplay: "no").
  */
 import seed from '../../site-plan/seed.json';
+import { hours as napHours } from '../../site-plan/nap.json'; // the hours only: nap.json also holds the never-shown address
 import imagesData from './images.json';
 
 export const business = {
@@ -25,11 +26,13 @@ export const business = {
   },
 };
 
-/** Opening hours, exactly as the Google listing (nap.json hours). Opening hours, not a promise of when work is done. */
-export const hours = [
-  { days: 'Monday to Friday', time: '7am to 7pm' },
-  { days: 'Saturday and Sunday', time: '8am to 6pm' },
-];
+/**
+ * Opening hours, exactly as the Google listing (nap.json hours), ONE ENTRY PER DAY: shown day by day,
+ * Monday to Sunday, never as "Monday to Friday" (operator round 3, 6 Nov 2026). Rendered by
+ * Hours.astro. Opening hours, not a promise of when work is done.
+ */
+export const hours = Object.entries(napHours as Record<string, string>).map(([day, t]) => ({ day, time: t.replace(/^(\w+)-(\w+)$/, '$1 to $2') }));
+if (hours.length !== 7 || hours[0].day !== 'Monday' || hours[6].day !== 'Sunday') throw new Error('nap.json hours must list Monday to Sunday, one entry per day');
 export const hoursSchema = [
   { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '07:00', closes: '19:00' },
   { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday', 'Sunday'], opens: '08:00', closes: '18:00' },
