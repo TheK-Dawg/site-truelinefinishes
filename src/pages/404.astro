@@ -1,6 +1,8 @@
 ---
-/** 404: page-not-found explanation with Home and Call actions only. Utility: noindex, no sticky bar. */
+/** 404: page-not-found explanation with Home and Call actions only. Utility: noindex, no sticky bar. The slimline and the main Trustindex reviews section sit under the hero as on every page (operator, 6 Nov 2026). */
 import Base from '../layouts/Base.astro';
+import Reviews from '../components/Reviews.astro';
+import TrustindexSlot from '../components/TrustindexSlot.astro';
 import CallButton from '../components/CallButton.astro';
 ---
 <Base title="Page Not Found | TrueLine Finishes" description="That page does not exist. Head back to the TrueLine Finishes home page, or call Brandon on 07949 484274 about painting and decorating." page="404" utility>
@@ -10,14 +12,17 @@ import CallButton from '../components/CallButton.astro';
       <h1 class="nf__h1">Page not found</h1>
       <p class="nf__p">The page you were looking for is not here. It may have moved, or the link may be wrong.</p>
       <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="404-home"><span class="btn__t">Back to home</span></a><CallButton cta="404-call" /></div>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="nf__ti" />
     </div>
   </section>
+  <Reviews />
 </Base>
 <style>
   .nf { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 80vh; text-align: center; }
   .nf__inner { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); }
   .nf__n { font-family: var(--font-heading); font-size: calc(var(--fs-6xl) * 2.5); line-height: 1; color: var(--accent-on-dark); }
   .nf__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); }
+  .nf :global(.nf__ti) { margin-top: var(--space-4); width: 100%; }
   .nf .btn-row { justify-content: center; margin-top: var(--space-4); }
   @media (max-width: 640px) { .nf__n { font-size: calc(var(--fs-6xl) * 1.6); } .nf__h1 { font-size: var(--fs-3xl); } }
 </style>

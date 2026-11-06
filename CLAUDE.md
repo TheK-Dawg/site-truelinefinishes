@@ -14,8 +14,10 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
 
 ## Site-specific rules that override generic v4 defaults (plan wins)
 - NO written/invented reviews (standing prohibition 2); reviews = Brandon's Google listing via the
-  Trustindex slot (`slots.trustindexReviews` in `src/data/site.ts`, TODO until the operator supplies
-  the widget id). Never a review count or rating; never "many five-star reviews"; never Rated People.
+  four TrueLine Trustindex widgets (`trustindex` in `src/data/site.ts`, DECISIONS T1-T7): corner
+  (desktop), main (under every hero; not on /reviews/), reviewPage (/reviews/ grid), slimline (every
+  hero + every form). Never a review count or rating written by the site; never "many five-star
+  reviews"; never Rated People.
 - The address is NEVER shown on the site or in schema. Phone 07949 484274 only; never 07706 215917.
 - "Free quotation" (Brandon's word) is allowed; "free quote" is not. Buttons say Quick Quote Online.
 - No prices, guarantees, warranties, accreditations, team claims, response times or out-of-hours

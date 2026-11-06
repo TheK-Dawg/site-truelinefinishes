@@ -51,19 +51,24 @@ export const usps = {
 export const charityLine = "Proud to support A Child's Wish, a children's charity.";
 
 /**
- * OPERATOR SLOTS. Empty until the operator supplies them.
- *  - trustindexReviews: the TrueLine Trustindex review-section widget loader
- *    (https://cdn.trustindex.io/loader.js?<id>), keyed on Google CID 8023434379390696838.
- *    TODO(operator): no TrueLine widget id exists yet. Do NOT invent one and do NOT reuse
- *    another client's id. Until it is set the reviews section shows its heading and the marked,
- *    empty slot (round 2: no "read our reviews on Google" line in its place); /reviews/ alone
- *    keeps a link to the Google listing.
+ * TRUSTINDEX WIDGETS (operator, 6 Nov 2026: brief TRUELINE-TRUSTINDEX-FOUR-WIDGETS). The four
+ * TrueLine loaders Vince supplied, each keyed on Brandon's Google listing (CID 8023434379390696838).
+ * One role, one id: never swap them, never borrow another site's id. The widgets show Google's own
+ * live rating, count and reviews; the site never writes, counts or rates anything itself.
+ *  - corner:     floating badge, bottom-left, on every page, desktop only (hidden below 1024px).
+ *  - main:       the reviews SECTION directly under the hero on every page except /reviews/.
+ *  - reviewPage: the grid widget, in /reviews/'s review section instead of main.
+ *  - slimline:   in every hero and again in the quote-form section (white text on dark grounds).
+ * Embed shape as supplied: <script defer async src="URL"></script>, the loader replaces its own
+ * script tag with the widget, so the same loader can sit in two places on one page.
  */
-export const slots = {
-  trustindexReviews: '',
-  // The slim white-text Trustindex widget for the hero (optional; same TODO rule as above).
-  trustindexStrip: '',
-};
+export const trustindex = {
+  corner: { id: '750bdd38520519524a16f32074e', src: 'https://cdn.trustindex.io/loader.js?750bdd38520519524a16f32074e' },
+  main: { id: '980be2f8585419540236d6075d0', src: 'https://cdn.trustindex.io/loader.js?980be2f8585419540236d6075d0' },
+  reviewPage: { id: '77dcbf385600195a22468d47c59', src: 'https://cdn.trustindex.io/loader.js?77dcbf385600195a22468d47c59' },
+  slimline: { id: 'c4b35ec858641953835667d83d1', src: 'https://cdn.trustindex.io/loader.js?c4b35ec858641953835667d83d1' },
+} as const;
+export type TrustindexRole = keyof typeof trustindex;
 
 /**
  * Brandon's two YouTube videos (plan, Video). NOT EMBEDDED ANYWHERE (operator round 2, 5 Nov 2026,

@@ -17,9 +17,10 @@
  * header, footer and sticky bar take the blue grounds here and nowhere else.
  */
 import Base from '../layouts/Base.astro';
+import TrustindexSlot from '../components/TrustindexSlot.astro';
 import Icon from '../components/Icon.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { business, seo, image, services, mainPlaces, hours, slots } from '../data/site';
+import { business, seo, image, services, mainPlaces, hours } from '../data/site';
 import { articles, articleUrl } from '../data/articles';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
@@ -47,8 +48,6 @@ const tiles = [
 ];
 const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
 const list = articles.slice(0, 3);
-const ti = slots.trustindexReviews;
-const tiStrip = slots.trustindexStrip;
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
 const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
 ---
@@ -64,16 +63,24 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
           <a href="#contact" class="btn fx-pill fx-pill--chrome" data-cta="hero-quote"><span class="fx-pill__dot"><Icon name="arrow" size={14} /></span><span class="btn__t">Quick Quote Online</span></a>
           <a href={business.phoneHref} class="btn fx-pill fx-pill--white" data-cta="hero-call"><span class="fx-pill__dot fx-pill__dot--ink"><Icon name="phone" size={14} /></span><span class="btn__t">Call {business.phone}</span></a>
         </div>
-        <Fragment set:html={`<!-- TODO-TrustIndex-ID: slim Trustindex widget (white text) for Google CID ${business.gbp.cid}. Set slots.trustindexStrip in src/data/site.ts. -->`} />
-        <div class:list={['fx-hero__ti', tiStrip && 'fx-hero__ti--live']} data-trustindex-slot="slim-hero" data-trustindex-todo={tiStrip ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-state={tiStrip ? 'live' : 'pending-widget-id'}>
-          {tiStrip && <script is:inline defer async src={tiStrip}></script>}
-        </div>
+        <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="fx-hero__ti" />
       </div>
       <ul class="fx-hero__bar">
         {usps.map((u) => (
           <li class="fx-hero__usp"><span class="fx-hero__ic"><Icon name={u.icon} size={18} /></span><div><h2>{u.title}</h2><p>{u.text}</p></div></li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <!-- REVIEWS (Flexora "Real People, Real Results"), directly under the hero (operator, 6 Nov 2026: the MAIN Trustindex widget under the hero on every page). -->
+  <section class="fx-sec fx-rv" id="reviews" data-section="reviews" data-ai-skip>
+    <div class="container">
+      <div class="fx-rv__head" data-motion="reveal">
+        <h2 class="rv__h2">What customers say about us</h2>
+        <p class="fx-lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
+      </div>
+      <TrustindexSlot role="main" place="reviews" class="fx-rv__widget" />
     </div>
   </section>
 
@@ -93,20 +100,6 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
           <a href="/gallery/" class="btn fx-pill fx-pill--line fx-pill--desc" data-cta="about-gallery"><span class="btn__t">See the Gallery</span></a>
         </div>
         <div class="fx-meet__wide"><img src={aboutWide.src} alt={aboutWide.alt} width={aboutWide.width} height={aboutWide.height} loading="lazy" decoding="async" /></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REVIEWS (Flexora "Real People, Real Results"), moved up under the second section (operator rule). The Trustindex slot, empty until the widget id arrives. -->
-  <section class="fx-sec fx-rv" id="reviews" data-section="reviews" data-ai-skip>
-    <div class="container">
-      <div class="fx-rv__head" data-motion="reveal">
-        <h2 class="rv__h2">What customers say about us</h2>
-        <p class="fx-lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
-      </div>
-      <Fragment set:html={`<!-- TODO-TrustIndex-ID: Trustindex review widget for Google CID ${business.gbp.cid}. Set slots.trustindexReviews in src/data/site.ts and the widget renders here. -->`} />
-      <div class:list={['fx-rv__widget', ti && 'fx-rv__widget--ti']} data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-slot="reviews" data-trustindex-cid={business.gbp.cid} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
-        {ti && <script is:inline defer async src={ti}></script>}
       </div>
     </div>
   </section>
@@ -233,6 +226,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       <div class="fx-qf__card">
         <div class="fx-qf__panel on-dark">
           <h2 class="fx-h2">Tell Brandon About the Job</h2>
+          <TrustindexSlot role="slimline" place="slim-form" ground="dark" class="fx-qf__ti" />
           <p class="fx-qf__lead">Leave your name, email, phone number and postcode, with a line or two about the job. Brandon will talk it through with you and give you a free quotation.</p>
           <div class="fx-qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
             <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
@@ -348,7 +342,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-hero__h1 { color: var(--v-white); font-size: var(--fs-8xl); line-height: 1.04; margin-bottom: var(--space-6); }
   .fx-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 60ch; margin-bottom: var(--space-8); }
   .fx-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
-  .fx-hero__ti--live { min-height: var(--space-8); margin-top: var(--space-5); max-width: 100%; overflow: hidden; }
+  .fx-hero__copy :global(.fx-hero__ti) { margin-top: var(--space-5); }
   /* The cut-out bar: a white tab rising out of the bottom edge with concave shoulders (Flexora's signature shape). */
   .fx-hero__bar { position: relative; list-style: none; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); width: min(100%, calc(var(--space-30) * 8)); padding: var(--space-6) var(--space-10) var(--space-5); background: var(--v-white); border-radius: var(--v-radius-lg) var(--v-radius-lg) 0 0; }
   .fx-hero__bar::before, .fx-hero__bar::after { content: ''; position: absolute; bottom: 0; width: var(--v-radius-lg); height: var(--v-radius-lg); }
@@ -373,9 +367,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-rv { background: linear-gradient(180deg, var(--v-mist-50), var(--v-white)); }
   .fx-rv__head { display: flex; flex-direction: column; gap: var(--space-4); }
   .fx-rv .rv__h2 { font-size: var(--fs-5xl); line-height: 1.12; }
-  .fx-rv__widget { margin-top: var(--space-10); }
-  .fx-rv__widget:empty { display: none; }
-  .fx-rv__widget--ti { min-height: calc(var(--space-30) * 3); }
+  .fx-rv :global(.fx-rv__widget) { margin-top: var(--space-10); }
 
   /* SERVICES */
   .fx-sv { background: var(--v-mist-100); }
@@ -464,6 +456,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .fx-qf__card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-radius: var(--v-radius-card); overflow: hidden; background: var(--v-ink-700); }
   .fx-qf__panel { padding: var(--space-16) var(--space-12); background: var(--v-ink-700); color: var(--v-mist-300); }
   .fx-qf__panel .fx-h2 { color: var(--v-white); margin-bottom: var(--space-4); }
+  .fx-qf__panel :global(.fx-qf__ti) { margin-bottom: var(--space-5); }
   .fx-qf__lead { margin-bottom: var(--space-8); max-width: 52ch; }
   .fx-qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .fx-qf__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-mist-300); }

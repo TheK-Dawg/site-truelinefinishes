@@ -17,8 +17,9 @@
  * here and nowhere else.
  */
 import Base from '../layouts/Base.astro';
+import TrustindexSlot from '../components/TrustindexSlot.astro';
 import Icon from '../components/Icon.astro';
-import { business, seo, image, services, hours, slots } from '../data/site';
+import { business, seo, image, services, hours } from '../data/site';
 import { articles, articleUrl } from '../data/articles';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
@@ -43,8 +44,6 @@ const tiles = [
 ];
 const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ?? '';
 const list = articles.slice(0, 4);
-const ti = slots.trustindexReviews;
-const tiStrip = slots.trustindexStrip;
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
 const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
 const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
@@ -62,15 +61,25 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
         <a href="#contact" class="btn dm-pill dm-pill--chrome" data-cta="hero-quote"><span class="btn__t">Quick Quote Online</span></a>
         <a href={business.phoneHref} class="btn dm-pill dm-pill--glass" data-cta="hero-call"><Icon name="phone" size={16} /><span class="btn__t">Call {business.phone}</span></a>
       </div>
-      <Fragment set:html={`<!-- TODO-TrustIndex-ID: slim Trustindex widget (white text) for Google CID ${business.gbp.cid}. Set slots.trustindexStrip in src/data/site.ts. -->`} />
-      <div class:list={['dm-hero__ti', tiStrip && 'dm-hero__ti--live']} data-trustindex-slot="slim-hero" data-trustindex-todo={tiStrip ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-state={tiStrip ? 'live' : 'pending-widget-id'}>
-        {tiStrip && <script is:inline defer async src={tiStrip}></script>}
-      </div>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="dm-hero__ti" />
     </div>
     <button type="button" class="dm-hero__arrow dm-hero__arrow--prev" data-slide-prev aria-label="Previous photo"><Icon name="chevronLeft" size={22} /></button>
     <button type="button" class="dm-hero__arrow dm-hero__arrow--next" data-slide-next aria-label="Next photo"><Icon name="chevronRight" size={22} /></button>
     <div class="dm-hero__dots" role="group" aria-label="Choose a photo">
       {slides.map((s, i) => <button type="button" class:list={['dm-hero__dot', i === 0 && 'is-on']} data-slide-to={i} aria-label={`Photo ${i + 1}: ${s.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
+    </div>
+  </section>
+
+  <!-- REVIEWS (Dom testimonials band over a photo), directly under the hero (operator, 6 Nov 2026: the MAIN Trustindex widget under the hero on every page). -->
+  <section class="dm-rv on-dark" id="reviews" data-section="reviews" data-ai-skip>
+    <img class="dm-rv__bg" src={reviewsBg.src} alt="" width={reviewsBg.width} height={reviewsBg.height} loading="lazy" decoding="async" />
+    <div class="container dm-rv__inner">
+      <div class="dm-rv__head" data-motion="reveal">
+        <h2 class="rv__h2">What customers say about us</h2>
+        <p class="dm-rv__lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
+        <a href="/gallery/" class="btn dm-pill dm-pill--chrome" data-cta="reviews-gallery"><span class="btn__t">See Brandon's Work</span></a>
+      </div>
+      <TrustindexSlot role="main" place="reviews" class="dm-rv__widget" />
     </div>
   </section>
 
@@ -93,22 +102,6 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
           </li>
         ))}
       </ul>
-    </div>
-  </section>
-
-  <!-- REVIEWS (Dom testimonials band over a photo), moved up under the second section (operator rule). The Trustindex slot, empty until the widget id arrives. -->
-  <section class="dm-rv on-dark" id="reviews" data-section="reviews" data-ai-skip>
-    <img class="dm-rv__bg" src={reviewsBg.src} alt="" width={reviewsBg.width} height={reviewsBg.height} loading="lazy" decoding="async" />
-    <div class="container dm-rv__inner">
-      <div class="dm-rv__head" data-motion="reveal">
-        <h2 class="rv__h2">What customers say about us</h2>
-        <p class="dm-rv__lead">Reviews come straight from TrueLine Finishes' Google Business Profile, in the customers' own words.</p>
-        <a href="/gallery/" class="btn dm-pill dm-pill--chrome" data-cta="reviews-gallery"><span class="btn__t">See Brandon's Work</span></a>
-      </div>
-      <Fragment set:html={`<!-- TODO-TrustIndex-ID: Trustindex review widget for Google CID ${business.gbp.cid}. Set slots.trustindexReviews in src/data/site.ts and the widget renders here. -->`} />
-      <div class:list={['dm-rv__widget', ti && 'dm-rv__widget--ti']} data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-slot="reviews" data-trustindex-cid={business.gbp.cid} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
-        {ti && <script is:inline defer async src={ti}></script>}
-      </div>
     </div>
   </section>
 
@@ -223,6 +216,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
       </div>
       <div class="dm-qf__card">
         <h3 class="dm-qf__form-h">Quick Quote Online</h3>
+        <TrustindexSlot role="slimline" place="slim-form" class="dm-qf__ti" />
         <div class="dm-qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
           <noscript><p>The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
         </div>
@@ -326,7 +320,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-hero__h1 { color: var(--v-white); font-size: var(--fs-7xl); line-height: 1.08; max-width: 18ch; margin-bottom: var(--space-6); }
   .dm-hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 58ch; margin-bottom: var(--space-8); }
   .dm-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
-  .dm-hero__ti--live { min-height: var(--space-8); margin-top: var(--space-5); max-width: 100%; overflow: hidden; }
+  .dm-hero__copy :global(.dm-hero__ti) { margin-top: var(--space-5); }
   .dm-hero__arrow { position: absolute; top: 50%; z-index: 1; display: grid; place-items: center; width: var(--space-16); height: var(--space-16); padding: 0; border: 0; border-radius: var(--radius-full); background: var(--v-glass-light); color: var(--v-white); backdrop-filter: blur(4px); cursor: pointer; transform: translateY(-50%); transition: background-color 0.2s var(--ease); }
   .dm-hero__arrow:hover { background: var(--v-chrome); color: var(--v-ink-900); }
   .dm-hero__arrow--prev { left: var(--space-16); }
@@ -356,10 +350,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-rv__head { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
   .dm-rv .rv__h2 { font-size: var(--fs-5xl); line-height: 1.12; color: var(--v-white); }
   .dm-rv__lead { color: var(--v-mist-100); max-width: 44ch; }
-  .dm-rv__widget--ti { min-height: calc(var(--space-30) * 3); background: var(--v-white); padding: var(--space-6); }
-  .dm-rv__widget:empty { display: none; }
-  /* Pending widget: the head spans the band rather than leaving an empty right column. */
-  .dm-rv__inner:not(:has(.dm-rv__widget--ti)) { grid-template-columns: minmax(0, 1fr); }
+  .dm-rv :global(.dm-rv__widget) { min-height: calc(var(--space-30) * 3); background: var(--v-white); padding: var(--space-6); }
 
   /* ACCENT BAND */
   .dm-band { background: var(--v-royal); padding: var(--space-20) 0; }
@@ -432,7 +423,8 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .dm-qf__hours { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-5); font-size: var(--fs-md); color: var(--v-slate-600); }
   .dm-qf__hours :global(.icon) { color: var(--v-royal); flex-shrink: 0; }
   .dm-qf__card { padding: var(--space-8); background: var(--v-white); box-shadow: var(--v-shadow-soft); }
-  .dm-qf__form-h { font-size: var(--fs-2xl); margin-bottom: var(--space-5); }
+  .dm-qf__form-h { font-size: var(--fs-2xl); margin-bottom: var(--space-3); }
+  .dm-qf__card :global(.dm-qf__ti) { margin-bottom: var(--space-5); }
   .dm-qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .dm-qf__secure { display: flex; gap: var(--space-2); align-items: flex-start; margin-top: var(--space-4); font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--v-slate-600); }
   .dm-qf__secure :global(.icon) { color: var(--v-royal); flex-shrink: 0; margin-top: 1px; }

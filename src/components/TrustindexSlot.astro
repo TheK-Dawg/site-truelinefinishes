@@ -1,0 +1,40 @@
+---
+/**
+ * TRUSTINDEX SLOT (operator, 6 Nov 2026). One Trustindex loader in its own marked box. The
+ * loader replaces its script tag with the widget, inside this box, so the same loader can sit in
+ * two places on one page (slimline: hero + quote form) and each renders where it was put.
+ * role:   which of the four TrueLine widgets (src/data/site.ts `trustindex`).
+ * place:  where it sits (data-trustindex-slot: slim-hero, slim-form, reviews, corner), for tests.
+ * ground: the colour behind it. The widgets are Trustindex's light set (dark text); on a dark
+ *         ground the slimline's text is turned white so it reads (contrast law). Nothing else in
+ *         the widget is changed: rating, count and reviews are Google's own, live.
+ * align:  slimline only: line it up with the copy above it (start) or centre it.
+ */
+import { trustindex, type TrustindexRole } from '../data/site';
+interface Props { role: TrustindexRole; place: string; ground?: 'dark' | 'light'; align?: 'start' | 'center'; class?: string }
+const { role, place, ground = 'light', align = 'start', class: cls } = Astro.props;
+const w = trustindex[role];
+---
+<div class:list={['ti-slot', `ti-slot--${role}`, `ti-slot--on-${ground}`, `ti-slot--${align}`, cls]} data-trustindex-slot={place} data-trustindex-role={role} data-trustindex-id={w.id} data-trustindex-state="live"><script is:inline defer async src={w.src}></script></div>
+
+<style is:global>
+  /* Reserve each widget's height so nothing below jumps when it renders. */
+  .ti-slot--slimline { min-height: var(--space-6); max-width: 100%; }
+  .ti-slot--main { min-height: calc(var(--space-30) * 3); }
+  .ti-slot--reviewPage { min-height: calc(var(--space-30) * 6); }
+  .ti-slot--corner { min-height: 0; }
+  .ti-slot .ti-widget { max-width: 100%; }
+  /* Trustindex's own rules are `.ti-widget[data-layout-id][data-set-id] ... !important`; these carry
+     the same attributes plus the slot classes so they win on specificity, not on load order. */
+  .ti-slot.ti-slot--slimline.ti-slot--start .ti-widget[data-layout-id][data-set-id] { text-align: left !important; }
+  .ti-slot.ti-slot--slimline.ti-slot--start .ti-widget[data-layout-id][data-set-id] .ti-widget-container { margin-left: 0 !important; margin-right: auto !important; text-align: left !important; }
+  .ti-slot.ti-slot--slimline.ti-slot--start .ti-widget[data-layout-id][data-set-id] .ti-widget-container .ti-header { justify-content: flex-start !important; padding-left: 0 !important; padding-right: 0 !important; }
+  .ti-slot.ti-slot--slimline.ti-slot--center .ti-widget[data-layout-id][data-set-id] .ti-widget-container .ti-header { justify-content: center !important; }
+  /* Dark grounds: the slimline's rating and count in white (Trustindex's light set prints them black). */
+  .ti-slot.ti-slot--on-dark .ti-widget[data-layout-id][data-set-id] .ti-widget-container,
+  .ti-slot.ti-slot--on-dark .ti-widget[data-layout-id][data-set-id] .ti-widget-container * { color: var(--text-inverse) !important; }
+  /* CORNER: desktop only. Hidden below the desktop breakpoint, by its box and by its own widget id. */
+  @media (max-width: 1023px) {
+    .ti-slot--corner, .ti-widget[data-pid="750bdd38520519524a16f32074e"] { display: none !important; }
+  }
+</style>

@@ -2,7 +2,8 @@
 /**
  * Root layout. Head (robots, canonical, OG, favicons), the HousePainter + WebSite + WebPage
  * @graph plus page-level schema, header, footer, the one root Lightbox, the mobile sticky bar,
- * the mobile WhatsApp button, motion, and the Quick Quote anchor law.
+ * the mobile WhatsApp button, the Trustindex CORNER badge (bottom-left, desktop only), motion,
+ * and the Quick Quote anchor law.
  * SCHEMA (plan, Contact): HousePainter with the name, phone, URL, the five services, areaServed
  * = the plan's towns, openingHoursSpecification (Mo-Fr 07:00-19:00, Sa-Su 08:00-18:00),
  * sameAs the YouTube channel and the Google listing (share link + CID), hasMap the listing. NO address (addressDisplay "no").
@@ -13,6 +14,7 @@ import Footer from '../components/Footer.astro';
 import Lightbox from '../components/Lightbox.astro';
 import StickyCtaBar from '../components/StickyCtaBar.astro';
 import WhatsAppButton from '../components/WhatsAppButton.astro';
+import TrustindexSlot from '../components/TrustindexSlot.astro';
 import { business, towns, services, seo, hoursSchema } from '../data/site';
 import { INDEXABLE } from '../data/launch';
 import { markdownPath } from '../lib/md-path.js';
@@ -99,6 +101,7 @@ const jsonld = { '@context': 'https://schema.org', '@graph': graph };
     <Footer formless={utility} />
     {!utility && <StickyCtaBar />}
     <WhatsAppButton />
+    <TrustindexSlot role="corner" place="corner" />
     <Lightbox formless={utility} />
 
     <script>

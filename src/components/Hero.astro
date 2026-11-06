@@ -7,17 +7,16 @@
  * Home (`compact` off) adds the three glass info cards on the bottom edge. Sub-pages use
  * `compact`: the same background, overlay, container and headline placement, a smaller height,
  * no info cards. Inner pages reach it through PageHero.astro.
- * REVIEWS LINE (round 2 fix 1): the old "Read Brandon's reviews on Google" line is gone. Its place
- * is the slim Trustindex slot, marked TODO-TrustIndex-ID until the operator supplies the widget
- * (slots.trustindexStrip); nothing renders there until then. No count, no rating, nothing faked.
+ * REVIEWS LINE (round 2 fix 1; widgets 6 Nov 2026): the old "Read Brandon's reviews on Google" line
+ * is gone. Its place is the SLIMLINE Trustindex widget (white text on the dark hero), showing
+ * Google's own live rating and count. The site writes no rating or count of its own.
  * OPERATOR OVERRIDES (DECISIONS O1-O3): no logo, no video and no form in any hero.
  */
 import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
-import { business, slots } from '../data/site';
+import TrustindexSlot from './TrustindexSlot.astro';
 interface Props { h1: string; lead: string; image: { src: string; alt: string; width: number; height: number }; compact?: boolean; formless?: boolean; showCta?: boolean }
 const { h1, lead, image, compact = false, formless = false, showCta = true } = Astro.props;
-const ti = slots.trustindexStrip;
 ---
 <section class:list={['hero on-dark section-hero', compact && 'hero--compact']} data-section="hero" data-hero={compact ? 'page' : 'home'}>
   <img class="hero__bg" src={image.src} alt="" width={image.width} height={image.height} fetchpriority="high" decoding="async" />
@@ -31,10 +30,7 @@ const ti = slots.trustindexStrip;
           <CallButton cta="hero-call" class="hero__btn" />
         </div>
       )}
-      <Fragment set:html={`<!-- TODO-TrustIndex-ID: slim Trustindex widget (white text) for Google CID ${business.gbp.cid}. Set slots.trustindexStrip in src/data/site.ts. -->`} />
-      <div class:list={['hero__ti', ti && 'hero__ti--live']} data-trustindex-slot="slim-hero" data-trustindex-todo={ti ? undefined : 'TODO-TrustIndex-ID'} data-trustindex-state={ti ? 'live' : 'pending-widget-id'}>
-        {ti && <script is:inline defer async src={ti}></script>}
-      </div>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" class="hero__ti" />
     </div>
     {!compact && (
       <ul class="hero__cards">
@@ -57,9 +53,8 @@ const ti = slots.trustindexStrip;
   .hero__lead { font-size: var(--fs-lg); max-width: 56ch; margin-bottom: var(--space-8); }
   .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  /* Pending: takes no space. Live: reserve the slim widget's height so nothing jumps on first input. */
-  .hero__ti--live { min-height: var(--space-8); margin-top: var(--space-4); max-width: 100%; overflow: hidden; }
-  .hero__ti :global(.ti-widget) { text-align: left !important; }
+  /* The slimline widget, 16px under the buttons (house spacing law: comfortable, not a chasm). */
+  .hero__copy :global(.hero__ti) { margin-top: var(--space-4); }
   .hero__cards { list-style: none; padding: 0; margin-top: var(--space-24); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); }
   .hero__card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-8) var(--space-6); background: var(--glass-card); border: 1px solid var(--border-inverse); backdrop-filter: blur(4px); }
   .hero__card--on { border-color: var(--accent-on-dark); }

@@ -21,7 +21,59 @@ const ARTICLE_ONLY = [[/\b(best|leading|number one|no\.? ?1|top-rated|most trust
 const visibleText = (html) => html.replace(/<!--[\s\S]*?-->/g, ' ').replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#39;|&rsquo;|&#x27;/g, "'").replace(/\s+/g, ' ');
 const copyFails = (text, article) => [...BANNED, ...(article ? ARTICLE_ONLY : [])].flatMap(([re, label]) => { const m = text.match(new RegExp(`.{0,50}${re.source}.{0,50}`, re.flags.replace('g', ''))); return m ? [`banned ${label}: "...${m[0].trim()}..."`] : []; });
 
+// TRUSTINDEX (operator, 6 Nov 2026): the four TrueLine widgets, one role per id (src/data/site.ts
+// `trustindex`). Every page: one CORNER; one MAIN in the reviews section, the first section after
+// the hero (on /reviews/ the REVIEW PAGE grid instead, never both); a SLIMLINE in the hero and in
+// the quote-form section. No other Trustindex id, no loader in the wrong role.
+const TI = { corner: '750bdd38520519524a16f32074e', main: '980be2f8585419540236d6075d0', reviewPage: '77dcbf385600195a22468d47c59', slimline: 'c4b35ec858641953835667d83d1' };
+const tiFails = (r, html) => {
+  const f = [];
+  const body = html.replace(/<!--[\s\S]*?-->/g, '');
+  const slots = [...body.matchAll(/<div class="ti-slot[^"]*"[^>]*data-trustindex-slot="([^"]+)" data-trustindex-role="([^"]+)" data-trustindex-id="([^"]+)"[^>]*><script defer async src="https:\/\/cdn\.trustindex\.io\/loader\.js\?([0-9a-f]+)"><\/script><\/div>/g)].map((m) => ({ at: m.index, place: m[1], role: m[2], id: m[3], src: m[4] }));
+  const loaders = [...body.matchAll(/cdn\.trustindex\.io\/loader\.js\?([0-9a-f]+)/g)].map((m) => m[1]);
+  if (loaders.length !== slots.length) f.push(`${loaders.length} Trustindex loaders but ${slots.length} marked slots (a loader outside a slot)`);
+  for (const x of slots) {
+    if (TI[x.role] === undefined) f.push(`unknown Trustindex role "${x.role}"`);
+    else if (x.id !== TI[x.role] || x.src !== TI[x.role]) f.push(`${x.role} slot loads ${x.src} (want ${TI[x.role]})`);
+  }
+  for (const id of loaders) if (!Object.values(TI).includes(id)) f.push(`foreign Trustindex id ${id}`);
+  const n = (role, place) => slots.filter((x) => x.role === role && (!place || x.place === place)).length;
+  const reviewsPage = r === '/reviews/';
+  if (n('corner', 'corner') !== 1 || n('corner') !== 1) f.push(`${n('corner')} corner widgets (want 1)`);
+  if (reviewsPage) { if (n('reviewPage', 'reviews') !== 1 || n('main')) f.push(`/reviews/ has ${n('reviewPage')} review-page and ${n('main')} main widgets (want 1 and 0)`); }
+  else if (n('main', 'reviews') !== 1 || n('main') !== 1 || n('reviewPage')) f.push(`${n('main')} main and ${n('reviewPage')} review-page widgets (want 1 main, 0 review-page)`);
+  const section = (name) => { const m = body.match(new RegExp(`<section[^>]*data-section="${name}"[\\s\\S]*?</section>`)); return m ? [m.index, m.index + m[0].length] : null; };
+  const inside = (place, name) => { const s = section(name); return s && slots.some((x) => x.place === place && x.role === 'slimline' && x.at > s[0] && x.at < s[1]); };
+  if (!inside('slim-hero', 'hero') || n('slimline', 'slim-hero') !== 1) f.push('slimline missing from the hero (or more than one)');
+  const hasForm = /data-section="quote-form"/.test(body);
+  if (hasForm && (!inside('slim-form', 'quote-form') || n('slimline', 'slim-form') !== 1)) f.push('slimline missing from the quote-form section (or more than one)');
+  if (!hasForm && n('slimline', 'slim-form')) f.push('slim-form slot on a page without a form');
+  const main = (body.match(/<main[^>]*>([\s\S]*)<\/main>/) || [, ''])[1];
+  const order = [...main.matchAll(/<section\b[^>]*data-section="([^"]+)"/g)].map((m) => m[1]);
+  if (order[0] !== 'hero' || order[1] !== 'reviews') f.push(`sections start ${order.slice(0, 3).join(' > ')} (want hero > reviews)`);
+  const rv = section('reviews');
+  if (!rv || !slots.some((x) => x.place === 'reviews' && x.at > rv[0] && x.at < rv[1])) f.push('review widget not inside the reviews section');
+  return f;
+};
+
 if (process.argv.includes('--selftest')) {
+  // Trustindex mapping gate: a correct page passes; swapped ids, a missing slot, main on /reviews/
+  // and reviews below another section each fail.
+  const slot = (place, role, id = TI[role]) => `<div class="ti-slot ti-slot--${role}" data-trustindex-slot="${place}" data-trustindex-role="${role}" data-trustindex-id="${id}" data-trustindex-state="live"><script defer async src="https://cdn.trustindex.io/loader.js?${id}"></script></div>`;
+  const page = ({ hero = slot('slim-hero', 'slimline'), rv = slot('reviews', 'main'), form = slot('slim-form', 'slimline'), corner = slot('corner', 'corner'), swap = false } = {}) => {
+    const h = `<section data-section="hero">${hero}</section>`; const v = `<section data-section="reviews">${rv}</section>`; const o = '<section data-section="about"></section>';
+    return `<main>${h}${swap ? o + v : v + o}<section data-section="quote-form">${form}</section></main>${corner}`;
+  };
+  const tiCases = [
+    ['good', '/', page(), 0], ['good reviews page', '/reviews/', page({ rv: slot('reviews', 'reviewPage') }), 0],
+    ['swapped ids', '/', page({ hero: slot('slim-hero', 'slimline', TI.main) }), 1], ['no hero slim', '/', page({ hero: '' }), 1],
+    ['no form slim', '/', page({ form: '' }), 1], ['no corner', '/', page({ corner: '' }), 1], ['main on /reviews/', '/reviews/', page(), 1],
+    ['review-page elsewhere', '/', page({ rv: slot('reviews', 'reviewPage') }), 1], ['reviews not under hero', '/', page({ swap: true }), 1],
+    ['foreign id', '/', page({ corner: slot('corner', 'corner', 'aaaaaaaaaaaaaaaaaaaaaaaaaaa') }), 1],
+  ];
+  const tiBad = tiCases.filter(([, r, h, want]) => (tiFails(r, h).length > 0) !== (want > 0)).map(([n, r, h]) => [n, tiFails(r, h)]);
+  if (tiBad.length) { console.error('SELFTEST FAIL (trustindex)', JSON.stringify(tiBad)); process.exit(1); }
+  console.log(`selftest: trustindex mapping gate, ${tiCases.length} cases (${tiCases.filter((c) => c[3]).length} broken on purpose) behave`);
   const bad = ['Get a free quote today', 'We guarantee it — always', 'Our team of staff', 'Call 07706 215917', '8 years experience', 'Trueline Finishes Ltd', 'Many five-star reviews', 'across West Yorkshire'];
   const missed = bad.filter((b) => copyFails(b, false).length === 0);
   const good = ["Over eight years' experience. Get a free quotation from Brandon.", 'TrueLine Finishes, fully insured'];
@@ -44,7 +96,6 @@ const fails = []; const warns = [];
 const route = (file) => '/' + relative(dist, file).replace(/index\.html$/, '').replace(/\.html$/, '/');
 const exists = (href) => { const p = href.split('#')[0].split('?')[0]; if (!p || p === '/') return true; const f = join(dist, p); return existsSync(join(f, 'index.html')) || existsSync(f); };
 const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
-const slotTodo = (html) => /data-trustindex-state="live"/.test(html) || /data-trustindex-todo="TODO-TrustIndex-ID"/.test(html);
 for (const need of ['/faq/', '/services/', '/gallery/', '/reviews/', '/resources/', '/sitemap/', '/privacy/', '/terms/', '/cookie-policy/', '/company-facts/', '/complaints-procedure/', '/accessibility/', '/find-us-online/']) if (!existsSync(join(dist, need, 'index.html'))) fails.push(`${need}: page missing`);
 const cssFiles = []; const walkCss = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walkCss(p) : f.endsWith('.css') && cssFiles.push(p); } }; walkCss(dist);
 for (const f of cssFiles) if (/text-decoration(-line)?:\s*underline/.test(readFileSync(f, 'utf8'))) fails.push(`${relative(dist, f)}: underline in compiled CSS`);
@@ -96,7 +147,6 @@ for (const file of pages) {
     if (!/data-lead-form="f_5ELbk5JcKfFh2EEaclT6" data-lf-token="npGnYEsjXAHrYRp13No3gA"/.test(html)) fails.push(`${r}: Formlane slot missing`);
     if (!html.includes('https://api.formlane.uk/edge/form.js')) fails.push(`${r}: form.js missing`);
     if (!text.includes('Any submission through this form is secure. We do not sell your details to third parties.')) fails.push(`${r}: security line missing`);
-    if (!html.includes('data-trustindex-slot="reviews"')) fails.push(`${r}: reviews section missing`);
   }
   for (const m of html.matchAll(/<img\b[^>]*>/g)) if (!/\balt="/.test(m[0])) fails.push(`${r}: img without alt ${m[0].slice(0, 80)}`);
   for (const m of html.matchAll(/href="(\/[^"]*)"/g)) {
@@ -113,7 +163,7 @@ for (const file of pages) {
   // OPERATOR OVERHAUL (5 Nov 2026, DECISIONS O1-O8) + ROUND 2 (DECISIONS R2-*): no YouTube embed
   // anywhere; every page's hero is the home hero pattern (background photo, no side image, no
   // logo / video / form); no before-and-after slider; no underlined links; footer charity line +
-  // LMB credit; the reviews slot keeps its TODO-TrustIndex-ID marker; no Google-reviews line in
+  // LMB credit; the Trustindex widgets mapped by role (tiFails); no Google-reviews line in
   // the hero; the home map is the Google listing (CID); list-of-services H2s are banned.
   if (/youtube(-nocookie)?\.com\/embed|data-video=/.test(html)) fails.push(`${r}: YouTube embed (round 2: none anywhere)`);
   const hero = (html.match(/<section[^>]*data-section="hero"[\s\S]*?<\/section>/) || [''])[0];
@@ -128,8 +178,8 @@ for (const file of pages) {
   if (/data-ba\b|before-and-after|class="ba[ _]/i.test(html)) fails.push(`${r}: before-and-after slider`);
   if (/text-decoration:\s*underline|text-decoration-line:\s*underline/.test(html)) fails.push(`${r}: underline style in the page`);
   if (!/data-footer-credit/.test(html) || !/href="https:\/\/localmapbooster\.com\/" rel="nofollow noopener"/.test(html)) fails.push(`${r}: footer LMB credit missing`);
-  if (!utility && !slotTodo(html)) fails.push(`${r}: reviews slot lost its TODO-TrustIndex-ID marker`);
-  if (!utility && !/<h2 class="rv__h2"[^>]*>What customers say about us<\/h2>/.test(html)) fails.push(`${r}: reviews heading is not "What customers say about us"`);
+  for (const f of tiFails(r, html)) fails.push(`${r}: trustindex: ${f}`);
+  if (!/<h2 class="rv__h2"[^>]*>What customers say about us<\/h2>/.test(html)) fails.push(`${r}: reviews heading is not "What customers say about us"`);
 }
 const published = articles.filter((a) => a.status === 'published');
 if (published.length < 3) fails.push(`only ${published.length} published articles (operator: three)`);

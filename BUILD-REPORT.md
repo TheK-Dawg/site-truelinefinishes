@@ -264,7 +264,7 @@ Checkout `cumbriaspires/site-cumbriaspas-build` (TheK-Dawg/site-cumbriaspas), wo
 That brief was written before this round and says TrueLine lacks company facts, complaints and accessibility, and that only one article exists. **This round has already added `/company-facts/`, `/complaints-procedure/` (not `/complaints/`), `/accessibility/` and `/find-us-online/`, and published all three articles.** All are linked from the footer and the site map. Extend these rather than duplicating them. If the operator wants `/complaints/` as the URL, make it a 301 to the existing page or a rename, not a second page. Company facts already omits the legal entity type, as that brief asks.
 
 ### Open items after round 2
-1. **Trustindex widget ids** (main section + optional slim hero widget): set `slots.trustindexReviews` / `slots.trustindexStrip` in `src/data/site.ts`. Until then the review section is a heading, its lead and an empty marked slot.
+1. ~~**Trustindex widget ids**~~ **Done 6 Nov 2026**: the four TrueLine widgets are live, see "TRUSTINDEX round" at the end.
 2. **Home and contact maps show the address and rating in Google's own card** (fix 8 above): operator's call.
 3. **Form destination spelling** apexai vs apexia (unchanged, D4).
 4. Earlier open items 2-12 and 14 still stand. Item 13 (contact map address) is now the same question as item 2 here.
