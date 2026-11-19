@@ -1,6 +1,6 @@
 ---
 /**
- * BRANDON'S VIDEOS (operator, 19 Nov 2026: "include the two Brandon YouTube links as normal
+ * THE VIDEOS (operator, 19 Nov 2026: "include the two Brandon YouTube links as normal
  * responsive video embeds on the site; the full video was suggested for the homepage, and the short
  * should sit appropriately with it"). This supersedes R2-13 ("no YouTube embed anywhere") for these
  * two videos only, on the home page only. The links are exactly the two Brandon sent (plan, Video);
@@ -13,6 +13,9 @@
  * PRIVACY: youtube-nocookie.com (YouTube's privacy-enhanced mode: no YouTube cookies until a visitor
  * plays a video), loading="lazy", no autoplay. The Cookie Policy and Privacy Policy say so.
  * Both ids were checked public and embeddable through YouTube's oEmbed endpoint on 19 Nov 2026.
+ * COPY (operator review 4, 19 Nov 2026): the brand, not the owner's name, and NO count of the
+ * videos, because more will be added ("just say TrueLine Finishes videos from their YouTube
+ * channel. Don't mention the person's name and don't mention the amount of videos").
  */
 import { business, videos } from '../data/site';
 const list = [
@@ -23,8 +26,8 @@ const list = [
 <section class="vd section section-videos" id="videos" data-section="videos">
   <div class="container">
     <div class="dm-head dm-head--c" data-motion="reveal">
-      <h2 class="dm-h2">Watch Brandon at Work</h2>
-      <p class="dm-lead">Two of Brandon’s own videos from his YouTube channel: a full house painted and decorated, and a kitchen from start to finish.</p>
+      <h2 class="dm-h2">Watch TrueLine Finishes at Work</h2>
+      <p class="dm-lead">TrueLine Finishes videos from their YouTube channel: a full house painted and decorated, and a kitchen from start to finish.</p>
     </div>
     <div class="vd__grid">
       {list.map((v) => (

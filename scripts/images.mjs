@@ -15,6 +15,8 @@ const OUT = new URL('../public/images/', import.meta.url).pathname;
 const DATA = new URL('../src/data/images.json', import.meta.url).pathname;
 
 // What each descriptive R2 name shows (alt text). Describes the photo only: no customer, place or project story.
+// Operator review 4 (19 Nov 2026) on the commercial set: "maybe stronger keywords in them would be
+// better". The commercial alts now name the trade as well as the room; still only what the photo shows.
 const ALT = {
   'bathroom-after': 'Bathroom after decorating, walls painted sage green with white woodwork',
   'bathroom-before': 'Bathroom before decorating, bare plaster walls',
@@ -89,9 +91,9 @@ const ALT = {
   'white-side-wall': 'Side wall painted white',
   'window-prepared': 'Window frame prepared for painting',
   'leaf-pattern-feature-wall': 'Lounge feature wall hung with leaf-pattern wallpaper',
-  'exhibition-stand-burgundy': 'Exhibition stand walls painted burgundy',
-  'office-navy-feature-wall': 'Office with a navy feature wall being painted',
-  'office-prepared': 'Office prepared for decorating',
+  'exhibition-stand-burgundy': 'Exhibition stand walls painted burgundy on a commercial decorating job',
+  'office-navy-feature-wall': 'Commercial office with a navy feature wall being painted',
+  'office-prepared': 'Office walls prepared for commercial painting and decorating',
 };
 
 const out = [];

@@ -22,8 +22,8 @@ const groups = [
 <Base title="Painting and Decorating Gallery, Brandon's Own Jobs | TrueLine Finishes" description="Photographs from TrueLine Finishes' own painting and decorating jobs: bedrooms, living rooms, kitchens, hallways, stairs, exteriors, wallpaper and business premises." page="gallery">
   <PageHero h1="Want to See the Finish First? Brandon’s Work in Photographs" lead="Photographs from Brandon's own jobs, taken on site: preparation, protection and the finished rooms and exteriors." image={image('kitchen-hall-tiled-floor-0144')} />
   <Reviews />
-  {groups.map((g) => (
-    <section class="gl section" data-section="gallery">
+  {groups.map((g, i) => (
+    <section class:list={['gl section', i === groups.length - 1 && 'gl--last']} data-section="gallery">
       <div class="container">
         <h2 class="gl__h2">{g.h}</h2>
         <ul class="gl__grid" data-gallery>
@@ -41,7 +41,12 @@ const groups = [
   .gl__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
   .gl__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
   .gl__shot:hover img { transform: scale(1.04); }
-  .gl:last-of-type { padding-bottom: var(--section-pad); }
+  /* The last group needs its own bottom padding so the Quick Quote section below it is not flush
+     against the photographs (operator review 4, 19 Nov 2026: "when it comes to the quick quote ...
+     there's no gap. There's no padding between the gallery and that section"). It used to be
+     `.gl:last-of-type`, which never matched: the last <section> on the page is the quote form, not
+     a gallery group, so the rule applied to nothing and the gap was zero. */
+  .gl--last { padding-bottom: var(--section-pad); }
   @media (max-width: 900px) { .gl__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 520px) { .gl__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); } }
 </style>

@@ -29,7 +29,10 @@ const img = image(photo);
             </li>
           ))}
         </ol>
-        <p class="more-line hw__more">Ready to talk it through? <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>
+        <div class="hw__cta" data-motion="reveal">
+          <p class="hw__cta-p">Ready to talk it through?</p>
+          <a href="#contact" class="btn btn-primary hw__cta-btn" data-cta="steps-quote"><span class="btn__t">Quick Quote Online</span></a>
+        </div>
       </div>
     </div>
     <div class="hw__photo"><img src={img.sm} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" /></div>
@@ -40,7 +43,11 @@ const img = image(photo);
   .hw__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); gap: 0; }
   .hw__head { grid-template-columns: 1fr; text-align: left; justify-items: start; }
   .hw__head .sec-head__lead { max-width: 60ch; }
-  .hw__more { text-align: left; }
+  /* OPERATOR REVIEW 4 (19 Nov 2026): "There's one here: 'Ready to talk? Us through quick quote
+     online.' Make that a button so it's obvious to see it." The line is now a heading above the
+     Quick Quote Online button, which scrolls to the form at the foot of the page. */
+  .hw__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-10); }
+  .hw__cta-p { font-size: var(--fs-xl); font-family: var(--font-heading); color: var(--text-primary); }
   .hw__panel { background: var(--bg-panel); padding: var(--section-pad) var(--space-12) var(--section-pad) max(var(--gutter), calc((100vw - var(--container)) / 2)); display: flex; justify-content: flex-start; }
   .hw__inner { width: 100%; max-width: calc(var(--container) * 0.64); }
   .hw__steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }

@@ -1,8 +1,11 @@
 ---
 /**
- * "<HUB> IN PICTURES" (plan, Layout). Brandon's own photos for the hub, in Home 3's photo grid (the
- * row head, then square-cornered 4:3 photos edge to edge),
- * each opening in the root Lightbox. Captions describe the photo only.
+ * "<HUB> IN PICTURES" (plan, Layout). TrueLine Finishes' own photos for the hub, each opening in the
+ * root Lightbox. Captions describe the photo only.
+ * OPERATOR REVIEW 4 (19 Nov 2026): "If you're going to do the gallery, do the gallery on these pages
+ * the same as you've done on the gallery page itself. Images should be square and they should have
+ * spaces between them. They shouldn't all be next to each other." So this is the gallery page's own
+ * treatment: square tiles with gaps, four across on a desktop, three on a tablet, two on a phone.
  */
 import { image } from '../data/site';
 interface Props { heading: string; lead: string; images: string[] }
@@ -20,10 +23,11 @@ const list = images.map(image);
   </div>
 </section>
 <style>
-  .pg__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .pg__grid--one { grid-template-columns: minmax(0, var(--narrow)); justify-content: center; }
-  .pg__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-inverse); aspect-ratio: 4 / 3; }
+  .pg__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+  .pg__grid--one { grid-template-columns: minmax(0, calc(var(--narrow) / 2)); justify-content: center; }
+  .pg__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
   .pg__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease), opacity 0.3s var(--ease); }
   .pg__shot:hover img { transform: scale(1.04); opacity: 0.9; }
-  @media (max-width: 640px) { .pg__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .pg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .pg__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); } }
 </style>

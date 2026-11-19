@@ -45,11 +45,14 @@ ul, ol { margin: 0; }
   .sec-head__h2 { font-size: var(--fs-3xl); }
 }
 
-/* Buttons (Home 3 / Dom): pills, mixed case, the heading font at medium weight. */
+/* Buttons (Home 3 / Dom): pills, mixed case, the heading font at medium weight.
+   OPERATOR REVIEW 4 (19 Nov 2026, "make the call-to-action buttons a bit larger"): one step up,
+   --btn-h-lg tall with a --fs-base label (was --btn-h-md / --fs-md). Site-wide, so every CTA
+   grows together. */
 .btn {
   position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
-  min-height: var(--btn-h-md); padding: 0 var(--space-8); border: 0; border-radius: var(--btn-radius);
-  font-family: var(--font-heading); font-size: var(--fs-md); font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; line-height: var(--lh-tight);
+  min-height: var(--btn-h-lg); padding: 0 var(--space-8); border: 0; border-radius: var(--btn-radius);
+  font-family: var(--font-heading); font-size: var(--fs-base); font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; line-height: var(--lh-tight);
   cursor: pointer; text-align: center; transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 /* OPTICAL CENTRING (operator round 2, 5 Nov 2026: "Quick Quote Online isn't vertically centred").
@@ -75,8 +78,10 @@ ul, ol { margin: 0; }
 .btn-call--light { background: var(--bg-inverse); color: var(--text-inverse); }
 .btn-call--light:hover { background: var(--v-ink-700); }
 .btn-call--light .icon { color: var(--accent-on-dark); }
-/* Mixed-case labels with descenders: lift the cap box 1px so cap top and descender bottom balance (scripts/check.mjs). */
-.btn--desc .btn__t { transform: translateY(-1px); }
+/* Mixed-case labels with descenders: `text-box` centres the CAP box, so a descender hangs below it
+   and the label reads low. Lift it by about half the descender depth so cap top and descender bottom
+   balance (measured by scripts/check.mjs; re-tuned in round 4 with the larger type). */
+.btn--desc .btn__t { transform: translateY(-2px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
 /* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16). */
 .btn::after {

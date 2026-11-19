@@ -5,8 +5,12 @@
  * reviews section (template: directly under the hero on every page); intro; what the job covers
  * (the seed's sections, each photo above its H2) and the `sectors:` line; how a job runs (no
  * before-and-after slider anywhere: operator, 5 Nov 2026, "I never do before and after"); "<hub> in pictures";
- * the other hubs as related links (NO YouTube embed: operator round 2, fix 13); FAQ; the quote form; further reading (the
- * hub's town articles). Landing page, never article-styled.
+ * the other hubs as related links (NO YouTube embed: operator round 2, fix 13); FAQ; the quote form.
+ * Landing page, never article-styled.
+ * OPERATOR REVIEW 4 (19 Nov 2026): the "<hub>: Further Reading" article teaser that used to close
+ * these pages is GONE ("Don't do that ... I don't want that on the service pages. That should only
+ * be on the resources page where articles are"). Articles keep their cards on /resources/ and the
+ * home resources row; FurtherReading.astro is deleted with its last caller.
  */
 import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
@@ -17,7 +21,6 @@ import PicturesGrid from './PicturesGrid.astro';
 import RelatedServices from './RelatedServices.astro';
 import Faq from './Faq.astro';
 import QuoteForm from './QuoteForm.astro';
-import FurtherReading from './FurtherReading.astro';
 import { services, business, towns, image } from '../data/site';
 import { stripTags } from '../lib/links';
 
@@ -46,5 +49,4 @@ const schema = [
   <RelatedServices picks={content.related} heading="Other Services from TrueLine Finishes" />
   <Faq items={content.faqs} heading={`${svc.name}: Questions People Ask`} />
   <QuoteForm heading={content.quote.heading} lead={content.quote.lead} />
-  <FurtherReading hub={content.slug} hubName={svc.name} />
 </Base>

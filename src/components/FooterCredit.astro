@@ -3,6 +3,12 @@
  * Footer credit: "[keyword] by [logo]" (Vince, 27 Oct 2026: "Construction websites by Local Map
  * Booster"). The fleet component (Oliver's, under SiteBuilder v4 D-176, the 20 Oct one-link ruling).
  *
+ * OPERATOR REVIEW 4 (19 Nov 2026): "That link should actually only be a link on the home page. It
+ * should work the same on every other page but only the home page should have that keyword." So the
+ * credit reads identically on every route, with the same wording, logo and hover behaviour, but the
+ * keyword phrase is an <a> ONLY on "/". Everywhere else it is plain text in the same style: no href,
+ * no tabindex, no role, so the site makes exactly one outbound credit link in total.
+ *
  * ONE link, on the keyword phrase only, rel nofollow noopener. "by", the logo and the name "Local
  * Map Booster" are plain text: no link, no tabindex, no role. The name stays in the HTML and is only
  * clipped by max-width. It slides out (250ms) on desktop hover over the logo, or when the keyword
@@ -23,14 +29,20 @@ interface Props {
 }
 const { anchorText, anchorHref, rel, cta } = Astro.props;
 const brand = 'Local Map Booster';
+// The keyword links on the home page only (operator review 4); every other route prints the same
+// words, unlinked.
+const linked = Astro.url.pathname === '/' || Astro.url.pathname === '/index.html';
 ---
-<span class="footer-credit" data-footer-credit><a href={anchorHref} rel={rel} class="footer-credit__link" data-cta={cta}>{anchorText}</a> by <span class="footer-credit__brand" data-credit-brand><span class="footer-credit__mark" set:html={mark} /><span class="footer-credit__name">{brand}</span></span></span>
+<span class="footer-credit" data-footer-credit data-credit-linked={linked ? '' : undefined}>{linked
+  ? <a href={anchorHref} rel={rel} class="footer-credit__link" data-cta={cta}>{anchorText}</a>
+  : <span class="footer-credit__link footer-credit__link--plain">{anchorText}</span>} by <span class="footer-credit__brand" data-credit-brand><span class="footer-credit__mark" set:html={mark} /><span class="footer-credit__name">{brand}</span></span></span>
 
 <style>
   .footer-credit { white-space: nowrap; }
   /* The footer bar's link look (Footer.astro .ft__bar a). */
   .footer-credit__link { color: inherit; display: inline-flex; align-items: center; min-height: 24px; }
-  .footer-credit__link:hover { color: var(--accent-on-dark); }
+  a.footer-credit__link:hover { color: var(--accent-on-dark); }
+  .footer-credit__link--plain { cursor: inherit; }
   .footer-credit__brand { white-space: nowrap; }
   /* Text height, its foot on the baseline of the words beside it. */
   .footer-credit__mark { display: inline-block; width: 1.3em; height: 1.3em; vertical-align: -0.25em; }
@@ -47,7 +59,7 @@ const brand = 'Local Map Booster';
   /* Desktop only. Finite bound: "Local Map Booster" is about 9.5em wide. */
   @media (hover: hover) and (pointer: fine) {
     .footer-credit__brand:hover .footer-credit__name,
-    .footer-credit__link:focus-visible ~ .footer-credit__brand .footer-credit__name { max-width: 11em; opacity: 1; margin-left: 0.35em; }
+    a.footer-credit__link:focus-visible ~ .footer-credit__brand .footer-credit__name { max-width: 11em; opacity: 1; margin-left: 0.35em; }
   }
   @media (prefers-reduced-motion: reduce) {
     .footer-credit__name { transition: none; }

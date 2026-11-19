@@ -5,16 +5,20 @@
  * Brandon's own work under the navy overlay, the headline, lead, slimline and the two pill buttons
  * CENTRED over it. The slim Trustindex slot sits between the lead and the buttons (operator round 3,
  * 6 Nov 2026: "above the buttons, right under the paragraph").
- * Home (`slides`): the full-height photo slider (Brandon's photos cross-fade behind the fixed
- * headline; round arrows and dots; auto-advance pauses on hover/focus, off-screen and under reduced
- * motion). Sub-pages (`compact`): the same pattern with one photo and a shorter height. Inner pages
- * reach it through PageHero.astro.
+ * Home (`slides`): the photo carousel. OPERATOR REVIEW 4 (19 Nov 2026: "just let the images be a
+ * carousel. It just moves for you on its own ... Customers don't need to be able to swap back and
+ * forth between them. It's actually bad for usability"): the photos cross-fade behind the fixed
+ * headline on their own and loop for ever, and there are NO customer-facing controls at all (the
+ * arrows and dots are gone, so there is no control left to be unreachable). It still pauses
+ * off-screen, and prefers-reduced-motion holds the first photo with no movement.
+ * HEIGHTS (operator review 4): the home hero is a little shorter than the viewport so the reviews
+ * section below it comes into view instead of a blank white band; every inner-page hero is the same
+ * 720px on a desktop, for consistency. Sub-pages (`compact`) reach it through PageHero.astro.
  * Buttons: Quick Quote Online = the chrome pill (scrolls to the quote form at the end of the page),
  * Call = the glass pill. REVIEWS: only the SLIMLINE widget (Google's own live rating and count);
  * the site writes no rating or count of its own.
  * OPERATOR OVERRIDES (DECISIONS O1-O3): no logo, no video and no form in any hero.
  */
-import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
 import TrustindexSlot from './TrustindexSlot.astro';
 type Img = { src: string; alt: string; width: number; height: number };
@@ -38,78 +42,56 @@ const slider = photos.length > 1;
       )}
     </div>
   </div>
-  {slider && (
-    <Fragment>
-      <button type="button" class="hero__arrow hero__arrow--prev" data-slide-prev aria-label="Previous photo"><Icon name="chevronLeft" size={22} /></button>
-      <button type="button" class="hero__arrow hero__arrow--next" data-slide-next aria-label="Next photo"><Icon name="chevronRight" size={22} /></button>
-      <div class="hero__dots" role="group" aria-label="Choose a photo">
-        {photos.map((p, i) => <button type="button" class:list={['hero__dot', i === 0 && 'is-on']} data-slide-to={i} aria-label={`Photo ${i + 1}: ${p.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
-      </div>
-    </Fragment>
-  )}
 </section>
 
 <script>
-  // Home 3 slider: cross-fades Brandon's photos behind the fixed headline. Auto-advance pauses
-  // on hover/focus, off-screen and under reduced motion; arrows and dots always work.
+  // Home carousel (operator review 4, 19 Nov 2026): the photos advance on their own and loop for
+  // ever. No arrows, no dots, nothing for a visitor to operate. It stops while the hero is off
+  // screen, and prefers-reduced-motion means it never moves at all (the first photo stays).
   const root = document.querySelector<HTMLElement>('[data-section="hero"][data-slider]');
   if (root) {
     const imgs = [...root.querySelectorAll<HTMLImageElement>('.hero__bg')];
-    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-slide-to]')];
     let at = 0; let timer = 0; let visible = true;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const go = (n: number) => {
       at = (n + imgs.length) % imgs.length;
       imgs.forEach((im, i) => { im.classList.toggle('is-on', i === at); if (i === at) im.loading = 'eager'; });
-      dots.forEach((d, i) => { d.classList.toggle('is-on', i === at); d.setAttribute('aria-pressed', String(i === at)); });
     };
     const stop = () => { window.clearInterval(timer); timer = 0; };
-    const start = () => { if (reduce || timer || !visible) return; timer = window.setInterval(() => go(at + 1), 6000); };
-    root.querySelector('[data-slide-prev]')?.addEventListener('click', () => { go(at - 1); stop(); start(); });
-    root.querySelector('[data-slide-next]')?.addEventListener('click', () => { go(at + 1); stop(); start(); });
-    dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.slideTo)); stop(); start(); }));
-    root.addEventListener('mouseenter', stop); root.addEventListener('mouseleave', start);
-    root.addEventListener('focusin', stop); root.addEventListener('focusout', start);
+    const start = () => { if (reduce || timer || !visible || imgs.length < 2) return; timer = window.setInterval(() => go(at + 1), 6000); };
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }).observe(root);
     start();
   }
 </script>
 
 <style>
-  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: min(calc(100vh - var(--space-8)), calc(var(--space-30) * 7)); padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-24); background: var(--bg-inverse-deep); color: var(--text-inverse-muted); text-align: center; }
-  .hero--compact { min-height: 0; padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-20); }
+  /* Home hero: a little under the viewport so the reviews section below it shows instead of a bare
+     white strip (operator review 4): the viewport less a --space-24, capped at 5.75 --space-30 units,
+     which leaves the reviews heading and its line inside the first screen on a laptop. */
+  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: min(calc(100vh - var(--space-24)), calc(var(--space-30) * 5.75)); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-20); background: var(--bg-inverse-deep); color: var(--text-inverse-muted); text-align: center; }
+  /* Every inner-page hero the same height on a desktop (operator review 4: "I want to make sure
+     they're all the same size ... something like 720 pixels"). */
+  .hero--compact { min-height: calc(var(--space-30) * 6); padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-20); }
   .hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
   .hero[data-slider] .hero__bg { opacity: 0; transition: opacity 1.1s var(--ease); }
   .hero[data-slider] .hero__bg.is-on { opacity: 1; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-hero); }
   .hero__copy { display: flex; flex-direction: column; align-items: center; }
   .hero__h1 { color: var(--text-inverse); font-size: var(--fs-7xl); line-height: 1.08; max-width: 18ch; margin-bottom: var(--space-6); }
-  .hero--compact .hero__h1 { font-size: var(--fs-5xl); max-width: 22ch; }
+  .hero--compact .hero__h1 { font-size: var(--fs-6xl); max-width: 22ch; }
   .hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 58ch; margin-bottom: var(--space-4); }
   /* The slimline directly under the paragraph, ABOVE the buttons (operator round 3): 16px above, 24px below. */
   .hero__copy :global(.hero__ti) { width: 100%; margin-bottom: var(--space-6); }
   .hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
-  .hero__actions :global(.hero__btn) { min-height: var(--btn-h-md); }
-  .hero__arrow { position: absolute; top: 50%; z-index: 1; display: grid; place-items: center; width: var(--space-16); height: var(--space-16); padding: 0; border: 0; border-radius: var(--radius-full); background: var(--glass); color: var(--text-inverse); backdrop-filter: blur(4px); cursor: pointer; transform: translateY(-50%); transition: background-color 0.2s var(--ease); }
-  .hero__arrow:hover { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
-  .hero__arrow--prev { left: var(--space-16); }
-  .hero__arrow--next { right: var(--space-16); }
-  .hero__dots { position: absolute; left: 50%; bottom: var(--space-8); transform: translateX(-50%); display: flex; gap: var(--space-2); }
-  .hero__dot { display: grid; place-items: center; width: var(--space-6); height: var(--space-6); padding: 0; border: 0; background: none; cursor: pointer; }
-  .hero__dot::before { content: ''; width: var(--space-2); height: var(--space-2); border-radius: var(--radius-full); background: var(--v-mist-300); transition: transform 0.2s var(--ease), background-color 0.2s var(--ease); }
-  .hero__dot.is-on::before { background: var(--v-white); transform: scale(1.5); box-shadow: 0 0 0 3px var(--glass-line); }
-  @media (max-width: 1180px) { .hero__arrow--prev { left: var(--space-5); } .hero__arrow--next { right: var(--space-5); } }
-  @media (max-width: 1023px) { .hero__h1 { font-size: var(--fs-5xl); } .hero--compact .hero__h1 { font-size: var(--fs-4xl); } }
+  .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
+  @media (max-width: 1023px) { .hero { min-height: min(calc(100vh - var(--space-24)), calc(var(--space-30) * 5)); } .hero--compact { min-height: calc(var(--space-30) * 4); } .hero__h1 { font-size: var(--fs-5xl); } .hero--compact .hero__h1 { font-size: var(--fs-5xl); } }
   @media (max-width: 760px) {
     .hero { min-height: 0; padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-20); }
-    .hero--compact { padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-12); }
+    .hero--compact { min-height: 0; padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-12); }
     .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-4xl); }
-    .hero--compact .hero__h1 { font-size: var(--fs-3xl); }
     .hero__lead { font-size: var(--fs-base); }
     .hero__actions { width: 100%; flex-direction: column; }
     .hero__actions :global(.hero__btn) { width: 100%; }
-    .hero__arrow { display: none; }
-    .hero__dots { bottom: var(--space-5); }
   }
   @media (prefers-reduced-motion: reduce) { .hero[data-slider] .hero__bg { transition: none; } }
 </style>

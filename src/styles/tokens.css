@@ -83,6 +83,9 @@
   --fs-xs: 11px;
   --fs-sm: 12px;
   --fs-md: 15px;
+  /* Card/teaser reading size (operator review 4, 19 Nov 2026: 12px card text under an 18px title
+     was "too small", especially on a phone). Minimum for any card or teaser body on the site. */
+  --fs-card: 16px;
   --fs-base: 17px;
   --fs-lg: 18px;
   --fs-xl: 20px;

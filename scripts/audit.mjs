@@ -57,6 +57,11 @@ const tiFails = (r, html) => {
 };
 
 // ROUND 3 (operator live review 3, 6 Nov 2026; DECISIONS R3-*): machine gates for this round's rulings.
+// ROUND 4: "I want half of this gallery on the home page". The gallery page shows every photo that is
+// not a "before" shot; the home page carries about half of them, so the floor is 40% of that set.
+const GALLERY_SHOWN = JSON.parse(readFileSync(new URL('../src/data/images.json', import.meta.url), 'utf8')).filter((i) => !/-before-/.test(i.key)).length;
+const HALF_MIN = Math.floor(GALLERY_SHOWN * 0.4);
+const LEGAL_SET = ['/privacy/', '/terms/', '/cookie-policy/', '/complaints-procedure/', '/accessibility/'];
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const NAP_HOURS = JSON.parse(readFileSync(new URL('../site-plan/nap.json', import.meta.url), 'utf8')).hours;
 const sectionOf = (html, name) => (html.match(new RegExp(`<section[^>]*data-section="${name}"[\\s\\S]*?</section>`)) || [''])[0];
@@ -113,13 +118,47 @@ function r3Fails(r, html, text, isArticle) {
     if (!/class="rv section section-reviews/.test(rv) || /<img/.test(rv)) f.push('reviews is not the site review section (bespoke photo band)');
     const band = sectionOf(html, 'cta-band');
     if (!/<img class="hb__bg"/.test(band) || !/data-cta="band-quote"/.test(band) || !/data-cta="band-call"/.test(band)) f.push('CTA band needs a photo and both buttons');
+    // ROUND 4 (operator review 4, 19 Nov 2026): about HALF the gallery page's collection on the home
+    // page, in the gallery page's square spaced tiles, not a six-photo strip.
     const gl = sectionOf(html, 'gallery');
-    if (!/<h2 class="dm-h2"/.test(gl) || (gl.match(/data-lightbox/g) || []).length !== 6 || !/href="\/gallery\/"/.test(gl)) f.push('gallery needs a visible introduction, six photos and See the Gallery');
-    if ((sectionOf(html, 'craft').match(/<li class="ht__card/g) || []).length !== 5) f.push('"Homes and business premises" does not list all five services');
+    const shots = (gl.match(/data-lightbox/g) || []).length;
+    if (!/<h2 class="dm-h2"/.test(gl) || !/href="\/gallery\/"/.test(gl)) f.push('gallery needs a visible introduction and See the Gallery');
+    if (!/wg__grid--full/.test(gl) || shots < HALF_MIN) f.push(`home gallery is not about half the collection in square tiles (${shots} photos)`);
+    // ONE services-links section on the home page: the second card set is gone (round 4).
+    if (/data-section="craft"|ht__card/.test(html)) f.push('the duplicate "For homes and business premises" services section is back');
+    if ((html.match(/data-section="services"/g) || []).length !== 1) f.push('the home page must carry exactly one services-links section');
     if ((sectionOf(html, 'services').match(/<li class="sv__tile/g) || []).length !== 5) f.push('the five hub tiles are missing');
+    // The hero still cross-fades several photos, but round 4 removed every visitor-facing control.
     const hero = sectionOf(html, 'hero');
-    if ((hero.match(/<img class="hero__bg/g) || []).length < 2 || !/data-slide-next/.test(hero)) f.push('home hero is not the Home 3 photo slider');
+    if ((hero.match(/<img class="hero__bg/g) || []).length < 2) f.push('home hero is not the photo carousel');
+    if (/data-slide-next|data-slide-prev|data-slide-to/.test(hero)) f.push('home hero carries manual slide controls (round 4: the carousel runs on its own)');
   }
+  // ---- ROUND 4 (operator review 4, 19 Nov 2026) ----
+  // No "Further Reading" article teaser anywhere but the resources pages.
+  if (/data-section="further-reading"|: Further Reading</.test(html)) f.push('a "Further Reading" article teaser is on this page (round 4: resources only)');
+  // Service pages: the "Ready to talk it through?" call to action is a BUTTON, not a text link.
+  if (/data-cta="steps-quote"/.test(html)) {
+    const cta = (html.match(/<a[^>]*data-cta="steps-quote"[^>]*>/) || [''])[0];
+    if (!/class="[^"]*\bbtn\b/.test(cta)) f.push('the "Ready to talk it through?" call to action is not a button');
+  }
+  // The reviews section carries a button through to /reviews/ on every page but /reviews/ itself.
+  if (/data-section="reviews"/.test(html)) {
+    const rvs = sectionOf(html, 'reviews');
+    const rvBtn = (rvs.match(/<a\b[^>]*data-cta="reviews-page"[^>]*>/) || [''])[0];
+    const hasBtn = /href="\/reviews\/"/.test(rvBtn) && /class="[^"]*\bbtn\b/.test(rvBtn);
+    if (r === '/reviews/' && hasBtn) f.push('the reviews page links to itself from its own reviews section');
+    if (r !== '/reviews/' && !hasBtn) f.push('the reviews section has no button through to the reviews page');
+  }
+  // The legal set interlinks inside the page content: the other four, plus About, Contact and home.
+  if (LEGAL_SET.includes(r)) {
+    const nxt = (html.match(/<nav class="lg__next"[\s\S]*?<\/nav>/) || [''])[0];
+    const want = [...LEGAL_SET.filter((x) => x !== r), '/about/', '/contact/', '/'];
+    const missing = want.filter((h) => !new RegExp(`href="${h.replace(/\//g, '\\/')}"`).test(nxt));
+    if (!nxt) f.push('no "Where to go next" block: this legal page does not interlink in its content');
+    else if (missing.length) f.push(`legal interlinks missing: ${missing.join(' ')}`);
+  }
+  // The gallery page needs real space between the last photo group and the quote section.
+  if (r === '/gallery/' && !/class="gl section gl--last"/.test(html)) f.push('the last gallery group has no bottom padding before the quote section');
   return f;
 }
 function r3Selftest() {
@@ -128,6 +167,7 @@ function r3Selftest() {
   const page = ({ hours = hrs, hero = '<p class="hero__lead">Lead</p>\n<div class="ti-slot" data-trustindex-slot="slim-hero"></div><div class="hero__actions"><a href="#contact" class="btn btn-primary">Q</a></div>', form = '<ul class="qf__list"><li>x</li></ul><div data-trustindex-slot="slim-form"></div><div class="qf__card"><div data-lead-form></div></div>', extra = '' } = {}) =>
     `<section data-section="hero">${hero}</section><section data-section="quote-form">${form}</section>${extra}<footer>${hours}</footer>`;
   const ok = (html, r = '/x/') => r3Fails(r, html, visibleText(html), false).length === 0;
+  const rvBtn = '<a href="/reviews/" class="btn btn-primary" data-cta="reviews-page"><span class="btn__t">Read the Reviews</span></a>';
   const bad = [];
   if (!ok(page())) bad.push(`good page fails: ${r3Fails('/x/', page(), visibleText(page()), false)}`);
   const cases = [
@@ -138,8 +178,27 @@ function r3Selftest() {
     ['slim above USPs', page({ form: '<div data-trustindex-slot="slim-form"></div><ul class="qf__list"></ul><div class="qf__card"></div>' })],
     ['odd service grid', page({ extra: '<section data-section="service-intro"><h2>I</h2><figure class="sb3__ifig"><img alt=""></figure></section><section data-section="service-sections"><h2 class="sb3__gh2">S</h2><article class="sb3__card"></article></section>' })],
   ];
+  // ROUND 4 (operator review 4): each case breaks one of the new rules and must fail.
+  const legalNext = (skip = '') => `<nav class="lg__next">${[...LEGAL_SET.filter((x) => x !== '/privacy/'), '/about/', '/contact/', '/'].filter((h) => h !== skip).map((h) => `<a href="${h}">x</a>`).join('')}</nav>`;
+  cases.push(
+    ['further reading teaser', page({ extra: '<section data-section="further-reading"><h2>Interior Painting: Further Reading</h2></section>' })],
+    ['steps CTA not a button', page({ extra: '<p class="more-line">Ready to talk it through? <a href="#contact" class="text-link" data-cta="steps-quote">Quick Quote Online</a></p>' })],
+    ['reviews section with no button', page({ extra: '<section data-section="reviews"></section>' })],
+  );
   for (const [name, html] of cases) if (ok(html)) bad.push(`not caught: ${name}`);
-  const art = '<section data-section="reviews"></section><nav class="art__crumbs"></nav><section data-section="article-body"><article class="art__main prose"><div data-rundown></div><p>One <a href="/a/">a</a></p></article></section>';
+  const steps = page({ extra: '<a href="#contact" class="btn btn-primary" data-cta="steps-quote"><span class="btn__t">Quick Quote Online</span></a>' });
+  if (!ok(steps)) bad.push(`good steps button fails: ${r3Fails('/x/', steps, visibleText(steps), false)}`);
+  const rvOk = page({ extra: `<section data-section="reviews">${rvBtn}</section>` });
+  if (!ok(rvOk)) bad.push('good reviews button fails');
+  if (ok(page({ extra: `<section data-section="reviews">${rvBtn}</section>` }), '/reviews/')) bad.push('not caught: /reviews/ linking to itself');
+  // Legal interlinks + the gallery gap.
+  const legalPage = (nav) => page({ extra: nav });
+  if (!ok(legalPage(legalNext()), '/privacy/')) bad.push(`good legal interlinks fail: ${r3Fails('/privacy/', legalPage(legalNext()), '', false)}`);
+  if (ok(legalPage(''), '/privacy/')) bad.push('not caught: legal page with no interlink block');
+  if (ok(legalPage(legalNext('/about/')), '/privacy/')) bad.push('not caught: legal interlinks missing About');
+  if (!ok(page({ extra: '<section class="gl section gl--last"></section>' }), '/gallery/')) bad.push('good gallery gap fails');
+  if (ok(page({ extra: '<section class="gl section"></section>' }), '/gallery/')) bad.push('not caught: gallery with no gap before the quote section');
+  const art = `<section data-section="reviews">${rvBtn}</section><nav class="art__crumbs"></nav><section data-section="article-body"><article class="art__main prose"><div data-rundown></div><p>One <a href="/a/">a</a></p></article></section>`;
   if (r3Fails('/resources/x/', page({ extra: art }), '', true).length) bad.push('good article fails');
   if (!r3Fails('/resources/x/', page({ extra: art.replace('<p>One <a href="/a/">a</a></p>', '<p><a href="/a/">a</a> and <a href="/b/">b</a></p>') }), '', true).length) bad.push('not caught: two links in one article paragraph');
   if (!r3Fails('/resources/x/', page({ extra: art.replace('<div data-rundown></div>', '') }), '', true).length) bad.push('not caught: no rundown');
@@ -173,7 +232,7 @@ if (process.argv.includes('--selftest')) {
   console.log(`selftest: ${bad.length} bad strings caught, ${good.length} good strings pass`);
   const r3 = r3Selftest();
   if (r3.length) { console.error('SELFTEST FAIL (round 3)', r3); process.exit(1); }
-  console.log('selftest: round-3 gates, 10 broken cases caught, the good page and good article pass');
+  console.log('selftest: round-3 and round-4 gates, 15 broken cases caught, the good pages and good article pass');
   process.exit(0);
 }
 
@@ -280,9 +339,35 @@ for (const file of pages) {
   if (r === '/' && !/data-section="areas"[\s\S]*?data-map="gbp"[\s\S]*?src="https:\/\/www\.google\.com\/maps\?cid=8023434379390696838&amp;output=embed"/.test(html)) fails.push('/: areas map is not the Google listing CID embed');
   if (/data-ba\b|before-and-after|class="ba[ _]/i.test(html)) fails.push(`${r}: before-and-after slider`);
   if (/text-decoration:\s*underline|text-decoration-line:\s*underline/.test(html)) fails.push(`${r}: underline style in the page`);
-  if (!/data-footer-credit/.test(html) || !/href="https:\/\/localmapbooster\.com\/" rel="nofollow noopener"/.test(html)) fails.push(`${r}: footer LMB credit missing`);
+  // LMB CREDIT (operator review 4, 19 Nov 2026): the same visible wording on every route, but the
+  // keyword is a LINK on the home page ONLY; everywhere else it is plain text, so the site makes
+  // exactly one outbound credit link.
+  if (!/data-footer-credit/.test(html) || !/Painting and decorating websites<\/(a|span)>\s*by/.test(html)) fails.push(`${r}: footer LMB credit missing`);
+  const creditLinked = /href="https:\/\/localmapbooster\.com\/" rel="nofollow noopener"/.test(html);
+  if (r === '/' && !creditLinked) fails.push('/: the LMB credit keyword must be the one nofollow link, on the home page');
+  if (r !== '/' && creditLinked) fails.push(`${r}: the LMB credit is linked off the home page (round 4: home page only)`);
   for (const f of tiFails(r, html)) fails.push(`${r}: trustindex: ${f}`);
   if (!/<h2 class="rv__h2"[^>]*>What customers say about us<\/h2>/.test(html)) fails.push(`${r}: reviews heading is not "What customers say about us"`);
+}
+// NO ORPHAN PAGES (operator review 4, 19 Nov 2026: "There should be no orphan pages on the site
+// anywhere. I need you to make sure that nothing's orphaned anywhere"). Every built route must be
+// linked from at least one OTHER built page. The only exempt routes are the two a visitor is never
+// meant to reach by a link: /thank-you/ (the form's own redirect target, noindex) and the 404 page.
+{
+  const ORPHAN_OK = new Set(['/thank-you/', '/404/']);
+  const built = pages.map(route).filter((r) => !RETIRED.test(r));
+  const inbound = new Map(built.map((r) => [r, 0]));
+  for (const file of pages) {
+    const from = route(file);
+    const html = readFileSync(file, 'utf8');
+    const seen = new Set();
+    for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
+      let h = m[1]; if (!h.endsWith('/')) h += '/';
+      if (h !== from && inbound.has(h)) seen.add(h);
+    }
+    for (const h of seen) inbound.set(h, inbound.get(h) + 1);
+  }
+  for (const [r, n] of inbound) if (!n && !ORPHAN_OK.has(r)) fails.push(`${r}: orphan page, nothing on the site links to it`);
 }
 const published = articles.filter((a) => a.status === 'published');
 if (published.length < 3) fails.push(`only ${published.length} published articles (operator: three)`);

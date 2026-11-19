@@ -5,8 +5,13 @@
  * the usable claims only (over eight years' experience, fully insured, the charity). He has NO
  * accreditations, qualifications, memberships, guarantees or warranties, so none is shown.
  * The charity line is words only: no link, logo, charity number or cover image.
- * A photograph of Brandon's own work sits beside the story. The kitchen Short that was here came
- * off with every other YouTube embed (operator round 2, fix 13); its caption stays in site.ts.
+ * A photograph of TrueLine Finishes' own work sits beside the story. The kitchen Short that was here
+ * came off with every other YouTube embed (operator round 2, fix 13); its caption stays in site.ts.
+ * OPERATOR REVIEW 4 (19 Nov 2026): "I don't like the About page saying 'Brandon'. Again you mention
+ * his name. Just say 'Meet TrueLine Finishes' ... The brand is TrueLine Finishes so you should be
+ * mentioning TrueLine Finishes more often than his name." The H1 and the story heading are the brand;
+ * Brandon is named once, as the owner who does the work, and the surname is out of the marketing copy
+ * (it stays in the structured data and on /company-facts/, which the operator passed as correct).
  */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
@@ -28,17 +33,17 @@ const creds = [
   { icon: 'heart', title: "A Child's Wish", text: charityLine },
 ];
 ---
-<Base title="About Brandon Dawson, Painter and Decorator | TrueLine Finishes" description="TrueLine Finishes is Brandon Dawson's painting and decorating business. Brandon carries out and oversees every job. Over eight years' experience, fully insured." page="about" schema={schema}>
-  <PageHero h1="Who Will Be Painting Your Home? Meet Brandon Dawson" lead="TrueLine Finishes is Brandon’s painting and decorating business, and the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
+<Base title="Painter and Decorator in Baildon: About Us | TrueLine Finishes" description="TrueLine Finishes paints and decorates homes and businesses. Brandon, the owner, carries out and oversees every job. Over eight years' experience, fully insured." page="about" schema={schema}>
+  <PageHero h1="Who Will Be Painting Your Home? Meet TrueLine Finishes" lead="TrueLine Finishes is a painting and decorating business for homes and businesses, and the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
   <Reviews />
   <section class="ab section section-story" data-section="story">
     <div class="container ab__inner">
       <div class="ab__copy prose" data-motion="reveal">
-        <h2>Brandon’s Business, Brandon’s Standards</h2>
-        <p>TrueLine Finishes is Brandon Dawson's painting and decorating business: interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.</p>
+        <h2>The TrueLine Finishes Standard</h2>
+        <p>TrueLine Finishes does interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.</p>
         <p>Brandon, the owner, carries out the work and oversees every job. When you call 07949 484274 you have a direct line to him, so the conversation about your job is with the person who will prepare the walls and lay on the finish.</p>
         <p>We take pride in attention to detail, lasting finishes and treating your property with care. Sanding, filling and caulking come with everything, because the preparation is what decides how good the paint looks and how long it lasts.</p>
-        <p>Bedrooms and living rooms are the jobs Brandon enjoys most, and the same care goes into kitchens, hallways, stairs, exteriors and business premises.</p>
+        <p>Bedrooms and living rooms are favourite jobs at TrueLine Finishes, and the same care goes into kitchens, hallways, stairs, exteriors and business premises.</p>
       </div>
       <figure class="ab__img" data-motion="reveal"><img src={story.sm} alt={story.alt} width={story.width} height={story.height} loading="lazy" decoding="async" /></figure>
     </div>
@@ -58,7 +63,7 @@ const creds = [
     </div>
   </section>
   <WorkGrid />
-  <QuoteForm heading="Talk to Brandon About Your Project" />
+  <QuoteForm heading="Talk to TrueLine Finishes About Your Project" />
 </Base>
 <style>
   .ab__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-16); align-items: center; }

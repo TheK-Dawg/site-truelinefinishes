@@ -9,6 +9,10 @@
 // no YouTube iframe, one hero pattern aligned to the page container, no lone top borders, home
 // map = the Google listing CID, areas boxless, how a job runs left-aligned with the photo flush,
 // every button's label optically centred (cap box, |delta| <= 1.5px); no console errors
+// ROUND 4 (19 Nov 2026): card/teaser body text never under 16px; the home hero carousel has NO manual
+// controls; one services-links section on the home page; a reviews button on every page but /reviews/;
+// the service CTA is a button; no Further Reading teaser; the gallery page has real space before the
+// quote section; inner heroes all 720px on a desktop; the LMB credit links on the home page only.
 // from our own code. Trustindex (6 Nov 2026): every widget actually renders (its own id, height > 0)
 // after a first interaction; main/review-page fill the reviews section, which is the first section
 // after the hero; slimline text white on dark grounds and AA on light ones; the corner is fixed
@@ -61,9 +65,16 @@ const measureButtons = (sel) => {
             cv.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
             const t = cs.textTransform === 'uppercase' ? tn.textContent.trim().toUpperCase() : tn.textContent.trim();
             const mt = cv.measureText(t);
+            // CAP HEIGHT comes from the flat-topped 'H' and the descender depth from 'p', NOT from the
+            // label's own ink: round capitals (Q, O, C) and tall lowercase overshoot the cap line, which
+            // made the measured gap shrink as the type grew. `text-box: trim-both cap alphabetic` centres
+            // the METRIC cap box, so the gate has to measure the same box (round 4, 19 Nov 2026: the
+            // button size went up one step and the old ink-based reading reported a false 2px offset).
+            const capH = cv.measureText('H').actualBoundingBoxAscent;
+            const descH = cv.measureText('p').actualBoundingBoxDescent;
             // The text's inline box spans the font's ascent + descent; its top + the ascent is the baseline.
             const rg = document.createRange(); rg.selectNodeContents(tn); const rr = rg.getClientRects()[0] || rg.getBoundingClientRect();
-            const base = rr.top + mt.fontBoundingBoxAscent; const capTop = base - mt.actualBoundingBoxAscent; const glyphBottom = base + (/[gjpqy,]/.test(t) ? mt.actualBoundingBoxDescent : 0);
+            const base = rr.top + mt.fontBoundingBoxAscent; const capTop = base - capH; const glyphBottom = base + (/[gjpqy,]/.test(t) ? descH : 0);
             const bb = b.getBoundingClientRect(); const bs = getComputedStyle(b);
             const top = capTop - (bb.top + parseFloat(bs.borderTopWidth)); const bottom = (bb.bottom - parseFloat(bs.borderBottomWidth)) - glyphBottom;
             out.push({ label: t.slice(0, 30), cls: (b.className || '').toString().split(' ')[0], top: +top.toFixed(1), bottom: +bottom.toFixed(1), delta: +(top - bottom).toFixed(1) });
@@ -158,9 +169,43 @@ for (const vp of sizes) {
         formSection: !!document.querySelector('[data-quote-card]')?.closest('[data-section="quote-form"]'),
         slider: !!document.querySelector('[data-ba], .ba'),
         charity: ft.includes("Proud to support A Child's Wish, a children's charity."),
-        credit: !!document.querySelector('footer [data-footer-credit] a[href="https://localmapbooster.com/"]'),
+        // ROUND 4 (19 Nov 2026): the credit reads the same on every page; the keyword is a LINK on the
+        // home page only, plain text (no href, tabindex or role) everywhere else.
+        credit: (() => {
+          const c = document.querySelector('footer [data-footer-credit]'); if (!c) return null;
+          const a = c.querySelector('a[href="https://localmapbooster.com/"]');
+          const kw = c.querySelector('.footer-credit__link');
+          return { text: c.innerText.replace(/\s+/g, ' ').trim(), linked: !!a, kw: kw ? kw.innerText.trim() : '', tab: kw ? kw.getAttribute('tabindex') : null, role: kw ? kw.getAttribute('role') : null, rel: a ? a.getAttribute('rel') : null };
+        })(),
         logos: [...document.querySelectorAll('img[src*="/brand/logo"]')].filter((i) => vis(i) && !i.closest('footer')).map((i) => i.closest('header') ? 'header' : 'other'),
         dropHubs: document.querySelectorAll('.hd__drop a').length,
+        // ---- ROUND 4 (operator review 4, 19 Nov 2026), measured on the rendered page ----
+        // Card and teaser body text: never the 12px he rejected, on either width.
+        r4Cards: [...document.querySelectorAll('.sv__body, .rl__body, .ap__body, .ht__p')].filter(vis)
+          .map((e) => ({ cls: (e.className || '').toString().split(' ')[0], px: parseFloat(getComputedStyle(e).fontSize) })),
+        // Home carousel: more than one photo, nothing for a visitor to operate.
+        r4Slides: document.querySelectorAll('[data-section="hero"] .hero__bg').length,
+        r4Controls: document.querySelectorAll('[data-section="hero"] [data-slide-next], [data-section="hero"] [data-slide-prev], [data-section="hero"] [data-slide-to]').length,
+        // One services-links section on the home page.
+        r4Services: document.querySelectorAll('[data-section="services"], [data-section="craft"]').length,
+        // The reviews section's button through to /reviews/.
+        r4RvBtn: (() => { const a = document.querySelector('[data-section="reviews"] a[data-cta="reviews-page"]'); return a ? { href: a.getAttribute('href'), btn: a.classList.contains('btn'), vis: vis(a) } : null; })(),
+        // The service-page "Ready to talk it through?" call to action is a button.
+        r4StepsCta: (() => { const a = document.querySelector('a[data-cta="steps-quote"]'); return a ? { btn: a.classList.contains('btn'), vis: vis(a), h: Math.round(a.getBoundingClientRect().height) } : null; })(),
+        // No Further Reading teaser anywhere.
+        r4Further: document.querySelectorAll('[data-section="further-reading"]').length,
+        // Gap between the last photo block and the quote-form section (the gallery page's bug).
+        r4QuoteGap: (() => {
+          const q = document.querySelector('[data-section="quote-form"]'); if (!q) return null;
+          const prev = q.previousElementSibling; if (!prev) return null;
+          return Math.round(q.getBoundingClientRect().top - prev.getBoundingClientRect().bottom + parseFloat(getComputedStyle(prev).paddingBottom));
+        })(),
+        // Home gallery tiles: square, with space between them.
+        r4HomeTiles: (() => {
+          const g = document.querySelector('.wg__grid--full'); if (!g) return null;
+          const li = g.querySelector('.wg__shot'); const b = li?.getBoundingClientRect();
+          return { n: g.querySelectorAll('.wg__shot').length, gap: Math.round(parseFloat(getComputedStyle(g).columnGap || 0)), sq: b ? Math.abs(b.width - b.height) < 2 : false };
+        })(),
         // ROUND 2 (5 Nov 2026): no YouTube anywhere; one hero pattern on every page; no lone top
         // borders; the home map is the Google listing; areas boxless; steps left + image flush.
         youtube: [...document.querySelectorAll('iframe')].filter((f) => /youtube/.test(f.src)).length,
@@ -175,7 +220,8 @@ for (const vp of sizes) {
         topBorders: [...document.querySelectorAll('main *')].filter((e) => { const c = getComputedStyle(e); return vis(e) && !e.closest('.ti-slot') && parseFloat(c.borderTopWidth) >= 2 && parseFloat(c.borderBottomWidth) === 0 && parseFloat(c.borderLeftWidth) === 0; }).map((e) => e.className).slice(0, 5),
         homeMap: document.querySelector('[data-section="areas"] iframe')?.getAttribute('src') || null,
         areasBoxed: [...document.querySelectorAll('[data-section="areas"] li, [data-section="areas"] .ar__copy')].filter((e) => { const c = getComputedStyle(e); return c.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(c.borderTopWidth) > 0 || parseFloat(c.borderLeftWidth) > 0; }).length,
-        steps: (() => { const s = document.querySelector('[data-section="process"]'); if (!s) return null; const h2 = s.querySelector('h2'); const more = s.querySelector('.more-line'); const p = s.querySelector('.hw__panel').getBoundingClientRect(); const ph = s.querySelector('.hw__photo'); const pb = ph && vis(ph) ? ph.getBoundingClientRect() : null; return { h2: getComputedStyle(h2).textAlign, more: more ? getComputedStyle(more).textAlign : null, gap: pb ? Math.round(pb.left - p.right) : null, step: getComputedStyle(s.querySelector('.hw__step')).textAlign }; })(),
+        steps: (() => { const s = document.querySelector('[data-section="process"]'); if (!s) return null; const h2 = s.querySelector('h2'); const more = s.querySelector('.hw__cta'); const p = s.querySelector('.hw__panel').getBoundingClientRect(); const ph = s.querySelector('.hw__photo'); const pb = ph && vis(ph) ? ph.getBoundingClientRect() : null; // ROUND 4: the closing line is now a heading + the Quick Quote Online BUTTON, left-aligned with the rest.
+          return { h2: getComputedStyle(h2).textAlign, more: more ? getComputedStyle(more).textAlign : null, moreBtn: !!more?.querySelector('a.btn'), gap: pb ? Math.round(pb.left - p.right) : null, step: getComputedStyle(s.querySelector('.hw__step')).textAlign }; })(),
       };
     }, vp.width);
     m.buttons = await page.evaluate(measureButtons, '.btn, .lf-b, button[type="submit"]');
@@ -225,9 +271,32 @@ for (const vp of sizes) {
     if (!m.utility && !m.formSection) fails.push(`${tag}: quote form not in its own section`);
     if (m.slider) fails.push(`${tag}: before-and-after slider present`);
     if (!m.charity) fails.push(`${tag}: footer charity line missing`);
-    if (!m.credit) fails.push(`${tag}: footer LMB credit missing`);
+    const cr = m.credit;
+    if (!cr || cr.kw !== 'Painting and decorating websites' || !/by Local Map Booster$/.test(cr.text)) fails.push(`${tag}: footer LMB credit missing or reworded ${JSON.stringify(cr)}`);
+    else if (r === '/') { if (!cr.linked || cr.rel !== 'nofollow noopener') fails.push(`${tag}: the home page LMB credit keyword is not the one nofollow link ${JSON.stringify(cr)}`); }
+    else if (cr.linked || cr.tab || cr.role) fails.push(`${tag}: LMB credit is a link/control off the home page (round 4: home page only) ${JSON.stringify(cr)}`);
     if (m.logos.some((l) => l !== 'header') || m.logos.length !== 1) fails.push(`${tag}: logo outside the header bar ${JSON.stringify(m.logos)}`);
     if (m.dropHubs < 5) fails.push(`${tag}: services dropdown lists ${m.dropHubs} links`);
+    // ---- ROUND 4 gates ----
+    const small = m.r4Cards.filter((c) => c.px < 16);
+    if (small.length) fails.push(`${tag}: card body text under 16px ${JSON.stringify(small.slice(0, 4))}`);
+    if (m.r4Further) fails.push(`${tag}: a "Further Reading" teaser is on this page (round 4: resources only)`);
+    if (m.r4RvBtn) { if (m.r4RvBtn.href !== '/reviews/' || !m.r4RvBtn.btn || !m.r4RvBtn.vis) fails.push(`${tag}: reviews button wrong ${JSON.stringify(m.r4RvBtn)}`); }
+    else if (r !== '/reviews/' && !/404/.test(r)) fails.push(`${tag}: the reviews section has no button through to /reviews/`);
+    if (r === '/reviews/' && m.r4RvBtn) fails.push(`${tag}: the reviews page links to itself from its own reviews section`);
+    if (m.r4StepsCta && (!m.r4StepsCta.btn || !m.r4StepsCta.vis)) fails.push(`${tag}: the "Ready to talk it through?" CTA is not a visible button ${JSON.stringify(m.r4StepsCta)}`);
+    if (r === '/') {
+      if (m.r4Slides < 2) fails.push(`${tag}: home hero is not the photo carousel (${m.r4Slides} photos)`);
+      if (m.r4Controls) fails.push(`${tag}: home hero has ${m.r4Controls} manual slide control(s) (round 4: it runs on its own)`);
+      if (m.r4Services !== 1) fails.push(`${tag}: ${m.r4Services} services-links sections on the home page (round 4: one)`);
+      const t = m.r4HomeTiles;
+      if (!t || !t.sq || t.gap < 8 || t.n < 60) fails.push(`${tag}: home gallery is not half the collection in spaced square tiles ${JSON.stringify(t)}`);
+    }
+    if (r === '/gallery/' && (m.r4QuoteGap == null || m.r4QuoteGap < 40)) fails.push(`${tag}: no space between the gallery and the quote section (${m.r4QuoteGap}px)`);
+    // HERO HEIGHTS (round 4): one height for every inner page on a desktop; the home hero shorter than
+    // the window so the reviews section below it shows.
+    if (vp.name === 'desktop' && m.heroPattern.kind === 'page' && Math.abs(m.heroPattern.height - 720) > 2) fails.push(`${tag}: inner hero is ${m.heroPattern.height}px, not the 720px every page shares`);
+    if (vp.name === 'desktop' && r === '/' && m.heroPattern.height >= vp.height - 40) fails.push(`${tag}: home hero fills the window (${m.heroPattern.height}px), so the reviews section does not come up`);
     // TRUSTINDEX (6 Nov 2026): rendered, mapped, placed, readable; corner desktop only.
     if (!tiRendered) fails.push(`${tag}: Trustindex widgets did not all render ${JSON.stringify(m.ti.filter((x) => !x.pid).map((x) => x.place))}`);
     const want = r === '/reviews/' ? 'reviewPage' : 'main';
@@ -299,7 +368,7 @@ for (const vp of sizes) {
     if (m.topBorders.length) fails.push(`${tag}: lone top borders ${JSON.stringify(m.topBorders)}`);
     if (r === '/' && m.homeMap !== 'https://www.google.com/maps?cid=8023434379390696838&output=embed') fails.push(`${tag}: home map ${m.homeMap}`);
     if (m.areasBoxed) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
-    if (m.steps && (m.steps.h2 !== 'left' && m.steps.h2 !== 'start' || !['left', 'start'].includes(m.steps.more) || !['left', 'start'].includes(m.steps.step) || (m.steps.gap !== null && m.steps.gap !== 0))) fails.push(`${tag}: how a job runs ${JSON.stringify(m.steps)}`);
+    if (m.steps && (m.steps.h2 !== 'left' && m.steps.h2 !== 'start' || !['left', 'start'].includes(m.steps.more) || !m.steps.moreBtn || !['left', 'start'].includes(m.steps.step) || (m.steps.gap !== null && m.steps.gap !== 0))) fails.push(`${tag}: how a job runs ${JSON.stringify(m.steps)}`);
     for (const x of m.buttons) { btnLog.push(`${tag} ${x.cls} "${x.label}" top ${x.top} bottom ${x.bottom} delta ${x.delta}`); if (Math.abs(x.delta) > 1.5) fails.push(`${tag}: button "${x.label}" (${x.cls}) not centred: top ${x.top} / bottom ${x.bottom}`); }
     if (vp.name === 'mobile' && !m.utility) {
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.45));

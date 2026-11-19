@@ -437,3 +437,115 @@ States, kept separate: **built + checked: PASS** · **deployed to the establishe
 - The three articles are still hand-written, not SEO-engine output (R3-6; engine pass still gated). No SEO batch run, no D1 approval changed, no test lead sent, no client message.
 - No VideoObject schema (YouTube upload dates were not fetched).
 - Chromium only; `astro check` not run (`@astrojs/check` not installed; no install approved). No packages were installed.
+
+---
+
+## ROUND 4: the operator's acceptance review of the preview (19 Nov 2026)
+
+Brief `/root/.hermes/cache/scratch/TRUELINE-OWNER-REVIEW-ROUND2-20261119.md`, from Vince's own
+transcript (`/root/.hermes/attachments/Pasted content (8.8 KB)`), read line by line before anything
+was touched. His verdict on the build was **"everything else on this website looks very good and I'm
+very happy with it"**, so this is a correction pass on the points he named, not a redesign. Minimal
+change: the Home 3 design, the gallery page, the reviews page, the company pages, the footer quick
+contact and the approved legal text are untouched except where he asked. Per-point record and the
+exact words behind each change: `DECISIONS.md` R4-1 … R4-20. Version 2.0.0 → **2.1.0**.
+
+### His points, and what was done
+1. **Card text at 12px** (service cards on the home page and the hubs, related services, resources
+   teasers): new `--fs-card: 16px` token drives every card and teaser body; card titles up one step
+   with them (home tiles 20 → 24px, related services 18 → 20px). The home tiles no longer hide their
+   line on a phone: the grid drops to one tile per row so the name and the line are both readable.
+   Measured on the rendered page at 1440 and 390: nothing under 16px, and `check.mjs` now fails if
+   anything is.
+2. **Five service cards in one row** → **three across, then two centred underneath at the same size**
+   (six-column grid; tiles 4 and 5 start at columns 2 and 4). Tablet: two across, fifth centred.
+   Phone: one per row.
+3. **The services section twice on the home page** → one. The second card set ("For Homes and
+   Business Premises, Inside and Out", five more links to the same five pages) is deleted, markup,
+   CSS and data; its wording is folded into the surviving head and its View All Services button moved
+   there. The home page now has exactly one services-links section, gated both ways.
+4. **H1s and buttons a little larger**: inner-page H1 44 → 52px (44 at tablet, 36 on a phone); every
+   button `--btn-h-lg` tall with a 17px label (was 48px/15px). The home H1 stays at 64px.
+5. **Hero heights**: every inner-page hero is now the same **720px** on a desktop (they were 574-655
+   and all different). The home hero is **690px** instead of 840, so the **"What customers say"**
+   section comes up under it instead of a bare white strip. Gated: inner heroes 720 ± 2px, home hero
+   never within 40px of the window height.
+6. **The home hero carousel moves on its own and loops for ever.** The arrows, the dots and the code
+   behind them are gone, so there is nothing for a visitor to operate and no control left to be
+   unreachable; it still stops while off screen, and `prefers-reduced-motion` holds the first photo
+   with no movement. No new images.
+7. **Reviews button**: a right-aligned **"Read the Reviews"** pill beside the line under the
+   "What customers say about us" heading, on every page except /reviews/ itself. The line already
+   said the reviews come straight from TrueLine Finishes' **Google Business Profile**: "Trailhead and
+   Google Play" in the transcript is speech-to-text noise, and neither name appears anywhere on the
+   site. The reviews page itself is unchanged.
+8. **"Further Reading" off the service pages**: the teaser that closed each hub is gone and
+   `FurtherReading.astro` is deleted with its last caller. Articles keep their cards on /resources/,
+   their own pages and the home resources row. Any page that grows one back fails the audit.
+9. **Service-page CTA**: "Ready to talk it through?" is now a line with the **Quick Quote Online
+   button** under it, scrolling to the same `#contact` form slot. Gated as a button, not a text link.
+10. **Copy, brand before owner**: "What TrueLine Finishes Can Paint and Paper for You"; "Watch
+    TrueLine Finishes at Work" with "TrueLine Finishes videos from their YouTube channel" (no count);
+    "Photographs taken on TrueLine Finishes jobs" (no count); "Tell Us About the Job", whose lead now
+    says a call is a direct line to Brandon; About: "Who Will Be Painting Your Home? Meet TrueLine
+    Finishes" and "The TrueLine Finishes Standard"; home H1 "... by TrueLine Finishes". Brandon is
+    still named as the owner who does every job. The surname is out of the edited marketing copy and
+    stays in the structured data, /company-facts/ and the legal text, which he passed as correct.
+11. **LMB credit**: identical wording, style and hover on every page; the keyword is a link **on the
+    home page only** and plain text everywhere else (no href, tabindex or role), so the site makes
+    exactly one outbound credit link. Gated both ways, in the HTML and in the browser.
+12. **Half the gallery on the home page**: every second photo in each of the gallery page's groups
+    (94 of its 188), in the gallery page's own treatment, which he called fantastic: square tiles with
+    gaps, four across, three at tablet, two on a phone, lazy-loaded, same lightbox, See the Gallery
+    kept. The six-photo block is unchanged on /about/, /reviews/ and /services/, because he reviewed
+    it on /reviews/ and said not to change it there.
+13. **Service-page galleries** in the same square, spaced treatment instead of edge-to-edge.
+14. **The missing gap on /gallery/** before the Quick Quote section: the rule was `.gl:last-of-type`,
+    which matched nothing (the last `<section>` on that page is the quote form), so the padding was
+    zero. The last group now carries `gl--last` with a full section pad: **0 → 96px**.
+15. **Legal pages interlinked in their content**: a "Where to Go Next" block at the end of Privacy,
+    Terms, Cookie Policy, Complaints Procedure and Accessibility links the other four plus About,
+    Contact and the home page. /company-facts/ and /find-us-online/ are left exactly as approved.
+16. **No orphan pages**: a new site-level audit gate requires every built route to be linked from at
+    least one other built page. The only exemptions are /thank-you/ (the form's own redirect target,
+    noindex) and the 404 page, which nothing should link to. The site has no other orphan.
+17. **WhatsApp icon** redrawn as the bubble with the bottom-left tail and the handset inside, on the
+    set's own 24 grid and stroke weight. The footer line and the floating mobile button share one
+    glyph, so they always match; the button stays mobile-only and opens wa.me/447949484274
+    (07949 484274, never 07706 215917). **Hours checked, not changed**: they match
+    `site-plan/nap.json` (the Google listing), 7am to 7pm Monday to Friday, 8am to 6pm Saturday and
+    Sunday, printed one row per day.
+18. **Commercial image captions** given the trade keyword as well as the room, truthfully, in
+    `scripts/images.mjs` (the source of truth) and `src/data/images.json` together.
+
+### Deliberately not done this round
+- **Gallery tabs with a scrolling thumbnail sidebar (R4-19).** He asked for it as a preference, the
+  brief made it conditional on not spoiling the gallery he already likes and not delaying the core
+  correction, and he said the mobile layout must stay as it is. It is a new interaction needing its
+  own keyboard, focus and deep-link work. Carried as the next optional enhancement; the gallery page
+  is otherwise untouched.
+- **The form, the reviews page and the company pages**, by instruction. The Formlane embed was
+  inspected **read-only** at `api.formlane.uk/edge/config/f_5ELbk5JcKfFh2EEaclT6`: five fields in
+  order (name, email, phone, postcode, short description), labels hidden with placeholders showing,
+  button "Quick Quote Online", after-submit **redirect to `/thank-you/`** passing the first name.
+  **No test lead was sent.** No registrar, DNS, mail or client contact was touched.
+
+### Gates (all run; every new one proved by breaking a copy of `dist` on purpose)
+- `npm run build` 26 pages · `token-gate.mjs` PASS (51 files) · `audit.mjs` **0 fails, 0 warnings** ·
+  `audit.mjs --selftest` PASS (round-3 and round-4 gates, 15 broken cases caught) ·
+  `contrast.mjs` **0 fails**.
+- New audit gates, each fired by a deliberate break and silent on the clean build: Further Reading
+  back on a hub; the steps CTA back to a text link; the reviews button removed; the LMB credit linked
+  off the home page; the gallery's bottom padding removed; a legal page missing its About link; the
+  duplicate services section back; hero slide controls back; the home gallery shrunk; and the orphan
+  gate (proved by unlinking /accessibility/ across the whole build).
+- `check.mjs` (Chromium, every route at 1440 and 390) carries new rendered gates: card body never
+  under 16px, no manual hero controls, one services section on the home page, the reviews button
+  present and a real button, the steps CTA a visible button, no Further Reading, real space before the
+  gallery's quote section, inner heroes 720px, the home hero shorter than the window, the home gallery
+  square and spaced, and the credit linked on the home page only.
+- **Button centring gate corrected, not relaxed.** It measured the label's *ink* top, and round
+  capitals and tall lowercase overshoot the cap line, so the reported offset grew with the type size
+  and the larger buttons showed a false 2px error. It now measures the **metric** cap height ('H') and
+  descender depth ('p'), which is the box `text-box: trim-both cap alphabetic` actually centres. The
+  descender lift was re-tuned for the new size at the same time.

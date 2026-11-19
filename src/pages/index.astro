@@ -5,11 +5,18 @@
  * Home 3 is the section flow of https://dom.themerex.net/ (captured 5 Nov 2026), in TrueLine's own
  * copy, Brandon's photos and the logo's blues, as corrected in the operator's live review 3 (R3-9):
  *   hero (full-bleed photo slider, centred headline, slimline, Quick Quote Online + Call)
- *   -> the site's reviews section -> the five hubs as tall photo tiles -> the photo CTA band (both
- *   buttons) -> preparation block (accordion + photo + ring badge + three USP boxes) -> Brandon's
- *   videos (NEW, operator 19 Nov) -> six-photo grid + See the Gallery -> all five services ->
+ *   -> the site's reviews section -> the five hubs as photo tiles (3 over 2, the page's ONLY
+ *   services-links section) -> the photo CTA band (both buttons) -> preparation block (accordion +
+ *   photo + ring badge + three USP boxes) -> the videos -> the gallery grid + See the Gallery ->
  *   Where to Find Us (KEPT from the regular home: operator round 2 fix 8 ordered Brandon's real
  *   listing map on the home page) -> resources row -> the quote form band.
+ * OPERATOR REVIEW 4 (19 Nov 2026): the second services card set ("For homes and business premises,
+ * inside and out") is GONE ("you have the services section twice on the homepage. That means there
+ * are twice the links on the homepage, which is not good ... remove that section, keep maybe the
+ * text, and move that text for the other section"): its wording is folded into the one remaining
+ * services head, and that head now carries the View All Services button the removed block had.
+ * The gallery grid shows about half the gallery page's collection ("I want half of this gallery on
+ * the home page ... because this gallery is great").
  * No address, no written reviews, rating or count, no form in the hero, no before/after slider.
  */
 import Base from '../layouts/Base.astro';
@@ -23,8 +30,7 @@ import ArticlesPreview from '../components/ArticlesPreview.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import CallButton from '../components/CallButton.astro';
 import Icon from '../components/Icon.astro';
-import { serviceContent as hubContent } from '../data/services';
-import { business, seo, image, services, mainPlaces } from '../data/site';
+import { business, seo, image, mainPlaces } from '../data/site';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
 
@@ -40,15 +46,11 @@ const usps = [
   { icon: 'user', title: 'Brandon on Every Job', text: 'The owner carries out the work and oversees every job.' },
   { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, with a free quotation for every job.' },
 ];
-// Round 3 on Home 3 ("add every service that we do"): all five services, each with its hub's own lead line
-// and a photo other than the one on the tiles above (only one wallpaper photo exists).
-const alt: Record<string, string> = { 'painting-and-decorating': 'landing-wood-spindles-0049', 'interior-painting': 'grey-bedroom-0183', 'exterior-painting': 'stone-farmhouse-0092', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177' };
-const allServices = services.map((s) => ({ ...s, photo: image(alt[s.slug]), lead: hubContent.find((c) => c.slug === s.slug)!.lead }));
 const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 ---
 <Base title={seo.title} description={seo.description} page="home" schema={schema}>
   <Hero
-    h1="Tired Rooms? Painting and Decorating by Brandon"
+    h1="Tired Rooms? Painting and Decorating by TrueLine Finishes"
     lead="Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation."
     image={slides[0]}
     slides={slides}
@@ -56,7 +58,13 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 
   <Reviews />
 
-  <ServicesGrid heading="What Brandon Can Paint and Paper for You" lead="Rooms inside, the outside of the house, wallpaper and business premises: pick the job you have in mind." showCall={false} moreLine={false} />
+  <ServicesGrid
+    heading="What TrueLine Finishes Can Paint and Paper for You"
+    lead="Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out. Rooms inside, the outside of the house, wallpaper and commercial premises: pick the job you have in mind."
+    showCall={false}
+    moreLine={false}
+    allLink
+  />
 
   <!-- CTA BAND (Dom's full-width band; round 3: one of Brandon's photos under the navy overlay, both buttons). -->
   <section class="hb on-dark" data-section="cta-band">
@@ -75,7 +83,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     <div class="container hp__grid">
       <div class="hp__copy" data-motion="reveal">
         <h2 class="dm-h2">Preparation First, and a Finish That Lasts</h2>
-        <p class="hp__p">Brandon Dawson, the owner, carries out the work and oversees every job. We take pride in attention to detail, lasting finishes and treating your property with care.</p>
+        <p class="hp__p">Brandon, the owner of TrueLine Finishes, carries out the work and oversees every job. We take pride in attention to detail, lasting finishes and treating your property with care.</p>
         <div class="hp__acc">
           {faqs.map((f, i) => (
             <details class="hp__item" open={i === 0}>
@@ -103,27 +111,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 
   <Videos />
 
-  <WorkGrid />
-
-  <!-- EVERY SERVICE (Dom's product grid): centred head, square photos with the title (the one link) and text under, one pill. -->
-  <section class="ht section" data-section="craft">
-    <div class="container">
-      <div class="dm-head dm-head--c" data-motion="reveal">
-        <h2 class="dm-h2">For Homes and Business Premises, Inside and Out</h2>
-        <p class="dm-lead">Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out.</p>
-      </div>
-      <ul class="ht__grid">
-        {allServices.map((t, i) => (
-          <li class="ht__card" data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
-            <div class="ht__img"><img src={t.photo.sm} alt={t.photo.alt} width={t.photo.width} height={t.photo.height} loading="lazy" decoding="async" /></div>
-            <h3 class="ht__h3"><a href={`/${t.slug}/`} data-link="card">{t.name}</a></h3>
-            <p class="ht__p">{t.lead}</p>
-          </li>
-        ))}
-      </ul>
-      <div class="dm-center"><a href="/services/" class="btn btn-primary" data-cta="services-all"><span class="btn__t">View All Services</span></a></div>
-    </div>
-  </section>
+  <WorkGrid full />
 
   <Areas
     heading="Where to Find Us"
@@ -173,24 +161,6 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   .hp__box p { font-size: var(--fs-sm); line-height: var(--lh-normal); }
   .hp__ic { display: grid; place-items: center; width: var(--space-10); height: var(--space-10); border-radius: var(--radius-full); background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
 
-  /* EVERY SERVICE */
-  .ht { padding-top: var(--section-pad); }
-  .ht__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-6); }
-  .ht__card { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .ht__img { width: 100%; aspect-ratio: 1; overflow: hidden; margin-bottom: var(--space-5); background: var(--bg-panel); }
-  .ht__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-  .ht__card:hover .ht__img img { transform: scale(1.04); }
-  .ht__h3 { font-size: var(--fs-lg); line-height: 1.25; margin-bottom: var(--space-2); }
-  .ht__h3 a { color: var(--text-heading); transition: color 0.2s var(--ease); }
-  .ht__h3 a:hover { color: var(--brand-primary); }
-  .ht__p { font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-muted); max-width: 40ch; }
-
-  @media (max-width: 1180px) {
-    /* Five cards: two per row and the fifth full width, so no row ends on an empty cell. */
-    .ht__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .ht__card:last-child:nth-child(odd) { grid-column: 1 / -1; }
-    .ht__card:last-child:nth-child(odd) .ht__img { max-width: calc(50% - var(--space-3)); }
-  }
   @media (max-width: 1023px) {
     .hp__grid { grid-template-columns: 1fr; }
     .hp__media { padding-left: 0; }

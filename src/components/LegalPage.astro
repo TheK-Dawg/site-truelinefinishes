@@ -1,16 +1,36 @@
 ---
 /**
- * LEGAL PAGE SHELL (privacy, terms, cookie policy): the template's spine. Inner hero, reviews,
- * then two columns: a sticky contents list built from the page's H2s, and the prose beside a
- * sticky quote card. The quote form closes the page (form law: every page).
+ * LEGAL PAGE SHELL (privacy, terms, cookie policy, complaints procedure, accessibility, and the
+ * company pages): the template's spine. Inner hero, reviews, then two columns: a sticky contents
+ * list built from the page's H2s, and the prose beside a sticky quote card. The quote form closes
+ * the page (form law: every page).
+ * OPERATOR REVIEW 4 (19 Nov 2026): "These pages should always link back to the homepage as well
+ * though, somewhere. They should be linking to each other. The privacy policy page and the privacy
+ * policy terms, cookie, complaints procedure, and accessibility pages should all link to each other
+ * as well ... and also link to the About Us and Contact page. They should all be interlinking with
+ * the pages so none of them are ever orphaned." A "Where to go next" block at the end of the prose
+ * carries the other four legal pages plus Home, About and Contact, so the links are in the page
+ * content, not only in the footer. It renders on the five pages he named; /company-facts/ and
+ * /find-us-online/ keep their approved content untouched (`related={false}`).
  */
 import Base from '../layouts/Base.astro';
 import PageHero from './PageHero.astro';
 import Reviews from './Reviews.astro';
 import QuoteForm from './QuoteForm.astro';
 import CallButton from './CallButton.astro';
-interface Props { title: string; description: string; h1: string; page: string; lead: string }
-const { title, description, h1, page, lead } = Astro.props;
+interface Props { title: string; description: string; h1: string; page: string; lead: string; related?: boolean }
+const { title, description, h1, page, lead, related = true } = Astro.props;
+/** The five pages the operator named, each linking to the other four plus the main routes. */
+const LEGAL = [
+  { href: '/privacy/', label: 'Privacy Policy' },
+  { href: '/terms/', label: 'Terms and Conditions' },
+  { href: '/cookie-policy/', label: 'Cookie Policy' },
+  { href: '/complaints-procedure/', label: 'Complaints Procedure' },
+  { href: '/accessibility/', label: 'Accessibility' },
+];
+const here = `/${page}/`;
+const others = LEGAL.filter((l) => l.href !== here);
+const showRelated = related && LEGAL.some((l) => l.href === here);
 const slug = (s: string) => s.toLowerCase().replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const toc: { id: string; label: string }[] = [];
 const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (_m, attrs: string, inner: string) => {
@@ -30,7 +50,21 @@ const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?
         <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ol>
       </nav>
       <div class="lg__main">
-        <div class="prose lg__body" set:html={html} />
+        <div class="lg__col">
+          <div class="prose lg__body" set:html={html} />
+          {showRelated && (
+            <nav class="lg__next" aria-label="Where to go next">
+              <h2 class="lg__next-h">Where to Go Next</h2>
+              <p class="lg__next-p">The rest of the information TrueLine Finishes publishes about how it works with you:</p>
+              <ul class="lg__next-list">
+                {others.map((l) => <li><a href={l.href} data-link="legal-related">{l.label}</a></li>)}
+                <li><a href="/about/" data-link="legal-related">About TrueLine Finishes</a></li>
+                <li><a href="/contact/" data-link="legal-related">Contact TrueLine Finishes</a></li>
+                <li><a href="/" data-link="legal-related">TrueLine Finishes home page</a></li>
+              </ul>
+            </nav>
+          )}
+        </div>
         <aside class="lg__card on-dark" aria-label="Quick Quote">
           <p class="lg__card-h">Need a Quote?</p>
           <p class="lg__card-p">Get a free quotation: call Brandon on 07949 484274 or use the quote form.</p>
@@ -53,6 +87,15 @@ const html = (await Astro.slots.render('default')).replace(/<h2([^>]*)>([\s\S]*?
   .lg__toc a { color: var(--brand-text); }
   .lg__toc a:hover { color: var(--text-heading); }
   .lg__main { display: grid; grid-template-columns: minmax(0, 1fr) var(--legal-card-w); gap: var(--space-12); align-items: start; }
+  .lg__col { min-width: 0; }
+  /* Where to go next (operator review 4): the legal set interlinked inside the page content. */
+  .lg__next { margin-top: var(--space-12); padding-top: var(--space-8); border-top: 1px solid var(--border-default); max-width: 72ch; }
+  .lg__next-h { font-size: var(--fs-2xl); margin-bottom: var(--space-3); }
+  .lg__next-p { color: var(--text-muted); font-size: var(--fs-card); margin-bottom: var(--space-5); }
+  .lg__next-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-8); font-size: var(--fs-card); }
+  .lg__next-list a { color: var(--brand-text); font-weight: var(--fw-semibold); }
+  .lg__next-list a:hover { color: var(--brand-primary); }
+  @media (max-width: 640px) { .lg__next-list { grid-template-columns: 1fr; } }
   .lg__body { max-width: 72ch; }
   .lg__body > :global(:first-child) { margin-top: 0; }
   .lg__body :global(h2) { scroll-margin-top: calc(var(--header-h) + var(--space-6)); }

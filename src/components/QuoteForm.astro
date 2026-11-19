@@ -15,6 +15,9 @@
  * The slot carries id="contact", so every #contact link lands on the form itself.
  * HOME 3 DESIGN (operator, 19 Nov 2026: Home 3 is the site's design): Home 3's form band, the Dom
  * reference's subscribe band. Pale mist band; heading, lead, the three selling points, the slimline,
+ * HEADING (operator review 4, 19 Nov 2026): "You say 'Tell us about the job' and then say a call is
+ * a direct line to Brandon. That's fine. You can keep that there." The service pages keep their own
+ * headings, which the operator reviewed and approved in the same pass.
  * the Call pill and the hours on the left (dark text); the white form card with pill fields and the
  * royal pill submit on the right. No WhatsApp button in the form section (operator round 3 on Home 3;
  * the floating button and the footer keep WhatsApp). DECISIONS H3-*.
@@ -29,8 +32,8 @@ import { business } from '../data/site';
 import Hours from './Hours.astro';
 interface Props { heading?: string; lead?: string }
 const {
-  heading = 'Tell Brandon About the Job',
-  lead = 'Leave your name, email, phone number and postcode, with a line or two about the job. Brandon will talk it through with you and give you a free quotation.',
+  heading = 'Tell Us About the Job',
+  lead = 'Leave your name, email, phone number and postcode, with a line or two about the job. TrueLine Finishes will talk it through with you and give you a free quotation, and a call is a direct line to Brandon.',
 } = Astro.props;
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
 const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
