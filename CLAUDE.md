@@ -21,7 +21,17 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
 - The address is NEVER shown on the site or in schema. Phone 07949 484274 only; never 07706 215917.
 - "Free quotation" (Brandon's word) is allowed; "free quote" is not. Buttons say Quick Quote Online.
 - No prices, guarantees, warranties, accreditations, team claims, response times or out-of-hours
-  promises. "Over eight years' experience" only. Brandon is named as the person doing every job.
+  promises. "Over eight years' experience" only.
+- ROUND 5 (19 Nov 2026, DECISIONS R5-3/R5-4, superseding the earlier "Brandon is named as the person
+  doing every job"): the BRAND leads all marketing copy. No self-work trope ("does the work himself")
+  anywhere; no owner name in any H1/H2/H3, title or meta description; the full name "Brandon Dawson"
+  only on /privacy/, /terms/, /company-facts/ and in structured data; the first name only in the
+  /contact/ quote-form lead. H1s = real service + verified town from towns.json (home: "Painter and
+  Decorator in Baildon and Shipley"), never a question. Gates: `node scripts/audit.mjs` round-5 block.
+- ROUND 5 heroes and gallery: ONE hero height for every route from `--hero-h` in Hero.astro (780
+  desktop, 640 tablet, 540 phone floor); `.hero--compact` sets no height. The home gallery is the
+  curated `HOME_PICKS` list, at most 20 DISTINCT photographs. The services tile footer carries a
+  Quick Quote Online button and never a phone number. Check with `node scripts/hero-heights.mjs`.
 - No Areas page, no town pages at the root. Articles live at /resources/<hub>-<town>/ and are
   written by the engine after handoff; anything not `published` in `src/data/articles.json` is
   noindex and unlinked.
@@ -40,5 +50,6 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
 ## Commands
 - `npm run build` · `node scripts/audit.mjs` (+ `--selftest`) · `node scripts/token-gate.mjs`
 - `node scripts/check.mjs [liveURL] [--shots dir]` (Playwright, 1440 + 390)
+- `node scripts/hero-heights.mjs [liveURL]` (every hero route at 1440 + 768 + 390, one height policy)
 - `node scripts/cookies.mjs <liveURL>` (Cookie Policy must match)
 - `npm run deploy` (deploy guard: worker `site-truelinefinishes` only)

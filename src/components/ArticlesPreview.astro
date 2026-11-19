@@ -24,7 +24,7 @@ const hubName = (slug: string) => services.find((s) => s.slug === slug)?.name ??
       </div>
       {showAll && <a href="/resources/" class="dm-link" data-cta="articles-all">All resources</a>}
     </div>
-    {list.length === 0 && <p class="ap__empty">Brandon's first resources on painting and decorating, room by room and town by town, are being written. They will appear here as they are published.</p>}
+    {list.length === 0 && <p class="ap__empty">The first TrueLine Finishes resources on painting and decorating, room by room and town by town, are being written. They will appear here as they are published.</p>}
     <ul class="ap__grid">
       {list.map((a, i) => {
         const img = image(a.hero);

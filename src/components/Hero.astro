@@ -11,9 +11,14 @@
  * headline on their own and loop for ever, and there are NO customer-facing controls at all (the
  * arrows and dots are gone, so there is no control left to be unreachable). It still pauses
  * off-screen, and prefers-reduced-motion holds the first photo with no movement.
- * HEIGHTS (operator review 4): the home hero is a little shorter than the viewport so the reviews
- * section below it comes into view instead of a blank white band; every inner-page hero is the same
- * 720px on a desktop, for consistency. Sub-pages (`compact`) reach it through PageHero.astro.
+ * HEIGHTS (OPERATOR REVIEW 5, 19 Nov 2026, superseding review 4's split): ONE height policy for
+ * every hero on the site, home page included. Review 4 left the home hero at 690px against 720px
+ * on the inner pages and the operator rejected both as too small ("they should all be the same
+ * visual height ... it has become too small"). There is now a single token, --hero-h, per
+ * breakpoint: 780px on a desktop (bigger than round 4 everywhere, and still short enough that the
+ * reviews section shows under it on a laptop, so no blank white band), 600px on a tablet and 540px
+ * on a phone, where the hero may still GROW past it so nothing is ever clipped. `compact` now only
+ * changes the type scale, never the height. Sub-pages reach it through PageHero.astro.
  * Buttons: Quick Quote Online = the chrome pill (scrolls to the quote form at the end of the page),
  * Call = the glass pill. REVIEWS: only the SLIMLINE widget (Google's own live rating and count);
  * the site writes no rating or count of its own.
@@ -65,13 +70,15 @@ const slider = photos.length > 1;
 </script>
 
 <style>
-  /* Home hero: a little under the viewport so the reviews section below it shows instead of a bare
-     white strip (operator review 4): the viewport less a --space-24, capped at 5.75 --space-30 units,
-     which leaves the reviews heading and its line inside the first screen on a laptop. */
-  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: min(calc(100vh - var(--space-24)), calc(var(--space-30) * 5.75)); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-20); background: var(--bg-inverse-deep); color: var(--text-inverse-muted); text-align: center; }
-  /* Every inner-page hero the same height on a desktop (operator review 4: "I want to make sure
-     they're all the same size ... something like 720 pixels"). */
-  .hero--compact { min-height: calc(var(--space-30) * 6); padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-20); }
+  /* ONE HEIGHT FOR EVERY HERO (operator review 5): --hero-h is the whole site's hero height at this
+     breakpoint and both variants use it, so the home page and every inner page measure the same.
+     780 CSS pixels on a desktop restores the presence round 4 took away and still leaves the
+     reviews section showing in a 900-tall laptop window, so there is no blank band. It is a MIN:
+     a long headline on a narrow window grows the hero rather than clipping it. */
+  .hero, .hero--compact { --hero-h: calc(var(--space-30) * 6.5); }
+  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: var(--hero-h); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-20); background: var(--bg-inverse-deep); color: var(--text-inverse-muted); text-align: center; }
+  /* `compact` is a TYPE variant only now: same height, slightly smaller headline. */
+  .hero--compact { padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-20); }
   .hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
   .hero[data-slider] .hero__bg { opacity: 0; transition: opacity 1.1s var(--ease); }
   .hero[data-slider] .hero__bg.is-on { opacity: 1; }
@@ -84,10 +91,15 @@ const slider = photos.length > 1;
   .hero__copy :global(.hero__ti) { width: 100%; margin-bottom: var(--space-6); }
   .hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  @media (max-width: 1023px) { .hero { min-height: min(calc(100vh - var(--space-24)), calc(var(--space-30) * 5)); } .hero--compact { min-height: calc(var(--space-30) * 4); } .hero__h1 { font-size: var(--fs-5xl); } .hero--compact .hero__h1 { font-size: var(--fs-5xl); } }
+  /* Tablet: one height for every hero again (640), the type one step down. The figure leaves room
+     for the longest headline at this width, so every tablet hero measures the same. */
+  @media (max-width: 1023px) { .hero, .hero--compact { --hero-h: calc(var(--space-30) * 5 + var(--space-10)); } .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-5xl); } }
+  /* Phone: one height for every hero (540), and the hero grows past it when the content needs
+     the room, so a long headline plus the slimline and both full-width buttons are never clipped. */
   @media (max-width: 760px) {
-    .hero { min-height: 0; padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-20); }
-    .hero--compact { min-height: 0; padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-12); }
+    .hero, .hero--compact { --hero-h: calc(var(--space-30) * 4.5); }
+    .hero { padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-20); }
+    .hero--compact { padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-12); }
     .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-4xl); }
     .hero__lead { font-size: var(--fs-base); }
     .hero__actions { width: 100%; flex-direction: column; }

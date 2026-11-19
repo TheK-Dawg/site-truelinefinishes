@@ -39,7 +39,7 @@ export const hoursSchema = [
 ];
 
 /** The CTA line, the plan's own words (Contact, calls to action). */
-export const ctaLine = 'Get a free quotation: call Brandon on 07949 484274 or use the quote form.';
+export const ctaLine = 'Get a free quotation: call 07949 484274 or use the quote form.';
 
 /** Usable claims only (nap.json usps, all affirmed). */
 export const usps = {

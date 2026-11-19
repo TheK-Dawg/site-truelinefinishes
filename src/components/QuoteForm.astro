@@ -33,7 +33,7 @@ import Hours from './Hours.astro';
 interface Props { heading?: string; lead?: string }
 const {
   heading = 'Tell Us About the Job',
-  lead = 'Leave your name, email, phone number and postcode, with a line or two about the job. TrueLine Finishes will talk it through with you and give you a free quotation, and a call is a direct line to Brandon.',
+  lead = 'Leave your name, email, phone number and postcode, with a line or two about the job. TrueLine Finishes will talk it through with you and give you a free quotation.',
 } = Astro.props;
 const FORMLANE_FORM = 'f_5ELbk5JcKfFh2EEaclT6';
 const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
@@ -45,7 +45,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       <p class="qf__p">{lead}</p>
       <ul class="qf__list">
         <li><Icon name="check" size={16} /> Free quotations</li>
-        <li><Icon name="check" size={16} /> A call is a direct line to Brandon</li>
+        <li><Icon name="check" size={16} /> Sanding, filling and caulking on every job</li>
         <li><Icon name="check" size={16} /> Fully insured, over eight years' experience</li>
       </ul>
       <TrustindexSlot role="slimline" place="slim-form" class="qf__ti" />
@@ -57,7 +57,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
     <div class="qf__card">
       <h3 class="qf__form-h">Quick Quote Online</h3>
       <div class="qf__form" id="contact" data-quote-card data-lead-form={FORMLANE_FORM} data-lf-token={FORMLANE_TOKEN}>
-        <noscript><p class="qf__nojs">The quote form needs JavaScript. Call Brandon on <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
+        <noscript><p class="qf__nojs">The quote form needs JavaScript. Call <a href={business.phoneHref}>{business.phone}</a> instead.</p></noscript>
       </div>
       <p class="qf__secure"><Icon name="lock" size={15} /> Any submission through this form is secure. We do not sell your details to third parties.</p>
     </div>

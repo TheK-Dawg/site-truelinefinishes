@@ -9,12 +9,17 @@
  * mobile"). On a phone the tiles go one per row so the name and its line stay readable.
  * CARD LAW: the hub name on the title is the tile's ONLY link (exact name, canonical href); photos
  * never link. Links are NEVER underlined: white on the photo, chrome on hover.
+ * OPERATOR REVIEW 5 (19 Nov 2026): the FOOTER under the tiles carries NO phone number and NO Call
+ * button, on any page. It is one prominent Quick Quote Online button through to this page's own
+ * quote form (`/contact/#contact` on a page without one), plus View All Services where that link
+ * belongs. The old small "Not sure which of these your job falls under? Quick Quote Online" text
+ * link is gone, so the same call to action never appears twice in the same footer. The phone stays
+ * in the header, the hero, the contact page and the footer, where he kept it.
  */
 import { services } from '../data/site';
 import Icon from './Icon.astro';
-import CallButton from './CallButton.astro';
-interface Props { heading?: string; lead?: string; showCall?: boolean; moreLine?: boolean; formless?: boolean; panel?: boolean; allLink?: boolean }
-const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five services, one standard of preparation and finish, for homes and businesses.', showCall = true, moreLine = true, formless = false, panel = false, allLink = false } = Astro.props;
+interface Props { heading?: string; lead?: string; formless?: boolean; panel?: boolean; allLink?: boolean }
+const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five services, one standard of preparation and finish, for homes and businesses.', formless = false, panel = false, allLink = false } = Astro.props;
 ---
 <section class:list={['sv section section-services', panel && 'section--panel']} id="services" data-section="services">
   <div class="container">
@@ -34,13 +39,10 @@ const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five servic
         </li>
       ))}
     </ul>
-    {(moreLine || showCall || allLink) && (
-      <div class="sv__foot">
-        {moreLine && <p class="sv__more">Not sure which of these your job falls under? <a href={formless ? '/contact/#contact' : '#contact'} class="dm-link" data-cta="services-quote">Quick Quote Online</a></p>}
-        {allLink && <a href="/services/" class="btn btn-primary" data-cta="services-all"><span class="btn__t">View All Services</span></a>}
-        {showCall && <CallButton cta="services-call" tone="light" />}
-      </div>
-    )}
+    <div class="sv__foot">
+      <a href={formless ? '/contact/#contact' : '#contact'} class="btn btn-primary" data-cta="services-quote"><span class="btn__t">Quick Quote Online</span></a>
+      {allLink && <a href="/services/" class="btn btn-dark" data-cta="services-all"><span class="btn__t">View All Services</span></a>}
+    </div>
   </div>
 </section>
 
@@ -60,7 +62,6 @@ const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five servic
   .sv__title a:hover { color: var(--accent-on-dark); }
   .sv__body { font-size: var(--fs-card); line-height: var(--lh-normal); color: var(--v-mist-100); }
   .sv__foot { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-4) var(--space-8); margin-top: var(--space-10); }
-  .sv__more { font-size: var(--fs-card); color: var(--text-muted); text-align: center; }
   /* Tablet: two across, the fifth centred underneath, so the row never ends on an empty cell. */
   @media (max-width: 1023px) {
     .sv__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }

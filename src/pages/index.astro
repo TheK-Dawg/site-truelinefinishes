@@ -43,15 +43,15 @@ const bandImg = image('lounge-navy-feature-wall-0036');
 const aboutImg = image('white-kitchen-0108');
 const usps = [
   { icon: 'clock', title: "Over Eight Years' Experience", text: 'Painting and decorating for homes and businesses.' },
-  { icon: 'user', title: 'Brandon on Every Job', text: 'The owner carries out the work and oversees every job.' },
+  { icon: 'user', title: 'Preparation Included', text: 'Sanding, filling and caulking come with every job.' },
   { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, with a free quotation for every job.' },
 ];
 const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 ---
 <Base title={seo.title} description={seo.description} page="home" schema={schema}>
   <Hero
-    h1="Tired Rooms? Painting and Decorating by TrueLine Finishes"
-    lead="Or the outside of the house letting it down? TrueLine Finishes paints and decorates homes and businesses, from a single room to a full property redecoration, and every job starts with careful preparation."
+    h1="Painter and Decorator in Baildon and Shipley"
+    lead="TrueLine Finishes paints and papers homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on."
     image={slides[0]}
     slides={slides}
   />
@@ -61,8 +61,6 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   <ServicesGrid
     heading="What TrueLine Finishes Can Paint and Paper for You"
     lead="Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out. Rooms inside, the outside of the house, wallpaper and commercial premises: pick the job you have in mind."
-    showCall={false}
-    moreLine={false}
     allLink
   />
 
@@ -70,7 +68,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   <section class="hb on-dark" data-section="cta-band">
     <img class="hb__bg" src={bandImg.src} alt="" width={bandImg.width} height={bandImg.height} loading="lazy" decoding="async" />
     <div class="container hb__inner">
-      <p class="hb__line">The person you call is the person who does the work.</p>
+      <p class="hb__line">Sanding, filling and caulking come with every job.</p>
       <div class="hb__actions">
         <a href="#contact" class="btn btn-primary" data-cta="band-quote"><span class="btn__t">Quick Quote Online</span></a>
         <CallButton cta="band-call" />
@@ -83,7 +81,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
     <div class="container hp__grid">
       <div class="hp__copy" data-motion="reveal">
         <h2 class="dm-h2">Preparation First, and a Finish That Lasts</h2>
-        <p class="hp__p">Brandon, the owner of TrueLine Finishes, carries out the work and oversees every job. We take pride in attention to detail, lasting finishes and treating your property with care.</p>
+        <p class="hp__p">Hairline cracks are opened and filled, gaps along skirting boards and frames are caulked, and surfaces are sanded smooth before any paint goes on. Brand-new plaster gets a mist coat first, so the finish bonds instead of flaking.</p>
         <div class="hp__acc">
           {faqs.map((f, i) => (
             <details class="hp__item" open={i === 0}>

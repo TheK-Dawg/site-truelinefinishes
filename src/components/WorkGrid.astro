@@ -8,18 +8,20 @@
  *    sharpness (Laplacian contrast on the served 1600px files, finished work only, no prep or
  *    dust-sheet shots) and then by eye, in Home 3's edge-to-edge 4:3 grid. The operator reviewed
  *    this block on /reviews/ in round 4 and asked for no change there.
- *  - `full` (the HOME page only, operator review 4, 19 Nov 2026: "I want half of this gallery on the
- *    home page, half of it instead of the one we have, because this gallery is great"): about half
- *    the gallery page's collection, in the GALLERY PAGE's own treatment, which the operator called
- *    fantastic: square tiles with real spacing between them, four across on a desktop, three on a
- *    tablet, two on a phone. Every photo is lazy-loaded.
+ *  - `full` (the HOME page only): the gallery page's own treatment, which the operator called
+ *    fantastic (square tiles with real spacing, four across on a desktop, three on a tablet, two on
+ *    a phone), but a SHORT, CURATED set. OPERATOR REVIEW 5 (19 Nov 2026): round 4's "half the
+ *    gallery" put 95 photographs on the home page, which is too many. The home page now carries
+ *    HOME_PICKS: at most 20 DISTINCT photographs, no duplicates and no repeat of a tile already
+ *    used elsewhere on the home page, in the gallery page's group order (interiors, exteriors,
+ *    wallpapering, commercial) so the set still reads coherently. The gallery page itself and the
+ *    reviews-page grid are untouched: the full collection stays one click away.
  * COPY (operator review 4): the brand, not the owner's name, and never a count of the photos,
  * because more are added over time ("don't say a number and don't say his name ... we will add
  * more pictures in the future").
- * The selection is deterministic (a fixed stride through the gallery order), so the page is the
- * same on every build and no photo appears twice.
+ * The selection is a fixed list, so the page is the same on every build and no photo appears twice.
  */
-import { images, image } from '../data/site';
+import { image } from '../data/site';
 interface Props { heading?: string; lead?: string; photos?: string[]; full?: boolean }
 const {
   heading = 'Our Work, Photographed on the Job',
@@ -28,16 +30,27 @@ const {
   full = false,
 } = Astro.props;
 
-// `full`: about half of what the gallery page shows, in the gallery page's own group order
-// (interiors, exteriors, wallpapering, commercial), evenly spread through each group so the
-// selection stays representative rather than the first half of one room type.
-const afterCat = (key: string) => (/gable|semi-detached/.test(key) ? 'exterior' : 'interior');
-const shown = images.filter((i) => !/-before-/.test(i.key)).map((i) => (i.cat === 'before-after' ? { ...i, cat: afterCat(i.key) } : i));
-const half = ['interior', 'exterior', 'wallpapering', 'commercial'].flatMap((cat) => {
-  const list = shown.filter((i) => i.cat === cat);
-  return list.filter((_, n) => n % 2 === 0);
-});
-const grid = full ? half : photos.map(image);
+// OPERATOR REVIEW 5: at most 20 distinct photographs on the home page, curated for variety and
+// kept in the gallery page's group order. Interiors first (living rooms, bedrooms, kitchens,
+// a hallway, a staircase, a bathroom, panelling), then exteriors, wallpaper and business premises.
+// No key appears twice, and none of them is a photo the home page already uses in its hero,
+// its CTA band, its services tiles or its preparation block.
+const HOME_PICKS = [
+  // interiors (12)
+  'grey-living-room-0133', 'lounge-dark-arched-alcove-0101', 'media-wall-finished-0095', 'green-bedroom-0129',
+  'grey-bedroom-0190', 'navy-kitchen-0038', 'white-kitchen-0113', 'sage-kitchen-0011',
+  'victorian-hallway-0066', 'white-staircase-spindles-0162', 'bathroom-finished-0111', 'cloakroom-green-panelling-0040',
+  // exteriors (5)
+  'mock-tudor-house-0074', 'stone-farmhouse-0092', 'navy-front-door-stone-0032', 'white-sash-window-stone-0033', 'painted-railings-0180',
+  // wallpapering (1)
+  'leaf-pattern-feature-wall-0026',
+  // business premises (2)
+  'office-navy-feature-wall-0175', 'exhibition-stand-burgundy-0194',
+];
+const HOME_MAX = 20;
+if (new Set(HOME_PICKS).size !== HOME_PICKS.length) throw new Error('WorkGrid: the home page selection repeats a photograph');
+if (HOME_PICKS.length > HOME_MAX) throw new Error(`WorkGrid: ${HOME_PICKS.length} home photographs, the operator's ceiling is ${HOME_MAX}`);
+const grid = (full ? HOME_PICKS : photos).map(image);
 ---
 <section class:list={['wg', full && 'wg--full']} data-section="gallery" data-ai-skip>
   <div class="container dm-head dm-head--row wg__head" data-motion="reveal">

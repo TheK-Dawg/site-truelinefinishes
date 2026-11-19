@@ -12,7 +12,10 @@
 // ROUND 4 (19 Nov 2026): card/teaser body text never under 16px; the home hero carousel has NO manual
 // controls; one services-links section on the home page; a reviews button on every page but /reviews/;
 // the service CTA is a button; no Further Reading teaser; the gallery page has real space before the
-// quote section; inner heroes all 720px on a desktop; the LMB credit links on the home page only.
+// quote section; the LMB credit links on the home page only.
+// ROUND 5 (19 Nov 2026): ONE hero height for every route at each width (780 desktop, 540 phone floor)
+// with the hero content never clipped; the home gallery at most 20 photographs, every one distinct,
+// measured on the served page at both widths; H1s and copy per scripts/audit.mjs round-5 gates.
 // from our own code. Trustindex (6 Nov 2026): every widget actually renders (its own id, height > 0)
 // after a first interaction; main/review-page fill the reviews section, which is the first section
 // after the hero; slimline text white on dark grounds and AA on light ones; the corner is fixed
@@ -82,8 +85,10 @@ const measureButtons = (sel) => {
           return out;
         };
 // HOME 3 SITE-WIDE (operator, 19 Nov 2026): the variants are retired and 301 to / (worker/redirects.js).
+// ROUND 5: the one hero height per width (src/components/Hero.astro --hero-h).
+const HERO_H = { desktop: 780, tablet: 640, mobile: 540 };
 const REDIRECTS = [['/home-3/', '/'], ['/home-3', '/'], ['/home-2/', '/'], ['/home-2', '/'], ['/complaints/', '/complaints-procedure/']];
-const fails = []; const btnLog = []; const heroLog = []; const tiLog = []; const videoLog = [];
+const fails = []; const btnLog = []; const heroLog = []; const tiLog = []; const videoLog = []; const galleryLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
 const sizes = [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 844 }];
 for (const vp of sizes) {
@@ -165,6 +170,14 @@ for (const vp of sizes) {
         // OPERATOR OVERHAUL (5 Nov 2026): computed styles, not source.
         underlined: [...document.querySelectorAll('a')].filter((a) => vis(a) && !a.closest('.ti-widget') && getComputedStyle(a).textDecorationLine.includes('underline')).map((a) => a.innerText.trim().slice(0, 40)),
         heroBad: (() => { const h = document.querySelector('[data-section="hero"]'); return h ? [...h.querySelectorAll('iframe, form, [data-lead-form], [data-video], img[src*="/brand/logo"]')].map((e) => e.tagName + (e.className ? '.' + e.className : '')) : []; })(),
+        // ROUND 5: the hero's own content must sit inside the hero box at every width, so a taller
+        // headline grows the hero instead of being cut off by it.
+        heroClipped: (() => {
+          const h = document.querySelector('[data-section="hero"]'); const c = h?.querySelector('.hero__copy'); if (!h || !c) return null;
+          const hb = h.getBoundingClientRect(); const cb = c.getBoundingClientRect();
+          const over = Math.round(Math.max(hb.top - cb.top, cb.bottom - hb.bottom));
+          return over > 1 ? `content overflows the hero box by ${over}px` : null;
+        })(),
         formInHero: !!document.querySelector('[data-quote-card]')?.closest('[data-section="hero"]'),
         formSection: !!document.querySelector('[data-quote-card]')?.closest('[data-section="quote-form"]'),
         slider: !!document.querySelector('[data-ba], .ba'),
@@ -184,6 +197,15 @@ for (const vp of sizes) {
         r4Cards: [...document.querySelectorAll('.sv__body, .rl__body, .ap__body, .ht__p')].filter(vis)
           .map((e) => ({ cls: (e.className || '').toString().split(' ')[0], px: parseFloat(getComputedStyle(e).fontSize) })),
         // Home carousel: more than one photo, nothing for a visitor to operate.
+        // ROUND 5: the home gallery, measured on the SERVED page: how many tiles render and how
+        // many DIFFERENT photographs they point at.
+        r5Gallery: (() => {
+          const g = document.querySelector('[data-section="gallery"] .wg__grid--full'); if (!g) return null;
+          const tiles = [...g.querySelectorAll('[data-lightbox]')];
+          const shown = tiles.filter((t) => t.getBoundingClientRect().width > 0).length;
+          const srcs = tiles.map((t) => t.querySelector('img')?.dataset.full || t.querySelector('img')?.src);
+          return { tiles: tiles.length, shown, distinct: new Set(srcs).size };
+        })(),
         r4Slides: document.querySelectorAll('[data-section="hero"] .hero__bg').length,
         r4Controls: document.querySelectorAll('[data-section="hero"] [data-slide-next], [data-section="hero"] [data-slide-prev], [data-section="hero"] [data-slide-to]').length,
         // One services-links section on the home page.
@@ -287,16 +309,33 @@ for (const vp of sizes) {
     if (m.r4StepsCta && (!m.r4StepsCta.btn || !m.r4StepsCta.vis)) fails.push(`${tag}: the "Ready to talk it through?" CTA is not a visible button ${JSON.stringify(m.r4StepsCta)}`);
     if (r === '/') {
       if (m.r4Slides < 2) fails.push(`${tag}: home hero is not the photo carousel (${m.r4Slides} photos)`);
+      // ROUND 5: at most 20 photographs on the home page and no photograph twice, on phone and desktop.
+      if (!m.r5Gallery) fails.push(`${tag}: no home gallery grid in the gallery page's square tiles`);
+      else {
+        const g = m.r5Gallery;
+        if (g.tiles > 20) fails.push(`${tag}: home gallery renders ${g.tiles} photographs, the ceiling is 20`);
+        if (g.tiles < 12) fails.push(`${tag}: home gallery renders only ${g.tiles} photographs`);
+        if (g.distinct !== g.tiles) fails.push(`${tag}: home gallery repeats a photograph (${g.tiles} tiles, ${g.distinct} distinct files)`);
+        if (g.shown !== g.tiles) fails.push(`${tag}: ${g.tiles - g.shown} home gallery tiles do not render at this width`);
+        galleryLog.push(`${tag} tiles=${g.tiles} distinct=${g.distinct} visible=${g.shown}`);
+      }
       if (m.r4Controls) fails.push(`${tag}: home hero has ${m.r4Controls} manual slide control(s) (round 4: it runs on its own)`);
       if (m.r4Services !== 1) fails.push(`${tag}: ${m.r4Services} services-links sections on the home page (round 4: one)`);
+      // ROUND 5 supersedes round 4's "half the collection": the tiles stay the gallery page's square
+      // spaced ones, but the home page carries at most 20 of them (counted above, with their
+      // distinct source files). Here we only hold the TREATMENT: square tiles with real gaps.
       const t = m.r4HomeTiles;
-      if (!t || !t.sq || t.gap < 8 || t.n < 60) fails.push(`${tag}: home gallery is not half the collection in spaced square tiles ${JSON.stringify(t)}`);
+      if (!t || !t.sq || t.gap < 8) fails.push(`${tag}: home gallery is not the gallery page's spaced square tiles ${JSON.stringify(t)}`);
     }
     if (r === '/gallery/' && (m.r4QuoteGap == null || m.r4QuoteGap < 40)) fails.push(`${tag}: no space between the gallery and the quote section (${m.r4QuoteGap}px)`);
-    // HERO HEIGHTS (round 4): one height for every inner page on a desktop; the home hero shorter than
-    // the window so the reviews section below it shows.
-    if (vp.name === 'desktop' && m.heroPattern.kind === 'page' && Math.abs(m.heroPattern.height - 720) > 2) fails.push(`${tag}: inner hero is ${m.heroPattern.height}px, not the 720px every page shares`);
+    // HERO HEIGHTS (ROUND 5, superseding round 4's split): ONE height for every hero on the site,
+    // the home page included, at each width. The operator rejected round 4's 690 home against 720
+    // inner as a mismatch and as too small, so the desktop figure is 780 everywhere, 540 on a phone,
+    // and the hero may only ever be TALLER than its floor (content is never clipped).
+    if (vp.name === 'desktop' && Math.abs(m.heroPattern.height - HERO_H.desktop) > 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px, not the ${HERO_H.desktop}px every page shares on a desktop`);
+    if (vp.name === 'mobile' && m.heroPattern.height < HERO_H.mobile - 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px on a phone, under the ${HERO_H.mobile}px floor every page shares`);
     if (vp.name === 'desktop' && r === '/' && m.heroPattern.height >= vp.height - 40) fails.push(`${tag}: home hero fills the window (${m.heroPattern.height}px), so the reviews section does not come up`);
+    if (m.heroClipped) fails.push(`${tag}: hero content is clipped (${m.heroClipped})`);
     // TRUSTINDEX (6 Nov 2026): rendered, mapped, placed, readable; corner desktop only.
     if (!tiRendered) fails.push(`${tag}: Trustindex widgets did not all render ${JSON.stringify(m.ti.filter((x) => !x.pid).map((x) => x.place))}`);
     const want = r === '/reviews/' ? 'reviewPage' : 'main';
@@ -426,7 +465,7 @@ await browser.close();
 server?.close();
 tiLog.forEach((l) => console.log('  ti', l));
 videoLog.forEach((l) => console.log('  video', l));
-if (args.includes('--log')) { heroLog.forEach((l) => console.log('  hero', l)); const seen = new Set(); btnLog.forEach((l) => { const k = l.replace(/^\S+ \S+ /, (x) => x.split(' ')[0] + ' '); if (!seen.has(k)) { seen.add(k); console.log('  btn', l); } }); }
+if (args.includes('--log')) { heroLog.forEach((l) => console.log('  hero', l)); galleryLog.forEach((l) => console.log('  gallery', l)); const seen = new Set(); btnLog.forEach((l) => { const k = l.replace(/^\S+ \S+ /, (x) => x.split(' ')[0] + ' '); if (!seen.has(k)) { seen.add(k); console.log('  btn', l); } }); }
 const worst = btnLog.map((l) => Math.abs(+l.split('delta ')[1])).reduce((a, b) => Math.max(a, b), 0);
 console.log(`buttons measured: ${btnLog.length}, worst |delta| ${worst}px`);
 console.log(`check: ${routes.length} routes x ${sizes.length} widths against ${base}, ${fails.length} fails`);

@@ -5,11 +5,11 @@ import Reviews from '../components/Reviews.astro';
 import TrustindexSlot from '../components/TrustindexSlot.astro';
 import { business } from '../data/site';
 ---
-<Base title="Thank You | TrueLine Finishes" description="Thanks for your enquiry to TrueLine Finishes. Brandon will be in touch. Want to talk now? Call Brandon on 07949 484274." page="thank-you" utility>
+<Base title="Thank You | TrueLine Finishes" description="Thanks for your enquiry to TrueLine Finishes. We will be in touch about your painting and decorating. Want to talk now? Call 07949 484274." page="thank-you" utility>
   <section class="ty on-dark section-hero" data-section="hero">
     <div class="container ty__inner">
-      <h1 class="ty__h1">Thanks: we've got your enquiry and Brandon will be in touch.</h1>
-      <p class="ty__p">Want to talk now? Call Brandon on <a href={business.phoneHref} data-cta="thanks-call">{business.phone}</a>.</p>
+      <h1 class="ty__h1">Thanks. Your enquiry is in and TrueLine Finishes will be in touch.</h1>
+      <p class="ty__p">Want to talk now? Call <a href={business.phoneHref} data-cta="thanks-call">{business.phone}</a>.</p>
       <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="ty__ti" />
       <div class="btn-row"><a href="/" class="btn btn-primary btn--desc" data-cta="thanks-home"><span class="btn__t">Back to the home page</span></a></div>
     </div>

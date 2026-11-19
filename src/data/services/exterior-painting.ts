@@ -7,14 +7,14 @@ const content: ServiceContent = {
   slug: 'exterior-painting',
   metaTitle: 'Exterior Painting in Baildon, Shipley & Otley | TrueLine Finishes',
   description: 'Exterior painting in Baildon, Shipley, Otley and Ilkley: masonry paint on render, brick and stone, windows, doors and woodwork. Free quotations.',
-  h1: 'Flaking Paint on the Walls, Windows or Front Door? Exterior Painting',
-  lead: 'Exterior painting from TrueLine Finishes covers painted render, brick and stone, windows, doors and exterior woodwork, prepared properly first.',
+  h1: 'Exterior Painting in Baildon, Shipley and Otley',
+  lead: 'Masonry paint on render, brick and stone that has been painted before, plus windows, doors and exterior woodwork, prepared first and painted around the weather.',
   heroImage: 'semi-detached-after-0125',
   introH2: 'Already Painted or Rendered? It Can Be Painted Again',
   introImage: 'navy-front-door-stone-0032',
   sectionsH2: 'What Goes Into Exterior Painting',
   intro: [
-    'If a wall has already been rendered or painted, it can be painted again, even if it is stone. Exterior painting covers masonry, exterior woodwork, mullion, sash and wooden windows, front and garage doors, and oil varnishing. Brandon Dawson, the owner, carries out the work and oversees every job.',
+    'If a wall has already been rendered or painted, it can be painted again, even if it is stone. Exterior painting covers masonry, exterior woodwork, mullion, sash and wooden windows, front and garage doors, and oil varnishing. A call to 07949 484274 is a direct line to the owner.',
     'The work is for homes and businesses. Preparation comes with everything: sanding, filling, caulking and fixing hairline cracks before a coat goes on.',
   ],
   sections: [
@@ -53,16 +53,16 @@ const content: ServiceContent = {
   sectorsImage: 'stone-farmhouse-0093',
   process: {
     heading: 'How an Exterior Job Runs',
-    lead: 'Three steps, and a call is a direct line to Brandon.',
+    lead: 'Three steps, and a call to 07949 484274 is a direct line to the owner.',
     steps: [
-      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form (choose Exterior work) or send a WhatsApp message with your postcode.' },
-      { title: 'A Free Quotation', body: 'Brandon talks through the walls, windows and doors with you, the colours and the finish, and gives you a free quotation.' },
-      { title: 'Prepared, Then Painted', body: 'Surfaces are prepared and the surroundings protected, then painted in the right conditions. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call 07949 484274, use the quote form (choose Exterior work) or send a WhatsApp message with your postcode.' },
+      { title: 'A Free Quotation', body: 'The walls, windows and doors are talked through with you, with the colours and the finish. The quotation is free.' },
+      { title: 'Prepared, Then Painted', body: 'Surfaces are prepared and the surroundings protected, then painted in the right conditions. The job is seen through to the finish by the person who quoted it.' },
     ],
   },
   pictures: {
     heading: 'Exterior Painting in Pictures',
-    lead: 'Masonry, windows and doors from Brandon’s own exterior jobs.',
+    lead: 'Masonry, windows and doors from TrueLine Finishes exterior jobs.',
     images: ['semi-detached-after-0125', 'white-sash-window-stone-0030', 'stone-terrace-sage-door-0191', 'mock-tudor-house-0075', 'navy-front-door-stone-0027', 'stone-farmhouse-0092'],
   },
   faqs: [
@@ -74,6 +74,6 @@ const content: ServiceContent = {
     { q: 'Do you paint front doors and garage doors?', a: 'Yes, front doors and garage doors, along with mullion, sash and wooden windows and other exterior woodwork.' },
   ],
   related: ['painting-and-decorating', 'interior-painting', 'commercial-painting-and-decorating'],
-  quote: { heading: 'Ask Brandon About the Outside of Your House', lead: 'Leave your details and postcode, with a short description of the walls, windows or doors. Brandon will talk it through and give you a free quotation.' },
+  quote: { heading: 'Ask About the Outside of Your House', lead: 'Leave your details and postcode, with a short description of the walls, windows or doors. It will be talked through with you, then quoted. Quotations are free.' },
 };
 export default content;

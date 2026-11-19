@@ -6,15 +6,15 @@ const content: ServiceContent = {
   slug: 'interior-painting',
   metaTitle: 'Interior Painting in Baildon, Guiseley & Ilkley | TrueLine Finishes',
   description: 'Interior painting in Baildon, Guiseley, Ilkley and Shipley: walls, ceilings, stairs and all the woodwork, with full preparation first. Free quotations.',
-  h1: 'Walls Marked and Woodwork Chipped? Interior Painting, Room by Room',
-  lead: 'Interior painting from TrueLine Finishes covers every room, the stairs and landings and all the woodwork, with sanding, filling and caulking before any paint goes on.',
+  h1: 'Interior Painting in Baildon, Guiseley and Ilkley',
+  lead: 'Walls, ceilings, every room, the stairs and landings and all the woodwork, filled, sanded and caulked before the first coat goes on.',
   heroImage: 'green-bedroom-0136',
   introH2: 'Every Room, the Stairs and All the Woodwork',
   introImage: 'sage-kitchen-0011',
   sectionsH2: 'What Interior Painting Covers',
   intro: [
-    'From one bedroom to a whole house, interior painting is walls and ceilings, every room, stairs and landings, and all aspects of woodwork. Brandon Dawson, the owner, carries out the work and oversees every job, and a call is a direct line to him.',
-    'Bedrooms and living rooms are the jobs Brandon enjoys most, and kitchens, bathrooms and hallways get the same care. The work is for homes and businesses alike.',
+    'From one bedroom to a whole house, interior painting is walls and ceilings, every room, stairs and landings, and all aspects of woodwork. A call to 07949 484274 is a direct line to the owner.',
+    'Bedrooms and living rooms are the jobs TrueLine Finishes enjoys most, and kitchens, bathrooms and hallways get the same care. The work is for homes and business premises alike.',
   ],
   sections: [
     {
@@ -57,16 +57,16 @@ const content: ServiceContent = {
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
   process: {
     heading: 'How an Interior Job Runs',
-    lead: 'Three steps, with Brandon on the job from the first call to the finish.',
+    lead: 'Three steps, with one point of contact from the first call to the finish.',
     steps: [
-      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms and your postcode.' },
-      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, the rooms, the colours and the finish, and gives you a free quotation.' },
-      { title: 'Prepared, Then Painted', body: 'Floors and furniture are protected, the surfaces are prepared, then painted. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call 07949 484274, use the quote form or send a WhatsApp message saying which rooms and your postcode.' },
+      { title: 'A Free Quotation', body: 'The job is talked through with you: the rooms, the colours and the finish. The quotation is free.' },
+      { title: 'Prepared, Then Painted', body: 'Floors and furniture are protected, the surfaces are prepared, then painted. The job is seen through to the finish by the person who quoted it.' },
     ],
   },
   pictures: {
     heading: 'Interior Painting in Pictures',
-    lead: 'Rooms, stairs and woodwork from Brandon’s own jobs.',
+    lead: 'Rooms, stairs and woodwork from TrueLine Finishes jobs.',
     images: ['green-bedroom-0136', 'white-staircase-spindles-0162', 'navy-kitchen-0038', 'grey-living-room-0133', 'hallway-green-panelling-0039', 'cream-room-0082'],
   },
   faqs: [
@@ -74,10 +74,10 @@ const content: ServiceContent = {
     { q: 'Do you paint woodwork as well as walls?', a: 'Yes, all aspects of woodwork: skirting boards, architraves, doors, spindles, handrails and staircase trims.' },
     { q: 'Can you paint kitchen doors?', a: 'Yes. Kitchen doors are painted by hand as part of a kitchen job. TrueLine Finishes does not fit kitchens or spray-paint units.' },
     { q: 'What happens with new plaster?', a: 'Brand-new plaster gets a mist coat first, a thinned first coat that soaks in and seals the surface, so the finish coats bond properly.' },
-    { q: 'Which paint finish should I choose?', a: 'Matt is the usual choice for walls and ceilings. Eggshell and satin are more wipeable for kitchens, hallways and children’s rooms. Gloss or satin suits woodwork. Brandon can talk the options through with you.' },
+    { q: 'Which paint finish should I choose?', a: 'Matt is the usual choice for walls and ceilings. Eggshell and satin are more wipeable for kitchens, hallways and children’s rooms. Gloss or satin suits woodwork. The options can be talked through with you.' },
     { q: 'Do you move and protect furniture?', a: 'Floors and furniture are covered and protected before any preparation starts, and the room is kept protected until the work is finished.' },
   ],
   related: ['painting-and-decorating', 'wallpapering', 'exterior-painting'],
-  quote: { heading: 'Tell Brandon Which Rooms Need Doing', lead: 'Leave your details and postcode, and say which rooms need painting and what state they are in. Brandon will talk it through and give you a free quotation.' },
+  quote: { heading: 'Tell Us Which Rooms Need Doing', lead: 'Leave your details and postcode, and say which rooms need painting and what state they are in. It will be talked through with you, then quoted. Quotations are free.' },
 };
 export default content;

@@ -57,14 +57,120 @@ const tiFails = (r, html) => {
 };
 
 // ROUND 3 (operator live review 3, 6 Nov 2026; DECISIONS R3-*): machine gates for this round's rulings.
-// ROUND 4: "I want half of this gallery on the home page". The gallery page shows every photo that is
-// not a "before" shot; the home page carries about half of them, so the floor is 40% of that set.
-const GALLERY_SHOWN = JSON.parse(readFileSync(new URL('../src/data/images.json', import.meta.url), 'utf8')).filter((i) => !/-before-/.test(i.key)).length;
-const HALF_MIN = Math.floor(GALLERY_SHOWN * 0.4);
+// ROUND 5 (operator review 5, 19 Nov 2026; DECISIONS R5-*): round 4's "half the gallery" put 95
+// photographs on the home page and the operator rejected it ("95 images is too many"). The home
+// gallery now carries AT MOST 20 DISTINCT photographs, and distinct means distinct source files,
+// not 20 slots with repeats. The floor keeps it a showcase rather than a thin strip.
+const HOME_GALLERY_MAX = 20;
+const HOME_GALLERY_MIN = 12;
 const LEGAL_SET = ['/privacy/', '/terms/', '/cookie-policy/', '/complaints-procedure/', '/accessibility/'];
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const NAP_HOURS = JSON.parse(readFileSync(new URL('../site-plan/nap.json', import.meta.url), 'utf8')).hours;
 const sectionOf = (html, name) => (html.match(new RegExp(`<section[^>]*data-section="${name}"[\\s\\S]*?</section>`)) || [''])[0];
+// ---- ROUND 5 (operator review 5, 19 Nov 2026; DECISIONS R5-*) ----
+// Three rulings become hard gates here: H1s grounded in the real service AND the verified service
+// area (never a vague question, never an owner slogan); no owner-centric marketing copy (no
+// self-work trope, no full name outside legal identification, the brand leads); and the services
+// tile footer carrying a Quick Quote Online button instead of a phone number.
+const TOWN_NAMES = JSON.parse(readFileSync(new URL('../site-plan/towns.json', import.meta.url), 'utf8')).towns.map((t) => t.town);
+const SERVICE_H1 = {
+  '/painting-and-decorating/': 'Painting and Decorating',
+  '/interior-painting/': 'Interior Painting',
+  '/exterior-painting/': 'Exterior Painting',
+  '/wallpapering/': 'Wallpapering',
+  '/commercial-painting-and-decorating/': 'Commercial Painting and Decorating',
+};
+// The full name is legal identification: the data controller, the trading name and the company
+// facts. Everywhere else it is owner-name repetition the operator banned from marketing copy.
+const FULL_NAME_OK = ['/privacy/', '/terms/', '/company-facts/'];
+const namedTown = (t) => TOWN_NAMES.find((n) => new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(t));
+function r5Fails(r, html, text) {
+  const f = [];
+  const h1 = visibleText((html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/) || [, ''])[1]).trim();
+  const title = (html.match(/<title>([^<]*)<\/title>/) || [, ''])[1];
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [, ''])[1];
+  const heads = [...html.matchAll(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/g)].map((m) => visibleText(m[1]).trim());
+  // 1. H1 = real service + verified location.
+  if (SERVICE_H1[r]) {
+    if (!h1.toLowerCase().includes(SERVICE_H1[r].toLowerCase())) f.push(`service H1 does not carry its service keyword "${SERVICE_H1[r]}": "${h1}"`);
+    if (!namedTown(h1)) f.push(`service H1 names no town from the plan's service area: "${h1}"`);
+  }
+  if (r === '/services/') {
+    if (!/painting and decorating/i.test(h1)) f.push(`/services/ H1 must say "Painting and Decorating": "${h1}"`);
+    if (!/\b(Baildon|Shipley)\b/.test(h1)) f.push(`/services/ H1 must name Baildon or Shipley: "${h1}"`);
+  }
+  if (r === '/') {
+    if (!/painter and decorator|painting and decorating/i.test(h1)) f.push(`home H1 does not answer a painter or decorator search: "${h1}"`);
+    if (!namedTown(h1)) f.push(`home H1 names no town from the plan's service area: "${h1}"`);
+  }
+  if (/^(\/|\/services\/)$/.test(r) || SERVICE_H1[r] || ['/about/', '/contact/', '/reviews/', '/gallery/', '/faq/', '/resources/'].includes(r)) {
+    if (/\?\s*$/.test(h1)) f.push(`H1 is a question, which round 5 ruled out: "${h1}"`);
+  }
+  // 2. No owner-centric marketing copy.
+  for (const [re, label] of [
+    [/\b(carries out|does) the work himself\b/i, 'self-work trope'],
+    [/work Brandon carries out/i, 'self-work trope naming the owner'],
+    [/the person you call is the person who does the work/i, 'self-work trope'],
+    [/Who Does the Work Himself/i, 'self-work trope in a headline'],
+  ]) if (re.test(text)) f.push(`banned ${label}: "${(text.match(new RegExp(`.{0,40}${re.source}.{0,40}`, 'i')) || [''])[0].trim()}"`);
+  const bodyText = text.replace(/Brandon@truelinefinishes\.com/g, 'EMAIL');
+  const fullName = (bodyText.match(/Brandon Dawson/g) || []).length;
+  if (fullName && !FULL_NAME_OK.includes(r)) f.push(`the owner's full name is in this page's copy ${fullName}x (round 5: legal identification pages only)`);
+  if (/Brandon Dawson/.test(title) || /Brandon Dawson/.test(desc)) f.push('the owner\'s full name is in the title or meta description');
+  for (const h of heads) if (/\bBrandon\b/.test(h)) f.push(`a heading leads with the owner's name: "${h}"`);
+  const firstName = (bodyText.match(/\bBrandon\b/g) || []).length;
+  const allowance = FULL_NAME_OK.includes(r) ? 4 : r === '/contact/' ? 1 : 0;
+  if (firstName > allowance) f.push(`the owner's name appears ${firstName}x in this page's copy (round 5 allowance here: ${allowance})`);
+  // 3. The services tile footer: a Quick Quote Online button, never a phone number.
+  const sv = sectionOf(html, 'services');
+  if (sv) {
+    const btn = (sv.match(/<a[^>]*data-cta="services-quote"[^>]*>[\s\S]*?<\/a>/) || [''])[0];
+    if (!btn) f.push('the services section has no Quick Quote Online action under the tiles');
+    else {
+      if (!/class="[^"]*\bbtn\b/.test(btn)) f.push('the services footer Quick Quote Online is a text link, not a button');
+      if (!/href="(#contact|\/contact\/#contact)"/.test(btn)) f.push('the services footer button does not go to the quote form');
+      if (!/Quick Quote Online/.test(visibleText(btn))) f.push(`the services footer button does not say Quick Quote Online: "${visibleText(btn).trim()}"`);
+    }
+    if (/href="tel:/.test(sv) || /data-cta="services-call"/.test(sv)) f.push('the services section still carries a phone number under the tiles');
+    if ((sv.match(/data-cta="services-quote"/g) || []).length > 1) f.push('the services footer repeats the quick quote action');
+  }
+  return f;
+}
+function r5Selftest() {
+  const bad = [];
+  const page = ({ h1 = 'Interior Painting in Baildon, Guiseley and Ilkley', body = '', sv = '' } = {}) =>
+    `<title>Interior Painting in Baildon | TrueLine Finishes</title><meta name="description" content="x"><h1>${h1}</h1>${body}${sv}`;
+  const goodSv = '<section data-section="services"><a href="#contact" class="btn btn-primary" data-cta="services-quote"><span class="btn__t">Quick Quote Online</span></a></section>';
+  const ok = (r, html) => r5Fails(r, html, visibleText(html)).length === 0;
+  const good = page({ sv: goodSv });
+  if (!ok('/interior-painting/', good)) bad.push(`good page fails: ${r5Fails('/interior-painting/', good, visibleText(good))}`);
+  const cases = [
+    ['service H1 without its keyword', '/interior-painting/', page({ h1: 'Rooms Repainted in Baildon', sv: goodSv })],
+    ['service H1 without a town', '/interior-painting/', page({ h1: 'Interior Painting, Room by Room', sv: goodSv })],
+    ['services hub H1 without the trade', '/services/', page({ h1: 'Which Kind of Decorating Does Your Job Need?', sv: goodSv })],
+    ['services hub H1 without the town', '/services/', page({ h1: 'Painting and Decorating Services', sv: goodSv })],
+    ['home H1 without the trade', '/', page({ h1: 'Tired Rooms in Baildon?', sv: goodSv })],
+    ['home H1 without a town', '/', page({ h1: 'Painter and Decorator, Inside and Out', sv: goodSv })],
+    ['question H1', '/gallery/', page({ h1: 'Want to See the Finish First?', sv: goodSv })],
+    ['owner name in the H1', '/gallery/', page({ h1: "Brandon's Work in Photographs", sv: goodSv })],
+    ['self-work trope', '/about/', page({ h1: 'About TrueLine Finishes in Baildon', body: '<p>Every card below is work Brandon carries out himself.</p>', sv: goodSv })],
+    ['the person you call trope', '/', page({ h1: 'Painter and Decorator in Baildon', body: '<p>The person you call is the person who does the work.</p>', sv: goodSv })],
+    ['full name in marketing copy', '/about/', page({ h1: 'About TrueLine Finishes in Baildon', body: '<p>Brandon Dawson, the owner, carries out the work.</p>', sv: goodSv })],
+    ['first name on a page with no allowance', '/gallery/', page({ h1: 'Photographs in Baildon', body: '<p>Photographs from Brandon jobs.</p>', sv: goodSv })],
+    ['call button under the tiles', '/', page({ h1: 'Painter and Decorator in Baildon', sv: '<section data-section="services"><a href="#contact" class="btn" data-cta="services-quote"><span>Quick Quote Online</span></a><a href="tel:+447949484274" class="btn" data-cta="services-call">07949 484274</a></section>' })],
+    ['quick quote as a text link only', '/', page({ h1: 'Painter and Decorator in Baildon', sv: '<section data-section="services"><a href="#contact" class="dm-link" data-cta="services-quote">Quick Quote Online</a></section>' })],
+    ['no quick quote under the tiles', '/', page({ h1: 'Painter and Decorator in Baildon', sv: '<section data-section="services"><p>tiles</p></section>' })],
+    ['duplicated quick quote action', '/', page({ h1: 'Painter and Decorator in Baildon', sv: '<section data-section="services"><p>Not sure? <a href="#contact" class="dm-link" data-cta="services-quote">Quick Quote Online</a></p><a href="#contact" class="btn" data-cta="services-quote"><span>Quick Quote Online</span></a></section>' })],
+  ];
+  for (const [name, r, html] of cases) if (ok(r, html)) bad.push(`not caught: ${name}`);
+  // Legal identification pages keep the full name.
+  const legal = page({ h1: 'Privacy Policy', body: '<p>TrueLine Finishes is run by Brandon Dawson. Brandon Dawson is the data controller.</p>', sv: '' });
+  if (!ok('/privacy/', legal)) bad.push(`legal page with the full name fails: ${r5Fails('/privacy/', legal, visibleText(legal))}`);
+  // The contact page keeps one first-name mention for the direct line.
+  const contact = page({ h1: 'Get a Free Painting and Decorating Quotation in Baildon', body: '<p>Call Brandon on 07949 484274. Email Brandon@truelinefinishes.com.</p>', sv: '' });
+  if (!ok('/contact/', contact)) bad.push(`contact page with one first name fails: ${r5Fails('/contact/', contact, visibleText(contact))}`);
+  return bad;
+}
 function r3Fails(r, html, text, isArticle) {
   const f = [];
   // Hours: day by day, as the Google listing shows them; never "Monday to Friday" / "Saturday and Sunday".
@@ -123,7 +229,14 @@ function r3Fails(r, html, text, isArticle) {
     const gl = sectionOf(html, 'gallery');
     const shots = (gl.match(/data-lightbox/g) || []).length;
     if (!/<h2 class="dm-h2"/.test(gl) || !/href="\/gallery\/"/.test(gl)) f.push('gallery needs a visible introduction and See the Gallery');
-    if (!/wg__grid--full/.test(gl) || shots < HALF_MIN) f.push(`home gallery is not about half the collection in square tiles (${shots} photos)`);
+    if (!/wg__grid--full/.test(gl)) f.push("home gallery is not the gallery page's square spaced tiles");
+    // ROUND 5: at most 20 photographs on the home page, and every one a DIFFERENT photograph.
+    const fulls = [...gl.matchAll(/data-full="([^"]+)"/g)].map((m) => m[1]);
+    const srcs = fulls.length ? fulls : [...gl.matchAll(/<img[^>]*\bsrc="([^"]+)"/g)].map((m) => m[1]);
+    const uniq = new Set(srcs).size;
+    if (shots > HOME_GALLERY_MAX) f.push(`home gallery shows ${shots} photographs, the operator's ceiling is ${HOME_GALLERY_MAX}`);
+    if (shots < HOME_GALLERY_MIN) f.push(`home gallery shows only ${shots} photographs (want ${HOME_GALLERY_MIN} to ${HOME_GALLERY_MAX})`);
+    if (uniq !== shots) f.push(`home gallery repeats a photograph: ${shots} tiles but ${uniq} distinct source files`);
     // ONE services-links section on the home page: the second card set is gone (round 4).
     if (/data-section="craft"|ht__card/.test(html)) f.push('the duplicate "For homes and business premises" services section is back');
     if ((html.match(/data-section="services"/g) || []).length !== 1) f.push('the home page must carry exactly one services-links section');
@@ -198,6 +311,16 @@ function r3Selftest() {
   if (ok(legalPage(legalNext('/about/')), '/privacy/')) bad.push('not caught: legal interlinks missing About');
   if (!ok(page({ extra: '<section class="gl section gl--last"></section>' }), '/gallery/')) bad.push('good gallery gap fails');
   if (ok(page({ extra: '<section class="gl section"></section>' }), '/gallery/')) bad.push('not caught: gallery with no gap before the quote section');
+  // ROUND 5: the home gallery ceiling and the no-repeat rule, proved on a synthetic home page (the
+  // other home-page rules fail on this stub, so the gate is checked by its own message).
+  const tile = (n) => `<li><button type="button" class="wg__shot wg__shot--sq" data-lightbox><img src="/images/p${n}-sm.webp" data-full="/images/p${n}.webp" alt=""></button></li>`;
+  const homeGallery = (tiles) => page({ extra: `<section data-section="gallery"><h2 class="dm-h2">Work</h2><a href="/gallery/">See the Gallery</a><ul class="wg__grid wg__grid--full">${tiles}</ul></section>` });
+  const galleryMsgs = (tiles) => r3Fails('/', homeGallery(tiles), '', false).join(' | ');
+  const twenty = Array.from({ length: 20 }, (_, i) => tile(i)).join('');
+  if (/ceiling is 20|repeats a photograph|only \d+ photographs/.test(galleryMsgs(twenty))) bad.push(`good 20-photo home gallery fails: ${galleryMsgs(twenty)}`);
+  if (!/ceiling is 20/.test(galleryMsgs(twenty + tile(20)))) bad.push('not caught: 21 photographs on the home page');
+  if (!/repeats a photograph/.test(galleryMsgs(Array.from({ length: 20 }, (_, i) => tile(i % 10)).join('')))) bad.push('not caught: the home gallery repeating photographs');
+  if (!/only 8 photographs/.test(galleryMsgs(Array.from({ length: 8 }, (_, i) => tile(i)).join('')))) bad.push('not caught: a home gallery thinned below the floor');
   const art = `<section data-section="reviews">${rvBtn}</section><nav class="art__crumbs"></nav><section data-section="article-body"><article class="art__main prose"><div data-rundown></div><p>One <a href="/a/">a</a></p></article></section>`;
   if (r3Fails('/resources/x/', page({ extra: art }), '', true).length) bad.push('good article fails');
   if (!r3Fails('/resources/x/', page({ extra: art.replace('<p>One <a href="/a/">a</a></p>', '<p><a href="/a/">a</a> and <a href="/b/">b</a></p>') }), '', true).length) bad.push('not caught: two links in one article paragraph');
@@ -232,7 +355,10 @@ if (process.argv.includes('--selftest')) {
   console.log(`selftest: ${bad.length} bad strings caught, ${good.length} good strings pass`);
   const r3 = r3Selftest();
   if (r3.length) { console.error('SELFTEST FAIL (round 3)', r3); process.exit(1); }
-  console.log('selftest: round-3 and round-4 gates, 15 broken cases caught, the good pages and good article pass');
+  console.log('selftest: round-3, round-4 and the round-5 home-gallery gates, 19 broken cases caught, the good pages and good article pass');
+  const r5 = r5Selftest();
+  if (r5.length) { console.error('SELFTEST FAIL (round 5)', r5); process.exit(1); }
+  console.log('selftest: round-5 gates (H1 service + location, no owner-centric copy, services footer quote not call), 16 broken cases caught, the good, legal and contact pages pass');
   process.exit(0);
 }
 
@@ -252,6 +378,16 @@ const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
 for (const need of ['/faq/', '/services/', '/gallery/', '/reviews/', '/resources/', '/sitemap/', '/privacy/', '/terms/', '/cookie-policy/', '/company-facts/', '/complaints-procedure/', '/accessibility/', '/find-us-online/']) if (!existsSync(join(dist, need, 'index.html'))) fails.push(`${need}: page missing`);
 const cssFiles = []; const walkCss = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); statSync(p).isDirectory() ? walkCss(p) : f.endsWith('.css') && cssFiles.push(p); } }; walkCss(dist);
 for (const f of cssFiles) if (/text-decoration(-line)?:\s*underline/.test(readFileSync(f, 'utf8'))) fails.push(`${relative(dist, f)}: underline in compiled CSS`);
+// HERO HEIGHT POLICY (round 5): every hero, home page included, takes its height from the one
+// --hero-h custom property, and the compact (inner-page) variant never sets a height of its own.
+{
+  const css = cssFiles.map((f) => readFileSync(f, 'utf8')).join('\n');
+  if (!/--hero-h:/.test(css)) fails.push('compiled CSS: no --hero-h hero height token');
+  if (!/\.hero\b[^{}]*\{[^{}]*min-height:\s*var\(--hero-h\)/.test(css)) fails.push('compiled CSS: the hero does not take its height from --hero-h');
+  for (const m of css.matchAll(/\.hero--compact[^{}]*\{([^{}]*)\}/g)) if (/min-height/.test(m[1])) fails.push(`compiled CSS: .hero--compact sets its own height (round 5: one height for every hero) -> ${m[1].slice(0, 80)}`);
+  const breaks = [...css.matchAll(/--hero-h:\s*([^;]+);/g)].map((m) => m[1].trim());
+  if (new Set(breaks).size !== breaks.length) fails.push(`compiled CSS: --hero-h declared twice with the same value (${breaks.join(' | ')})`);
+}
 
 for (const file of pages) {
   const r = route(file);
@@ -291,6 +427,7 @@ for (const file of pages) {
   if (/class="eyebrow"/.test(html)) fails.push(`${r}: eyebrow label`);
   if (!text.includes('07949 484274')) fails.push(`${r}: phone missing`);
   for (const f of r3Fails(r, html, text, isArticle)) fails.push(`${r}: round 3: ${f}`);
+  for (const f of r5Fails(r, html, text)) fails.push(`${r}: round 5: ${f}`);
   if (!text.includes("Proud to support A Child's Wish, a children's charity.")) fails.push(`${r}: charity line missing from footer`);
   if (!html.includes('href="https://wa.me/447949484274"')) fails.push(`${r}: WhatsApp link missing`);
   const contactIds = (html.match(/id="contact"/g) || []).length;

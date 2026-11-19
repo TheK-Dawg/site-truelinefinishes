@@ -1,0 +1,392 @@
+{
+  "brand": "TrueLine Finishes",
+  "format": "landing_page",
+  "generated_on": "2026-11-19",
+  "method_credit": "Harry Dry's method (marketingexamples.com, How I Write interview): the three rules, the zoom-in ladder, don't talk only point, and the A to B framing.",
+  "point_a": "A room, a staircase or the front of the house needs painting. The reader has been let down before by paint laid over old cracks and caulk, and is scanning for a decorator who actually covers Baildon, Shipley, Guiseley, Ilkley or Otley.",
+  "point_b": "TrueLine Finishes paints and papers in my town, the preparation is part of the job, it is insured, the quotation is free, and the form takes a minute.",
+  "enemy": {
+    "type": "approach",
+    "statement": "The decorator who opens the paint on day one: two coats over last decade's cracks, split caulk and shiny skirting, and it shows within months."
+  },
+  "facts": [
+    {
+      "fact": "Over eight years' painting and decorating experience.",
+      "source": "founder (23 Oct 2026 call, 'Eight. Eight.'; operator ruling 4 Nov 2026 to say 'over eight years')",
+      "used_in": "home subhead, about, credential boxes, metadata"
+    },
+    {
+      "fact": "Sanding, filling and caulking come with every job; hairline cracks are opened and filled, gaps along skirting and frames are caulked, and brand-new plaster gets a mist coat before the finish.",
+      "source": "founder (WhatsApp 27 Oct 2026, 23 Oct 2026 call)",
+      "used_in": "CTA band line, home subhead, every service lead"
+    },
+    {
+      "fact": "Fully insured. No cover amount is published, so none is stated.",
+      "source": "founder (his own printed advert)",
+      "used_in": "credential box, metadata"
+    },
+    {
+      "fact": "Free quotations.",
+      "source": "founder (his own printed advert)",
+      "used_in": "contact H1, service quote headings"
+    },
+    {
+      "fact": "Based at Baildon, Shipley; works Baildon, Guiseley, Menston, Ilkley, Shipley, Otley, Horsforth, Bingley and the towns around them, inside about 15 miles.",
+      "source": "founder (23 Oct 2026 call on radius) + nap.json towns",
+      "used_in": "every H1 location, areas section"
+    },
+    {
+      "fact": "Homes and business premises: offices, restaurants, schools, hotels, spas, leisure centres.",
+      "source": "founder (nap.json sectors)",
+      "used_in": "commercial H1 and lead, services head"
+    },
+    {
+      "fact": "Open 7am to 7pm Monday to Friday, 8am to 6pm Saturday and Sunday.",
+      "source": "Google Business Profile hours in nap.json",
+      "used_in": "contact subhead"
+    },
+    {
+      "fact": "Every photograph on the site is from the business's own finished jobs (194 photographs supplied by the client).",
+      "source": "founder (WhatsApp photo sets, SHA-256 checked into images.json)",
+      "used_in": "gallery H1 and lead, home gallery lead"
+    },
+    {
+      "fact": "Painting and decorating only: no plastering, skimming, rendering or gutter work.",
+      "source": "founder (WhatsApp 27 Oct 2026; 2 Apr 2026 call on gutters)",
+      "used_in": "scope wording, kept out of every claim"
+    },
+    {
+      "fact": "Reviews on the site are the live Google reviews of the business's own listing; the site writes no rating and no count.",
+      "source": "operator standing prohibition 24 + Trustindex widgets",
+      "used_in": "reviews H1 and lead"
+    }
+  ],
+  "absence_findings": [
+    "No review text was supplied, so no customer's own words could be mined. The strongest fact available is the preparation routine, and the copy leads with it instead of a borrowed adjective.",
+    "No prices, guarantees, accreditations or response times exist. Every line had to earn attention on service, place and preparation alone."
+  ],
+  "copy": {
+    "landing_page": {
+      "headline": "Painter and Decorator in Baildon and Shipley",
+      "subhead": "TrueLine Finishes paints and papers homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on.",
+      "sections": [
+        {
+          "h2": "What TrueLine Finishes Can Paint and Paper for You",
+          "body": "Interiors, exteriors, wallpaper and business premises, inside and out. Pick the job you have in mind and see how it is done."
+        },
+        {
+          "h2": "Preparation First, and a Finish That Lasts",
+          "body": "Hairline cracks are opened and filled, gaps along skirting boards and frames are caulked, surfaces are sanded smooth, and brand-new plaster gets a mist coat before the first finish coat. That is where the look of the paint and the length of its life are decided."
+        },
+        {
+          "h2": "Our Work, Photographed on the Job",
+          "body": "Photographs from finished jobs, inside and out. Tap one to see it larger; the gallery page has the full collection."
+        }
+      ],
+      "cta": "Quick Quote Online",
+      "band_line": "Sanding, filling and caulking come with every job.",
+      "page_h1s": {
+        "/": "Painter and Decorator in Baildon and Shipley",
+        "/services/": "Painting and Decorating in Baildon and Shipley",
+        "/painting-and-decorating/": "Painting and Decorating in Baildon, Ilkley and Otley",
+        "/interior-painting/": "Interior Painting in Baildon, Guiseley and Ilkley",
+        "/exterior-painting/": "Exterior Painting in Baildon, Shipley and Otley",
+        "/wallpapering/": "Wallpapering in Baildon, Ilkley and Guiseley",
+        "/commercial-painting-and-decorating/": "Commercial Painting and Decorating in Baildon and Leeds",
+        "/reviews/": "Painting and Decorating Reviews in Baildon and Shipley",
+        "/gallery/": "Painting and Decorating Photographs, Job by Job",
+        "/about/": "About TrueLine Finishes, Painting and Decorating in Baildon",
+        "/contact/": "Get a Free Painting and Decorating Quotation in Baildon",
+        "/faq/": "Painting and Decorating Questions, Answered",
+        "/resources/": "Painting and Decorating Resources, Town by Town",
+        "/thank-you/": "Thanks. Your enquiry is in and TrueLine Finishes will be in touch."
+      },
+      "proof": [
+        "Over eight years' experience",
+        "Fully insured",
+        "Free quotations",
+        "Sanding, filling and caulking on every job",
+        "Live Google reviews of the business's own listing"
+      ]
+    }
+  },
+  "ladders": [
+    {
+      "line_id": "home_headline",
+      "rungs": [
+        "quality decorating you can trust",
+        "a decorator who turns up",
+        "a painter and decorator near me",
+        "a painter and decorator in my town",
+        "Painter and Decorator in Baildon and Shipley"
+      ]
+    },
+    {
+      "line_id": "band_line",
+      "rungs": [
+        "attention to detail",
+        "we prepare properly",
+        "we fill and sand first",
+        "cracks opened, gaps caulked, surfaces sanded",
+        "Sanding, filling and caulking come with every job."
+      ]
+    },
+    {
+      "line_id": "services_h1",
+      "rungs": [
+        "which kind of decorating does your job need?",
+        "our decorating services",
+        "painting and decorating services",
+        "Painting and Decorating in Baildon and Shipley"
+      ]
+    },
+    {
+      "line_id": "gallery_h1",
+      "rungs": [
+        "see the quality of our work",
+        "want to see the finish first?",
+        "photographs of our work",
+        "Painting and Decorating Photographs, Job by Job"
+      ]
+    },
+    {
+      "line_id": "contact_h1",
+      "rungs": [
+        "get in touch today",
+        "talk to us about your job",
+        "ask for a free quotation",
+        "Get a Free Painting and Decorating Quotation in Baildon"
+      ]
+    }
+  ],
+  "alternates": [
+    {
+      "line_id": "home_headline",
+      "options": [
+        "Painter and Decorator in Baildon and Shipley",
+        "Painting and Decorating in Baildon and Shipley, Inside and Out",
+        "Baildon and Shipley Painter and Decorator for Homes and Businesses",
+        "Rooms Painted and Papered Properly in Baildon and Shipley",
+        "Tired Rooms? Painting and Decorating by TrueLine Finishes",
+        "Your Local Decorating Experts"
+      ]
+    },
+    {
+      "line_id": "band_line",
+      "options": [
+        "Sanding, filling and caulking come with every job.",
+        "Cracks filled, gaps caulked, surfaces sanded. Then the paint.",
+        "New plaster gets a mist coat before it gets a finish.",
+        "Preparation is not an extra here.",
+        "The person you call is the person who does the work.",
+        "Quality you can rely on, every time."
+      ]
+    },
+    {
+      "line_id": "services_h1",
+      "options": [
+        "Painting and Decorating in Baildon and Shipley",
+        "Painting and Decorating Services in Baildon and Shipley",
+        "Five Painting and Decorating Services in Baildon and Shipley",
+        "Which Kind of Decorating Does Your Job Need?"
+      ]
+    },
+    {
+      "line_id": "interior_h1",
+      "options": [
+        "Interior Painting in Baildon, Guiseley and Ilkley",
+        "Interior Painting in Baildon and Shipley, Room by Room",
+        "Walls Marked and Woodwork Chipped? Interior Painting, Room by Room"
+      ]
+    },
+    {
+      "line_id": "exterior_h1",
+      "options": [
+        "Exterior Painting in Baildon, Shipley and Otley",
+        "Exterior Painting in Baildon and Shipley: Walls, Windows and Doors",
+        "Flaking Paint on the Walls, Windows or Front Door? Exterior Painting"
+      ]
+    },
+    {
+      "line_id": "wallpapering_h1",
+      "options": [
+        "Wallpapering in Baildon, Ilkley and Guiseley",
+        "Wallpapering in Baildon and Shipley, One Wall or Every Wall",
+        "Want a Feature Wall, or a Whole Room Papered? Wallpapering"
+      ]
+    },
+    {
+      "line_id": "commercial_h1",
+      "options": [
+        "Commercial Painting and Decorating in Baildon and Leeds",
+        "Commercial Painting and Decorating for Premises in Baildon and Leeds",
+        "Premises Looking Worn? Commercial Painting and Decorating"
+      ]
+    },
+    {
+      "line_id": "contact_h1",
+      "options": [
+        "Get a Free Painting and Decorating Quotation in Baildon",
+        "Free Painting and Decorating Quotations in Baildon and Shipley",
+        "A Room or a House That Needs Decorating? Talk to Brandon"
+      ]
+    },
+    {
+      "line_id": "reviews_h1",
+      "options": [
+        "Painting and Decorating Reviews in Baildon and Shipley",
+        "TrueLine Finishes Reviews, Straight from Google",
+        "What Is It Like to Have Brandon In? Read the Reviews"
+      ]
+    }
+  ],
+  "gate": [
+    {
+      "line_id": "home_headline",
+      "line": "Painter and Decorator in Baildon and Shipley",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "A rival decorator in Baildon could sign this line word for word.",
+      "note": "Shipped on the operator's explicit instruction that the H1 answer the search and name the area. Rule 3 is carried by the subhead and the band line instead, which a rival who skips preparation cannot sign."
+    },
+    {
+      "line_id": "home_subhead",
+      "line": "TrueLine Finishes paints and papers homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "A decorator who opens the paint on day one cannot sign the second sentence.",
+      "note": "One room to a whole property is a range the reader can picture; the preparation list is checkable on site."
+    },
+    {
+      "line_id": "band_line",
+      "line": "Sanding, filling and caulking come with every job.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "Put a rival's name on it and the customer can test it on the first morning: did anyone sand, fill or caulk?",
+      "note": "Replaces 'The person you call is the person who does the work' (owner-centric, and the operator banned the trope)."
+    },
+    {
+      "line_id": "services_h1",
+      "line": "Painting and Decorating in Baildon and Shipley",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "Any Baildon decorator could sign it.",
+      "note": "The operator specified this line almost verbatim. Its job is the search and the area; the lead under it carries the proof."
+    },
+    {
+      "line_id": "services_grid_lead",
+      "line": "Interiors, exteriors, wallpaper and business premises, inside and out. Pick the job you have in mind and see how it is done.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "A rival with the same five services could sign it.",
+      "note": "Replaces 'Every card below is work Brandon carries out himself', which the operator ordered removed. Kept deliberately plain: it is a navigation line, not a claim."
+    },
+    {
+      "line_id": "interior_h1",
+      "line": "Interior Painting in Baildon, Guiseley and Ilkley",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "A rival could sign it; the towns are the verified service area, not a boast.",
+      "note": "Exact service keyword plus three verified towns, as instructed."
+    },
+    {
+      "line_id": "interior_lead",
+      "line": "Walls, ceilings, every room, the stairs and landings and all the woodwork, filled, sanded and caulked before the first coat goes on.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "The 'before the first coat' order is the opposite of what the enemy does.",
+      "note": "Objects you could point at: skirting, spindles, handrails."
+    },
+    {
+      "line_id": "exterior_lead",
+      "line": "Masonry paint on render, brick and stone that has been painted before, plus windows, doors and exterior woodwork, prepared first and painted around the weather.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "A rival who paints bare stone or works in the rain cannot sign it.",
+      "note": "Also states a limit honestly: previously painted surfaces."
+    },
+    {
+      "line_id": "gallery_h1",
+      "line": "Painting and Decorating Photographs, Job by Job",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "Only this business can show these photographs: every one is from its own finished jobs.",
+      "note": "No stock photography anywhere on the site."
+    },
+    {
+      "line_id": "contact_h1",
+      "line": "Get a Free Painting and Decorating Quotation in Baildon",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "Any decorator offering free quotations could sign it.",
+      "note": "An outcome line, as the operator asked: it names what the visitor leaves with."
+    },
+    {
+      "line_id": "reviews_h1",
+      "line": "Painting and Decorating Reviews in Baildon and Shipley",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": false,
+      "score": 2,
+      "signed_by": "A rival could sign the heading; the widget underneath is the part they cannot copy.",
+      "note": "The site states no rating and no count: the live Google widget does."
+    },
+    {
+      "line_id": "about_h1",
+      "line": "About TrueLine Finishes, Painting and Decorating in Baildon",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "The brand name makes it unsignable by anyone else.",
+      "note": "Replaces 'Who Will Be Painting Your Home? Meet TrueLine Finishes'."
+    },
+    {
+      "line_id": "thank_you_h1",
+      "line": "Thanks. Your enquiry is in and TrueLine Finishes will be in touch.",
+      "visualize": true,
+      "falsifiable": true,
+      "only_us": true,
+      "score": 3,
+      "signed_by": "Named brand, stated next step.",
+      "note": "Owner's first name removed; the promise stays."
+    }
+  ],
+  "cut": [
+    "'Tired Rooms? Painting and Decorating by TrueLine Finishes' (home H1): a question headline, and the operator ruled questions out.",
+    "'Which Kind of Decorating Does Your Job Need?' (/services/ H1): named by the operator as the exact line to replace.",
+    "'What Is It Like to Have Brandon In? Read the Reviews': owner-centric and a question; both banned in round 5.",
+    "'Every card below is work Brandon carries out himself': the self-work trope the operator ordered removed outright.",
+    "'The person you call is the person who does the work': same trope without the name, so it goes too.",
+    "'Who Will Be Painting Your Home? Meet TrueLine Finishes': owner-centric framing in question form.",
+    "'Your Local Decorating Experts' and 'Quality you can rely on, every time': unfalsifiable, unvisualisable, signable by anyone.",
+    "Any line naming 'Brandon Dawson' in marketing copy or metadata: the operator restricted the full name to legal identification."
+  ],
+  "caveats": [
+    "Every specific in this copy traces to a fact you provided or a review you supplied: check them before you spend money behind them. This writes the copy; it doesn't verify your claims or clear them for compliance.",
+    "No review text was available to mine: the site may not write reviews, ratings or counts, and the real reviews live inside Google-fed widgets. Harry Dry's best fact source was therefore closed, and the copy leans on the founder's preparation routine instead.",
+    "The keyword-plus-location H1s score 2 on rule three (a rival could sign them). That is a deliberate trade the operator instructed in round 5: the H1 answers the search, and the only-us burden moves to the subheads, the band line and the photographs.",
+    "'Over eight years' experience', 'fully insured' and 'free quotations' are the client's own statements, used verbatim in the form the operator ruled. No cover amount, no price, no guarantee, no accreditation and no review number appears, because none exists.",
+    "The home-page gallery lead states no photograph count: the operator's round-4 ruling forbids a number there because more photographs are added over time."
+  ]
+}

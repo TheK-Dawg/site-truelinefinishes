@@ -6,15 +6,15 @@ import type { ServiceContent } from './types';
 const content: ServiceContent = {
   slug: 'painting-and-decorating',
   metaTitle: 'Painting and Decorating in Baildon, Ilkley & Otley | TrueLine Finishes',
-  description: 'Painting and decorating for homes and businesses in Baildon, Guiseley, Ilkley, Otley and Shipley. Brandon carries out every job. Free quotations.',
-  h1: 'Looking for a Painter and Decorator Who Does the Work Himself?',
-  lead: 'TrueLine Finishes handles all aspects of painting and decorating for homes and businesses, from one tired room to a full property redecoration. Brandon Dawson, the owner, carries out the work, and every job starts with careful preparation.',
+  description: 'Painting and decorating for homes and business premises in Baildon, Guiseley, Ilkley, Otley and Shipley. Preparation included, fully insured, free quotations.',
+  h1: 'Painting and Decorating in Baildon, Ilkley and Otley',
+  lead: 'All aspects of painting and decorating for homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on.',
   heroImage: 'victorian-hallway-0065',
   introH2: 'The Whole Trade, From Walls to Woodwork',
   introImage: 'navy-kitchen-0038',
   sectionsH2: 'What Painting and Decorating Takes In',
   intro: [
-    'Painting and decorating is the whole trade: walls and ceilings, woodwork, exterior masonry, windows and doors, and wallpaper, for homes and for businesses. Brandon Dawson, the owner, carries out the work and oversees every job, so the person you speak to on the phone is the person doing the preparation and the finish.',
+    'Painting and decorating is the whole trade: walls and ceilings, woodwork, exterior masonry, windows and doors, and wallpaper, for homes and for business premises. The person who quotes the job is the person on site, so nothing is lost between the phone call and the first coat.',
     'We take pride in attention to detail, lasting finishes and treating your property with care. Every job starts with the preparation, because that is what decides how the paint looks and how long it lasts.',
   ],
   sections: [
@@ -58,27 +58,27 @@ const content: ServiceContent = {
   sectorsLine: 'For homes and businesses: homes, offices, restaurants, schools, hotels, spas, leisure centres and local businesses, small and large.',
   process: {
     heading: 'How a Job Runs, From the First Call to the Last Coat',
-    lead: 'Three steps, and you deal with Brandon from the first call to the last coat.',
+    lead: 'Three steps, and one point of contact from the first call to the last coat.',
     steps: [
-      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms, or which part of the outside, and your postcode.' },
-      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, what needs doing and the finish you want, and gives you a free quotation.' },
-      { title: 'The Work, Done Properly', body: 'Preparation first, with floors and surfaces protected. Brandon carries out the work and oversees the job through to the finish.' },
+      { title: 'Get in Touch', body: 'Call 07949 484274, use the quote form or send a WhatsApp message saying which rooms, or which part of the outside, and your postcode.' },
+      { title: 'A Free Quotation', body: 'The job is talked through with you: what needs doing and the finish you want. The quotation is free.' },
+      { title: 'The Work, Done Properly', body: 'Preparation first, with floors and surfaces protected. Preparation, paint and the finish are seen through by the person who quoted the job.' },
     ],
   },
   pictures: {
     heading: 'Painting and Decorating in Pictures',
-    lead: 'Brandon’s own photographs from his jobs: interiors, exteriors, woodwork and wallpaper.',
+    lead: 'Photographs from TrueLine Finishes jobs: interiors, exteriors, woodwork and wallpaper.',
     images: ['victorian-hallway-0065', 'lounge-dark-arched-alcove-0101', 'mock-tudor-house-0075', 'green-bedroom-0136', 'kitchen-diner-protected-0007', 'white-sash-window-stone-0030'],
   },
   faqs: [
     { q: 'What does TrueLine Finishes do?', a: 'All aspects of painting and decorating for homes and businesses: interior painting of walls, ceilings and woodwork, exterior painting of masonry, windows, doors and woodwork, and wallpapering, from individual rooms to full property redecorations.' },
     { q: 'How much preparation is included?', a: 'Preparation comes with everything. Sanding, filling and caulking are part of every job, hairline cracks are filled, and brand-new plaster gets a mist coat before the finish goes on.' },
-    { q: 'Who will actually do the work?', a: 'Brandon Dawson, the owner, carries out the work and oversees every job. A call to 07949 484274 is a direct line to him.' },
+    { q: 'Who will actually do the work?', a: 'The owner of TrueLine Finishes carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him.' },
     { q: 'Are you insured?', a: 'Yes. TrueLine Finishes is fully insured.' },
     { q: 'How are floors and furniture protected?', a: 'Floors and surfaces are covered before any work starts, and the room stays protected while it is prepared and painted.' },
     { q: 'Do you do plastering?', a: 'Not for now. TrueLine Finishes is painting and decorating only. Small cracks and holes are filled as part of the preparation, and painting render, brick or stone that is already there is offered under exterior painting.' },
   ],
   related: ['interior-painting', 'exterior-painting', 'wallpapering', 'commercial-painting-and-decorating'],
-  quote: { heading: 'Ask Brandon for a Free Quotation', lead: 'Leave your name, email, phone number and postcode, with a line or two about the rooms or the outside of the house. Brandon will talk it through with you and give you a free quotation.' },
+  quote: { heading: 'Ask for a Free Painting and Decorating Quotation', lead: 'Leave your name, email, phone number and postcode, with a line or two about the rooms or the outside of the house. It will be talked through with you, then quoted. Quotations are free.' },
 };
 export default content;

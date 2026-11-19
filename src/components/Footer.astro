@@ -20,7 +20,7 @@ const { formless = false } = Astro.props;
 const year = new Date().getFullYear();
 const company = [
   { label: 'Home', href: '/' },
-  { label: 'About Brandon', href: '/about/' },
+  { label: 'About TrueLine Finishes', href: '/about/' },
   { label: 'Gallery', href: '/gallery/' },
   { label: 'Reviews', href: '/reviews/' },
   { label: 'FAQ', href: '/faq/' },
@@ -40,9 +40,9 @@ const company = [
     <div class="ft__cols">
       <div class="ft__col ft__col--about">
         <h2 class="ft__h">About Us</h2>
-        <p>{business.name} is {business.owner}'s painting and decorating business: homes and businesses, from individual rooms to full property redecorations. Over eight years' experience, fully insured.</p>
+        <p>{business.name} is a painting and decorating business for homes and businesses in Baildon, Shipley and the towns around them, from individual rooms to full property redecorations. Over eight years' experience, fully insured.</p>
         <p class="ft__charity"><Icon name="heart" size={18} /> <span>{charityLine}</span></p>
-        <p class="ft__google"><span class="ft__g" aria-hidden="true">G</span><a href={business.gbp.mapsUrl} target="_blank" rel="noopener" data-cta="footer-google">Brandon's reviews on Google</a></p>
+        <p class="ft__google"><span class="ft__g" aria-hidden="true">G</span><a href={business.gbp.mapsUrl} target="_blank" rel="noopener" data-cta="footer-google">TrueLine Finishes reviews on Google</a></p>
       </div>
       <div class="ft__col">
         <h2 class="ft__h">Our Services</h2>
@@ -57,7 +57,7 @@ const company = [
       </div>
       <div class="ft__col">
         <h2 class="ft__h">Quick Contact</h2>
-        <p>Questions about a job, or want Brandon to come and look?</p>
+        <p>Questions about a job, or want it looked at in person?</p>
         <div class="ft__phone"><CallButton cta="footer-call" /></div>
         <p class="ft__line"><Icon name="mail" size={16} /> <a href={`mailto:${business.email}`} data-cta="footer-email">{business.email}</a></p>
         <p class="ft__line"><Icon name="whatsapp" size={16} /> <a href={business.whatsappHref} target="_blank" rel="noopener" data-cta="footer-whatsapp">WhatsApp {business.phone}</a></p>

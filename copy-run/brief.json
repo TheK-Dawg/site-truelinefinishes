@@ -1,0 +1,19 @@
+{
+  "brand": "TrueLine Finishes",
+  "format": "landing_page",
+  "scope": "Site-wide H1s, hero subheads, service card lead, section copy and metadata for truelinefinishes.com (owner correction round 5, 19 Nov 2026)",
+  "literally": "A painting and decorating business based in Baildon, Shipley, working on homes and business premises: interior painting, exterior painting, wallpapering, commercial work.",
+  "point_a": "Someone in Baildon, Shipley, Guiseley, Ilkley or Otley is searching 'painter and decorator near me' with a room, a staircase or the front of the house that needs doing. They have been let down before by paint laid straight over old caulk and cracks, or by a decorator who never rang back. They are scanning for someone local who actually covers their town.",
+  "point_b": "TrueLine Finishes does painting and decorating in my town, preparation is part of the price, it is insured, the quotation is free, and sending the details takes a minute.",
+  "offer": "Free quotation on every job. No prices published. No guarantees, warranties or accreditations exist and none are claimed.",
+  "reviews": "NONE SUPPLIED AS TEXT. Real Google reviews are displayed live through four Trustindex widgets keyed to the Google Business Profile (CID 8023434379390696838). The site is prohibited from writing reviews, a rating or a review count, so no review quote could be mined for copy.",
+  "competitor": "Any other painter and decorator listing in Baildon, Shipley, Guiseley, Ilkley and Otley",
+  "operator_constraints": [
+    "H1s must be grounded in the real service plus the verified service area, not questions and not owner-centric slogans (owner correction 5, item 3).",
+    "/services/ H1 must visibly carry 'Painting and Decorating' plus Baildon/Shipley.",
+    "Each service-detail H1 must carry its exact service keyword plus a verified location.",
+    "No self-work proof tropes ('does the work himself') in marketing headlines, cards or body; the brand leads, not the owner.",
+    "No full name in public marketing copy, SEO titles/descriptions or article teasers; legal identification pages keep it.",
+    "No prices, guarantees, warranties, accreditations, team claims, response times, review counts or ratings. 'Free quotation', never 'free quote'. No em dashes."
+  ]
+}

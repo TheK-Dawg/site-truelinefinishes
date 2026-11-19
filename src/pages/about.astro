@@ -1,17 +1,18 @@
 ---
 /**
- * ABOUT (seed: story / credentials / contact-cta). `story`: Brandon's business in the plan's
- * terms, Brandon as the expert who carries out the work and oversees every job. `credentials`:
+ * ABOUT (seed: story / credentials / contact-cta). `story`: the business in the plan's own terms,
+ * with the direct line to the owner explained once, not a self-work claim. `credentials`:
  * the usable claims only (over eight years' experience, fully insured, the charity). He has NO
  * accreditations, qualifications, memberships, guarantees or warranties, so none is shown.
  * The charity line is words only: no link, logo, charity number or cover image.
  * A photograph of TrueLine Finishes' own work sits beside the story. The kitchen Short that was here
  * came off with every other YouTube embed (operator round 2, fix 13); its caption stays in site.ts.
- * OPERATOR REVIEW 4 (19 Nov 2026): "I don't like the About page saying 'Brandon'. Again you mention
- * his name. Just say 'Meet TrueLine Finishes' ... The brand is TrueLine Finishes so you should be
- * mentioning TrueLine Finishes more often than his name." The H1 and the story heading are the brand;
- * Brandon is named once, as the owner who does the work, and the surname is out of the marketing copy
- * (it stays in the structured data and on /company-facts/, which the operator passed as correct).
+ * OPERATOR REVIEW 5 (19 Nov 2026, superseding review 4's one-mention compromise): the owner's name
+ * is out of this page's copy altogether. The H1 is the service and the place ("About TrueLine
+ * Finishes, Painting and Decorating in Baildon"), the story explains the direct line without naming
+ * anyone ("A call to 07949 484274 is a direct line to the owner"), and no line claims the owner does
+ * the work himself. The full name stays only in the structured data and on the legal-identification
+ * pages (/privacy/, /terms/, /company-facts/). Gated in scripts/audit.mjs (round-5 block).
  */
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
@@ -29,21 +30,21 @@ const story = image('grey-living-room-0142');
 const creds = [
   { icon: 'clock', title: "Over Eight Years' Experience", text: 'Painting and decorating for homes and businesses.' },
   { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, and fully insured.' },
-  { icon: 'clipboard', title: 'Free Quotations', text: 'Brandon talks every job through and gives you a free quotation.' },
+  { icon: 'clipboard', title: 'Free Quotations', text: 'Every job is talked through with you before a free quotation is given.' },
   { icon: 'heart', title: "A Child's Wish", text: charityLine },
 ];
 ---
-<Base title="Painter and Decorator in Baildon: About Us | TrueLine Finishes" description="TrueLine Finishes paints and decorates homes and businesses. Brandon, the owner, carries out and oversees every job. Over eight years' experience, fully insured." page="about" schema={schema}>
-  <PageHero h1="Who Will Be Painting Your Home? Meet TrueLine Finishes" lead="TrueLine Finishes is a painting and decorating business for homes and businesses, and the person you call is the person who does the work." image={image('lounge-dark-arched-alcove-0101')} />
+<Base title="Painter and Decorator in Baildon: About Us | TrueLine Finishes" description="TrueLine Finishes paints and decorates homes and business premises in Baildon, Shipley and nearby towns. Over eight years' experience, fully insured." page="about" schema={schema}>
+  <PageHero h1="About TrueLine Finishes, Painting and Decorating in Baildon" lead="A painting and decorating business for homes and business premises in Baildon, Shipley and the towns around them, with over eight years' experience and preparation included in every job." image={image('lounge-dark-arched-alcove-0101')} />
   <Reviews />
   <section class="ab section section-story" data-section="story">
     <div class="container ab__inner">
       <div class="ab__copy prose" data-motion="reveal">
         <h2>The TrueLine Finishes Standard</h2>
         <p>TrueLine Finishes does interior and exterior painting, wallpapering and careful surface preparation, for homes and businesses, from individual rooms to full property redecorations.</p>
-        <p>Brandon, the owner, carries out the work and oversees every job. When you call 07949 484274 you have a direct line to him, so the conversation about your job is with the person who will prepare the walls and lay on the finish.</p>
+        <p>A call to 07949 484274 is a direct line to the owner, so the job is talked through with the person who will be on site, not passed down a chain.</p>
         <p>We take pride in attention to detail, lasting finishes and treating your property with care. Sanding, filling and caulking come with everything, because the preparation is what decides how good the paint looks and how long it lasts.</p>
-        <p>Bedrooms and living rooms are favourite jobs at TrueLine Finishes, and the same care goes into kitchens, hallways, stairs, exteriors and business premises.</p>
+        <p>Bedrooms and living rooms are favourite jobs at TrueLine Finishes, and the same care goes into kitchens, hallways, stairs, exteriors and business premises in Baildon, Shipley, Guiseley, Ilkley and the towns around them.</p>
       </div>
       <figure class="ab__img" data-motion="reveal"><img src={story.sm} alt={story.alt} width={story.width} height={story.height} loading="lazy" decoding="async" /></figure>
     </div>
