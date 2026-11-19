@@ -588,3 +588,172 @@ domain needs the zone active on Cloudflare, so the site cannot be attached witho
 change at GoDaddy, which needs Vince's or Brandon's authority and access. **The preview URL is a
 preview, not the real domain.** The go-live steps and the exact mail records to recreate are in the
 HOME-3 section above and are unchanged.
+
+## ROUND 5: the operator's second review of the preview (19 Nov 2026, brief `TRUELINE-OWNER-REVIEW-R5-20261119`)
+
+Vince reviewed the round-4 preview and rejected five results. This is a correction release on the
+same Worker preview: no DNS change, no mail change, no test lead, no installs, no paid API calls, no
+image generation, no new template, no refactor beyond the five items. Round 4's other rulings stand.
+Per-point dispositions and the rule conflicts are in `DECISIONS.md` (R5-1 to R5-7).
+
+| | |
+|---|---|
+| Repo | github.com/TheK-Dawg/site-truelinefinishes, branch `main`, commit `8b5871b` (remote SHA read back with `git ls-remote`: `8b5871b4260b84f3a610beffa8b57aa015b859cb`) |
+| Version | `package.json` 2.1.0 → **2.2.0** |
+| Worker | `site-truelinefinishes`, deployed through `scripts/deploy-guard.mjs`; **Version ID `1a1d239a-b413-4597-b20e-909e08ab9d0b`** |
+| Worker URL | https://site-truelinefinishes.small-bird-3273.workers.dev (still noindexed by `public/_headers`) |
+| Real domain | **unchanged and still blocked** at GoDaddy. No DNS or mail record was touched this round |
+
+### 1. Home gallery: 95 photographs → 20 distinct (R5-1)
+`WorkGrid.astro`'s `full` mode no longer walks half the gallery collection. It renders `HOME_PICKS`,
+a fixed list of **20 distinct photographs** in the gallery page's group order: 12 interiors (two
+living rooms, a media wall, two bedrooms, three kitchens, a hallway, a staircase, a bathroom,
+cloakroom panelling), 5 exteriors (mock-Tudor frontage, stone farmhouse, a navy front door, a sash
+window in stone, painted railings), the wallpaper feature wall, and 2 business premises. Same square
+spaced tiles, same lightbox, same "See the Gallery" button. None of the 20 repeats a photograph the
+home page already uses in its hero carousel, CTA band, service tiles or preparation block.
+The gallery page (all 194) and the reviews-page grid are untouched.
+**Served proof:** `/` returns 20 `data-lightbox` tiles and 20 distinct `data-full` files; the
+rendered check counted `tiles=20 distinct=20 visible=20` at 1440 and at 390.
+
+### 2. One hero height for every page (R5-2)
+Round 4 left the home hero at 690px against 720px on the inner pages; Vince called that a mismatch
+and too small. There is now a single `--hero-h` custom property per breakpoint in `Hero.astro`,
+used by the home hero and the inner-page (`compact`) hero alike: **780px desktop, 640px tablet,
+540px phone** (a floor on a phone, so a long headline grows the hero instead of being clipped).
+`.hero--compact` is a type variant only and sets no height of its own.
+**Served proof** (`node scripts/hero-heights.mjs <url>`, all 24 hero routes):
+desktop 1440 → **24/24 exactly 780px**; tablet 768 → **24/24 exactly 640px**; phone 390 → every
+route at or above the 540px floor (540 to 657, content never clipped: the gate measures the hero
+copy against the hero box). The carousel still auto-advances with no controls and
+`prefers-reduced-motion` still holds the first photo.
+
+### 3. H1s and copy, written through the `conversion-copywriter` skill (R5-3)
+The skill at `/root/.claude/skills/conversion-copywriter/SKILL.md` was read and applied: intake,
+fact harvest from the client's own statements, the zoom-in ladder on each abstraction, a named enemy
+(the decorator who opens the paint on day one and leaves the cracks), four to six alternates per
+load-bearing line, then Harry Dry's three-rule gate scored line by line. The run is in `copy-run/`
+(`brief.json`, `copy.json`, `copy-deck.html`). The skill's own `scripts/render_deck.py` is **not
+present in the installed copy**, so nothing was installed: the deck was rendered by a throwaway
+Python-3-standard-library script kept outside the repo.
+
+Every H1 shipped (served HTML):
+
+| Route | H1 |
+|---|---|
+| `/` | Painter and Decorator in Baildon and Shipley |
+| `/services/` | Painting and Decorating in Baildon and Shipley |
+| `/painting-and-decorating/` | Painting and Decorating in Baildon, Ilkley and Otley |
+| `/interior-painting/` | Interior Painting in Baildon, Guiseley and Ilkley |
+| `/exterior-painting/` | Exterior Painting in Baildon, Shipley and Otley |
+| `/wallpapering/` | Wallpapering in Baildon, Ilkley and Guiseley |
+| `/commercial-painting-and-decorating/` | Commercial Painting and Decorating in Baildon and Leeds |
+| `/about/` | About TrueLine Finishes, Painting and Decorating in Baildon |
+| `/contact/` | Get a Free Painting and Decorating Quotation in Baildon |
+| `/reviews/` | Painting and Decorating Reviews in Baildon and Shipley |
+| `/gallery/` | Painting and Decorating Photographs, Job by Job |
+| `/faq/` | Painting and Decorating Questions, Answered |
+| `/resources/` | Painting and Decorating Resources, Town by Town |
+| `/thank-you/` | Thanks. Your enquiry is in and TrueLine Finishes will be in touch. |
+| legal set, `/company-facts/`, `/find-us-online/`, `/sitemap/`, `/404` | unchanged (approved wording) |
+
+The town is **Baildon and Shipley** (`site-plan/nap.json`: base town Baildon, the address line reads
+"Baildon, Shipley"); the transcript's "Baldon" is speech-to-text noise and appears nowhere. Every
+town named in an H1 is checked against `site-plan/towns.json` by the audit, so no service town can be
+invented. Subheads carry the proof the H1 no longer does: preparation (sanding, filling, caulking,
+and a mist coat on new plaster), over eight years' experience, fully insured, free quotations. No
+price, guarantee, accreditation, response time, rating or review count appears anywhere, because
+none exists.
+
+**Honest limit, recorded rather than hidden:** the keyword-plus-location H1s score 2 of 3 on the
+skill's gate (a rival decorator could sign "Painting and Decorating in Baildon and Shipley"). That
+trade is Vince's instruction for this round; the only-us burden moved to the subheads, the CTA band
+line and the photographs. No customer review text could be mined, because this site may not write
+reviews, ratings or counts and the real ones live inside the Google-fed Trustindex widgets.
+
+### 4. The owner's name out of the marketing copy (R5-4)
+`"Every card below is work Brandon carries out himself"` is **deleted**. Every other self-work proof
+trope went with it, including the home CTA band (now "Sanding, filling and caulking come with every
+job.") and the home USP box ("Brandon on Every Job" → "Preparation Included"). The sweep was done
+across rendered pages, not one file: 181 name strings across pages, components, the five service
+content modules, the general FAQ and the three published articles.
+
+Where the name remains, and why:
+- **Legal identification (deliberate, declared exception):** `/privacy/` (the named data controller),
+  `/terms/` ("run by Brandon Dawson, trading as TrueLine Finishes") and `/company-facts/` (who runs
+  the business). UK practice expects a sole trader to be identifiable to the customer and to a data
+  subject, and the brief said not to change legal identity without reviewing the requirement.
+- **Structured data:** the `founder` node on the business and the `author` node on articles. Those
+  are identity statements, not marketing copy or metadata.
+- **The real email address** `Brandon@truelinefinishes.com`, which is a fact.
+- **One first-name mention in marketing copy**, in the `/contact/` quote-form lead explaining the
+  direct line, which is the use Vince allowed.
+
+**Served proof per route:** 0 occurrences of the full name and 0 of the first name on `/`,
+`/services/`, all five hubs, `/about/`, `/reviews/`, `/gallery/`, `/faq/`, `/resources/`,
+`/thank-you/`; 1 first name on `/contact/`; the legal-identification pages as listed. No owner name
+in any H1, H2, H3, `<title>` or meta description on any route.
+
+### 5. Services tile footer: a quote button, never a phone number (R5-5)
+Component-level change in `ServicesGrid.astro`: the `CallButton` and the small inline "Quick Quote
+Online" text link are both gone. The footer is one prominent **Quick Quote Online** button in the
+site's primary pill style, through to that page's own Formlane section (`#contact`, or
+`/contact/#contact` on a page with no form), with **View All Services** kept beside it on the home
+page in the dark pill. The `showCall` and `moreLine` props were deleted with their callers, so no
+page can put a phone number back under the tiles. The phone is untouched in the header, the hero,
+`/contact/`, the footer and the mobile sticky bar.
+**Served proof:** on `/`, `/services/` and `/resources/` the services section contains a `btn`-class
+`services-quote` button reading "Quick Quote Online" and **no `tel:` href at all**; verified in the
+served HTML and in the rendered run at 1440 and 390.
+
+### Gates added, and proved by breaking them
+- `scripts/audit.mjs` round-5 block: H1 service keyword + a town from `towns.json` (and the
+  `/services/` and home rules), no question H1s, no self-work trope, no owner name in headings,
+  titles or descriptions, a per-route name allowance, and the services-footer rule.
+  `node scripts/audit.mjs --selftest` runs **16 deliberately broken cases** plus the good, legal and
+  contact pages, and **4 home-gallery cases** (21 photographs, a repeat, a thinned set, a good 20).
+- `scripts/audit.mjs` compiled-CSS hero policy: one `--hero-h`, hero height read from it,
+  `.hero--compact` with no height of its own. Proved by giving `.hero--compact` its own height: the
+  gate fired, and so did `hero-heights.mjs` (four different tablet heights reported).
+- `scripts/hero-heights.mjs` (new): every hero route at 1440, 768 and 390, exact match at desktop and
+  tablet, floor plus clipping check on a phone, and a "more than one height at this width" failure.
+  It waits for `networkidle` and `document.fonts.ready` and takes two agreeing readings, because
+  measuring a LIVE page at `load` reported heights from 487px to 1384px on pages that are all 640px
+  (proved with a probe before trusting the gate).
+- `scripts/check.mjs`: hero heights updated to the one policy, hero-content clipping, and the home
+  gallery counted on the served page (tiles, distinct files, tiles actually rendering at that width).
+
+### Checks run this round (results as recorded)
+| Check | Result |
+|---|---|
+| `npm run build` | 26 pages, clean |
+| `node scripts/token-gate.mjs` | PASS, 51 files, 0 violations |
+| `node scripts/audit.mjs --selftest` | all four gate families behave: Trustindex 10 cases, copy bans 8 bad + 2 good, round-3/4 + home-gallery 19 broken cases, round-5 16 broken cases |
+| `node scripts/audit.mjs` (dist) | **26 pages, 0 fails, 0 warnings** |
+| `node scripts/hero-heights.mjs <live>` | **24 hero routes x 3 widths, 0 fails**: 780px on all 24 at 1440, 640px on all 24 at 768, at or above the 540px floor at 390 with no clipped content |
+| `node scripts/check.mjs <live> --log` | **26 routes x 2 widths against the deployed Worker, 0 fails** (overflow, H1s, hero CTA above the fold, header/nav, sticky bar, Trustindex rendering and placement, button centring 412 buttons worst 0.2px, videos, redirects, home gallery `tiles=20 distinct=20 visible=20` at both widths) |
+| `node scripts/cookies.mjs <live>` | 0 cookies and 0 first-party storage on every route, so the Cookie Policy still matches |
+| Served-byte sweep (17 routes) | every H1 as listed, no self-work trope, no owner name outside the declared exceptions, services footer quote button with no `tel:` href, home gallery 20 tiles / 20 distinct files |
+| Live redirects | `/home-2/` and `/home-3/` 301 to `/`, `/complaints/` 301 to `/complaints-procedure/`, unknown path 404, `x-robots-tag: noindex, nofollow` still on the preview |
+| Screenshots | desktop 1440 and phone 390 of `/`, `/services/`, `/interior-painting/`, `/about/`, plus the services footer, the services tiles and the home gallery, in `/tmp/r5-shots/` |
+
+Lazy-loaded tiles do not appear in a bare element screenshot; both the services tiles (5/5) and the
+home gallery (20/20 at 1440 and at 390) were confirmed loaded by reading `img.complete` and
+`naturalWidth` on the served page after scrolling.
+
+### What was NOT done, and why
+- **No DNS, nameserver or mail change**, no custom domain attached: the real domain is still on
+  GoDaddy nameservers with live Google Workspace mail, exactly as recorded in the HOME-3 section.
+  Nothing about it was touched this round.
+- **No test lead** through the Formlane form, **no installs**, no paid API call, no image
+  generation, no new template and no refactor beyond the five corrections.
+- `astro check` was not run: `@astrojs/check` is not installed in this repo and the brief forbids
+  installing anything. The gate set that did run is the one in `CLAUDE.md` (build, token gate,
+  audit + selftest, hero heights, rendered check, cookies).
+- **Round 4's deferred item (R4-19, gallery tabs with a thumbnail sidebar) is still deferred**: it
+  was not part of this correction.
+- One consequence worth flagging for the next review: because R5-5 is a component-level change, the
+  Quick Quote Online button now also sits at the end of the services block on `/resources/`, which
+  is directly above that page's quote form. That follows his instruction ("a component-level
+  change, not just the service detail steps CTA"); say the word and it can be suppressed on that
+  one page.

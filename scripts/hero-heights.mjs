@@ -64,7 +64,21 @@ for (const vp of WANT) {
     const page = await ctx.newPage();
     const res = await page.goto(base + r, { waitUntil: 'load', timeout: 60000 });
     if (!res || res.status() !== 200) fails.push(`${vp.name} ${r}: HTTP ${res?.status()}`);
-    const m = await page.evaluate(measure);
+    // A LIVE page is still settling at 'load': the self-hosted fonts and the Trustindex slimline
+    // arrive after it, and measuring then reported heights from 487 to 1384px on pages that are
+    // actually all 640 (proved with a probe). Wait for the network to go quiet and the fonts to be
+    // ready, then take the same reading twice and only trust it when the two agree.
+    await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
+    await page.evaluate(() => document.fonts.ready).catch(() => {});
+    let m = null;
+    for (let i = 0; i < 4; i++) {
+      await page.waitForTimeout(400);
+      const a = await page.evaluate(measure);
+      await page.waitForTimeout(400);
+      const b = await page.evaluate(measure);
+      if (a && b && Math.abs(a.height - b.height) <= 1) { m = b; break; }
+      m = b;
+    }
     await page.close();
     if (!m) { fails.push(`${vp.name} ${r}: no hero section`); continue; }
     rows.push(`${vp.name.padEnd(7)} ${r.padEnd(44)} ${String(m.height).padStart(4)}px  (${m.kind}, --hero-h ${m.token})`);
