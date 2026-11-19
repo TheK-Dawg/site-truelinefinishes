@@ -77,16 +77,16 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
 <style>
   .sb3 { padding-top: var(--space-4); padding-bottom: var(--section-pad-sm); }
   .sb3__intro { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-12); align-items: center; }
-  .sb3__ih2 { font-size: var(--fs-4xl); margin-bottom: var(--space-5); }
+  .sb3__ih2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-5); }
   .sb3__copy p { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }
   .sb3__copy p + p { margin-top: 1em; }
   .sb3__copy :global(a), .sb3__lead :global(a) { color: var(--brand-text); font-weight: var(--fw-semibold); }
   .sb3__copy .sb3__first { font-size: var(--fs-xl); line-height: var(--lh-normal); }
-  .sb3__ifig { margin: 0; overflow: hidden; box-shadow: var(--shadow-card); }
+  .sb3__ifig { margin: 0; overflow: hidden; }
   .sb3__ifig img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-  .sb3__gh2 { font-size: var(--fs-4xl); margin-bottom: var(--space-10); }
+  .sb3__gh2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-10); text-align: center; }
   .sb3__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
-  .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); }
+  .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); box-shadow: var(--shadow-raised); }
   .sb3__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); overflow: hidden; }
   .sb3__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.5s var(--ease); }
   .sb3__shot:hover img { transform: scale(1.03); }
@@ -95,13 +95,12 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
   .sb3__text--dark .sb3__h3 { display: flex; gap: var(--space-3); align-items: center; color: var(--text-inverse); }
   .sb3__text--dark .sb3__h3 :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
   .sb3__text--dark .sb3__lead { color: var(--text-inverse); font-weight: var(--fw-semibold); }
-  .sb3__card--sectors { border-color: var(--border-inverse); }
-  /* The card titles keep the look they had as H2s (capitals), now H3s under the grid's H2. */
-  .sb3__h3 { font-size: var(--fs-2xl); text-transform: uppercase; font-variant-caps: normal; letter-spacing: var(--ls-heading); }
+  .sb3__h3 { font-size: var(--fs-2xl); line-height: 1.2; }
   .sb3__lead { margin-top: var(--space-3); color: var(--text-secondary); }
   .sb3__points { list-style: none; padding: 0; margin-top: var(--space-4); display: grid; gap: var(--space-2); }
   .sb3__points li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; color: var(--text-primary); font-size: var(--fs-md); line-height: var(--lh-normal); }
   .sb3__points :global(.icon) { color: var(--brand-primary); margin-top: 2px; }
+  .sb3__copy :global(a), .sb3__lead :global(a) { transition: color 0.2s var(--ease); }
   .sb3__sectors { display: flex; gap: var(--space-3); align-items: center; margin-top: var(--space-10); padding: var(--space-5) var(--space-6); background: var(--bg-inverse); color: var(--text-inverse); font-weight: var(--fw-semibold); }
   .sb3__sectors :global(.icon) { color: var(--accent-on-dark); flex-shrink: 0; }
   @media (max-width: 900px) {

@@ -60,9 +60,9 @@ const content: ServiceContent = {
     heading: 'How a Job Runs, From the First Call to the Last Coat',
     lead: 'Three steps, and you deal with Brandon from the first call to the last coat.',
     steps: [
-      { title: 'Get in touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms, or which part of the outside, and your postcode.' },
-      { title: 'A free quotation', body: 'Brandon talks the job through with you, what needs doing and the finish you want, and gives you a free quotation.' },
-      { title: 'The work, done properly', body: 'Preparation first, with floors and surfaces protected. Brandon carries out the work and oversees the job through to the finish.' },
+      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms, or which part of the outside, and your postcode.' },
+      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, what needs doing and the finish you want, and gives you a free quotation.' },
+      { title: 'The Work, Done Properly', body: 'Preparation first, with floors and surfaces protected. Brandon carries out the work and oversees the job through to the finish.' },
     ],
   },
   pictures: {

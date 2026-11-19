@@ -13,7 +13,7 @@ const places = towns.slice(0, 20).map((t) => t.name);
 ---
 <section class="fr section section-further-reading" data-section="further-reading">
   <div class="container">
-    <h2 class="fr__h2">{hubName}: further reading</h2>
+    <h2 class="fr__h2">{hubName}: Further Reading</h2>
     {list.length > 0 ? (
       <ul class="fr__list">{list.map((a) => <li><a href={articleUrl(a)} data-link="further">{a.title}</a></li>)}</ul>
     ) : (

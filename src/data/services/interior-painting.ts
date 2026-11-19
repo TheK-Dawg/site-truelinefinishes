@@ -59,9 +59,9 @@ const content: ServiceContent = {
     heading: 'How an Interior Job Runs',
     lead: 'Three steps, with Brandon on the job from the first call to the finish.',
     steps: [
-      { title: 'Get in touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms and your postcode.' },
-      { title: 'A free quotation', body: 'Brandon talks the job through with you, the rooms, the colours and the finish, and gives you a free quotation.' },
-      { title: 'Prepared, then painted', body: 'Floors and furniture are protected, the surfaces are prepared, then painted. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which rooms and your postcode.' },
+      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, the rooms, the colours and the finish, and gives you a free quotation.' },
+      { title: 'Prepared, Then Painted', body: 'Floors and furniture are protected, the surfaces are prepared, then painted. Brandon carries out the work and oversees the job.' },
     ],
   },
   pictures: {

@@ -88,7 +88,7 @@ const schema = [
         <Fragment set:html={body} />
         {article.faqs.length > 0 && (
           <section class="art__faq" aria-labelledby="faq">
-            <h2 id="faq">{article.title}: questions people ask</h2>
+            <h2 id="faq">{article.title}: Questions People Ask</h2>
             {article.faqs.map((f) => <details class="art__q" open><summary>{f.q}</summary><div set:html={f.a} /></details>)}
           </section>
         )}
@@ -101,7 +101,7 @@ const schema = [
           </details>
         )}
         <div class="art__cta on-dark">
-          <p class="art__cta-h">Need a quote?</p>
+          <p class="art__cta-h">Need a Quote?</p>
           <p>Get a free quotation: call Brandon on <a href={business.phoneHref} data-cta="article-aside-call">{business.phone}</a> or use the quote form.</p>
           <a href="#contact" class="btn btn-primary" data-cta="article-aside-quote"><span class="btn__t">Quick Quote Online</span></a>
         </div>
@@ -111,13 +111,13 @@ const schema = [
   {(sameHub.length > 0 || sameTown.length > 0 || others.length > 0) && (
     <section class="art__rel section section--panel" data-section="related-articles">
       <div class="container art__rel-grid">
-        {sameHub.length > 0 && <div><h2 class="art__rel-h">{svc.name} in other towns</h2><ul>{sameHub.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
+        {sameHub.length > 0 && <div><h2 class="art__rel-h">{svc.name} in Other Towns</h2><ul>{sameHub.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
         {sameTown.length > 0 && <div><h2 class="art__rel-h">More in {article.town}</h2><ul>{sameTown.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
         {others.length > 0 && <div><h2 class="art__rel-h">More from TrueLine Finishes</h2><ul>{others.map((a) => <li><a href={articleUrl(a)} data-link="related">{a.title}</a></li>)}</ul></div>}
       </div>
     </section>
   )}
-  <QuoteForm heading={`${svc.name} in ${article.town}: talk to Brandon`} />
+  <QuoteForm heading={`${svc.name} in ${article.town}: Talk to Brandon`} />
 </Base>
 
 <style>
@@ -125,15 +125,15 @@ const schema = [
      directly above the article, under the reviews section, with tight spacing either side. */
   .art__crumbs { padding-top: 0; padding-bottom: 0; }
   .art.section { padding-top: var(--space-6); }
-  .art__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); font-size: var(--fs-sm); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; }
+  .art__crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); font-family: var(--font-heading); font-size: var(--fs-md); font-weight: var(--fw-medium); }
   .art__crumbs li + li::before { content: '/'; margin-right: var(--space-3); color: var(--text-muted); }
   .art__crumbs a { color: var(--brand-text); }
   .art__crumbs [aria-current] { color: var(--text-primary); }
   /* Round 3: the body runs the full column up to the sidebar (no 72ch cap leaving a gulf). */
   .art__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--aside-w); gap: var(--space-10); align-items: start; }
   .art__main { background: var(--bg-card); color: var(--text-primary); }
-  .art__rd { margin-bottom: var(--space-8); padding: var(--space-6) var(--space-8); background: var(--bg-panel); border: 1px solid var(--border-default); }
-  .art__rd-h { font-family: var(--font-heading); font-size: var(--fs-xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-heading); margin-bottom: var(--space-3); }
+  .art__rd { margin-bottom: var(--space-8); padding: var(--space-6) var(--space-8); background: var(--bg-panel); }
+  .art__rd-h { font-family: var(--font-heading); font-size: var(--fs-xl); font-weight: var(--fw-regular); color: var(--text-heading); margin-bottom: var(--space-3); }
   .art__rd ul { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2); }
   .art__rd li { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; }
   .art__rd :global(.icon) { color: var(--brand-primary); margin-top: 3px; }
@@ -152,8 +152,8 @@ const schema = [
   .art__toc ol { list-style: none; padding: 0; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--fs-md); }
   .art__toc a { color: var(--brand-text); }
   .art__toc a:hover { color: var(--brand-primary); }
-  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); border: 1px solid var(--border-inverse); }
-  .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-heading); color: var(--text-inverse); }
+  .art__cta { background: var(--bg-inverse); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); color: var(--text-inverse-muted); }
+  .art__cta-h { font-family: var(--font-heading); font-size: var(--fs-2xl); font-weight: var(--fw-regular); color: var(--text-inverse); }
   .art__cta a:not(.btn) { color: var(--text-inverse); font-weight: var(--fw-semibold); }
   .art__cta .btn { width: 100%; }
   .art__rel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-10); }

@@ -59,9 +59,9 @@ const content: ServiceContent = {
     heading: 'How a Wallpapering Job Runs',
     lead: 'Three steps, with Brandon from the first call to the last drop.',
     steps: [
-      { title: 'Get in touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which room and your postcode.' },
-      { title: 'A free quotation', body: 'Brandon talks the job through with you, the wall or walls and the paper, and gives you a free quotation.' },
-      { title: 'Prepared, then hung', body: 'The room is protected, the walls prepared and the paper hung. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message saying which room and your postcode.' },
+      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, the wall or walls and the paper, and gives you a free quotation.' },
+      { title: 'Prepared, Then Hung', body: 'The room is protected, the walls prepared and the paper hung. Brandon carries out the work and oversees the job.' },
     ],
   },
   pictures: {

@@ -10,15 +10,19 @@ import { business } from '../data/site';
     <div class="container ty__inner">
       <h1 class="ty__h1">Thanks: we've got your enquiry and Brandon will be in touch.</h1>
       <p class="ty__p">Want to talk now? Call Brandon on <a href={business.phoneHref} data-cta="thanks-call">{business.phone}</a>.</p>
-      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" class="ty__ti" />
-      <div class="btn-row"><a href="/" class="btn btn-primary" data-cta="thanks-home"><span class="btn__t">Back to the home page</span></a></div>
+      <TrustindexSlot role="slimline" place="slim-hero" ground="dark" align="center" class="ty__ti" />
+      <div class="btn-row"><a href="/" class="btn btn-primary btn--desc" data-cta="thanks-home"><span class="btn__t">Back to the home page</span></a></div>
     </div>
   </section>
   <Reviews />
 </Base>
 <style>
-  .ty { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 70vh; }
-  .ty__inner { max-width: 60em; }
+  /* Home 3 hero treatment (centred on the navy ground), as every hero on the site. */
+  .ty { background: var(--bg-inverse); color: var(--text-inverse-muted); padding: calc(var(--header-h) + var(--space-24)) 0 var(--space-24); min-height: 70vh; text-align: center; }
+  .ty__inner { display: flex; flex-direction: column; align-items: center; }
+  .ty__h1 { max-width: 22ch; }
+  .ty :global(.ty__ti) { width: 100%; }
+  .ty .btn-row { justify-content: center; }
   .ty__h1 { color: var(--text-inverse); font-size: var(--fs-5xl); margin-bottom: var(--space-5); }
   .ty__p { font-size: var(--fs-xl); margin-bottom: var(--space-4); }
   .ty :global(.ty__ti) { margin-bottom: var(--space-6); }

@@ -28,17 +28,17 @@ const schema = [
         <li class="ct__card ct__card--on on-dark"><span class="ct__ic"><Icon name="phone" size={24} /></span><h3>Call Brandon</h3><p><a href={business.phoneHref} data-cta="contact-call">{business.phone}</a></p></li>
         <li class="ct__card"><span class="ct__ic"><Icon name="mail" size={24} /></span><h3>Email</h3><p><a href={`mailto:${business.email}`} data-cta="contact-email">{business.email}</a></p></li>
         <li class="ct__card"><span class="ct__ic"><Icon name="whatsapp" size={24} /></span><h3>WhatsApp</h3><p><a href={business.whatsappHref} target="_blank" rel="noopener" data-cta="contact-whatsapp">Message Brandon on WhatsApp</a></p></li>
-        <li class="ct__card" id="hours"><span class="ct__ic"><Icon name="clock" size={24} /></span><h3>Opening hours</h3><Hours class="ct__hrs" /></li>
+        <li class="ct__card" id="hours"><span class="ct__ic"><Icon name="clock" size={24} /></span><h3>Opening Hours</h3><Hours class="ct__hrs" /></li>
       </ul>
       <div class="ct__map" data-motion="reveal"><MapEmbed /></div>
     </div>
   </section>
-  <QuoteForm heading="Send Brandon the details" />
+  <QuoteForm heading="Send Brandon the Details" />
 </Base>
 <style>
-  .ct__h2 { font-size: var(--fs-3xl); margin-bottom: var(--space-6); }
+  .ct__h2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-8); }
   .ct__cards { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
-  .ct__card { padding: var(--card-pad); background: var(--bg-panel); border: 1px solid var(--border-default); overflow-wrap: anywhere; }
+  .ct__card { padding: var(--card-pad); background: var(--bg-panel); overflow-wrap: anywhere; }
   .ct__card p + p { margin-top: var(--space-2); }
   .ct__card--on { background: var(--bg-inverse); border-color: var(--bg-inverse); color: var(--text-inverse-muted); }
   .ct__card h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
@@ -49,5 +49,6 @@ const schema = [
   .ct__card--on .ct__ic { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
   .ct__map { margin-top: var(--space-10); height: calc(var(--space-30) * 3.5); }
   @media (max-width: 1023px) { .ct__cards { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) { .ct__h2 { font-size: var(--fs-3xl); } }
   @media (max-width: 520px) { .ct__cards { grid-template-columns: 1fr; } }
 </style>

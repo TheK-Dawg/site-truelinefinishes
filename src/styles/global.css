@@ -1,8 +1,8 @@
 /*
  * Global layer. Reads tokens only (no raw colours, no off-scale px).
- * Buildings for Life template rhythm (letter-spaced labels, display headings, square
- * uppercase buttons, generous section padding) in TrueLine's own type and colours:
- * classical serif capitals for headings, the system sans for reading.
+ * HOME 3 SITE-WIDE (operator, 19 Nov 2026): the Dom-reference look of /home-3/ for every page.
+ * Mixed-case Lexend Deca headings at regular weight, Kumbh Sans reading text, pill buttons in
+ * the heading font, centred or row section heads, square photos, navy grounds.
  */
 @import './tokens.css';
 
@@ -16,9 +16,7 @@ img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 a:hover, a:focus-visible { text-decoration: none; }
 button { font: inherit; }
-h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-family: var(--font-heading); font-weight: var(--fw-semibold); line-height: var(--lh-tight); letter-spacing: var(--ls-heading); text-wrap: balance; }
-h1, h2 { text-transform: uppercase; }
-h3, h4 { font-variant-caps: small-caps; letter-spacing: 0.02em; }
+h1, h2, h3, h4 { margin: 0; color: var(--text-heading); font-family: var(--font-heading); font-weight: var(--fw-regular); line-height: var(--lh-tight); letter-spacing: 0; text-transform: none; font-variant-caps: normal; text-wrap: balance; }
 p { margin: 0; }
 ul, ol { margin: 0; }
 :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
@@ -37,7 +35,7 @@ ul, ol { margin: 0; }
 .sec-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-8) var(--space-16); align-items: end; margin-bottom: var(--space-12); }
 .sec-head--center { grid-template-columns: 1fr; text-align: center; justify-items: center; }
 .sec-head--center .sec-head__lead { max-width: 60ch; }
-.sec-head__h2 { font-size: var(--fs-5xl); }
+.sec-head__h2 { font-size: var(--fs-5xl); line-height: 1.12; max-width: 24ch; }
 .sec-head__lead { color: var(--text-muted); font-size: var(--fs-base); }
 .sec-head__side { display: flex; flex-direction: column; gap: var(--space-6); align-items: flex-start; }
 .on-dark .sec-head__h2, .on-dark h2, .on-dark h3 { color: var(--text-inverse); }
@@ -47,11 +45,11 @@ ul, ol { margin: 0; }
   .sec-head__h2 { font-size: var(--fs-3xl); }
 }
 
-/* Buttons: square, uppercase, letter-spaced (Electrix "GET STARTED"). */
+/* Buttons (Home 3 / Dom): pills, mixed case, the heading font at medium weight. */
 .btn {
   position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
-  min-height: var(--btn-h-md); padding: var(--space-3) var(--space-8); border: 0; border-radius: var(--btn-radius);
-  font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; line-height: var(--lh-tight);
+  min-height: var(--btn-h-md); padding: 0 var(--space-8); border: 0; border-radius: var(--btn-radius);
+  font-family: var(--font-heading); font-size: var(--fs-md); font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; line-height: var(--lh-tight);
   cursor: pointer; text-align: center; transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 /* OPTICAL CENTRING (operator round 2, 5 Nov 2026: "Quick Quote Online isn't vertically centred").
@@ -67,16 +65,18 @@ ul, ol { margin: 0; }
 .on-dark .btn-primary:hover { background: var(--accent-on-dark-hover); }
 .btn-dark { background: var(--bg-inverse); color: var(--text-inverse); }
 .btn-dark:hover { background: var(--bg-inverse-2); }
-.btn-ghost { background: transparent; color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--border-inverse); }
+.btn-ghost { background: transparent; color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--glass-line); }
 .btn-ghost:hover { background: var(--glass-strong); }
-/* Call button (CallButton.astro): glass on dark, transparent on light, same box as Quick Quote. */
+/* Call button (CallButton.astro), Home 3 pills: glass on dark grounds, the navy ink pill on light ones. */
 .btn-call { white-space: nowrap; }
-.btn-call--dark { background: var(--glass); color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--border-inverse); backdrop-filter: blur(2px); }
+.btn-call--dark { background: var(--glass); color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--glass-line); backdrop-filter: blur(4px); }
 .btn-call--dark:hover { background: var(--glass-strong); }
 .btn-call--dark .icon { color: var(--accent-on-dark); }
-.btn-call--light { background: transparent; color: var(--text-heading); box-shadow: inset 0 0 0 1px var(--border-strong); }
-.btn-call--light:hover { background: var(--bg-subtle); }
-.btn-call--light .icon { color: var(--brand-text); }
+.btn-call--light { background: var(--bg-inverse); color: var(--text-inverse); }
+.btn-call--light:hover { background: var(--v-ink-700); }
+.btn-call--light .icon { color: var(--accent-on-dark); }
+/* Mixed-case labels with descenders: lift the cap box 1px so cap top and descender bottom balance (scripts/check.mjs). */
+.btn--desc .btn__t { transform: translateY(-1px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
 /* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16). */
 .btn::after {
@@ -99,6 +99,27 @@ ul, ol { margin: 0; }
 .section { padding: var(--section-pad) 0; }
 .section--panel { background: var(--bg-panel); }
 .section--dark { background: var(--bg-inverse); color: var(--text-inverse-muted); }
+
+/* HOME 3 (Dom) section heads: centred (heading, lead, chevron) or a row (heading left, action right). */
+.dm-head { margin-bottom: var(--space-12); }
+.dm-head--c { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.dm-head--c .dm-h2 { max-width: 24ch; }
+.dm-head__chev { margin-top: var(--space-5); color: var(--text-muted); }
+.dm-head--row { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-8); }
+.dm-head--row .dm-h2 { margin-bottom: 0; max-width: 24ch; }
+.dm-head--row .dm-lead { margin-top: var(--space-4); }
+.dm-h2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-5); }
+.on-dark .dm-h2 { color: var(--text-inverse); }
+.dm-lead { color: var(--text-muted); max-width: 62ch; }
+.on-dark .dm-lead { color: var(--text-inverse-muted); }
+.dm-center { display: flex; justify-content: center; margin-top: var(--space-12); }
+.dm-link { font-family: var(--font-heading); font-weight: var(--fw-medium); color: var(--brand-primary); transition: color 0.2s var(--ease); white-space: nowrap; }
+.dm-link:hover { color: var(--text-heading); }
+.section--band { background: var(--bg-band); }
+@media (max-width: 760px) {
+  .dm-h2 { font-size: var(--fs-3xl); }
+  .dm-head--row { flex-direction: column; align-items: flex-start; }
+}
 
 /* Long-form copy. */
 .prose { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed); }

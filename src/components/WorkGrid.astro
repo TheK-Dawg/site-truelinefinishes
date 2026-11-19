@@ -1,0 +1,44 @@
+---
+/**
+ * BRANDON'S WORK, in Home 3's photo grid (the Dom reference's full-bleed 3 x 2 grid; operator round 3
+ * on Home 3: a visible heading, a line saying what it shows, a See the Gallery button). Brandon's own
+ * photos from finished jobs, each opening in the root Lightbox; the gallery page has the rest.
+ * Replaces the tabbed "Our Work" block site-wide (Home 3 design, 19 Nov 2026).
+ * DEFAULT SIX (round 3): the six best photos in the pool, picked by measured sharpness (Laplacian
+ * contrast on the served 1600px files, finished work only, no prep or dust-sheet shots) and then by eye.
+ */
+import { image } from '../data/site';
+interface Props { heading?: string; lead?: string; photos?: string[] }
+const {
+  heading = 'Brandon’s Work, Photographed on the Job',
+  lead = 'Six of Brandon’s own photos from finished jobs, inside and out. Tap one to see it larger; the gallery page has the rest.',
+  photos = ['navy-kitchen-0038', 'victorian-hallway-0066', 'navy-front-door-stone-0032', 'grey-living-room-0133', 'white-sash-window-stone-0030', 'stone-farmhouse-0093'],
+} = Astro.props;
+const grid = photos.map(image);
+---
+<section class="wg" data-section="gallery" data-ai-skip>
+  <div class="container dm-head dm-head--row wg__head" data-motion="reveal">
+    <div>
+      <h2 class="dm-h2">{heading}</h2>
+      <p class="dm-lead">{lead}</p>
+    </div>
+    <a href="/gallery/" class="btn btn-primary btn--desc" data-cta="gallery-all"><span class="btn__t">See the Gallery</span></a>
+  </div>
+  <ul class="wg__grid" data-gallery>
+    {grid.map((g) => (
+      <li><button type="button" class="wg__shot" data-lightbox aria-label={`Open larger: ${g.alt}`}><img src={g.sm} data-full={g.src} alt={g.alt} width={g.width} height={g.height} loading="lazy" decoding="async" /></button></li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .wg { padding: var(--section-pad) 0 0; }
+  .wg__head { margin-bottom: var(--space-10); }
+  .wg__head .dm-h2 { margin-bottom: var(--space-4); }
+  .wg__head .dm-lead { margin-top: 0; }
+  .wg__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wg__shot { display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 0; overflow: hidden; cursor: zoom-in; background: var(--bg-inverse); }
+  .wg__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease), opacity 0.3s var(--ease); }
+  .wg__shot:hover img { transform: scale(1.04); opacity: 0.9; }
+  @media (max-width: 760px) { .wg__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

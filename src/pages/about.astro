@@ -11,7 +11,7 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Reviews from '../components/Reviews.astro';
-import OurWork from '../components/OurWork.astro';
+import WorkGrid from '../components/WorkGrid.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
 import { business, image, charityLine } from '../data/site';
@@ -22,9 +22,9 @@ const schema = [
 ];
 const story = image('grey-living-room-0142');
 const creds = [
-  { icon: 'clock', title: "Over eight years' experience", text: 'Painting and decorating for homes and businesses.' },
-  { icon: 'shield', title: 'Fully insured', text: 'Friendly and reliable, and fully insured.' },
-  { icon: 'clipboard', title: 'Free quotations', text: 'Brandon talks every job through and gives you a free quotation.' },
+  { icon: 'clock', title: "Over Eight Years' Experience", text: 'Painting and decorating for homes and businesses.' },
+  { icon: 'shield', title: 'Fully Insured', text: 'Friendly and reliable, and fully insured.' },
+  { icon: 'clipboard', title: 'Free Quotations', text: 'Brandon talks every job through and gives you a free quotation.' },
   { icon: 'heart', title: "A Child's Wish", text: charityLine },
 ];
 ---
@@ -45,7 +45,7 @@ const creds = [
   </section>
   <section class="cr section section--panel section-credentials" data-section="credentials">
     <div class="container">
-      <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">What You Can Count On</h2></div>
+      <div class="dm-head dm-head--c" data-motion="reveal"><h2 class="dm-h2">What You Can Count On</h2></div>
       <ul class="cr__grid">
         {creds.map((c, i) => (
           <li class="cr__item" data-motion="reveal" style={`--reveal-delay: ${i * 60}ms`}>
@@ -57,8 +57,8 @@ const creds = [
       </ul>
     </div>
   </section>
-  <OurWork />
-  <QuoteForm heading="Talk to Brandon about your project" />
+  <WorkGrid />
+  <QuoteForm heading="Talk to Brandon About Your Project" />
 </Base>
 <style>
   .ab__inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-16); align-items: center; }
@@ -66,7 +66,7 @@ const creds = [
   .ab__img { margin: 0; }
   .ab__img img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
   .cr__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5); }
-  .cr__item { background: var(--bg-card); padding: var(--card-pad); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); }
+  .cr__item { background: var(--bg-card); padding: var(--card-pad); box-shadow: var(--shadow-raised); }
   .cr__item h3 { font-size: var(--fs-xl); margin: var(--space-4) 0 var(--space-2); }
   .cr__item p { color: var(--text-primary); font-size: var(--fs-md); }
   .cr__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); border-radius: var(--badge-radius); background: var(--bg-inverse); color: var(--accent-on-dark); }

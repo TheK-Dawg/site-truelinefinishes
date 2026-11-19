@@ -9,7 +9,7 @@ import PageHero from '../../components/PageHero.astro';
 import Reviews from '../../components/Reviews.astro';
 import ServicesGrid from '../../components/ServicesGrid.astro';
 import Steps from '../../components/Steps.astro';
-import OurWork from '../../components/OurWork.astro';
+import WorkGrid from '../../components/WorkGrid.astro';
 import Faq from '../../components/Faq.astro';
 import QuoteForm from '../../components/QuoteForm.astro';
 import { business, services, image } from '../../data/site';
@@ -27,13 +27,13 @@ const schema = [
 <Base title="Painting and Decorating Services in Baildon and Shipley | TrueLine Finishes" description="Painting and decorating, interior painting, exterior painting, wallpapering and commercial work from TrueLine Finishes, with Brandon carrying out every job." page="services" schema={schema}>
   <PageHero h1="Which Kind of Decorating Does Your Job Need?" lead="Five services, one standard of preparation and finish, for homes and businesses. Pick the job below to see how Brandon does it, or send the details for a free quotation." image={image('white-staircase-spindles-0162')} />
   <Reviews />
-  <ServicesGrid heading="Pick the job you have in mind" lead="Every card below is work Brandon carries out himself, for homes and for business premises." />
-  <Steps heading="How a job runs" lead="The same three steps whether it is one room or the whole house." photo="living-room-sheeted-0138" steps={[
-    { icon: 'chat', title: 'Get in touch', text: 'Call Brandon directly, use the quote form or send a WhatsApp message.' },
-    { icon: 'clipboard', title: 'A free quotation', text: 'Brandon talks the job through with you and gives you a free quotation.' },
-    { icon: 'roller', title: 'The work, done properly', text: 'Preparation first, floors and surfaces protected, with Brandon carrying out the work and overseeing the job.' },
+  <ServicesGrid heading="Pick the Job You Have in Mind" lead="Every card below is work Brandon carries out himself, for homes and for business premises." />
+  <Steps heading="How a Job Runs" lead="The same three steps whether it is one room or the whole house." photo="living-room-sheeted-0138" steps={[
+    { icon: 'chat', title: 'Get in Touch', text: 'Call Brandon directly, use the quote form or send a WhatsApp message.' },
+    { icon: 'clipboard', title: 'A Free Quotation', text: 'Brandon talks the job through with you and gives you a free quotation.' },
+    { icon: 'roller', title: 'The Work, Done Properly', text: 'Preparation first, floors and surfaces protected, with Brandon carrying out the work and overseeing the job.' },
   ]} />
-  <OurWork />
+  <WorkGrid />
   <Faq items={faqs} heading="Questions About the Work" allLink />
   <QuoteForm />
 </Base>

@@ -54,9 +54,9 @@ const content: ServiceContent = {
     heading: 'How a Commercial Job Runs',
     lead: 'Three steps, and you deal with Brandon directly.',
     steps: [
-      { title: 'Get in touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message with the premises, the work and the postcode.' },
-      { title: 'A free quotation', body: 'Brandon talks the job through with you, the areas, the finish and how the building is used, and gives you a free quotation.' },
-      { title: 'Planned, protected, painted', body: 'The work is planned around the business, the premises protected, then prepared and painted. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form or send a WhatsApp message with the premises, the work and the postcode.' },
+      { title: 'A Free Quotation', body: 'Brandon talks the job through with you, the areas, the finish and how the building is used, and gives you a free quotation.' },
+      { title: 'Planned, Protected, Painted', body: 'The work is planned around the business, the premises protected, then prepared and painted. Brandon carries out the work and oversees the job.' },
     ],
   },
   pictures: {

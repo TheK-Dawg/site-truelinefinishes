@@ -1,5 +1,7 @@
-// TrueLine Finishes: static-assets-only Cloudflare Worker (no Worker script, no D1, no email:
-// the quote form is the Formlane direct embed, which posts straight to api.formlane.uk).
+// TrueLine Finishes: Cloudflare Worker serving the static build (./dist) through Workers static assets,
+// plus a tiny script (worker/redirects.js) that only runs for paths with no file: the 301s for the
+// retired /home-2/ and /home-3/ variants and /complaints/ (19 Nov 2026). No D1, no email: the quote
+// form is the Formlane direct embed, which posts straight to api.formlane.uk.
 // Preview URL first: site-truelinefinishes.small-bird-3273.workers.dev (noindexed by public/_headers).
 // The real domain (www.truelinefinishes.com, apex 301 -> www) is attached at launch when GoDaddy DNS
 // is handed over; Custom Domains are attached in Cloudflare, not declared here, so a deploy never
@@ -7,8 +9,10 @@
 {
   "name": "site-truelinefinishes",
   "compatibility_date": "2025-01-01",
+  "main": "worker/redirects.js",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },

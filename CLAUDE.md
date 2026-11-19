@@ -28,8 +28,14 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
 - Royal blue never on black; chrome blue never on white. All raw colours live in `src/styles/tokens.css`.
 - Images: Brandon's own photos from R2 only (`npm run images`), never generated.
 - Round 2 (DECISIONS R2-*): the DEFAULT quote form everywhere (name, email, phone, postcode, short
-  description) unless the operator says otherwise; no YouTube embed anywhere; one hero pattern
-  (Hero.astro) on every page; no lone top borders on cards.
+  description) unless the operator says otherwise; one hero pattern (Hero.astro) on every page; no
+  lone top borders on cards.
+- HOME 3 SITE-WIDE (19 Nov 2026, DECISIONS H3-*): Vince selected Home 3 (the Dom-reference variant,
+  https://dom.themerex.net/ captured 5 Nov) as the design for the whole site. Its navy/royal/chrome
+  tokens, Lexend Deca + Kumbh Sans, pill buttons, centred photo heroes and Dom section patterns are
+  the defaults in tokens.css/global.css. /home-2/ and /home-3/ are retired: worker/redirects.js 301s
+  them (and /complaints/) to their targets. Brandon's two YouTube videos are embedded on the home
+  page ONLY (youtube-nocookie, Videos.astro); no other video anywhere (supersedes R2-13 for those two).
 
 ## Commands
 - `npm run build` · `node scripts/audit.mjs` (+ `--selftest`) · `node scripts/token-gate.mjs`

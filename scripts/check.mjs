@@ -13,7 +13,10 @@
 // after a first interaction; main/review-page fill the reviews section, which is the first section
 // after the hero; slimline text white on dark grounds and AA on light ones; the corner is fixed
 // bottom-left on desktop, hidden on mobile, and never sits over a link, button or field while the
-// page scrolls. A missing route (the 404 page) is checked too. Exit 1 on any failure.
+// page scrolls. A missing route (the 404 page) is checked too. Home 3 site-wide (19 Nov 2026): the
+// selected design's fonts, navy header/footer, pill buttons and centred hero on every page; Brandon's two
+// videos on the home page only (geometry + each player loads inside its frame); live: the retired
+// /home-2/, /home-3/ and /complaints/ URLs answer 301. Exit 1 on any failure.
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync, mkdirSync } from 'node:fs';
@@ -67,10 +70,9 @@ const measureButtons = (sel) => {
           }
           return out;
         };
-// HOMEPAGE VARIANTS (TEMPORARY, operator brief 5 Nov 2026): /home-2/ and /home-3/ port other templates'
-// heroes and areas treatments on purpose, so the one-hero-pattern and boxless-areas checks skip them.
-const VARIANT = /^\/home-[23]\/$/;
-const fails = []; const btnLog = []; const heroLog = []; const tiLog = [];
+// HOME 3 SITE-WIDE (operator, 19 Nov 2026): the variants are retired and 301 to / (worker/redirects.js).
+const REDIRECTS = [['/home-3/', '/'], ['/home-3', '/'], ['/home-2/', '/'], ['/home-2', '/'], ['/complaints/', '/complaints-procedure/']];
+const fails = []; const btnLog = []; const heroLog = []; const tiLog = []; const videoLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
 const sizes = [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 844 }];
 for (const vp of sizes) {
@@ -116,17 +118,23 @@ for (const vp of sizes) {
           if (hs && btn) { const sb = hs.getBoundingClientRect(); out.hero = { leadAbove: !!lead && lead.tagName === 'P' && lead.getBoundingClientRect().bottom <= sb.top + 1, gapLead: lead ? Math.round(sb.top - lead.getBoundingClientRect().bottom) : null, btnBelow: btn.getBoundingClientRect().top >= sb.bottom - 1, gapBtn: Math.round(btn.getBoundingClientRect().top - sb.bottom) }; }
           const q = document.querySelector('[data-section="quote-form"]'); const qs = q?.querySelector('[data-trustindex-slot="slim-form"]'); const card = q?.querySelector('.qf__card, .dm-qf__card');
           if (qs && card) { const sb = qs.getBoundingClientRect(); const cb = card.getBoundingClientRect(); out.form = { inCard: card.contains(qs), leftOfCard: sb.right <= cb.left + 1, aboveCard: sb.bottom <= cb.top + 1 }; }
-          if (location.pathname === '/home-2/') {
-            const ff = getComputedStyle(document.querySelector('h1')).fontFamily; out.font = { family: ff, loaded: document.fonts.check('500 40px Outfit') };
-            out.royal = ['services-all', 'articles-all', 'faq-all'].map((c) => getComputedStyle(document.querySelector(`[data-cta="${c}"]`)).backgroundColor);
-            out.bar = getComputedStyle(document.querySelector('.ft__bar')).backgroundColor;
-            out.rvBg = getComputedStyle(document.querySelector('[data-section="reviews"]')).backgroundImage + '|' + getComputedStyle(document.querySelector('[data-section="reviews"]')).backgroundColor;
-            const cards = [...document.querySelectorAll('.fx-ap__card')].map((c) => Math.round(c.getBoundingClientRect().height)); out.apHeights = cards;
-            const imgs = [...document.querySelectorAll('.fx-ap__img')].map((c) => Math.round(c.getBoundingClientRect().height)); out.apImgs = imgs;
-            const tl = [...document.querySelectorAll('.fx-tl__card')].map((c) => { const i = c.querySelector('.fx-tl__img'); return i ? Math.round(c.getBoundingClientRect().width - i.getBoundingClientRect().width) : -1; }); out.tlGap = tl;
-          }
           return out;
         })(),
+        // HOME 3 SITE-WIDE (19 Nov 2026): computed styles of the selected design on every page.
+        design: (() => {
+          const h1 = document.querySelector('h1'); const h2 = document.querySelector('main h2'); const q = document.querySelector('[data-cta="hero-quote"]') || document.querySelector('main .btn');
+          return {
+            h1Font: getComputedStyle(h1).fontFamily.split(',')[0].replace(/"/g, ''), headLoaded: document.fonts.check('400 40px "Lexend Deca"'),
+            bodyFont: getComputedStyle(document.body).fontFamily.split(',')[0].replace(/"/g, ''), bodyLoaded: document.fonts.check('400 16px "Kumbh Sans"'),
+            upper: [h1, h2].filter(Boolean).map((e) => getComputedStyle(e).textTransform).filter((t) => t === 'uppercase').length,
+            header: getComputedStyle(document.querySelector('[data-header]')).backgroundColor,
+            footer: getComputedStyle(document.querySelector('footer')).backgroundColor, bar: getComputedStyle(document.querySelector('.ft__bar')).backgroundColor,
+            pill: q ? parseFloat(getComputedStyle(q).borderTopLeftRadius) >= q.getBoundingClientRect().height / 2 - 1 : false,
+            // The headline's TEXT lines (not its box) centred in the hero: every line's centre within 2px of the hero's.
+            heroCentred: (() => { const h = document.querySelector('[data-section="hero"]'); const t = h?.querySelector('h1'); if (!h || !t) return null; const hb = h.getBoundingClientRect(); const c = (hb.left + hb.right) / 2; const rg = document.createRange(); rg.selectNodeContents(t); const lines = [...rg.getClientRects()].filter((r) => r.width > 4); return lines.length ? Math.round(Math.max(...lines.map((r) => Math.abs((r.left + r.right) / 2 - c)))) : null; })(),
+          };
+        })(),
+        videos: [...document.querySelectorAll('[data-section="videos"] iframe')].map((f) => { const b = f.getBoundingClientRect(); return { src: f.getAttribute('src'), w: Math.round(b.width), h: Math.round(b.height), left: Math.round(b.left), top: Math.round(b.top + scrollY) }; }),
         ti: (() => {
           const lum = (c) => { const v = (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
           const bgOf = (el) => { for (let e = el; e; e = e.parentElement) { const c = getComputedStyle(e).backgroundColor; const a = (c.match(/[\d.]+/g) || [])[3]; if (c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent' && (a === undefined || +a > 0.5)) return c; } return 'rgb(255, 255, 255)'; };
@@ -185,15 +193,32 @@ for (const vp of sizes) {
     // ROUND 3 rendered gates.
     if (m.r3.hero && (!m.r3.hero.leadAbove || !m.r3.hero.btnBelow || m.r3.hero.gapLead > 24 || m.r3.hero.gapBtn > 32)) fails.push(`${tag}: hero slimline not between the paragraph and the buttons ${JSON.stringify(m.r3.hero)}`);
     if (m.r3.form && (m.r3.form.inCard || (vp.name === 'desktop' ? !m.r3.form.leftOfCard : !m.r3.form.aboveCard))) fails.push(`${tag}: quote-section slimline not in the left column ${JSON.stringify(m.r3.form)}`);
-    if (r === '/home-2/') {
-      const x = m.r3;
-      if (!/^"?Outfit/.test(x.font.family) || !x.font.loaded) fails.push(`${tag}: home-2 headings not in Outfit ${JSON.stringify(x.font)}`);
-      if (x.royal.some((c) => c !== 'rgb(1, 82, 155)')) fails.push(`${tag}: home-2 View All / All Resources / All Questions buttons not royal blue ${JSON.stringify(x.royal)}`);
-      if (x.bar !== 'rgb(16, 35, 58)') fails.push(`${tag}: home-2 footer legal bar ${x.bar} (want the navy ink-800)`);
-      if (x.rvBg !== 'none|rgb(255, 255, 255)') fails.push(`${tag}: home-2 reviews background ${x.rvBg} (want white)`);
-      if (vp.name === 'desktop' && (Math.max(...x.apHeights) - Math.min(...x.apHeights) > 2 || Math.max(...x.apImgs) - Math.min(...x.apImgs) > 1)) fails.push(`${tag}: home-2 resource cards not equal height ${JSON.stringify([x.apHeights, x.apImgs])}`);
-      if (x.tlGap.some((g) => g < 0 || g > 32)) fails.push(`${tag}: home-2 tiles: photo missing or not full width ${JSON.stringify(x.tlGap)}`);
-    }
+    // HOME 3 design gates (every page): Lexend Deca headings + Kumbh Sans body, loaded; no capitals transform on
+    // h1/h2; navy header and footer, the deeper-navy legal bar; pill buttons; the hero headline centred.
+    const d = m.design;
+    if (d.h1Font !== 'Lexend Deca' || !d.headLoaded || d.bodyFont !== 'Kumbh Sans' || !d.bodyLoaded) fails.push(`${tag}: Home 3 fonts not in use/loaded ${JSON.stringify(d)}`);
+    if (d.upper) fails.push(`${tag}: headings still in capitals (text-transform)`);
+    if (d.header !== 'rgb(14, 27, 42)' || d.footer !== 'rgb(14, 27, 42)' || d.bar !== 'rgb(16, 35, 58)') fails.push(`${tag}: header/footer/legal bar not the Home 3 navy ${JSON.stringify([d.header, d.footer, d.bar])}`);
+    if (!d.pill) fails.push(`${tag}: buttons are not pills`);
+    if (d.heroCentred == null || d.heroCentred > 2) fails.push(`${tag}: hero headline not centred (${d.heroCentred}px off)`);
+    // VIDEOS (operator, 19 Nov 2026): Brandon's two, home page only; desktop side by side at the same height in
+    // 16:9 and 9:16; mobile stacked inside the viewport. Each player must actually load (checked inside the frame below).
+    if (r === '/') {
+      const v = m.videos; const wide = v.find((x) => /mNwdUtQedkc/.test(x.src)); const short = v.find((x) => /v3g1Kdja0gk/.test(x.src));
+      if (v.length !== 2 || !wide || !short) fails.push(`${tag}: videos ${JSON.stringify(v)}`);
+      else {
+        if (Math.abs(wide.w / wide.h - 16 / 9) > 0.03 || Math.abs(short.w / short.h - 9 / 16) > 0.03) fails.push(`${tag}: video aspect ratios ${JSON.stringify(v)}`);
+        if (vp.name === 'desktop' && (Math.abs(wide.h - short.h) > 2 || Math.abs(wide.top - short.top) > 2 || short.left <= wide.left)) fails.push(`${tag}: videos not side by side at one height ${JSON.stringify(v)}`);
+        if (vp.name === 'mobile' && (short.top <= wide.top || v.some((x) => x.left < 0 || x.left + x.w > vp.width))) fails.push(`${tag}: videos not stacked inside the viewport ${JSON.stringify(v)}`);
+      }
+      const frames = page.frames().filter((f) => /youtube-nocookie\.com\/embed\//.test(f.url()));
+      for (const id of ['mNwdUtQedkc', 'v3g1Kdja0gk']) {
+        const fr = frames.find((f) => f.url().includes(id));
+        const st = fr ? await fr.waitForSelector('.html5-video-player, .ytp-error, .ytp-cued-thumbnail-overlay', { timeout: 15000 }).then(() => fr.evaluate(() => ({ player: !!document.querySelector('.html5-video-player'), error: document.querySelector('.ytp-error')?.innerText?.trim().slice(0, 80) || '' })), () => null) : null;
+        if (!st || !st.player || st.error) fails.push(`${tag}: video ${id} did not load a playable player ${JSON.stringify(st)}`);
+        else videoLog.push(`${tag} ${id}: player ready, no error`);
+      }
+    } else if (m.videos.length) fails.push(`${tag}: ${m.videos.length} video(s) off the home page`);
     if (m.underlined.length) fails.push(`${tag}: underlined links ${JSON.stringify(m.underlined.slice(0, 5))}`);
     if (m.heroBad.length) fails.push(`${tag}: hero carries ${m.heroBad.join(', ')}`);
     if (m.formInHero) fails.push(`${tag}: quote form inside the hero`);
@@ -266,15 +291,14 @@ for (const vp of sizes) {
       if (m.visibleLabels) fails.push(`${tag}: ${m.visibleLabels} visible form labels`);
       if (!m.buttons.some((x) => x.cls === 'lf-b')) fails.push(`${tag}: form submit button not measured`);
     }
-    if (m.youtube) fails.push(`${tag}: ${m.youtube} YouTube iframe(s)`);
-    if (!m.utility && !VARIANT.test(r)) {
+    if (r !== '/' && m.youtube) fails.push(`${tag}: ${m.youtube} YouTube iframe(s) off the home page`);
+    if (!m.utility) {
       if (!m.heroPattern.ok || m.heroPattern.side) fails.push(`${tag}: hero not the home pattern ${JSON.stringify(m.heroPattern)}`);
-      if (m.heroPattern.refLeft != null && Math.abs(m.heroPattern.h1Left - m.heroPattern.refLeft) > 2) fails.push(`${tag}: hero H1 left ${m.heroPattern.h1Left} vs page container ${m.heroPattern.refLeft}`);
-      heroLog.push(`${tag} ${m.heroPattern.kind} h=${m.heroPattern.height} h1x=${m.heroPattern.h1Left} cx=${m.heroPattern.refLeft}`);
+      heroLog.push(`${tag} ${m.heroPattern.kind} h=${m.heroPattern.height} centre-offset=${m.design.heroCentred}`);
     }
     if (m.topBorders.length) fails.push(`${tag}: lone top borders ${JSON.stringify(m.topBorders)}`);
     if (r === '/' && m.homeMap !== 'https://www.google.com/maps?cid=8023434379390696838&output=embed') fails.push(`${tag}: home map ${m.homeMap}`);
-    if (m.areasBoxed && !VARIANT.test(r)) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
+    if (m.areasBoxed) fails.push(`${tag}: areas section still boxed (${m.areasBoxed})`);
     if (m.steps && (m.steps.h2 !== 'left' && m.steps.h2 !== 'start' || !['left', 'start'].includes(m.steps.more) || !['left', 'start'].includes(m.steps.step) || (m.steps.gap !== null && m.steps.gap !== 0))) fails.push(`${tag}: how a job runs ${JSON.stringify(m.steps)}`);
     for (const x of m.buttons) { btnLog.push(`${tag} ${x.cls} "${x.label}" top ${x.top} bottom ${x.bottom} delta ${x.delta}`); if (Math.abs(x.delta) > 1.5) fails.push(`${tag}: button "${x.label}" (${x.cls}) not centred: top ${x.top} / bottom ${x.bottom}`); }
     if (vp.name === 'mobile' && !m.utility) {
@@ -320,11 +344,19 @@ for (const vp of sizes) {
   }
   for (const h of targets) { const res = await ctx.request.get(base + h, { maxRedirects: 3 }); if (res.status() !== 200) fails.push(`link ${h} -> ${res.status()}`); }
   console.log(`internal link targets: ${targets.size}`);
+  // Retired URLs answer 301 to their replacement (worker/redirects.js). Live only: the local server has no Worker.
+  if (live) for (const [from, to] of REDIRECTS) {
+    const res = await ctx.request.get(base + from, { maxRedirects: 0 });
+    const loc = res.headers()['location'] || '';
+    if (res.status() !== 301 || new URL(loc, base).pathname !== to) fails.push(`redirect ${from} -> ${res.status()} ${loc} (want 301 ${to})`);
+    else console.log(`  redirect ${from} -> 301 ${new URL(loc, base).pathname}`);
+  }
   await ctx.close();
 }
 await browser.close();
 server?.close();
 tiLog.forEach((l) => console.log('  ti', l));
+videoLog.forEach((l) => console.log('  video', l));
 if (args.includes('--log')) { heroLog.forEach((l) => console.log('  hero', l)); const seen = new Set(); btnLog.forEach((l) => { const k = l.replace(/^\S+ \S+ /, (x) => x.split(' ')[0] + ' '); if (!seen.has(k)) { seen.add(k); console.log('  btn', l); } }); }
 const worst = btnLog.map((l) => Math.abs(+l.split('delta ')[1])).reduce((a, b) => Math.max(a, b), 0);
 console.log(`buttons measured: ${btnLog.length}, worst |delta| ${worst}px`);

@@ -55,9 +55,9 @@ const content: ServiceContent = {
     heading: 'How an Exterior Job Runs',
     lead: 'Three steps, and a call is a direct line to Brandon.',
     steps: [
-      { title: 'Get in touch', body: 'Call Brandon directly, use the quote form (choose Exterior work) or send a WhatsApp message with your postcode.' },
-      { title: 'A free quotation', body: 'Brandon talks through the walls, windows and doors with you, the colours and the finish, and gives you a free quotation.' },
-      { title: 'Prepared, then painted', body: 'Surfaces are prepared and the surroundings protected, then painted in the right conditions. Brandon carries out the work and oversees the job.' },
+      { title: 'Get in Touch', body: 'Call Brandon directly, use the quote form (choose Exterior work) or send a WhatsApp message with your postcode.' },
+      { title: 'A Free Quotation', body: 'Brandon talks through the walls, windows and doors with you, the colours and the finish, and gives you a free quotation.' },
+      { title: 'Prepared, Then Painted', body: 'Surfaces are prepared and the surroundings protected, then painted in the right conditions. Brandon carries out the work and oversees the job.' },
     ],
   },
   pictures: {

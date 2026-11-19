@@ -74,9 +74,10 @@ export const trustindex = {
 export type TrustindexRole = keyof typeof trustindex;
 
 /**
- * Brandon's two YouTube videos (plan, Video). NOT EMBEDDED ANYWHERE (operator round 2, 5 Nov 2026,
- * fix 13: every hand-placed YouTube embed came off; the operator will supply auto-updating
- * widgets). Kept, with their captions, for that later use. The channel stays in schema sameAs.
+ * Brandon's two YouTube videos (plan, Video), exactly the two links he sent. EMBEDDED ON THE HOME PAGE
+ * ONLY (operator, 19 Nov 2026: "include the two Brandon YouTube links as normal responsive video
+ * embeds ... the full video for the homepage, and the short should sit appropriately with it"),
+ * through Videos.astro on youtube-nocookie.com. Supersedes R2-13 for these two. No other video.
  */
 export const videos = {
   kitchen: { id: 'v3g1Kdja0gk', url: 'https://youtube.com/shorts/v3g1Kdja0gk', caption: 'Full kitchen renovation', portrait: true },

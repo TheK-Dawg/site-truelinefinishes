@@ -82,13 +82,14 @@ function r3Fails(r, html, text, isArticle) {
   }
   // Quote section: the slimline in the LEFT intro column under the selling points, never in the form card.
   const qf = sectionOf(html, 'quote-form');
-  if (qf && r !== '/home-2/') {
+  if (qf) {
     const s2 = qf.search(/data-trustindex-slot="slim-form"/); const list = qf.search(/class="(qf__list|dm-qf__list)"/); const card = qf.search(/class="(qf__card|dm-qf__card)"/);
     if (s2 < 0 || list < 0 || card < 0 || !(s2 > list && s2 < card)) f.push(`quote-section slimline not in the left column under the selling points (slot ${s2}, list ${list}, card ${card})`);
   }
   // WhatsApp branding removed where the operator flagged it.
   if (isArticle && /article-aside-whatsapp|art__wa/.test(html)) f.push('WhatsApp in the article "Need a quote?" card');
-  if (r === '/home-3/' && /data-cta="form-whatsapp"/.test(html)) f.push('WhatsApp button in the quote section');
+  // HOME 3 SITE-WIDE (19 Nov 2026): Home 3's form band has no WhatsApp button, so no quote section has one.
+  if (/data-cta="form-whatsapp"/.test(qf)) f.push('WhatsApp button in the quote section');
   // Articles: Quick Rundown; internal links spread out (no paragraph with more than one); no link-dump line.
   if (isArticle) {
     const body = (html.match(/<article class="art__main[\s\S]*?<\/article>/) || [''])[0];
@@ -106,23 +107,18 @@ function r3Fails(r, html, text, isArticle) {
     const cards = (grid.match(/<article class="sb3__card/g) || []).length;
     if (cards % 2) f.push(`service grid ends on an empty cell (${cards} cards in two columns)`);
   }
-  // Variants.
-  if (r === '/home-2/') {
-    if (/class="fx-bn__chips"/.test(html)) f.push('services repeated in the "Rooms looking tired" CTA');
-    for (const cta of ['services-all', 'articles-all', 'faq-all']) if (!new RegExp(`class="btn fx-pill fx-pill--royal" data-cta="${cta}"`).test(html)) f.push(`${cta} button is not the royal-blue pill`);
-    const tiles = sectionOf(html, 'craft');
-    if ((tiles.match(/<li class="fx-tl__card/g) || []).length !== 3 || (tiles.match(/class="fx-tl__img"/g) || []).length !== 3) f.push('the three tiles are not all photo cards');
-    if (/class="fx-ar__panel"|class="fx-tag"/.test(html)) f.push('Where to Find Us still boxed / chips');
-    if (/class="fx-qf__lead"/.test(html)) f.push('the "Leave your name..." paragraph is still in the form');
-  }
-  if (r === '/home-3/') {
+  // HOME = HOME 3 (operator, 19 Nov 2026): the round-3 Home 3 rulings now hold on the regular homepage.
+  if (r === '/') {
     const rv = sectionOf(html, 'reviews');
     if (!/class="rv section section-reviews/.test(rv) || /<img/.test(rv)) f.push('reviews is not the site review section (bespoke photo band)');
     const band = sectionOf(html, 'cta-band');
-    if (!/<img class="dm-band__bg"/.test(band) || !/data-cta="band-quote"/.test(band) || !/data-cta="band-call"/.test(band)) f.push('CTA band needs a photo and both buttons');
+    if (!/<img class="hb__bg"/.test(band) || !/data-cta="band-quote"/.test(band) || !/data-cta="band-call"/.test(band)) f.push('CTA band needs a photo and both buttons');
     const gl = sectionOf(html, 'gallery');
-    if (!/<h2 class="dm-h2"/.test(gl) || (gl.match(/data-lightbox/g) || []).length !== 6) f.push('gallery needs a visible introduction and six photos');
-    if ((sectionOf(html, 'craft').match(/<li class="dm-tl__card/g) || []).length !== 5) f.push('"Homes and business premises" does not list all five services');
+    if (!/<h2 class="dm-h2"/.test(gl) || (gl.match(/data-lightbox/g) || []).length !== 6 || !/href="\/gallery\/"/.test(gl)) f.push('gallery needs a visible introduction, six photos and See the Gallery');
+    if ((sectionOf(html, 'craft').match(/<li class="ht__card/g) || []).length !== 5) f.push('"Homes and business premises" does not list all five services');
+    if ((sectionOf(html, 'services').match(/<li class="sv__tile/g) || []).length !== 5) f.push('the five hub tiles are missing');
+    const hero = sectionOf(html, 'hero');
+    if ((hero.match(/<img class="hero__bg/g) || []).length < 2 || !/data-slide-next/.test(hero)) f.push('home hero is not the Home 3 photo slider');
   }
   return f;
 }
@@ -187,9 +183,9 @@ const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); st
 walk(dist);
 const articles = JSON.parse(readFileSync(new URL('../src/data/articles.json', import.meta.url), 'utf8'));
 const review = new Set(articles.filter((a) => a.status !== 'published').map((a) => `/resources/${a.slug}/`));
-// HOMEPAGE VARIANTS (TEMPORARY, operator brief 5 Nov 2026): noindex, out of the sitemap, and exempt
-// from the one-hero-pattern check only (they port other templates' heroes on purpose).
-const VARIANT = /^\/home-[23]\/$/;
+// HOMEPAGE VARIANTS RETIRED (19 Nov 2026): /home-2/ and /home-3/ must not be built (they 301 to / in
+// worker/redirects.js); nothing may link to them.
+const RETIRED = /^\/(home-[23]|complaints)\/$/;
 const fails = []; const warns = [];
 const route = (file) => '/' + relative(dist, file).replace(/index\.html$/, '').replace(/\.html$/, '/');
 const exists = (href) => { const p = href.split('#')[0].split('?')[0]; if (!p || p === '/') return true; const f = join(dist, p); return existsSync(join(f, 'index.html')) || existsSync(f); };
@@ -210,12 +206,12 @@ for (const file of pages) {
   if (!/\| TrueLine Finishes$/.test(title.replace(/&amp;/g, '&'))) fails.push(`${r}: title must end "| TrueLine Finishes" (brand last): "${title}"`);
   if (title.length > 75) warns.push(`${r}: title ${title.length} chars`);
   if (desc.length < 110 || desc.length > 165) warns.push(`${r}: description ${desc.length} chars`);
-  const variant = VARIANT.test(r);
-  const wantRobots = utility || review.has(r) || variant ? 'noindex, nofollow' : 'index, follow';
+  if (RETIRED.test(r)) fails.push(`${r}: retired URL is still built (it must 301 through worker/redirects.js)`);
+  const wantRobots = utility || review.has(r) ? 'noindex, nofollow' : 'index, follow';
   if (!html.includes(`<meta name="robots" content="${wantRobots}"`)) fails.push(`${r}: robots meta is not "${wantRobots}"`);
   if (!/<link rel="canonical" href="https:\/\/www\.truelinefinishes\.com\//.test(html)) fails.push(`${r}: canonical missing or not www`);
-  if (!utility && !review.has(r) && !variant && !sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: missing from sitemap`);
-  if ((utility || review.has(r) || variant) && sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: noindex page is in the sitemap`);
+  if (!utility && !review.has(r) && !sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: missing from sitemap`);
+  if ((utility || review.has(r)) && sitemap.includes(`https://www.truelinefinishes.com${r}<`)) fails.push(`${r}: noindex page is in the sitemap`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     let j; try { j = JSON.parse(m[1]); } catch (e) { fails.push(`${r}: schema JSON parse ${e.message}`); continue; }
     const biz = j['@graph']?.find((n) => n['@type'] === 'HousePainter');
@@ -230,7 +226,6 @@ for (const file of pages) {
       if (!/cid=8023434379390696838/.test(biz.hasMap || '')) fails.push(`${r}: hasMap is not the Google listing`);
     }
     if (isArticle && !j['@graph'].some((n) => n['@type'] === 'Article')) fails.push(`${r}: no Article schema`);
-    if (/VideoObject/.test(m[1])) fails.push(`${r}: VideoObject schema (no video is embedded)`);
   }
   const text = visibleText(html);
   for (const f of copyFails(text, isArticle)) fails.push(`${r}: ${f}`);
@@ -251,6 +246,7 @@ for (const file of pages) {
     const h = m[1];
     if (/^\/(_astro|brand|images|favicon|site\.webmanifest|sitemap)/.test(h)) continue;
     if (!exists(h)) fails.push(`${r}: broken link ${h}`);
+    if (RETIRED.test(h.split('#')[0].split('?')[0])) fails.push(`${r}: links to a retired URL ${h}`);
     for (const rv of review) if (h.split('#')[0] === rv && r !== rv) fails.push(`${r}: links to unpublished article ${h}`);
   }
   for (const m of html.matchAll(/<a\b[^>]*>([\s\S]*?)<\/a>/g)) {
@@ -263,11 +259,20 @@ for (const file of pages) {
   // logo / video / form); no before-and-after slider; no underlined links; footer charity line +
   // LMB credit; the Trustindex widgets mapped by role (tiFails); no Google-reviews line in
   // the hero; the home map is the Google listing (CID); list-of-services H2s are banned.
-  if (/youtube(-nocookie)?\.com\/embed|data-video=/.test(html)) fails.push(`${r}: YouTube embed (round 2: none anywhere)`);
+  // VIDEOS (operator, 19 Nov 2026, superseding round 2's "none anywhere"): Brandon's two videos, on the
+  // home page only, privacy-enhanced (youtube-nocookie), lazy, titled, no autoplay; no other video.
+  const yt = [...html.matchAll(/<iframe\b[^>]*youtube[^>]*>/g)].map((m) => m[0]);
+  if (r === '/') {
+    const ids = yt.map((t) => (t.match(/youtube-nocookie\.com\/embed\/([\w-]+)/) || [])[1]).sort();
+    if (JSON.stringify(ids) !== JSON.stringify(['mNwdUtQedkc', 'v3g1Kdja0gk'])) fails.push(`/: videos ${JSON.stringify(ids)} (want Brandon's two: mNwdUtQedkc + v3g1Kdja0gk, on youtube-nocookie)`);
+    for (const t of yt) if (!/loading="lazy"/.test(t) || !/title="[^"]+"/.test(t) || /autoplay=1/.test(t) || !/allowfullscreen/.test(t)) fails.push(`/: video iframe not lazy/titled/fullscreen or autoplaying: ${t.slice(0, 100)}`);
+    const vs = sectionOf(html, 'videos');
+    if (!/vd__item--wide[\s\S]*mNwdUtQedkc[\s\S]*vd__item--short[\s\S]*v3g1Kdja0gk/.test(vs)) fails.push('/: the full video (16:9) and the Short (9:16) are not together in the videos section');
+  } else if (yt.length || /data-video=/.test(html)) fails.push(`${r}: YouTube embed off the home page (${yt.length})`);
   const hero = (html.match(/<section[^>]*data-section="hero"[\s\S]*?<\/section>/) || [''])[0];
   if (/<iframe|data-video=|data-lead-form|<form\b|\/brand\/logo/.test(hero)) fails.push(`${r}: hero carries a video, a form or the logo`);
   if (!/404|thank-you/.test(r)) {
-    if (!variant && (!/class="hero on-dark section-hero[^"]*"[^>]*data-hero="(home|page)"/.test(hero) || !/class="hero__bg"/.test(hero))) fails.push(`${r}: hero is not the shared home-hero pattern`);
+    if (!/class="hero on-dark section-hero[^"]*"[^>]*data-hero="(home|page)" data-hero-style="home-3"/.test(hero) || !/class="hero__bg( is-on)?"/.test(hero)) fails.push(`${r}: hero is not the shared Home 3 hero pattern`);
     if (/ph__img|class="ph /.test(html)) fails.push(`${r}: old inner hero / side image`);
     if (/reviews on Google/i.test(visibleText(hero))) fails.push(`${r}: Google reviews line still in the hero`);
   }

@@ -1,23 +1,22 @@
 ---
 /**
- * RELATED SERVICES. The other hubs as cards (plan: "the other hubs as related links"; each hub's
+ * RELATED SERVICES, in Home 3's "every service" cards (the Dom reference's product grid: a square
+ * photo, the centred title and line under it). The other hubs as cards (plan: "the other hubs as related links"; each hub's
  * content note names its cross-links). CARD LAW: exactly one link per card, on the title text,
  * whose anchor is the exact hub name. Images never link.
  */
 import { services } from '../data/site';
-import Icon from './Icon.astro';
 interface Props { picks: string[]; heading?: string }
 const { picks, heading = 'Work that often goes with this' } = Astro.props;
 const list = picks.map((slug) => services.find((s) => s.slug === slug)).filter((s): s is NonNullable<typeof s> => !!s);
 ---
 <section class="rl section section--panel section-related" data-section="related">
   <div class="container">
-    <div class="sec-head" data-motion="reveal"><h2 class="sec-head__h2">{heading}</h2></div>
+    <div class="dm-head dm-head--c" data-motion="reveal"><h2 class="dm-h2">{heading}</h2></div>
     <ul class:list={['rl__grid', `rl__grid--${Math.min(list.length, 4)}`]}>
       {list.map((s, i) => (
         <li class="rl__card" data-motion="reveal" style={`--reveal-delay: ${i * 70}ms`}>
           <div class="rl__img"><img src={s.image.sm} alt={s.image.alt} width={s.image.width} height={s.image.height} loading="lazy" decoding="async" /></div>
-          <span class="rl__ic"><Icon name={s.icon} size={24} /></span>
           <h3 class="rl__title"><a href={`/${s.slug}/`} data-link="card">{s.name}</a></h3>
           <p class="rl__body">{s.short}</p>
         </li>
@@ -27,18 +26,17 @@ const list = picks.map((slug) => services.find((s) => s.slug === slug)).filter((
 </section>
 
 <style>
-  .rl__grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .rl__grid--2 { grid-template-columns: repeat(2, 1fr); }
-  .rl__grid--4 { grid-template-columns: repeat(4, 1fr); }
-  .rl__card { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border-default); box-shadow: var(--shadow-card); padding-bottom: var(--space-6); transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease); }
-  .rl__card:hover { border-color: var(--brand-primary); box-shadow: var(--shadow-raised); }
-  .rl__img { aspect-ratio: 16 / 10; overflow: hidden; }
-  .rl__img img { width: 100%; height: 100%; object-fit: cover; }
-  .rl__ic { display: grid; place-items: center; width: var(--space-12); height: var(--space-12); margin: calc(-1 * var(--space-6)) 0 0 var(--space-6); position: relative; border-radius: var(--badge-radius); background: var(--brand-primary); color: var(--brand-fg); }
-  .rl__title { font-size: var(--fs-xl); padding: var(--space-4) var(--space-6) var(--space-2); }
-  .rl__title a { color: var(--brand-text); }
-  .rl__title a:hover { color: var(--text-heading); }
-  .rl__body { flex: 1; padding: 0 var(--space-6); font-size: var(--fs-md); color: var(--text-muted); }
-  @media (max-width: 1100px) { .rl__grid--4 { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 900px) { .rl__grid, .rl__grid--2, .rl__grid--4 { grid-template-columns: 1fr; } }
+  .rl__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .rl__grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: calc(var(--container) * 0.67); margin-inline: auto; }
+  .rl__grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .rl__card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .rl__img { width: 100%; aspect-ratio: 1; overflow: hidden; margin-bottom: var(--space-5); background: var(--bg-card); }
+  .rl__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+  .rl__card:hover .rl__img img { transform: scale(1.04); }
+  .rl__title { font-size: var(--fs-lg); line-height: 1.25; margin-bottom: var(--space-2); }
+  .rl__title a { color: var(--text-heading); transition: color 0.2s var(--ease); }
+  .rl__title a:hover { color: var(--brand-primary); }
+  .rl__body { font-size: var(--fs-sm); line-height: var(--lh-normal); color: var(--text-muted); max-width: 40ch; }
+  @media (max-width: 1100px) { .rl__grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .rl__grid, .rl__grid--2, .rl__grid--4 { grid-template-columns: 1fr; } }
 </style>
