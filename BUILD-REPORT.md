@@ -549,3 +549,42 @@ exact words behind each change: `DECISIONS.md` R4-1 … R4-20. Version 2.0.0 →
   and the larger buttons showed a false 2px error. It now measures the **metric** cap height ('H') and
   descender depth ('p'), which is the box `text-box: trim-both cap alphabetic` actually centres. The
   descender lift was re-tuned for the new size at the same time.
+
+### Released and verified live (19 Nov 2026)
+- Commit **`8167d29`**, pushed to `github.com/TheK-Dawg/site-truelinefinishes` `main`
+  (`git ls-remote` returns the same SHA). Deployed through `scripts/deploy-guard.mjs` to the
+  **existing** Worker `site-truelinefinishes`, **Version ID `f9884024-1b9e-43eb-a238-7ad8c40b4d71`**,
+  https://site-truelinefinishes.small-bird-3273.workers.dev. No other Worker was touched.
+- `check.mjs` **against the live URL**: **26 routes × 1440/390, 0 fails**; 456 buttons measured,
+  worst offset **0.5px**; every Trustindex slot rendered its own widget; the Formlane form rendered
+  its five fields on every form page; all 24 internal link targets resolve; the retired URLs answer
+  301; both videos loaded a player with no error inside their frames at both widths.
+- Served read-back (curl): every route 200, `/sitemap.xml` 200, `/no-such-page/` 404,
+  /home-2/ and /home-3/ → 301 `/`, /complaints/ → 301 `/complaints-procedure/`; the preview host
+  still sends `X-Robots-Tag: noindex, nofollow`. Home, a hub, /gallery/ and /privacy/ served bytes
+  are **md5-identical** to the committed build.
+- Served HTML spot checks: the LMB credit keyword is an `<a rel="nofollow noopener">` on `/` and
+  `footer-credit__link--plain` on `/terms/` (0 localmapbooster hrefs there); 0 `further-reading`
+  sections on a hub; `data-cta="reviews-page"` present on inner pages; 0 `data-slide-next` on the
+  home page; **95** square gallery tiles on the home page; 7 `legal-related` links on
+  /accessibility/.
+- Computed live (Chromium, 1440): home hero **690px**, /interior-painting/ and /gallery/ heroes both
+  **720px**; buttons **17px**; `.sv__body` **16px**, `.sv__title` 24px, `.rl__body` 16px,
+  `.ap__body` 16px; the last gallery group's bottom padding **96px** (was 0).
+- Carousel live: three photos, advancing on their own `0 → 1 → 2 → 0 → 1 → 2 → 0 → 1` over 48s
+  (it loops), **0 controls** inside the hero, and under `prefers-reduced-motion: reduce` it stays on
+  the first photo for the whole 7s window.
+- Live orphan sweep over all 25 routes: the only route with no inbound link is **/thank-you/**, which
+  is the form's own redirect target and noindex, as intended.
+- `cookies.mjs` live (6 routes): **0 cookies, 0 first-party storage** on every route.
+
+### Real domain: STILL BLOCKED at GoDaddy (nothing was changed)
+Re-checked today, read-only: `truelinefinishes.com` still answers on GoDaddy nameservers
+`ns15/ns16.domaincontrol.com`, the apex and www both resolve to GoDaddy parking
+(3.33.130.190 / 15.197.148.33) and serve the `/lander` redirect page, and the Cloudflare account
+still has **no zone** for `truelinefinishes.com` (zones API, `name=truelinefinishes.com` → 0
+results). Live Google Workspace mail is on the domain (`MX 1 smtp.google.com`). A Worker custom
+domain needs the zone active on Cloudflare, so the site cannot be attached without the nameserver
+change at GoDaddy, which needs Vince's or Brandon's authority and access. **The preview URL is a
+preview, not the real domain.** The go-live steps and the exact mail records to recreate are in the
+HOME-3 section above and are unchanged.
