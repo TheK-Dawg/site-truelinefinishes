@@ -15,7 +15,7 @@
  * "Painting and Decorating in Harrogate" always has it above its first H2 (#harrogate tag).
  */
 import data from './articles.json';
-import { towns } from './site';
+import { towns, images, type Img } from './site';
 
 export interface Article {
   slug: string; // engine contract: <hub-slug>-<town-slug>
@@ -46,3 +46,16 @@ export function videoPosition(a: Pick<Article, 'hub' | 'town'>): VideoPos {
   if (!t) return 'top';
   return (['top', 'mid', 'end'] as const)[(t.order - 1) % 3];
 }
+
+/**
+ * ARTICLE PHOTO POOL. The rule itself lives in src/lib/article-photos.js so scripts/audit.mjs can
+ * hold the built pages to exactly the same set (operator review 6, 25 Nov 2026: "correct
+ * service-matched photo pool", "block off-topic fallbacks"). These are the typed wrappers the
+ * Astro components use.
+ */
+export { HUB_SUBJECTS, photoSubject } from '../lib/article-photos.js';
+import { articlePhotoPool as poolOf } from '../lib/article-photos.js';
+/** Every photograph that may illustrate an article in this hub, hero excluded, in key order. */
+export const articlePhotoPool = (hub: string, heroKey?: string): Img[] => poolOf(images, hub, heroKey) as Img[];
+/** How many figures an article in this hub can carry before it would have to repeat or stray. */
+export const articlePhotoBudget = (hub: string, heroKey?: string) => articlePhotoPool(hub, heroKey).length;

@@ -45,14 +45,17 @@ ul, ol { margin: 0; }
   .sec-head__h2 { font-size: var(--fs-3xl); }
 }
 
-/* Buttons (Home 3 / Dom): pills, mixed case, the heading font at medium weight.
+/* Buttons (Home 3 / Dom): pills, mixed case, the heading font.
    OPERATOR REVIEW 4 (19 Nov 2026, "make the call-to-action buttons a bit larger"): one step up,
    --btn-h-lg tall with a --fs-base label (was --btn-h-md / --fs-md). Site-wide, so every CTA
-   grows together. */
+   grows together.
+   OPERATOR REVIEW 6 (25 Nov 2026, the shared call CTA "too pale or small: increase readability"):
+   one more step, --fs-lg at semibold (was --fs-base at medium). Same pill, same palette; the label
+   itself carries more ink. */
 .btn {
   position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
   min-height: var(--btn-h-lg); padding: 0 var(--space-8); border: 0; border-radius: var(--btn-radius);
-  font-family: var(--font-heading); font-size: var(--fs-base); font-weight: var(--fw-medium); letter-spacing: 0; text-transform: none; line-height: var(--lh-tight);
+  font-family: var(--font-heading); font-size: var(--fs-lg); font-weight: var(--fw-semibold); letter-spacing: 0; text-transform: none; line-height: var(--lh-tight);
   cursor: pointer; text-align: center; transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 /* OPTICAL CENTRING (operator round 2, 5 Nov 2026: "Quick Quote Online isn't vertically centred").
@@ -70,26 +73,41 @@ ul, ol { margin: 0; }
 .btn-dark:hover { background: var(--bg-inverse-2); }
 .btn-ghost { background: transparent; color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--glass-line); }
 .btn-ghost:hover { background: var(--glass-strong); }
-/* Call button (CallButton.astro), Home 3 pills: glass on dark grounds, the navy ink pill on light ones. */
+/* Call button (CallButton.astro), Home 3 pills: glass on dark grounds, the navy ink pill on light ones.
+   OPERATOR REVIEW 6 (25 Nov 2026): "the call button phone icon is too light against white; darker,
+   legible". Two things were wrong on a photographic hero. The pill was a 12% WHITE film, so over a
+   bright part of one of Brandon's photographs the pill's own ground went white; and the phone icon
+   was chrome blue, which is 2.4:1 on white and simply disappeared there. The pill now carries its
+   own navy glass (--glass-pill) at every width, so the ground under the label and the icon is dark
+   whatever the photograph does, and the icon is the same white as the label. Measured: white on the
+   pill is 18.9:1 over a dark photograph and 5.6:1 over a pure-white one (the worst case there is;
+   inside a hero the darker overlay lifts it to about 12:1). It was effectively white on white.
+   Same shape, same size, same place. */
 .btn-call { white-space: nowrap; }
-.btn-call--dark { background: var(--glass); color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--glass-line); backdrop-filter: blur(4px); }
-.btn-call--dark:hover { background: var(--glass-strong); }
-.btn-call--dark .icon { color: var(--accent-on-dark); }
+.btn-call--dark { background: var(--glass-pill); color: var(--text-inverse); box-shadow: inset 0 0 0 1px var(--glass-line); backdrop-filter: blur(4px); }
+.btn-call--dark:hover { background: var(--glass-pill-hover); }
+.btn-call--dark .icon { color: var(--text-inverse); }
 .btn-call--light { background: var(--bg-inverse); color: var(--text-inverse); }
 .btn-call--light:hover { background: var(--v-ink-700); }
-.btn-call--light .icon { color: var(--accent-on-dark); }
+.btn-call--light .icon { color: var(--text-inverse); }
 /* Mixed-case labels with descenders: `text-box` centres the CAP box, so a descender hangs below it
    and the label reads low. Lift it by about half the descender depth so cap top and descender bottom
    balance (measured by scripts/check.mjs; re-tuned in round 4 with the larger type). */
 .btn--desc .btn__t { transform: translateY(-2px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
-/* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16). */
-.btn::after {
+/* Sheen: continuous diagonal sweep, siblings staggered (v3 law 16).
+   OPERATOR REVIEW 6 (25 Nov 2026): the mobile sticky bar's two buttons get "the same restrained
+   repeating swipe/sheen motion on BOTH buttons". They are not .btn (they are the bar's own pills),
+   so they are named here, next to the one keyframe and inside the one prefers-reduced-motion switch
+   below, rather than given a second animation of their own. The white pill's sweep is the dark
+   token (a white sweep over white is invisible). */
+.btn::after, .sb a::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(110deg, transparent 30%, var(--glass-strong) 45%, var(--glass-strong) 55%, transparent 70%);
   transform: translateX(-120%); animation: sheen 4.2s var(--ease) infinite;
 }
-.btn-row .btn:nth-child(2)::after { animation-delay: 0.7s; }
+.sb .sb__quote::after { background: linear-gradient(110deg, transparent 30%, var(--v-glass-dark-sheen) 45%, var(--v-glass-dark-sheen) 55%, transparent 70%); }
+.btn-row .btn:nth-child(2)::after, .sb a:nth-child(2)::after { animation-delay: 0.7s; }
 @keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
 
 /* Inline text link. NEVER underlined (operator, 5 Nov 2026: "we don't underline links"): colour + weight, hover colour. */
@@ -143,7 +161,7 @@ ul, ol { margin: 0; }
 [data-motion='reveal'].is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   [data-motion='reveal'] { opacity: 1; transform: none; transition: none; }
-  .btn::after { animation: none; display: none; }
+  .btn::after, .sb a::after { animation: none; display: none; }
   * { scroll-behavior: auto !important; }
 }
 

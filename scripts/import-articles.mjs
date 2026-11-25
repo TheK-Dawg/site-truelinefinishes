@@ -10,6 +10,15 @@
 // articles go to Brandon for comments first); pass --publish <slug,...> to publish approved ones.
 // The house-video position and the per-H2 photos are applied by the template, not here.
 //
+// QUICK RUNDOWN (operator review 6, 25 Nov 2026, proved with a fixture run of this importer): the
+// round-3 audit gate requires a Quick Rundown box at the top of every article, and nothing here used
+// to produce one - so the FIRST engine article imported would have failed `node scripts/audit.mjs`
+// and blocked the release. The engine does write the box; it puts it in introHtml as an inline-styled
+// div holding "The Quick Answer" and a <ul>. That box is now lifted out of the intro into the
+// article's own `rundown` bullets, which the template renders in the site's own Quick Rundown panel.
+// Nothing is written here that the engine did not write. An accepted article WITHOUT such a box is
+// reported loudly, because it will not pass the gate until someone looks at it.
+//
 // Usage: node scripts/import-articles.mjs <run> [--engine /root/audit/claude-seo-engine] [--publish a,b]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,7 +45,17 @@ for (const n of ranks) {
   const hub = ctx.row.serviceSlug;
   if (!HUBS.includes(hub)) throw new Error(`rank ${n}: unknown hub ${hub}`);
   const slug = String(out.slug).replace(/^\/|\/$/g, '');
-  const html = `${out.introHtml}\n${out.bodyHtml}`
+  // Lift the engine's "Quick Answer" box out of the intro and into the site's Quick Rundown bullets.
+  let rundown = [];
+  let introHtml = out.introHtml;
+  const boxed = /<div\b[^>]*>(?:(?!<\/div>)[\s\S])*?<ul\b[\s\S]*?<\/ul>[\s\S]*?<\/div>/i.exec(introHtml || '');
+  if (boxed) {
+    rundown = [...boxed[0].matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)].map((m) => m[1].replace(/\s+/g, ' ').trim()).filter(Boolean);
+    if (rundown.length) introHtml = introHtml.replace(boxed[0], '');
+  }
+  if (!rundown.length) console.log(`  WARNING rank ${n} ${out.slug}: no "Quick Answer" box in the intro, so this article has no Quick Rundown and WILL FAIL scripts/audit.mjs until one is supplied`);
+
+  const html = `${introHtml}\n${out.bodyHtml}`
     .replace(/href="https:\/\/(www\.)?truelinefinishes\.com\//g, 'href="/')
     .replace(/href="\/((?:painting-and-decorating|interior-painting|exterior-painting|wallpapering|commercial-painting-and-decorating)-[a-z0-9-]+)\/"/g, 'href="/resources/$1/"');
   let faqs = [];
@@ -45,7 +64,7 @@ for (const n of ranks) {
   bySlug.set(slug, {
     slug, hub, town: out.town, status: PUBLISH.has(slug) || prev?.status === 'published' ? 'published' : 'review',
     title: out.pageTitle, metaTitle: out.seoTitle, description: out.metaDescription, summary: out.hero,
-    hero: HERO[hub], bodyHtml: html, faqs,
+    hero: HERO[hub], bodyHtml: html, rundown, faqs,
     engine: { runId: RUN, rank: n, source: `${DIR}/rank-${n}-article-out.json` },
   });
   console.log(`rank ${n}: ${slug} (${res.measured?.wordCount ?? '?'} words, ${faqs.length} FAQs)`);

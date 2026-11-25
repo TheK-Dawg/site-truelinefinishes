@@ -45,9 +45,23 @@
   --v-red-50: #FDECEA;
   --v-line-dark: rgba(169, 187, 208, 0.22);
   --v-glass-dark: rgba(14, 27, 42, 0.55);
+  /* The call pill's own ground (operator review 6, 25 Nov 2026). Round 5's call pill was a 12%
+     WHITE film, so over a pale part of a photograph the pill, its white label and its blue phone
+     icon all sat on white. A navy glass of its own means the label and the icon never depend on
+     what the photograph is doing behind them. */
+  --v-glass-dark-pill: rgba(14, 27, 42, 0.66);
+  /* The sheen sweep on a WHITE pill (the sticky bar's Quick Quote button): a white sweep over white
+     is invisible, so that one sweeps dark. Same subtlety as the white sweep on dark buttons. */
+  --v-glass-dark-sheen: rgba(14, 27, 42, 0.10);
+  --v-glass-dark-pill-hover: rgba(14, 27, 42, 0.82);
   --v-glass-light: rgba(255, 255, 255, 0.12);
   --v-glass-line: rgba(255, 255, 255, 0.28);
-  --v-overlay-slide: linear-gradient(180deg, rgba(14, 27, 42, 0.5) 0%, rgba(16, 35, 58, 0.6) 100%);
+  /* HERO OVERLAY (operator review 6, 25 Nov 2026: "background modestly darker so the Google /
+     Trustindex review strip can be read"). One modest step down from round 5's 0.5/0.6: the
+     photograph still reads as a photograph, and the white slimline rating, the headline and both
+     pills now sit on a ground dark enough to read over the bright parts of Brandon's photos
+     (the lit wall on the Baildon article hero, the pale bedding on the home carousel). */
+  --v-overlay-slide: linear-gradient(180deg, rgba(14, 27, 42, 0.62) 0%, rgba(16, 35, 58, 0.72) 100%);
   --v-overlay-band: linear-gradient(90deg, rgba(14, 27, 42, 0.88) 0%, rgba(16, 35, 58, 0.7) 45%, rgba(16, 35, 58, 0.2) 100%);
   --v-overlay-tile: linear-gradient(180deg, rgba(14, 27, 42, 0) 45%, rgba(14, 27, 42, 0.85) 100%);
   --v-shadow-soft: 0 10px 30px rgba(14, 27, 42, 0.08);
@@ -138,14 +152,19 @@
   --glass: var(--v-glass-light);
   --glass-strong: var(--v-glass-line);
   --glass-card: var(--v-glass-dark);
+  --glass-pill: var(--v-glass-dark-pill);
+  --glass-pill-hover: var(--v-glass-dark-pill-hover);
   --glass-line: var(--v-glass-line);
   --scrim-lightbox: rgba(14, 27, 42, 0.95);
   --shadow-card: 0 1px 3px rgba(14, 27, 42, 0.05);
   --shadow-raised: var(--v-shadow-soft);
   --shadow-overlay: var(--v-shadow-lift);
   --focus-ring: var(--v-chrome);
+  /* WhatsApp's own brand green with the official mark in white on it (operator review 6, 25 Nov
+     2026: use the actual official WhatsApp logo). White on #25D366 is the brand's own lock-up;
+     WCAG 1.4.11 exempts a logotype from the non-text contrast minimum. */
   --whatsapp: #25D366;
-  --whatsapp-fg: #000000;
+  --whatsapp-fg: #FFFFFF;
 
   /* ── Layout layer ──
      Breakpoint scale (literal in @media): 400 · 520 · 640 · 760 · 900 · 1023/1024 · 1100 · 1180 */

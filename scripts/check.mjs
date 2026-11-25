@@ -16,6 +16,9 @@
 // ROUND 5 (19 Nov 2026): ONE hero height for every route at each width (780 desktop, 540 phone floor)
 // with the hero content never clipped; the home gallery at most 20 photographs, every one distinct,
 // measured on the served page at both widths; H1s and copy per scripts/audit.mjs round-5 gates.
+// ROUND 6 (25 Nov 2026): the HOME hero alone steps up (840 desktop, 720 phone floor) because the
+// operator asked for it bigger and for every other hero to be left alone; the shared figure still
+// governs every inner route, and scripts/hero-heights.mjs proves the whole set at three widths.
 // from our own code. Trustindex (6 Nov 2026): every widget actually renders (its own id, height > 0)
 // after a first interaction; main/review-page fill the reviews section, which is the first section
 // after the hero; slimline text white on dark grounds and AA on light ones; the corner is fixed
@@ -86,7 +89,9 @@ const measureButtons = (sel) => {
         };
 // HOME 3 SITE-WIDE (operator, 19 Nov 2026): the variants are retired and 301 to / (worker/redirects.js).
 // ROUND 5: the one hero height per width (src/components/Hero.astro --hero-h).
+// Hero heights. Review 5's one shared height, then review 6's home-only step up (25 Nov 2026).
 const HERO_H = { desktop: 780, tablet: 640, mobile: 540 };
+const HERO_H_HOME = { desktop: 840, tablet: 720, mobile: 720 };
 const REDIRECTS = [['/home-3/', '/'], ['/home-3', '/'], ['/home-2/', '/'], ['/home-2', '/'], ['/complaints/', '/complaints-procedure/']];
 const fails = []; const btnLog = []; const heroLog = []; const tiLog = []; const videoLog = []; const galleryLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
@@ -328,12 +333,16 @@ for (const vp of sizes) {
       if (!t || !t.sq || t.gap < 8) fails.push(`${tag}: home gallery is not the gallery page's spaced square tiles ${JSON.stringify(t)}`);
     }
     if (r === '/gallery/' && (m.r4QuoteGap == null || m.r4QuoteGap < 40)) fails.push(`${tag}: no space between the gallery and the quote section (${m.r4QuoteGap}px)`);
-    // HERO HEIGHTS (ROUND 5, superseding round 4's split): ONE height for every hero on the site,
-    // the home page included, at each width. The operator rejected round 4's 690 home against 720
-    // inner as a mismatch and as too small, so the desktop figure is 780 everywhere, 540 on a phone,
-    // and the hero may only ever be TALLER than its floor (content is never clipped).
-    if (vp.name === 'desktop' && Math.abs(m.heroPattern.height - HERO_H.desktop) > 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px, not the ${HERO_H.desktop}px every page shares on a desktop`);
-    if (vp.name === 'mobile' && m.heroPattern.height < HERO_H.mobile - 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px on a phone, under the ${HERO_H.mobile}px floor every page shares`);
+    // HERO HEIGHTS. Round 5 gave every hero on the site one height at each width; ROUND 6 (25 Nov
+    // 2026) supersedes that for the HOME PAGE ONLY ("homepage hero should feel a little bigger / not
+    // stop too soon", and don't touch the others). So home is held to its own, taller figure and
+    // every inner route is still held to the one shared figure. Either way the hero may only ever be
+    // TALLER than its floor (content is never clipped).
+    const heroWant = r === '/' ? HERO_H_HOME : HERO_H;
+    const heroWhose = r === '/' ? 'the home hero height (round 6)' : `the ${HERO_H.desktop}px every inner page shares`;
+    if (vp.name === 'desktop' && Math.abs(m.heroPattern.height - heroWant.desktop) > 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px, not ${heroWant.desktop}px - ${heroWhose}`);
+    if (vp.name === 'mobile' && m.heroPattern.height < heroWant.mobile - 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px on a phone, under the ${heroWant.mobile}px floor (${r === '/' ? 'home, round 6' : 'shared by every inner page'})`);
+    if (vp.name === 'desktop' && r === '/' && m.heroPattern.height <= HERO_H.desktop) fails.push(`${tag}: the home hero (${m.heroPattern.height}px) is not taller than the inner heroes (${HERO_H.desktop}px) - round 6 asked for it bigger`);
     if (vp.name === 'desktop' && r === '/' && m.heroPattern.height >= vp.height - 40) fails.push(`${tag}: home hero fills the window (${m.heroPattern.height}px), so the reviews section does not come up`);
     if (m.heroClipped) fails.push(`${tag}: hero content is clipped (${m.heroClipped})`);
     // TRUSTINDEX (6 Nov 2026): rendered, mapped, placed, readable; corner desktop only.

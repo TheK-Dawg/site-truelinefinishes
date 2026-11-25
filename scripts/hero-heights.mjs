@@ -1,11 +1,16 @@
-// HERO HEIGHT GATE (operator review 5, 19 Nov 2026): the computed height of EVERY hero on EVERY
-// route, at three widths, proving one policy for the whole site.
-//   desktop 1440x900: every hero exactly 780px (the one shared height; round 4's 690 home against
-//     720 inner was the mismatch the operator rejected, and both were too small)
-//   tablet   768x1024: every hero exactly 640px
-//   phone     390x844: every hero at least 540px, and never with its content clipped
+// HERO HEIGHT GATE. Operator review 5 (19 Nov 2026) set one height for every hero on the site;
+// operator review 6 (25 Nov 2026) supersedes that FOR THE HOME PAGE ONLY ("homepage hero should feel
+// a little bigger / not stop too soon", with the explicit instruction not to change every hero when
+// only home needs the room). So the gate now proves TWO things at once: the home hero is the taller
+// one, and every OTHER hero on the site still shares review 5's single height exactly.
+//   desktop 1440x900: home exactly 840px, every inner hero exactly 780px
+//   tablet   768x1024: home exactly 720px, every inner hero exactly 640px
+//   phone     390x844: home at least 720px, every inner hero at least 540px, none with content clipped
 // Usage: node scripts/hero-heights.mjs [baseURL]   (no URL: serves dist/ locally)
-// Exit 1 on any mismatch. --selftest proves the gate fails a deliberately mismatched hero.
+// Exit 1 on any mismatch. There is no --selftest switch here (an earlier header claimed one that was
+// never written): the gate is proved by breaking the subject instead - give .hero--compact a height of
+// its own and the inner-page checks fail; drop the home re-point and the home checks fail. Both were
+// run on 25 Nov 2026 and both failed as they should before this pass was called clean.
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
@@ -15,10 +20,11 @@ const { chromium } = require('playwright');
 const EXE = '/root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell';
 
 const WANT = [
-  { name: 'desktop', width: 1440, height: 900, exact: 780 },
-  { name: 'tablet', width: 768, height: 1024, exact: 640 },
-  { name: 'phone', width: 390, height: 844, min: 540 },
+  { name: 'desktop', width: 1440, height: 900, exact: 780, home: 840 },
+  { name: 'tablet', width: 768, height: 1024, exact: 640, home: 720 },
+  { name: 'phone', width: 390, height: 844, min: 540, homeMin: 720 },
 ];
+const HOME = '/';
 const args = process.argv.slice(2);
 const live = args[0] && !args[0].startsWith('--') ? args[0].replace(/\/$/, '') : '';
 const dist = new URL('../dist/', import.meta.url).pathname;
@@ -82,13 +88,19 @@ for (const vp of WANT) {
     await page.close();
     if (!m) { fails.push(`${vp.name} ${r}: no hero section`); continue; }
     rows.push(`${vp.name.padEnd(7)} ${r.padEnd(44)} ${String(m.height).padStart(4)}px  (${m.kind}, --hero-h ${m.token})`);
-    seen.set(m.height, (seen.get(m.height) || 0) + 1);
-    if (vp.exact != null && Math.abs(m.height - vp.exact) > 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, want ${vp.exact}px (the one height every hero shares)`);
-    if (vp.min != null && m.height < vp.min - 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, under the ${vp.min}px floor every hero shares`);
+    const isHome = r === HOME;
+    if (!isHome) seen.set(m.height, (seen.get(m.height) || 0) + 1);
+    // The home hero is its own (taller) height, review 6; every other hero shares review 5's.
+    const exact = isHome ? vp.home : vp.exact;
+    const min = isHome ? vp.homeMin : vp.min;
+    if (exact != null && Math.abs(m.height - exact) > 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, want ${exact}px (${isHome ? 'the home hero height, review 6' : 'the one height every inner hero shares'})`);
+    if (min != null && m.height < min - 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, under the ${min}px floor (${isHome ? 'home, review 6' : 'shared by every inner hero'})`);
+    if (isHome && vp.exact != null && m.height <= vp.exact) fails.push(`${vp.name} ${r}: the home hero (${m.height}px) is not taller than the inner heroes (${vp.exact}px) - review 6 asked for it bigger`);
+    if (isHome && vp.min != null && m.height <= vp.min) fails.push(`${vp.name} ${r}: the home hero (${m.height}px) is not taller than the inner floor (${vp.min}px) - review 6 asked for it bigger`);
     if (m.clip != null && m.clip > 1) fails.push(`${vp.name} ${r}: hero content clipped by ${m.clip}px`);
   }
   await ctx.close();
-  if (vp.exact != null && seen.size > 1) fails.push(`${vp.name}: ${seen.size} different hero heights across the site (${[...seen.keys()].sort((a, b) => a - b).join(', ')}px) - they must all match`);
+  if (vp.exact != null && seen.size > 1) fails.push(`${vp.name}: ${seen.size} different hero heights across the inner pages (${[...seen.keys()].sort((a, b) => a - b).join(', ')}px) - every hero but the home one must match`);
 }
 await browser.close();
 server?.close();

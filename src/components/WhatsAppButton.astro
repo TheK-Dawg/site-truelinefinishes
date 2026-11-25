@@ -4,6 +4,12 @@
  * chat with the business number 07949 484274 (wa.me/447949484274). Never 07706 215917.
  * Open item: tap it on a phone before launch; if 07949 484274 is not on WhatsApp, hide this
  * (set WHATSAPP_ON = false) until Brandon has WhatsApp on that number.
+ *
+ * OPERATOR REVIEW 6 (25 Nov 2026): the official WhatsApp mark (Icon.astro SOLID, white on WhatsApp
+ * green) replaces round 4's hand-drawn glyph, and the button gets "subtle up/down motion so it
+ * stands out", respecting reduced motion. The destination is untouched: the same wa.me link on the
+ * same number. This is the ONE floating round button on the site and it stays in the reviewed
+ * bottom-right CTA corner, riding above the sticky bar when that shows; nothing else floats.
  */
 import Icon from './Icon.astro';
 import { business } from '../data/site';
@@ -15,7 +21,11 @@ const WHATSAPP_ON = true;
   </a>
 )}
 <style>
-  .wa { display: none; position: fixed; right: var(--space-4); bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); z-index: 86; width: calc(var(--tap) + var(--space-3)); height: calc(var(--tap) + var(--space-3)); place-items: center; border-radius: var(--badge-radius); background: var(--whatsapp); color: var(--whatsapp-fg); box-shadow: var(--shadow-overlay); transition: bottom 0.2s var(--ease); }
+  .wa { display: none; position: fixed; right: var(--space-4); bottom: calc(var(--space-4) + env(safe-area-inset-bottom)); z-index: 86; width: calc(var(--tap) + var(--space-3)); height: calc(var(--tap) + var(--space-3)); place-items: center; border-radius: var(--badge-radius); background: var(--whatsapp); color: var(--whatsapp-fg); box-shadow: var(--shadow-overlay); transition: bottom 0.2s var(--ease); animation: wa-bob 2.8s var(--ease) infinite; }
   @media (max-width: 1023px) { .wa { display: grid; } }
   :global(html[data-sticky]) .wa { bottom: calc(var(--btn-h-md) + var(--space-8) + env(safe-area-inset-bottom)); }
+  /* "Subtle up/down motion so it stands out" (review 6): a 4px rise and fall, nothing more. The
+     `bottom` transition above still owns the move over the sticky bar, so the two never fight. */
+  @keyframes wa-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .wa { animation: none; } }
 </style>

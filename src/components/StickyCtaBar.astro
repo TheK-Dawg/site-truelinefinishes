@@ -3,23 +3,38 @@
  * STICKY CTA BAR. MOBILE ONLY (<1024px). Hidden while the hero is on screen (the hero has its
  * own CTAs), shown once it scrolls out, hidden again over the quote form and the footer.
  * The site's own black styling: Quick Quote Online on white, the call button in chrome blue
- * (black text) showing the number. A call is a direct line to Brandon.
+ * (black text). A call is a direct line to Brandon.
+ *
+ * OPERATOR REVIEW 6 (25 Nov 2026), three corrections, all here:
+ *  - "On mobile do not print the number in the sticky CTA: big Call Us; keep the actual tel: number
+ *    working." The label is now Call Us; href is still business.phoneHref, and the number is still
+ *    read out to assistive technology through the aria-label.
+ *  - "Mobile bottom buttons should match the site's rounded/pill buttons (not squares)" - both take
+ *    --btn-radius, the same pill every other button on the site uses.
+ *  - "the same restrained repeating swipe/sheen motion on BOTH buttons" - the sheen is the site's
+ *    one .btn::after sweep, extended to these two in global.css (one keyframe, one stagger, and the
+ *    one prefers-reduced-motion switch that turns every sheen on the site off).
+ * The labels also come up one step (--fs-base, and --fs-md on the narrowest phones) with the number
+ * gone: the operator's "button text ... too small" on the shared call CTA.
  */
 import Icon from './Icon.astro';
 import { business } from '../data/site';
 ---
 <div class="sb on-dark" data-sticky-cta hidden>
   <a class="sb__quote" href="#contact" data-cta="sticky-quote"><span class="btn__t">Quick Quote</span></a>
-  <a class="sb__call" href={business.phoneHref} data-cta="sticky-call"><Icon name="phone" size={18} /><span class="btn__t">{business.phone}</span></a>
+  <a class="sb__call" href={business.phoneHref} data-cta="sticky-call" aria-label={`Call TrueLine Finishes on ${business.phone}`}><Icon name="phone" size={20} /><span class="btn__t">Call Us</span></a>
 </div>
 
 <style>
   .sb { position: fixed; inset: auto 0 0 0; z-index: 85; grid-template-columns: 1fr 1fr; gap: var(--space-3); padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom)); background: var(--bg-inverse); border-top: 1px solid var(--border-inverse); }
   .sb:not([hidden]) { display: grid; }
-  .sb a { display: flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--btn-h-md); padding: var(--space-3) var(--space-2); font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; text-align: center; white-space: nowrap; }
+  /* Pills, like every other button on the site (review 6). `position: relative` + `overflow: hidden`
+     are what the shared sheen in global.css sweeps inside. */
+  .sb a { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: var(--btn-h-md); padding: var(--space-3) var(--space-4); border-radius: var(--btn-radius); font-family: var(--font-heading); font-size: var(--fs-base); font-weight: var(--fw-semibold); letter-spacing: 1px; text-transform: uppercase; text-align: center; white-space: nowrap; }
   .sb__quote { background: var(--bg-card); color: var(--text-heading); }
   .sb__call { background: var(--accent-on-dark); color: var(--accent-on-dark-fg); }
-  @media (max-width: 400px) { .sb a { font-size: var(--fs-sm); letter-spacing: 0; } }
+  .sb__call :global(.icon) { flex-shrink: 0; }
+  @media (max-width: 400px) { .sb a { font-size: var(--fs-md); letter-spacing: 0; } }
   @media (min-width: 1024px) { .sb, .sb:not([hidden]) { display: none; } }
 </style>
 

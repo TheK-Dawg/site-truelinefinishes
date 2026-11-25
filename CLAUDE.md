@@ -32,6 +32,18 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
   desktop, 640 tablet, 540 phone floor); `.hero--compact` sets no height. The home gallery is the
   curated `HOME_PICKS` list, at most 20 DISTINCT photographs. The services tile footer carries a
   Quick Quote Online button and never a phone number. Check with `node scripts/hero-heights.mjs`.
+- ROUND 6 (25 Nov 2026, DECISIONS R6-*): the HOME hero alone is taller, `--hero-h-home` (840 desktop,
+  720 tablet, 720 phone floor); every other hero keeps round 5's shared figure. The hero overlay is
+  0.62-0.72 so the Trustindex strip reads over a bright photograph. The shared call pill carries its
+  own navy glass (`--glass-pill`) with a WHITE phone icon, never a white film with a chrome icon. The
+  mobile sticky bar is two PILLS, says "Call Us" with no number, and both buttons carry the sheen.
+  WhatsApp uses the OFFICIAL mark (Icon.astro `SOLID`), white on green, with a 4px bob; never redraw
+  a brand logo. ARTICLES: photographs come only from the hub's own subject pool
+  (`src/lib/article-photos.js`, no fallback chain, no repeats, no `*-before-*`), the engine's CTA
+  block and all inline styles are rewritten at render (`src/lib/article-body.js`), and the importer
+  lifts the engine's "Quick Answer" box into the Quick Rundown. Inventory: `npm run articles:pool`.
+  Before any engine batch, follow `ARTICLE-PUBLICATION-CONTRACT.md` - it also records what is NOT
+  wired (no CI deploy on push; worker-drip-worker cannot publish to this site as configured).
 - No Areas page, no town pages at the root. Articles live at /resources/<hub>-<town>/ and are
   written by the engine after handoff; anything not `published` in `src/data/articles.json` is
   noindex and unlinked.
@@ -50,6 +62,8 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
 ## Commands
 - `npm run build` · `node scripts/audit.mjs` (+ `--selftest`) · `node scripts/token-gate.mjs`
 - `node scripts/check.mjs [liveURL] [--shots dir]` (Playwright, 1440 + 390)
+- `node scripts/contrast.mjs [extra routes...]` (WCAG AA per element; PASS NEW ROUTES EXPLICITLY)
+- `npm run articles:pool` (per-hub figure budget) · `npm run articles:import -- <run> [--publish a,b]`
 - `node scripts/hero-heights.mjs [liveURL]` (every hero route at 1440 + 768 + 390, one height policy)
 - `node scripts/cookies.mjs <liveURL>` (Cookie Policy must match)
 - `npm run deploy` (deploy guard: worker `site-truelinefinishes` only)

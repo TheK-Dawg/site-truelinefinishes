@@ -3,6 +3,7 @@
 // --selftest: proves the copy gate fires on known-bad strings before trusting a clean pass.
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { articlePhotoPool, HUB_SUBJECTS } from '../src/lib/article-photos.js';
 
 const BANNED = [
   [/[—–]/, 'em/en dash'], [/free quote\b/i, '"free quote" (the word is "free quotation")'], [/\bbespoke\b/i, 'bespoke'], [/\bcustom\b/i, 'custom'], [/\btailored\b/i, 'tailored'],
@@ -368,6 +369,51 @@ const walk = (d) => { for (const f of readdirSync(d)) { const p = join(d, f); st
 walk(dist);
 const articles = JSON.parse(readFileSync(new URL('../src/data/articles.json', import.meta.url), 'utf8'));
 const review = new Set(articles.filter((a) => a.status !== 'published').map((a) => `/resources/${a.slug}/`));
+// ARTICLE PHOTOGRAPHS (operator review 6, 25 Nov 2026): every figure on a built article page must
+// come from that article's own hub pool (src/lib/article-photos.js - the same module the renderer
+// uses), and no photograph may appear twice on one page. This is the gate that holds the SEO
+// engine's future batches to the service-matched pool instead of whatever the renderer happened to
+// reach for. It is keyed on the BUILT html, so it fails on what actually shipped.
+const siteImages = JSON.parse(readFileSync(new URL('../src/data/images.json', import.meta.url), 'utf8'));
+const articleBySlug = new Map(articles.map((a) => [`/resources/${a.slug}/`, a]));
+function articlePhotoFails(route, html) {
+  const a = articleBySlug.get(route);
+  if (!a) return [];
+  const out = [];
+  if (!HUB_SUBJECTS[a.hub]) return [`article hub "${a.hub}" has no declared photo subjects`];
+  const allowed = new Set(articlePhotoPool(siteImages, a.hub, a.hero).map((i) => i.src));
+  const figs = [...html.matchAll(/<figure class="art__fig"><img src="([^"]+)"/g)].map((m) => m[1]);
+  const heroSrc = (siteImages.find((i) => i.key === a.hero) || {}).src;
+  for (const src of figs) {
+    if (src === heroSrc) out.push(`the hero photograph is used again in the body (${src})`);
+    else if (!allowed.has(src)) out.push(`figure ${src} is not in the ${a.hub} photo pool (off-topic fallback)`);
+  }
+  const seen = new Set();
+  for (const src of figs) { if (seen.has(src)) out.push(`figure ${src} used twice on one page`); seen.add(src); }
+  if (figs.length > allowed.size) out.push(`${figs.length} figures from a pool of ${allowed.size}`);
+  return out;
+}
+// ARTICLE BODY (operator review 6): an engine article must carry "the same styled in-article CTA as
+// the rest of the site". The engine hard-codes its own CTA block with another client's palette, URL
+// and telephone number as INLINE styles; src/lib/article-body.js rebuilds it in the site's markup at
+// render. This proves it on the built page: no inline style survives inside the reading column, the
+// only telephone number anywhere on the page is Brandon's, and any in-article CTA is the site's own
+// pill buttons pointing at the page's own form.
+function articleBodyFails(route, html) {
+  if (!articleBySlug.has(route)) return [];
+  const out = [];
+  const main = (html.match(/<article class="art__main prose"[^>]*>([\s\S]*?)<\/article>/) || [])[1] || '';
+  if (!main) return ['the article reading column was not found in the built page'];
+  for (const m of main.matchAll(/\sstyle="([^"]*)"/g)) out.push(`inline style in the article body -> ${m[1].slice(0, 70)}`);
+  for (const m of html.matchAll(/href="tel:([^"]*)"/g)) if (m[1] !== '+447949484274') out.push(`a telephone link that is not Brandon's -> tel:${m[1]}`);
+  for (const m of main.matchAll(/<div class="art__inline-cta"[\s\S]*?<\/div>/g)) {
+    const cta = m[0];
+    if (!/class="btn btn-primary" href="#contact"/.test(cta)) out.push('the in-article CTA does not use the site\'s Quick Quote Online button to its own form');
+    if (!/class="btn btn-call btn-call--light" href="tel:\+447949484274"/.test(cta)) out.push('the in-article CTA does not use the site\'s call button');
+  }
+  if (/data-lmb="cta"[^>]*style=/.test(main)) out.push("the engine's own CTA block shipped unrewritten");
+  return out;
+}
 // HOMEPAGE VARIANTS RETIRED (19 Nov 2026): /home-2/ and /home-3/ must not be built (they 301 to / in
 // worker/redirects.js); nothing may link to them.
 const RETIRED = /^\/(home-[23]|complaints)\/$/;
@@ -428,6 +474,8 @@ for (const file of pages) {
   if (!text.includes('07949 484274')) fails.push(`${r}: phone missing`);
   for (const f of r3Fails(r, html, text, isArticle)) fails.push(`${r}: round 3: ${f}`);
   for (const f of r5Fails(r, html, text)) fails.push(`${r}: round 5: ${f}`);
+  for (const f of articlePhotoFails(r, html)) fails.push(`${r}: round 6 article photos: ${f}`);
+  for (const f of articleBodyFails(r, html)) fails.push(`${r}: round 6 article body: ${f}`);
   if (!text.includes("Proud to support A Child's Wish, a children's charity.")) fails.push(`${r}: charity line missing from footer`);
   if (!html.includes('href="https://wa.me/447949484274"')) fails.push(`${r}: WhatsApp link missing`);
   const contactIds = (html.match(/id="contact"/g) || []).length;
@@ -488,10 +536,16 @@ for (const file of pages) {
 }
 // NO ORPHAN PAGES (operator review 4, 19 Nov 2026: "There should be no orphan pages on the site
 // anywhere. I need you to make sure that nothing's orphaned anywhere"). Every built route must be
-// linked from at least one OTHER built page. The only exempt routes are the two a visitor is never
-// meant to reach by a link: /thank-you/ (the form's own redirect target, noindex) and the 404 page.
+// linked from at least one OTHER built page. Exempt: the two routes a visitor is never meant to
+// reach by a link - /thank-you/ (the form's own redirect target, noindex) and the 404 page - and
+// any article still at "review" status.
+// That last exemption is the status gate in src/data/articles.ts doing its job, not a hole: an
+// article the operator has not approved is DELIBERATELY noindex, out of the sitemap and out of every
+// link, so it is unlinked by design and the orphan rule cannot apply to it. Found by running the
+// real importer on a fixture batch (operator review 6, 25 Nov 2026): without this, the first engine
+// article to land at review status would have failed the audit and blocked the whole release.
 {
-  const ORPHAN_OK = new Set(['/thank-you/', '/404/']);
+  const ORPHAN_OK = new Set(['/thank-you/', '/404/', ...review]);
   const built = pages.map(route).filter((r) => !RETIRED.test(r));
   const inbound = new Map(built.map((r) => [r, 0]));
   for (const file of pages) {
