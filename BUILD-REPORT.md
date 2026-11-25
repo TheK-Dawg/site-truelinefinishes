@@ -979,3 +979,129 @@ photographs, the towns and the articles. Round 6's article work and its findings
    `/cookie-policy/` "Last updated" date, deferred R4-19) are unchanged and still open.
 4. **The design is not accepted until Brandon and Vince have seen it.** Nothing here claims his
    approval; it claims built, gated, pushed, deployed and read back on the real domain.
+
+## THE SITE PLAN'S 25 NOV 2026 CHANGE, IMPLEMENTED (brief `TRUELINE-FENCING-SITEMAP-UPDATE-20261125`)
+
+Kieran's plan commit **`542315e`** ("Fencing as hub 6, broaden hub/home-page naming to West and North
+Yorkshire", D-2026-11-25-01 / D-2026-11-25-02) was compared against its parent in full — all three
+files, `SITE-PLAN.md`, `seed.json`, `nap.json` — and implemented. The visual-correction round that
+ran before this one finished cleanly (commit `ba63a40`, Worker `ae06e863`, service exited 0, clean
+worktree) and **its eight corrections are preserved and re-proved**, not assumed: they are gated by
+`scripts/check.mjs` and `scripts/hero-heights.mjs`, and both ran green against the real domain after
+this release.
+
+| | |
+|---|---|
+| Commit | `66c0609` on `main`, pushed; `git ls-remote origin main` = `66c06095287a55efe4469d90d556ed87c668e278` |
+| Worker | `site-truelinefinishes`, version **`905eef96-9a1a-483b-9a43-dcbfbbeae599`**, 43 files uploaded |
+| Live | https://www.truelinefinishes.com — zone cache purged after the deploy (the edge was serving the old pages, including a cached 404 for `/fencing/`) |
+| Preview | https://site-truelinefinishes.small-bird-3273.workers.dev |
+| Version | `package.json` 2.3.0 → **2.4.0** |
+
+### Baseline, before the work (25 Nov 2026, 14:31 UTC)
+`/fencing/` → **404**. Home title "Painting and Decorating in Baildon, Shipley and Ilkley". `/services/`
+title "...in Baildon and Shipley". The live sitemap had no fencing entry. All as the brief described.
+
+### What changed
+1. **`/fencing/`, the sixth hub**, on the plan's locked URL, through the same `[slug].astro` route and
+   the same `ServicePage` as the other five: hero → reviews → intro → four section cards → the
+   "who the work is for" line → how a job runs → related services → FAQ (6) → quote form.
+   Scope is the seed's `contentNote` and nothing else: panel fencing, close board (feather edge),
+   composite, trellis fencing and toppers, new installation and repairs. **No blueprint was bought**
+   (the plan's own open item), so it takes the default skeleton. No fence height, panel brand, timber
+   treatment, warranty, price or timescale anywhere on it. The sectors slot says "homes and
+   businesses alike" rather than listing offices, schools and hotels: nothing supports a
+   sector-specific fencing claim.
+2. **Six hubs everywhere but the top nav**: the home tiles (3 across, 2 full rows — the five-tile
+   centring offsets are gone), `/services/`, the Services dropdown (desktop and mobile accordion),
+   the footer's Our Services column, the related-services cards on three hubs, both sitemaps and the
+   `HousePainter` offer catalogue (5 → 6; `knowsAbout` with it). The **top nav is still the owner's
+   exactly five** — Home, Services, About, Resources, Contact — and both nav gates still hold it.
+3. **The area naming**, on the home page, `/services/` and **every** hub page: title, H1, meta
+   description, hero lead, the footer "About Us" paragraph, the FAQ "which areas do you cover" answer
+   and the home "Where to Find Us" line now lead on **West and North Yorkshire** and still name real
+   pinned towns in support (Baildon, Guiseley, Menston, Ilkley, Shipley, Otley, Horsforth, Bingley,
+   Leeds, Bradford, Harrogate — every one of them in the plan's 116). "West Yorkshire" is used on the
+   two headings where the full phrase ran the title past 75 characters, which the plan allows.
+4. **The round-5 H1 gate was repaired, not evaded.** It demanded a town from `towns.json` in those
+   H1s, so a region-led H1 would have failed the build. It now accepts a plan town **or** the plan's
+   own region wording and nothing else; a vague, placeless or invented-region H1 ("Fencing in Greater
+   Manchester") is still caught, proved in `--selftest` in both directions.
+5. **Fencing's photographs: there are none.** All 194 photographs in the pool are painting and
+   decorating, and only Brandon's own R2 photographs may be used. So the hub's four section cards
+   carry **copy alone** (a copy-only card variant in `ServiceBody.astro` — same card, same grid, no
+   lone top border) and there is **no "Fencing in Pictures" band**. The two photographs the page does
+   use are his own job at a property **boundary**: the railings and gate he painted. A painted
+   bedroom under "Composite Fencing" would have been a picture that says something untrue.
+6. **Fencing's future town articles are wired but none exist**: `fencing` is a known hub in
+   `scripts/import-articles.mjs`, its photo subjects are declared **empty** in
+   `src/lib/article-photos.js` (so a fencing article carries its hero and no body figures rather than
+   borrowing painting shots), its hero is marked a stand-in, and `npm run articles:pool` reports the
+   honest budget of 0. Written up in `ARTICLE-PUBLICATION-CONTRACT.md` §3.
+
+### Gates — all run, all green
+| Gate | Result |
+|---|---|
+| `npm run build` | 27 pages |
+| `node scripts/audit.mjs` | **27 pages, 0 fails, 0 warnings** |
+| `node scripts/audit.mjs --selftest` | all four blocks pass, including the new region-H1 cases (17 broken cases caught) |
+| `node scripts/token-gate.mjs` | PASS, 51 files, 0 violations |
+| `node scripts/hero-heights.mjs` (local) | 25 routes × 4 widths, **0 fails** |
+| `node scripts/contrast.mjs` (incl. `/fencing/`) | **0 fails** |
+| `node scripts/check.mjs` (local) | 27 routes × 2 widths, **0 fails** |
+| `node scripts/check.mjs https://www.truelinefinishes.com` | **27 routes × 2 widths, 0 fails** |
+| `node scripts/hero-heights.mjs https://www.truelinefinishes.com` | **25 routes × 4 widths, 0 fails** |
+
+### Read back on the real domain, after the deploy
+* `/` 200, title and H1 "…in West and North Yorkshire"; **six** `sv__tile` hub tiles, four links to
+  `/fencing/` on the page; footer Our Services lists all six plus All services.
+* `/fencing/` **200** (was 404), title "Fencing in West and North Yorkshire | TrueLine Finishes",
+  canonical `https://www.truelinefinishes.com/fencing/`, `robots: index, follow`, breadcrumb +
+  `Service` + `FAQPage` schema, `Service.areaServed` 116 towns, `HousePainter` with 6 offers,
+  116 towns, 2 opening-hours rules and **no address**. Hero fills the viewport at 1440×900, 390×844
+  and 320×640 with no horizontal overflow; five nav entries at every width; four copy cards; no
+  pictures band. Every CTA resolves: `tel:+447949484274` (header, hero, steps, FAQ, form, footer,
+  sticky), `https://wa.me/447949484274`, and every Quick Quote Online to this page's own `#contact`.
+  Trustindex live on it: hero slimline at **19.69:1**, the reviews widget under the hero, the form
+  slimline, the corner badge on desktop and hidden on mobile.
+* `/services/`, `/exterior-painting/`, `/wallpapering/`, `/commercial-painting-and-decorating/`: 200,
+  broadened titles and H1s read back.
+* `/sitemap.xml` → the index → `/sitemap-0.xml`, **25 URLs**, including
+  `https://www.truelinefinishes.com/fencing/`.
+* `/home-2/`, `/home-3/`, `/complaints/` still 301 as before.
+
+### Not touched, by instruction
+The Formlane quote form (its five default fields, no service dropdown — **nothing was added to it**,
+and fencing is not a form choice), its routing and recipients; **no test lead was sent**. The NAP, the
+never-shown address, the 07949 484274-only phone rule, the opening hours in the footer, on `/contact/`
+and in `openingHoursSpecification`, the 116 towns, the videos, the photographs, the legal pages, the
+Trustindex widgets, DNS and email. The three published articles keep their URLs, status and copy, and
+no article's single-town wording was changed. `site-plan/` was not edited.
+
+### Open, and honest
+1. **`site-plan/APPROVED-BY-OPERATOR` still holds the stale fingerprint `7495853204d1a803`.** The plan
+   itself says the 25 Nov change makes it stale and that only Kieran writes that file, so it was
+   **not** refreshed here. No repository rule or gate blocked this build on it, and Vince's
+   instruction to implement the new sitemap is the authority this round ran on — but the marker is an
+   **outstanding administrative step for Kieran**, and this is not a "fully approved plan" claim.
+2. **A fencing album from Brandon is needed.** Until it arrives the hub has no fencing photograph,
+   its cards are copy-only, it has no pictures band, and a fencing article could not be published
+   (the audit requires a figure above all but one H2 on a published article). The moment photographs
+   land they drop into the same fields as every other hub and the hub's article hero stops being a
+   stand-in.
+3. **The Fencing hub has no blueprint.** The plan flags buying one before its prose is written in
+   depth. What ships now is the default skeleton written strictly from the seed's content note.
+4. **The 116 fencing articles were not generated, published or queued**, as instructed, and the
+   D1 → repository → deploy half of the publisher contract is still not wired (round 6, R6-10,
+   unchanged).
+5. **At 320px the floating WhatsApp button still overlaps the right end of the hero Call pill**
+   (measured again this round: the float sits at x 248–304, y 568–624; the full-width hero buttons run
+   x 16–304). It is **pre-existing** and it is not fixable in CSS alone: the float is fixed to the
+   viewport corner and the hero content is taller than a 640px window, so no hero-side layout change
+   can clear it. The two real fixes both change something the owner has already reviewed — hide the
+   float over the hero the way the sticky bar hides (which also means relaxing the gate that requires
+   the float to be visible at mobile widths), or stop the hero buttons short of the float on the
+   narrowest phones. **Left for his call rather than changed unasked.** It affects 320px-wide
+   phones only; at 360 and 390 there is no overlap.
+6. `astro check` is still not installed here (it stops at an interactive install prompt); no install
+   was made. The build, the token gate and the five gate scripts are this site's ship gate.
