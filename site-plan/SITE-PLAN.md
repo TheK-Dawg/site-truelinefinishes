@@ -1,7 +1,14 @@
 # SITE PLAN — TrueLine Finishes (new site on truelinefinishes.com + SEO articles)
 
-**STATUS: APPROVED (the operator, 4 Nov 2026). Fingerprint `7495853204d1a803`, recorded in
-`site-plan/APPROVED-BY-OPERATOR`.** Ready to go to Vincent (who builds the site, with his AI). Only
+**STATUS: APPROVED (the operator, 4 Nov 2026), WITH A PENDING UPDATE from the operator, 25 Nov 2026**
+(a sixth hub, Fencing, D-2026-11-25-01 below, and the hub/home-page area-naming broadened to West and
+North Yorkshire, D-2026-11-25-02 below). **Fingerprint `7495853204d1a803`, recorded in
+`site-plan/APPROVED-BY-OPERATOR`, no longer covers this file**: both changes alter `seed.json`, and
+"a re-run that changes the plan changes its fingerprint" (below). The operator is the one making
+this update, so it does not need a fresh approval cycle in the sense Section 1's rule guards against
+(an unreviewed change); it does need `APPROVED-BY-OPERATOR`'s fingerprint refreshed before Vincent
+is told the plan is approved again, since no fingerprinting tool is available on this VPS to compute
+the new value. Flagged in Open items, below. Ready to go to Vincent (who builds the site, with his AI). Only
 the operator writes that file — Vincent should not build from this plan unless it is present with a
 matching fingerprint. Rebuilt on 4 Nov 2026 from Brandon's own WhatsApp messages, on the operator's
 brief, and updated the same evening on the operator's second instruction (the commercial hub
@@ -248,6 +255,28 @@ Brandon@truelinefinishes.com / Website that will be Www.truelinefinishes.com"):
     experience, say over 8 years' experience." Brandon's own answer on 23 Oct was "Eight. Eight."; the
     operator said "over eight years" on that call. The figure is eight either way (standing
     prohibition 3); copy may write "over eight years" or "over 8 years".
+17. **Resolved (the operator, 25 Nov 2026): Fencing added as a sixth hub, and the hub/home-page
+    area naming broadened (D-2026-11-25-01, D-2026-11-25-02).** Brandon asked for fencing SEO twice
+    on WhatsApp (12 Nov 2026: "if we can focus more with seo on fencing as well that be great ...
+    unsure how you'll do it"; 25 Nov 2026: "is there a fencing page on there as we also do fencing
+    as I discussed with you before to add a fencing page and include it in the seo"), and the
+    operator confirmed Brandon's scope directly: "he does all the main types of UK fencing."
+    DataForSEO keyword research bought the same day (8 service nouns, $0.1536, UK-wide) found
+    "fencing" at 27,100/mo, with panel fencing, composite fencing, close board (feather-edge)
+    fencing and trellis fencing the real popular types, and "fence installation" / "fence repairs"
+    (plus their "near me" variants) the clear service-intent terms. The sixth hub, Fencing
+    (`/fencing/`), takes the default skeleton (no blueprint bought yet: an open item, below) and
+    adds 116 articles (580 → 696, Article budget). Separately, and on the same instruction: the
+    operator relayed Brandon's own words that hub pages "can also mention lots of the towns, all
+    the main towns that are included in the areas that he covers, because it's like a generic big
+    area," and that he wants "all the hubs to be the main area he covers ... like Yorkshire and
+    West Yorkshire." This overrides the home page's and every hub page's area-naming (How to write,
+    Layout, below) from the narrow "Baildon and Shipley" framing the live site currently carries to
+    a broad "West and North Yorkshire" framing that still names several real towns as supporting
+    detail. **It does not change how individual SEO articles are titled or targeted**: each still
+    names and targets its own single town, unchanged (D-2026-11-25-02 is explicit on this point).
+    This plan's edit is the deliverable; Vincent builds the live site from it (the operator's own
+    words, 25 Nov 2026: "i will then give that to vincent to add to site based on the site plan").
 
 ## Build scope
 - **A new website plus a year of SEO articles** on truelinefinishes.com.
@@ -267,15 +296,15 @@ Brandon@truelinefinishes.com / Website that will be Www.truelinefinishes.com"):
   `site-plan/towns.json`, `brand/`, and the research in `site-plan/blueprints/`, `keywords/` and
   `serp-classified/`), plus the photos from the planning server (Images).
 - **The domain** is at GoDaddy; Brandon hands over access when the site is ready (23 Oct call).
-- **Pages and URLs:** the home page (`/`); the five hub pages on their locked URLs (Hub pages);
-  About (`/about/`); Contact (`/contact/`); the legal pages (`/privacy/`, `/terms/`,
+- **Pages and URLs:** the home page (`/`); the six hub pages on their locked URLs (Hub pages, Fencing
+  added 25 Nov 2026, flag 17); About (`/about/`); Contact (`/contact/`); the legal pages (`/privacy/`, `/terms/`,
   `/cookie-policy/`, built from this file, not from the seed); and the SEO articles, one per hub per
   town, on this plan's article pattern, `/resources/<hub-slug>-<town-slug>/` (for example
-  `/resources/exterior-painting-guiseley/`), which the change of template does not change. **No
+  `/resources/exterior-painting-guiseley/`, or `/resources/fencing-guiseley/` for the new hub), which the change of template does not change. **No
   Areas page:** a hub links down to its town articles and each article links up to its hub.
 - **Who writes and publishes the articles:** the article engine, from the approved seed after the
   handoff, a few a day from launch, in the seed's town order: the 385 articles of the first 77 towns,
-  then the 195 of the second batch (Towns); test articles go to Brandon for comments first (23 Oct
+  then the 195 of the second batch (Towns), each now ×6 hubs instead of ×5 (flag 17); test articles go to Brandon for comments first (23 Oct
   call).
 - **A standard enquiry site:** quote form, phone, email and WhatsApp. No payments of any kind.
 - **The research, for the hub pages** (the operator, 4 Nov 2026: "go ahead and buy it, which can be
@@ -350,8 +379,8 @@ Build these; each is placed in Layout and Images below.
   hours (NAP, exactly as on the Google listing), the quote form. The seed's NAP block has no field for
   the email, the WhatsApp number or the hours: take them from here and `nap.json` (the seed's Contact
   page has an `hours` section for the hours). No address.
-- **Schema:** `HousePainter` on the home page, with the name, the phone, the URL, the five services,
-  `areaServed` as the towns in the plan, and `openingHoursSpecification` (Mo-Fr 07:00-19:00, Sa-Su
+- **Schema:** `HousePainter` on the home page, with the name, the phone, the URL, the six services
+  (Fencing added 25 Nov 2026, flag 17), `areaServed` as the towns in the plan, and `openingHoursSpecification` (Mo-Fr 07:00-19:00, Sa-Su
   08:00-18:00). No address in schema: it is `addressDisplay: "no"`, for the Google listing and
   directories only.
 - **Prices:** none on any page or in any article. Brandon has published none.
@@ -416,9 +445,12 @@ for Life's, Build scope), in TrueLine Finishes' own colours.
   linking to Wallpapering, to Interior Painting and Exterior Painting (that tile carries two links,
   one for each), and to Commercial Painting and Decorating; **the before-and-after slider**, his three pairs first, interior before exterior (the
   bedroom, the bathroom, then the gable wall: his ideal jobs are interiors, 25 Feb call) (Images); the
-  five hubs as cards; "why choose us" (the usable claims, below, led by Brandon himself and the direct
-  line to him); one line naming the main places served (his close-to-home list: Baildon, Guiseley,
-  Menston, Ilkley, Shipley, Otley, Horsforth, Bingley and the towns around them); the reviews (the
+  six hubs as cards (flag 17 adds Fencing, 25 Nov 2026); "why choose us" (the usable claims, below, led
+  by Brandon himself and the direct line to him); one line naming the broad area served, West and
+  North Yorkshire, with several of the main towns within it named too (Baildon, Guiseley, Menston,
+  Ilkley, Shipley, Otley, Horsforth, Bingley, Leeds, Bradford, Harrogate and the towns around them):
+  broadened from his close-to-home list alone, D-2026-11-25-02, so the home page reads as the whole
+  area he covers, not two or three towns; the reviews (the
   operator's standard live Google reviews widget, as on the other client builds, "live Google reviews
   on every single page" as the 25 Feb call put it, keyed on the Google listing recorded in flag 4); a
   line on the charity he supports; an FAQ; a call-to-action band; the latest articles; footer.
@@ -461,10 +493,10 @@ for Life's, Build scope), in TrueLine Finishes' own colours.
     the usable claims only (over eight years' experience, fully insured, the charity he supports). He
     has **no accreditations, qualifications, memberships, guarantees or warranties**, so none is shown.
   - Contact (`nap`, `enquiry-form`, `hours`): as under Contact, `hours` being the Google listing's.
-- **Footer:** the five hubs, quick links, contact (phone, email, WhatsApp, the opening hours; no
+- **Footer:** the six hubs, quick links, contact (phone, email, WhatsApp, the opening hours; no
   address), the charity line, the legal pages.
 
-## Hub pages (5, locked in services-override.json, 4 Nov 2026)
+## Hub pages (6, Fencing added 25 Nov 2026 flag 17; the original 5 locked in services-override.json, 4 Nov 2026)
 Each hub's name is used word for word as its page title and in its articles' titles ("Exterior
 Painting in Guiseley"), and the URLs are locked: a re-run that changed one would fail the Jev pass and
 `npm test`. The title of hub 5 is the operator's (4 Nov 2026), and it runs over the
@@ -479,11 +511,19 @@ which the operator dropped the same night (D-2026-11-04-10).
 | 3 | **Exterior Painting** | `/exterior-painting/` | "exterior painting", 4,400/mo | masonry (painting render, brick, stone), woodwork, oil varnishing, windows, doors, fascias and soffits |
 | 4 | **Wallpapering** | `/wallpapering/` | "wallpapering", 720/mo | wallpaper hanging, feature walls and whole rooms |
 | 5 | **Commercial Painting and Decorating** | `/commercial-painting-and-decorating/` | "commercial painting", 390/mo ("office decorating" 1,300 among its variants) | the same work for business premises of every kind: offices, restaurants, schools, hotels, spas, leisure centres, and local businesses, small and large (the operator, 4 Nov 2026) |
+| 6 | **Fencing** | `/fencing/` | "fencing", 27,100/mo (DataForSEO, UK-wide, 25 Nov 2026) | all the main types of UK garden fencing (the operator, 25 Nov 2026): panel fencing, composite fencing, close board/feather-edge fencing, trellis fencing and toppers, new installation and repairs. No blueprint bought yet: default skeleton (flag 17, D-2026-11-25-01) |
+
+**Hub 6 is new, added 25 Nov 2026 (flag 17, D-2026-11-25-01):** Brandon asked for it twice on
+WhatsApp, and the operator confirmed he does every main type of UK fencing. It has no blueprint
+(none was bought), so it takes the default skeleton like Exterior Painting and Commercial Painting
+and Decorating, and its own content note in `seed.json`/`nap.json` is the only brief for it until one
+is bought. **5 hubs × 116 towns = 580 articles is now 6 hubs × 116 towns = 696 articles** (Article
+budget, below); every other hub, town and figure in this plan is unchanged by this addition.
 
 Each hub's full brief is its `contentNote` in `seed.json` (from `nap.json` `hubContentNotes`): what
 to cover, how to write its blueprint's headings, what never to offer, Brandon named as the expert,
 its video, the cross-links and the call to action. Every hub says, in passing, that the work is for
-homes and businesses. The nav shows the five in this order.
+homes and businesses. The nav shows the six in this order.
 
 ## What to write, and what never to write
 **Usable claims** (`nap.json` `usps`, all affirmed: Brandon's own words, and the operator's rulings of
@@ -516,8 +556,24 @@ homes and businesses. The nav shows the five in this order.
   else: his brother and the other worker are never named, and no team or crew is claimed. His ideal
   jobs are interiors, bedrooms and living rooms first (25 Feb call), so interior work leads the
   examples.
-- Name the places served, never a whole region ("across West Yorkshire"): the coverage rule in
-  `docs/SEED-CONTRACT.md`. Brandon's advert says "across West and North Yorkshire"; the site does not.
+- **Every individual SEO article names its own single town only**, never a whole region: the
+  coverage rule in `docs/SEED-CONTRACT.md`, unchanged by the override below. "Painting and
+  Decorating in Guiseley" is about Guiseley; it is not where the broader regional framing applies.
+- **SITE-SPECIFIC OVERRIDE for the home page and every hub page (the operator, 25 Nov 2026,
+  D-2026-11-25-02): name the broad region, West and North Yorkshire, and mention several of the
+  main towns within it, rather than leading on one or two specific towns.** Brandon's own words,
+  relayed by the operator: hub pages "can also mention lots of the towns, all the main towns that
+  are included in the areas that he covers, because it's like a generic big area," and he wants
+  "all the hubs to be the main area he covers... like Yorkshire and West Yorkshire." This replaces
+  the live site's current title, H1, meta description, footer "About Us" and FAQ "what areas do you
+  cover" wording, which all currently lead on "Baildon and Shipley" or "Baildon, Shipley and Ilkley"
+  specifically — narrower than the operator now wants, on every hub, not only the home page. Use
+  "West and North Yorkshire" (or "West Yorkshire" where brevity needs it) as the lead framing, and
+  still name several of the real pinned towns as supporting detail (Baildon, Guiseley, Ilkley,
+  Shipley, Otley, Leeds, Bradford, Harrogate and the towns around them): do not drop the real towns,
+  broaden what leads. Brandon's advert already says "across West and North Yorkshire"; this override
+  brings the site in line with his own wording. This does NOT change the rule above: every SEO
+  article still names its own single town.
 - Homes and businesses on every page, in passing.
 - Generic buyer's-guide material is welcome (paint finishes, preparation, weather and drying, kinds of
   wallpaper), with no paint or wallpaper brand unless Brandon names one.
@@ -609,6 +665,13 @@ Brandon's own lists, from the 2 Apr call unless marked.
   or warehouses" and then "spas, hotels, leisure", and Brandon said "Yes ... Yeah" and "Yeah";
   warehouses and bars are not named. Never present any customer as a past client (standing
   prohibition 5).
+- **Fencing (added 25 Nov 2026, flag 17):** all the main types of UK garden fencing (the operator,
+  25 Nov 2026, confirming Brandon's own scope: "he does all the main types of UK fencing"), new
+  installation and repairs. The most-searched real types (DataForSEO, UK-wide, 25 Nov 2026): panel
+  fencing, composite fencing, close board (feather-edge) fencing, trellis fencing and toppers, and
+  general garden fencing. No source names a specific fence height, panel brand, timber treatment or
+  price, so none is given (standing prohibitions 12, 13, 17); this is the only service with no
+  blueprint bought yet (`hubContentNotes.fencing`).
 
 ## Images
 **The pool:** 195 of Brandon's own job photos, sent on WhatsApp on 26 Oct 2026 in two albums, which
@@ -787,9 +850,11 @@ Pool-in-Wharfedale. GeoNames gives Yeadon 37,379 people, which looks like the wh
 populations are for sorting only and never appear on a page.
 
 ## The article budget
-**5 hubs × 116 towns = 580 articles** (`seed.json` `articleCap`), under the standing 900, which does
-not bite (900 ÷ 5 = 180 towns allowed): first the 385 of the first batch (5 × 77), then the 195 of
-the second (5 × 39). It was 385 on the 15-mile ruling before the operator extended it (flag 8), 635
+**6 hubs × 116 towns = 696 articles** (`seed.json` `articleCap`), under the standing 900, which does
+not bite (900 ÷ 6 = 150 towns allowed): first the 462 of the first batch (6 × 77), then the 234 of
+the second (6 × 39). It was 580 (5 hubs × 116 towns) until the operator added Fencing as hub 6 on 25
+Nov 2026 (flag 17, D-2026-11-25-01) — the 5-hub figure stands in every record before that date in
+Section 2, below. It was 385 on the 15-mile ruling before the operator extended it (flag 8), 635
 (5 × 127) on the 20-mile fill, the figure the operator gave before ruling on the radius, and 762 only while
 the kitchen hub was in the plan. The home page, About, Contact and the legal pages add no articles.
 
@@ -810,6 +875,16 @@ For Brandon, through the operator:
 - **His YouTube channel's name**, "Trueline Finishes": renaming it "TrueLine Finishes" would match
   his Google listing and the site (his choice; the videos embed either way).
 For the operator:
+- **Refresh `site-plan/APPROVED-BY-OPERATOR`'s fingerprint** (flag 17, D-2026-11-25-01/-02): this
+  pass changed `seed.json`, so `7495853204d1a803` no longer matches it; no fingerprinting tool is
+  checked out on this VPS to compute the new value.
+- **Buy a blueprint for the Fencing hub** before Vincent writes its hub-page prose in depth (flag
+  17): it currently has keyword volume only, no SERP/competitor read, and takes the default
+  skeleton until one is bought.
+- **Apply flag 17's plan changes to the live site and redeploy**: the fencing hub, the home-page
+  copy and the hub-page copy (title, H1, meta, footer, FAQ) all still read the old narrow framing on
+  truelinefinishes.com as of 25 Nov 2026; this plan is the brief, not yet applied to
+  `cf-deploy-fix/site-truelinefinishes`'s actual files.
 - **The form endpoint, anti-spam key and mailbox routing** for the quote form, supplied to Vincent
   privately (Contact).
 - **The full 2 Apr transcript in saleshq:** its copy there stops at 12,000 characters, so the swarm's
@@ -868,6 +943,10 @@ template: D-2026-11-04-12). Where an earlier pass below says 127 or 77 towns, th
   structural template in place of Vision Plumbing, and a second batch of 39 towns out to 20 miles,
   published after the first 77; 116 towns, 580 articles, the first 385 unchanged
   (D-2026-11-04-12, below). Approved, fingerprint `7495853204d1a803`.
+- **25 Nov 2026:** the operator adds Fencing as a sixth hub (D-2026-11-25-01) and broadens the
+  home-page and every hub page's area naming to West and North Yorkshire (D-2026-11-25-02), both
+  below. 696 articles (was 580); the fingerprint no longer covers this file (Status, top of this
+  file); open items added for the operator and Vincent.
 
 ## The 4 Nov 2026 pass (D-2026-11-04-05)
 The brief is `.claude-dispatch-briefs/truelinefinishes-whatsapp-rebuild.md` (the operator, 4 Nov
@@ -1100,6 +1179,91 @@ it." What the run did:
   Spas and Family Home Solutions; the status line at the top says the same. "Send it to Vince" is the
   operator's and Hermes's hand-off, outside this repo, and was not done here.
 - **Spend: $0.00.**
+
+## Fencing added as a sixth hub (D-2026-11-25-01)
+Brandon asked for this twice on WhatsApp: 12 Nov 2026, "if we can focus more with seo on fencing as
+well that be great we'll both same if we can unsure how you'll do it"; and 25 Nov 2026, forwarded by
+the operator, "is there a fencing page on there as we also do fencing as I discussed with you before
+to add a fencing page and include it in the seo." The operator, the same day, confirmed Brandon's
+scope directly rather than this plan inferring it: "he does all the main types of UK fencing." What
+the run did:
+- **Research bought:** DataForSEO `keyword_suggestions/live`, UK-wide (`location_code` 2826), 8
+  service nouns (Fencing, Garden Fencing, Fence Installation, Fence Panels, Fence Repairs, Close
+  Board Fencing, Fence Posts, Trellis Fencing), 479 keywords kept, 1 excluded (an American-marker
+  phrase), $0.1536 total. Written to `research/keywords/fencing.json` in the engine repo
+  (claude-seo-engine), the per-vertical asset pattern every other hub's research follows. Real
+  numbers used here: "fencing" 27,100/mo; "fence panels" 90,500/mo (judged mostly retail/product
+  search, not installation-service intent, so not the primary phrase); "composite fencing"
+  18,100/mo; "garden fencing" 5,400/mo; "close board fencing" 2,900/mo; "trellis fencing" 1,300/mo;
+  "fence installation" 880/mo ("fence installation near me" 1,300/mo); "fence repairs" 1,000/mo
+  ("fence repairs near me" 1,900/mo).
+- **The hub:** Fencing, sixth, on `/fencing/`, `pinPosition: 6`, primary phrase "fencing" (27,100/mo,
+  the real highest-volume service-noun figure, following this plan's own rule of picking the
+  highest-volume phrase per hub). No blueprint bought (an open item, below): it takes the default
+  skeleton, the same shape as Exterior Painting and Commercial Painting and Decorating (intro,
+  what-we-do, process, areas-covered, faqs, sectors, contact-cta). Its content note
+  (`nap.json` `hubContentNotes.fencing`, `seed.json` `hubs[].contentNote` for slug `fencing`) names
+  the real popular fence types above, the two clear service-intent terms (installation and
+  repairs), Brandon as the expert (carried from flag 1's wording), and warns against inventing a
+  fence height, panel brand, timber treatment, warranty or price, none of which any source gives.
+- **`seed.json` changed:** a sixth `services[]` entry (Fencing); a sixth `hubs[]` entry (slug
+  `fencing`), with the same 116-town `townCoverage` every other hub carries (fencing serves the
+  whole area, like every other hub: the operator did not ask for a narrower list); `articleCap`
+  (`hubCount` 5 → 6, `articlesPlanned` 580 → 696, `townsAllowed` 180 → 150, recomputed from 900 ÷ 6);
+  `homePage.sections` gains "Fencing installation and repairs" alongside the other five hub-card
+  lines. Nothing else in `seed.json` changed: the other five hubs, the towns, the NAP, the images,
+  the videos and the prohibitions are byte-identical to the file before this pass.
+- **What this does NOT do:** buy a blueprint (an open item below, before Vincent writes the hub
+  page's prose in depth); write the 116 Fencing articles themselves (the article engine's job, after
+  handoff, same as every other hub's articles); or touch the quote form's dropdown, which still
+  lists Brandon's own 28 Oct categories and was not asked to change.
+- **Spend: $0.1536** (DataForSEO, the fencing keyword research above). No other paid call.
+
+## The hub and home-page area naming broadened to West and North Yorkshire (D-2026-11-25-02)
+The operator's own words, 25 Nov 2026, voice-dictated and relaying what Brandon had texted him:
+"the hub he wanted to be... Yorkshire and West Yorkshire, and... all the hubs to be the main area he
+covers. So like Yorkshire and West Yorkshire"; and, on the SEO articles versus the hubs: "the SEO
+articles... will target all the individual towns, but the hubs can also mention... lots of the
+towns, all the main towns that are included in the areas that he covers, because it's like a
+generic book, like a big area." Brandon's own original WhatsApp text, forwarded by the operator
+(10:43 am, 25 Nov 2026): "could we change baildon and Shipley to Painting and decorating in west/
+North Yorkshire." What the run did:
+- **Checked what's live first.** Fetched truelinefinishes.com directly (curl, 25 Nov 2026): the
+  homepage `<title>` reads "Painting and Decorating in Baildon, Shipley and Ilkley | TrueLine
+  Finishes," the H1 "Painter and Decorator in Baildon and Shipley," the meta description names
+  Baildon, Guiseley, Ilkley, Otley and Shipley, the footer "About Us" names Baildon and Shipley by
+  themselves, and an FAQ answer lists towns under the same narrow framing. This is narrower than
+  what the operator now wants, and not confined to the home page: Vincent's own hub-page files
+  (`src/data/services/exterior-painting.ts`, `commercial-painting-and-decorating.ts`) carry the
+  same two-town framing.
+- **The rule that produced it, found and overridden.** This file's "How to write" section (What to
+  write, and what never to write, below the Hub pages table) had said: "Name the places served,
+  never a whole region ('across West Yorkshire')... Brandon's advert says 'across West and North
+  Yorkshire'; the site does not." That is the opposite of today's instruction. It is now split in
+  two: individual SEO articles keep the single-town rule exactly as before (unchanged, and
+  restated so the override cannot be read as touching it); the home page and every hub page get a
+  site-specific override naming the broad region first, with several real towns still named as
+  supporting detail, not dropped.
+- **What changed in this file:** the "How to write" bullet (above); the home page's coverage line in
+  Layout (now "the broad area served, West and North Yorkshire, with several of the main towns...",
+  was "his close-to-home list" of 2-8 towns only); flag 17 records both this and D-2026-11-25-01
+  together, since the operator gave them in one instruction.
+- **What did NOT change:** `seed.json`'s `towns[]`, `townOrder` and every hub's `townCoverage`
+  (unaffected: broadening the FRAMING of hub/home copy does not change which towns exist or which
+  towns' articles get written); the article-title pattern ("Painting and Decorating in [Town]" and
+  so on, one town each); the quote form, NAP, hours, images or videos.
+- **Not done here, and needed before Vincent can act on this safely:** the live site's actual copy
+  (title, H1, meta, footer, FAQ, and the two hub-page data files found) is a code-level change in
+  `cf-deploy-fix/site-truelinefinishes`, outside this plan file; a prior attempt to dispatch Claude
+  Code to make that change directly failed at the tool level (`--dangerously-skip-permissions`
+  blocked under root) before writing anything, so the live site is UNCHANGED by this pass. This
+  plan file is the brief; Vincent (or a properly re-dispatched session) still has to apply it to the
+  actual site files and redeploy. Recorded as an open item, below, and reported to the operator.
+- **The fingerprint:** this pass and D-2026-11-25-01 both change `seed.json`, so
+  `site-plan/APPROVED-BY-OPERATOR`'s fingerprint `7495853204d1a803` no longer matches it (Status, top
+  of this file). No fingerprinting tool is available on this VPS (the site-planner repo that
+  produces one is not checked out here) to compute the new value; flagged for the operator, below.
+- **Spend: $0.00** (this pass's own work; the $0.1536 above belongs to D-2026-11-25-01).
 
 ## Sources and provenance
 | Source | Where | Size | Used for |
