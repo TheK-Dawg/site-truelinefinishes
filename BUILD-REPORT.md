@@ -904,3 +904,78 @@ approved legal text, the photographs themselves, the towns, the plan and the see
 hand-written articles keep their URLs, their `published` status and their copy; only their figures
 changed, and only to remove the off-topic ones. No GoDaddy DNS write, no MX/SPF/DKIM/DMARC change, no
 second Worker, no other client's repository, no install, no paid API call and no image generation.
+
+---
+
+# RELEASE: the site owner's visual correction, 25 Nov 2026 (after round 6)
+
+Brief: `/root/.hermes/cache/scratch/TRUELINE-OWNER-VISUAL-CORRECTION-20261125.md`. Brandon's own
+review of the live site, relayed the same day round 6 landed. Rulings, with the exact wording he
+used and what each one superseded: `DECISIONS.md`, section "Site owner's visual correction".
+
+| | |
+|---|---|
+| Local HEAD at start | `519e3f5`, clean. Remote `main` had moved to `542315e` (Kieran's site-plan commit, 12:49 UTC): **fast-forwarded**, his three plan files preserved byte for byte |
+| Commit | `ba63a40`, pushed to `github.com/TheK-Dawg/site-truelinefinishes` `main` (`git ls-remote` confirms `ba63a40…` on `refs/heads/main`) |
+| Worker | `site-truelinefinishes` only, through `scripts/deploy-guard.mjs` (`deploy-guard: OK`). **Version `ae06e863-a1a7-4179-9678-58f05b5a8200`** (round 6 was `aeb76328`) |
+| Real domain | https://www.truelinefinishes.com — 200, served from Cloudflare; `truelinefinishes.com` → 301 → `https://www.truelinefinishes.com/` |
+| No new Worker, no DNS, no email, no form submission, no article publication, no client message, no paid service | |
+
+## The eight changes, and the exact selectors
+
+| What he said | What changed | Where |
+|---|---|---|
+| Hero must fill the entire visible viewport, same policy on every page | `--hero-h: 100svh` (`100vh` fallback behind `@supports`), as a `min-height`, shared by `.hero` and `.hero--compact`. The fixed 840/780/720/640/540 figures are gone, and `.hero--compact` now carries no geometry at all | `src/components/Hero.astro` `.hero`, `.hero--compact` |
+| The H1 is 52px, too small; about 72 | `--fs-8xl: 72px`, used by `.hero__h1` on **every** page (inner heroes used to drop to 52). Tablet 44, phone 36 | `tokens.css --fs-8xl`, `Hero.astro .hero__h1` |
+| Dark neutral / near-black overlay, not a blue tint, and darker | `--v-overlay-slide` is `rgba(10,11,13,0.7)` → `rgba(10,11,13,0.82)`; the hero's own ground is the new `--bg-hero` (`#0A0B0D`), not the navy | `tokens.css --v-overlay-slide`, `--v-night-900`, `--bg-hero` |
+| Put the call button back to WHITE, only the little phone icon a darker blue | `.btn-call--dark` and `.btn-call--light` are one rule: `--call-bg` white, `--call-fg` navy ink, `--call-icon` deep blue `#003A72`, `--call-line` hairline. The sheen on `.btn-call::after` sweeps dark | `global.css .btn-call--dark, .btn-call--light`, `tokens.css --call-*` |
+| Take the call icon out of the header entirely | `.hd__phone` lost its `.hd__phone-ic` icon badge (the number is the link); `.hd__mcall` lost its `<Icon name="phone">` and is now a **"Call" pill** with the number in `aria-label` | `src/components/Header.astro` |
+| Five nav entries: Home, Services, About, Resources, Contact | `nav` in `src/data/site.ts` — one list, so the desktop bar and the mobile menu cannot drift. Gallery and Reviews stay in the footer's Company column, the reviews button on every page but `/reviews/`, and See the Gallery on the home page | `src/data/site.ts nav` |
+| The copyright/legal row should blend, not be a square blue box | `.ft__bar` lost `background: var(--bg-inverse-2)`; it is the footer's own navy behind a `border-top` hairline, on the container edges, copyright left and links+credit right. **And** the footer now clears the fixed Trustindex corner badge on desktop, which had been sitting on the copyright line — that is why he read the year as "206" | `Footer.astro .ft__bar`, `.ft__bar-end`, `@media (min-width: 1024px) .ft` |
+| Round the form card, widen it, take the opening hours out of that section | `.qf__card` takes `--v-radius-card`; `--form-w` 460 → 560 with the column gap evened; the `.qf__hours` block and the `Hours` import are gone from this component only | `QuoteForm.astro`, `tokens.css --form-w` |
+
+## Gates — every one proved by breaking it first
+
+| Gate | Result | Proved by |
+|---|---|---|
+| `npm run build` | 26 pages, clean | — |
+| `node scripts/token-gate.mjs` | PASS, 51 files, 0 violations | it caught a `72px` literal in a comment during this round |
+| `node scripts/audit.mjs --selftest` | all four selftest blocks pass | — |
+| `node scripts/audit.mjs` | **26 pages, 0 fails, 0 warnings** | a Gallery link replanted in a built page's nav, a phone icon replanted in the header and an hours table replanted in the quote band each fired their new gate |
+| `node scripts/hero-heights.mjs` (local **and** live) | **24 routes × 4 widths — 1440×900, 768×1024, 390×844, 320×640 — 0 fails** | a fixed `min-height: 540px` on `.hero` fired it at every width |
+| `node scripts/contrast.mjs` + 12 extra routes | **0 fails**, 24 routes × 2 widths | — |
+| `node scripts/check.mjs` (local **and** live) | **26 routes × 2 widths, 0 fails**, 460 button labels measured, worst \|delta\| 0.5px | a navy call pill, a boxed footer bar and a square card fired **336** failures |
+| `node scripts/cookies.mjs` live | **zero cookies** on all six sampled routes; the one first-party `sessionStorage` key `lf_t` is Formlane's, unchanged | — |
+
+Measured on the live page: the hero is exactly the window at 1440×900, 768×1024 and 390×844 (and
+grows 25px at 320×640 for the headline, clipping nothing); the H1 computes 72px on desktop on both
+the home page and an inner page; the hero overlay computes the neutral gradient; the slimline Google
+strip now reads at **19.7:1** on dark against 4.9 before; the call pill computes `rgb(255,255,255)`
+with `rgb(14,27,42)` text, an `rgb(0,58,114)` glyph and a 9999px radius at every width; the five
+Formlane fields and the submit button render on the live domain; the mobile menu opens with exactly
+the five entries, the Services accordion opens to all six service links and Escape closes it; under
+`prefers-reduced-motion: reduce` the sheen's `animation-name` is `none`.
+
+## Not touched, by instruction
+
+Kieran's plan commit `542315e` is preserved verbatim — **no fencing hub, page, link or copy was
+created**, and nothing was regenerated from the plan. The saved Formlane form, its fields, routing
+and recipients are unchanged and **no test lead was sent**. No review was written or invented: the
+rating and count on the page are Google's own, live, through Brandon's four Trustindex widgets,
+which are untouched, as are the reviews and gallery pages, the approved legal text, the
+photographs, the towns and the articles. Round 6's article work and its findings stand unchanged.
+
+## Open, and honest
+
+1. **`astro check` is not installed in this repository.** Running it stops at an interactive prompt
+   to install `@astrojs/check` and `typescript`; no install was made (install law, and disk was at
+   94%). `npm run build`, the token gate and the five gate scripts are this site's ship gate and all
+   pass. Same state as round 6 recorded.
+2. **At 320px the floating WhatsApp button overlaps the right end of the hero's Call pill**, partly
+   covering the last digit. **Pre-existing** — it does the same on the round-6 build — and not one of
+   the eight items he raised, so it was left alone under the minimal-change law. Worth a round of
+   its own if he wants it.
+3. Round 6's open items 2 to 5 (wallpapering photographs, the Cookie Policy `lf_t` sentence, the
+   `/cookie-policy/` "Last updated" date, deferred R4-19) are unchanged and still open.
+4. **The design is not accepted until Brandon and Vince have seen it.** Nothing here claims his
+   approval; it claims built, gated, pushed, deployed and read back on the real domain.
