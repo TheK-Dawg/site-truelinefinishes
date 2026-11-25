@@ -1,16 +1,16 @@
-// HERO HEIGHT GATE. Operator review 5 (19 Nov 2026) set one height for every hero on the site;
-// operator review 6 (25 Nov 2026) supersedes that FOR THE HOME PAGE ONLY ("homepage hero should feel
-// a little bigger / not stop too soon", with the explicit instruction not to change every hero when
-// only home needs the room). So the gate now proves TWO things at once: the home hero is the taller
-// one, and every OTHER hero on the site still shares review 5's single height exactly.
-//   desktop 1440x900: home exactly 840px, every inner hero exactly 780px
-//   tablet   768x1024: home exactly 720px, every inner hero exactly 640px
-//   phone     390x844: home at least 720px, every inner hero at least 540px, none with content clipped
+// HERO HEIGHT GATE. THE SITE OWNER'S OWN POLICY (25 Nov 2026, superseding review 5's fixed
+// 780/640/540 and review 6's taller home figure): "the hero should fill the entire visible vertical
+// viewport automatically, and the EXACT SAME hero size policy on ALL my pages, not just the home
+// page". So the gate now proves ONE rule on every hero route, home included, at four widths:
+//   the hero is at least the full viewport height (it fills the window: no strip of the next
+//   section showing under it), and its content is never clipped by it. A hero is allowed to GROW
+//   past the viewport when a long headline needs the room - that is reported, never failed - and a
+//   hero that is SHORTER than the viewport is the failure this gate exists to catch.
+// Widths: 1440x900 desktop, 768x1024 tablet, 390x844 phone, 320x640 narrow phone.
 // Usage: node scripts/hero-heights.mjs [baseURL]   (no URL: serves dist/ locally)
-// Exit 1 on any mismatch. There is no --selftest switch here (an earlier header claimed one that was
-// never written): the gate is proved by breaking the subject instead - give .hero--compact a height of
-// its own and the inner-page checks fail; drop the home re-point and the home checks fail. Both were
-// run on 25 Nov 2026 and both failed as they should before this pass was called clean.
+// Exit 1 on any mismatch. Proved by breaking the subject: put a fixed `min-height: 540px` back on
+// .hero and every route fails the fill check at every width (run 25 Nov 2026 before this pass was
+// called clean).
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
@@ -20,11 +20,11 @@ const { chromium } = require('playwright');
 const EXE = '/root/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux64/chrome-headless-shell';
 
 const WANT = [
-  { name: 'desktop', width: 1440, height: 900, exact: 780, home: 840 },
-  { name: 'tablet', width: 768, height: 1024, exact: 640, home: 720 },
-  { name: 'phone', width: 390, height: 844, min: 540, homeMin: 720 },
+  { name: 'desktop', width: 1440, height: 900 },
+  { name: 'tablet', width: 768, height: 1024 },
+  { name: 'phone', width: 390, height: 844 },
+  { name: 'narrow', width: 320, height: 640 },
 ];
-const HOME = '/';
 const args = process.argv.slice(2);
 const live = args[0] && !args[0].startsWith('--') ? args[0].replace(/\/$/, '') : '';
 const dist = new URL('../dist/', import.meta.url).pathname;
@@ -64,8 +64,8 @@ const measure = () => {
 const fails = []; const rows = [];
 const browser = await chromium.launch({ executablePath: EXE });
 for (const vp of WANT) {
-  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 1, isMobile: vp.name === 'phone', hasTouch: vp.name === 'phone' });
-  const seen = new Map();
+  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 1, isMobile: vp.width <= 390, hasTouch: vp.width <= 390 });
+  let grown = 0;
   for (const r of heroRoutes) {
     const page = await ctx.newPage();
     const res = await page.goto(base + r, { waitUntil: 'load', timeout: 60000 });
@@ -87,20 +87,17 @@ for (const vp of WANT) {
     }
     await page.close();
     if (!m) { fails.push(`${vp.name} ${r}: no hero section`); continue; }
-    rows.push(`${vp.name.padEnd(7)} ${r.padEnd(44)} ${String(m.height).padStart(4)}px  (${m.kind}, --hero-h ${m.token})`);
-    const isHome = r === HOME;
-    if (!isHome) seen.set(m.height, (seen.get(m.height) || 0) + 1);
-    // The home hero is its own (taller) height, review 6; every other hero shares review 5's.
-    const exact = isHome ? vp.home : vp.exact;
-    const min = isHome ? vp.homeMin : vp.min;
-    if (exact != null && Math.abs(m.height - exact) > 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, want ${exact}px (${isHome ? 'the home hero height, review 6' : 'the one height every inner hero shares'})`);
-    if (min != null && m.height < min - 2) fails.push(`${vp.name} ${r}: hero ${m.height}px, under the ${min}px floor (${isHome ? 'home, review 6' : 'shared by every inner hero'})`);
-    if (isHome && vp.exact != null && m.height <= vp.exact) fails.push(`${vp.name} ${r}: the home hero (${m.height}px) is not taller than the inner heroes (${vp.exact}px) - review 6 asked for it bigger`);
-    if (isHome && vp.min != null && m.height <= vp.min) fails.push(`${vp.name} ${r}: the home hero (${m.height}px) is not taller than the inner floor (${vp.min}px) - review 6 asked for it bigger`);
+    const over = m.height - vp.height;
+    if (over > 2) grown += 1;
+    rows.push(`${vp.name.padEnd(7)} ${r.padEnd(44)} ${String(m.height).padStart(4)}px of ${vp.height}px viewport${over > 2 ? `  (+${over}px: grown for its headline)` : ''}  (${m.kind}, --hero-h ${m.token})`);
+    // ONE POLICY, EVERY ROUTE: the hero fills the visible viewport. Shorter than the window is the
+    // defect the site owner reported (a white strip of the next section under the hero).
+    if (m.height < vp.height - 2) fails.push(`${vp.name} ${r}: hero ${m.height}px in a ${vp.height}px window - it does not fill the visible viewport, so the next section shows under it`);
+    if (!/^100[sd]?vh$/.test(m.token)) fails.push(`${vp.name} ${r}: --hero-h is "${m.token}", not the shared viewport height`);
     if (m.clip != null && m.clip > 1) fails.push(`${vp.name} ${r}: hero content clipped by ${m.clip}px`);
   }
   await ctx.close();
-  if (vp.exact != null && seen.size > 1) fails.push(`${vp.name}: ${seen.size} different hero heights across the inner pages (${[...seen.keys()].sort((a, b) => a - b).join(', ')}px) - every hero but the home one must match`);
+  if (grown) console.log(`  ${vp.name}: ${grown} hero(es) grew past the ${vp.height}px window for their headline (allowed: content is never clipped)`);
 }
 await browser.close();
 server?.close();

@@ -18,8 +18,11 @@
  * HEADING (operator review 4, 19 Nov 2026): "You say 'Tell us about the job' and then say a call is
  * a direct line to Brandon. That's fine. You can keep that there." The service pages keep their own
  * headings, which the operator reviewed and approved in the same pass.
- * the Call pill and the hours on the left (dark text); the white form card with pill fields and the
- * royal pill submit on the right. No WhatsApp button in the form section (operator round 3 on Home 3;
+ * the Call pill on the left (dark text); the white form card with pill fields and the royal pill
+ * submit on the right. NO OPENING HOURS IN THIS BAND (the site owner, 25 Nov 2026: "take the
+ * opening hours out of the form section" - they are business information for Google). The hours
+ * themselves are untouched everywhere else: the footer on every page, the /contact/ page's own
+ * Opening Hours card, and the openingHoursSpecification in the structured data. No WhatsApp button in the form section (operator round 3 on Home 3;
  * the floating button and the footer keep WhatsApp). DECISIONS H3-*.
  * SLIMLINE Trustindex widget (operator, 6 Nov 2026; moved round 3): in the LEFT column, under the
  * selling points and above the Call button, its own dark text on the pale band. Never inside the
@@ -29,7 +32,6 @@ import Icon from './Icon.astro';
 import CallButton from './CallButton.astro';
 import TrustindexSlot from './TrustindexSlot.astro';
 import { business } from '../data/site';
-import Hours from './Hours.astro';
 interface Props { heading?: string; lead?: string }
 const {
   heading = 'Tell Us About the Job',
@@ -52,7 +54,6 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
       <div class="qf__call">
         <CallButton cta="form-call" tone="light" />
       </div>
-      <div class="qf__hours"><p class="qf__hours-h"><Icon name="clock" size={16} /> Opening hours</p><Hours class="qf__hrs" /></div>
     </div>
     <div class="qf__card">
       <h3 class="qf__form-h">Quick Quote Online</h3>
@@ -67,7 +68,7 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
 
 <style>
   .qf { background: var(--bg-band); color: var(--text-secondary); padding: var(--section-pad) 0; }
-  .qf__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--form-w); gap: var(--space-12) var(--space-16); align-items: start; }
+  .qf__inner { display: grid; grid-template-columns: minmax(0, 1fr) var(--form-w); gap: var(--space-12); align-items: start; }
   .qf__h2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-5); }
   .qf__p { color: var(--text-secondary); margin-bottom: var(--space-6); max-width: 54ch; }
   .qf__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-3); }
@@ -75,12 +76,12 @@ const FORMLANE_TOKEN = 'npGnYEsjXAHrYRp13No3gA';
   .qf__list :global(.icon) { color: var(--brand-primary); flex-shrink: 0; }
   .qf__copy :global(.qf__ti) { margin-top: var(--space-6); }
   .qf__call { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
-  .qf__hours { margin-top: var(--space-5); }
-  .qf__hours-h { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text-primary); font-weight: var(--fw-semibold); }
-  .qf__hours-h :global(.icon) { color: var(--brand-primary); flex-shrink: 0; }
-  .qf__hours :global(.qf__hrs) { padding-left: calc(16px + var(--space-2)); max-width: 22em; color: var(--text-muted); }
-  .qf__hours :global(.qf__hrs dd) { color: var(--text-primary); }
-  .qf__card { padding: var(--space-8); background: var(--bg-card); color: var(--text-primary); box-shadow: var(--shadow-raised); }
+  /* THE CARD (the site owner, 25 Nov 2026): "the square box clashes with the pill buttons - round
+     the corners", and "the form is squished - widen it". So the card takes the site's own card
+     radius and --form-w is 560 rather than 460, with the copy column taking the rest of the
+     container. Below 1024 it is one column and the card is full width, so no field stretches or
+     overflows at any width. */
+  .qf__card { padding: var(--space-8); background: var(--bg-card); color: var(--text-primary); border-radius: var(--v-radius-card); box-shadow: var(--shadow-raised); }
   .qf__form-h { font-size: var(--fs-2xl); margin-bottom: var(--space-3); }
   .qf__form { scroll-margin-top: calc(var(--header-h) + var(--space-4)); min-height: calc(var(--space-30) * 3); }
   .qf__nojs { color: var(--text-primary); }

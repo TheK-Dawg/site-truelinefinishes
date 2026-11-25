@@ -13,12 +13,15 @@
 // controls; one services-links section on the home page; a reviews button on every page but /reviews/;
 // the service CTA is a button; no Further Reading teaser; the gallery page has real space before the
 // quote section; the LMB credit links on the home page only.
-// ROUND 5 (19 Nov 2026): ONE hero height for every route at each width (780 desktop, 540 phone floor)
-// with the hero content never clipped; the home gallery at most 20 photographs, every one distinct,
-// measured on the served page at both widths; H1s and copy per scripts/audit.mjs round-5 gates.
-// ROUND 6 (25 Nov 2026): the HOME hero alone steps up (840 desktop, 720 phone floor) because the
-// operator asked for it bigger and for every other hero to be left alone; the shared figure still
-// governs every inner route, and scripts/hero-heights.mjs proves the whole set at three widths.
+// ROUND 5 (19 Nov 2026): the home gallery at most 20 photographs, every one distinct, measured on
+// the served page at both widths; H1s and copy per scripts/audit.mjs round-5 gates.
+// SITE OWNER, 25 Nov 2026 (supersedes round 5's fixed hero height and round 6's taller home hero):
+// EVERY hero on the site, home and inner alike, fills the visible viewport - it is never shorter
+// than the window, so no strip of the next section shows under it - and its content is never
+// clipped; scripts/hero-heights.mjs proves the whole set at four widths. Same round: the shared
+// call pill is WHITE with a deep-blue phone glyph; the header's call control carries no icon at
+// either width; the top nav is exactly Home, Services, About, Resources, Contact; the footer's
+// bottom bar has no ground of its own; the quote card is rounded and carries no opening hours.
 // from our own code. Trustindex (6 Nov 2026): every widget actually renders (its own id, height > 0)
 // after a first interaction; main/review-page fill the reviews section, which is the first section
 // after the hero; slimline text white on dark grounds and AA on light ones; the corner is fixed
@@ -88,10 +91,10 @@ const measureButtons = (sel) => {
           return out;
         };
 // HOME 3 SITE-WIDE (operator, 19 Nov 2026): the variants are retired and 301 to / (worker/redirects.js).
-// ROUND 5: the one hero height per width (src/components/Hero.astro --hero-h).
-// Hero heights. Review 5's one shared height, then review 6's home-only step up (25 Nov 2026).
-const HERO_H = { desktop: 780, tablet: 640, mobile: 540 };
-const HERO_H_HOME = { desktop: 840, tablet: 720, mobile: 720 };
+// HERO HEIGHT: one policy for every route - the visible viewport (src/components/Hero.astro,
+// --hero-h: 100svh). The gate is "at least the window, never clipped", measured per width below.
+// THE TOP NAV, exactly five entries in this order (the site owner, 25 Nov 2026).
+const NAV = ['Home', 'Services', 'About', 'Resources', 'Contact'];
 const REDIRECTS = [['/home-3/', '/'], ['/home-3', '/'], ['/home-2/', '/'], ['/home-2', '/'], ['/complaints/', '/complaints-procedure/']];
 const fails = []; const btnLog = []; const heroLog = []; const tiLog = []; const videoLog = []; const galleryLog = [];
 const browser = await chromium.launch({ executablePath: EXE });
@@ -154,6 +157,38 @@ for (const vp of sizes) {
             // The headline's TEXT lines (not its box) centred in the hero: every line's centre within 2px of the hero's.
             heroCentred: (() => { const h = document.querySelector('[data-section="hero"]'); const t = h?.querySelector('h1'); if (!h || !t) return null; const hb = h.getBoundingClientRect(); const c = (hb.left + hb.right) / 2; const rg = document.createRange(); rg.selectNodeContents(t); const lines = [...rg.getClientRects()].filter((r) => r.width > 4); return lines.length ? Math.round(Math.max(...lines.map((r) => Math.abs((r.left + r.right) / 2 - c)))) : null; })(),
           };
+        })(),
+        // THE SITE OWNER'S 25 NOV 2026 CORRECTIONS, measured on the rendered page.
+        nav25: (() => {
+          // Document order, both bars: the dropdown/accordion parent link carries the same class as
+          // the plain ones, and the service sub-links carry a different class, so this is the list.
+          const txt = (el) => [...el.querySelectorAll('a.hd__link, a.hd__menu-link')].map((a) => a.textContent.trim());
+          const bar = document.querySelector('.hd__nav'); const menu = document.querySelector('.hd__menu-nav');
+          const call = document.querySelector('.hd__phone, .hd__mcall');
+          return {
+            top: bar ? txt(bar) : [], menu: menu ? txt(menu) : [],
+            headerIcons: document.querySelectorAll('.hd__phone .icon, .hd__mcall .icon, .hd__phone-ic').length,
+            callHref: !!document.querySelector('.hd__phone[href^="tel:"], .hd__mcall[href^="tel:"]') && !!call,
+          };
+        })(),
+        call25: (() => {
+          const lum = (c) => { const v = (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+          return [...document.querySelectorAll('.btn-call')].filter((b) => b.getBoundingClientRect().width > 0).map((b) => {
+            const cs = getComputedStyle(b); const ic = b.querySelector('.icon');
+            const [x, y] = [lum(cs.backgroundColor), lum(cs.color)].sort((p, q) => q - p);
+            return { cls: (b.className || '').toString().split(' ').filter((c) => c.startsWith('btn-call')).join(' '), bg: cs.backgroundColor, fg: cs.color, icon: ic ? getComputedStyle(ic).color : '', contrast: (x + 0.05) / (y + 0.05) };
+          });
+        })(),
+        bar25: (() => {
+          const bar = document.querySelector('.ft__bar'); const ft = document.querySelector('footer');
+          return { bg: bar ? getComputedStyle(bar).backgroundColor : null, footerBg: ft ? getComputedStyle(ft).backgroundColor : null, links: bar ? bar.querySelectorAll('nav a').length : 0 };
+        })(),
+        card25: (() => {
+          const q = document.querySelector('[data-section="quote-form"]'); const card = q?.querySelector('.qf__card');
+          if (!card) return { radius: null, hours: false, overflow: 0 };
+          const cb = card.getBoundingClientRect();
+          const over = [...card.querySelectorAll('input, textarea, button, .lf-i, .lf-b')].reduce((mx, el) => { const b = el.getBoundingClientRect(); return Math.max(mx, Math.round(Math.max(b.left - cb.left < -0.5 ? cb.left - b.left : 0, b.right - cb.right))); }, 0);
+          return { radius: parseFloat(getComputedStyle(card).borderTopLeftRadius), hours: !!q.querySelector('dl[data-hours]'), overflow: over };
         })(),
         videos: [...document.querySelectorAll('[data-section="videos"] iframe')].map((f) => { const b = f.getBoundingClientRect(); return { src: f.getAttribute('src'), w: Math.round(b.width), h: Math.round(b.height), left: Math.round(b.left), top: Math.round(b.top + scrollY) }; }),
         ti: (() => {
@@ -271,7 +306,10 @@ for (const vp of sizes) {
     const d = m.design;
     if (d.h1Font !== 'Lexend Deca' || !d.headLoaded || d.bodyFont !== 'Kumbh Sans' || !d.bodyLoaded) fails.push(`${tag}: Home 3 fonts not in use/loaded ${JSON.stringify(d)}`);
     if (d.upper) fails.push(`${tag}: headings still in capitals (text-transform)`);
-    if (d.header !== 'rgb(14, 27, 42)' || d.footer !== 'rgb(14, 27, 42)' || d.bar !== 'rgb(16, 35, 58)') fails.push(`${tag}: header/footer/legal bar not the Home 3 navy ${JSON.stringify([d.header, d.footer, d.bar])}`);
+    // Home 3's navy header and footer stay. The bottom bar's own deeper-navy box is GONE (the site
+    // owner, 25 Nov 2026: it must blend into the footer); it is checked as "no ground of its own"
+    // in the bar25 block below instead of being held to a colour of its own.
+    if (d.header !== 'rgb(14, 27, 42)' || d.footer !== 'rgb(14, 27, 42)') fails.push(`${tag}: header/footer not the Home 3 navy ${JSON.stringify([d.header, d.footer])}`);
     if (!d.pill) fails.push(`${tag}: buttons are not pills`);
     if (d.heroCentred == null || d.heroCentred > 2) fails.push(`${tag}: hero headline not centred (${d.heroCentred}px off)`);
     // VIDEOS (operator, 19 Nov 2026): Brandon's two, home page only; desktop side by side at the same height in
@@ -338,13 +376,29 @@ for (const vp of sizes) {
     // stop too soon", and don't touch the others). So home is held to its own, taller figure and
     // every inner route is still held to the one shared figure. Either way the hero may only ever be
     // TALLER than its floor (content is never clipped).
-    const heroWant = r === '/' ? HERO_H_HOME : HERO_H;
-    const heroWhose = r === '/' ? 'the home hero height (round 6)' : `the ${HERO_H.desktop}px every inner page shares`;
-    if (vp.name === 'desktop' && Math.abs(m.heroPattern.height - heroWant.desktop) > 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px, not ${heroWant.desktop}px - ${heroWhose}`);
-    if (vp.name === 'mobile' && m.heroPattern.height < heroWant.mobile - 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px on a phone, under the ${heroWant.mobile}px floor (${r === '/' ? 'home, round 6' : 'shared by every inner page'})`);
-    if (vp.name === 'desktop' && r === '/' && m.heroPattern.height <= HERO_H.desktop) fails.push(`${tag}: the home hero (${m.heroPattern.height}px) is not taller than the inner heroes (${HERO_H.desktop}px) - round 6 asked for it bigger`);
-    if (vp.name === 'desktop' && r === '/' && m.heroPattern.height >= vp.height - 40) fails.push(`${tag}: home hero fills the window (${m.heroPattern.height}px), so the reviews section does not come up`);
+    if (!m.utility && m.heroPattern.height < vp.height - 2) fails.push(`${tag}: hero is ${m.heroPattern.height}px in a ${vp.height}px window - every hero fills the visible viewport (the site owner, 25 Nov 2026)`);
     if (m.heroClipped) fails.push(`${tag}: hero content is clipped (${m.heroClipped})`);
+    // THE TOP NAV: five entries, that order, the same list at both widths (desktop bar / mobile menu).
+    if (JSON.stringify(m.nav25.top) !== JSON.stringify(NAV)) fails.push(`${tag}: top nav is ${JSON.stringify(m.nav25.top)}, want ${JSON.stringify(NAV)}`);
+    if (JSON.stringify(m.nav25.menu) !== JSON.stringify(NAV)) fails.push(`${tag}: mobile menu nav is ${JSON.stringify(m.nav25.menu)}, want ${JSON.stringify(NAV)}`);
+    if (m.nav25.headerIcons) fails.push(`${tag}: the header call control still carries ${m.nav25.headerIcons} icon(s) - the site owner had the phone icon taken out of the header`);
+    if (!m.nav25.callHref) fails.push(`${tag}: the header has no working call link`);
+    // THE CALL PILL: white ground, dark label, deep-blue glyph, wherever it renders.
+    for (const c of m.call25) {
+      if (c.bg !== 'rgb(255, 255, 255)') fails.push(`${tag}: a call button is ${c.bg}, not white (${c.cls})`);
+      if (c.icon === c.fg || c.icon !== 'rgb(0, 58, 114)') fails.push(`${tag}: a call button's phone icon is ${c.icon}, want the deep blue rgb(0, 58, 114) (${c.cls})`);
+      if (c.contrast < 4.5) fails.push(`${tag}: a call button's label is ${c.contrast.toFixed(1)}:1 on its pill (${c.cls})`);
+    }
+    // THE FOOTER BOTTOM BAR: no box of its own - the footer's own ground (the site owner, 25 Nov 2026).
+    const barBlends = m.bar25.bg === m.bar25.footerBg || /rgba\(0, 0, 0, 0\)|transparent/.test(m.bar25.bg || '');
+    if (!barBlends) fails.push(`${tag}: the footer bottom bar is a ${m.bar25.bg} box on a ${m.bar25.footerBg} footer - it must blend`);
+    if (m.bar25.links < 6) fails.push(`${tag}: the footer bottom bar lost legal links (${m.bar25.links})`);
+    // THE QUOTE CARD: rounded, and no opening hours in that band.
+    if (!m.utility) {
+      if (m.card25.radius < 12) fails.push(`${tag}: the quote card's corners are ${m.card25.radius}px, not rounded`);
+      if (m.card25.hours) fails.push(`${tag}: opening hours are still in the quote-form section`);
+      if (m.card25.overflow) fails.push(`${tag}: a quote-form field overflows its card by ${m.card25.overflow}px`);
+    }
     // TRUSTINDEX (6 Nov 2026): rendered, mapped, placed, readable; corner desktop only.
     if (!tiRendered) fails.push(`${tag}: Trustindex widgets did not all render ${JSON.stringify(m.ti.filter((x) => !x.pid).map((x) => x.place))}`);
     const want = r === '/reviews/' ? 'reviewPage' : 'main';

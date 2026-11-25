@@ -41,14 +41,22 @@
   --v-mist-300: #A9BBD0;
   --v-slate-600: #45556A;
   --v-white: #FFFFFF;
+  /* NEUTRAL NIGHT (site owner's correction, 25 Nov 2026, after round 6: "use the photo with a DARK
+     neutral / near-black overlay rather than a blue background or tint"). The hero ground and the
+     hero overlay are the only places these are used: every other dark ground on the site stays the
+     Home 3 navy. Near-black, not pure black, so Brandon's photographs keep their own colour. */
+  --v-night-900: #0A0B0D;
+  --v-night-800: #131417;
   --v-red-600: #B3261E;
   --v-red-50: #FDECEA;
   --v-line-dark: rgba(169, 187, 208, 0.22);
   --v-glass-dark: rgba(14, 27, 42, 0.55);
-  /* The call pill's own ground (operator review 6, 25 Nov 2026). Round 5's call pill was a 12%
-     WHITE film, so over a pale part of a photograph the pill, its white label and its blue phone
-     icon all sat on white. A navy glass of its own means the label and the icon never depend on
-     what the photograph is doing behind them. */
+  /* THE CALL PILL (site owner's correction, 25 Nov 2026, superseding round 6's navy glass: "that is
+     the opposite of what I asked - put the button back to WHITE and make only the little phone icon
+     a darker blue"). The pill is solid white at every size and on every ground, its label is the
+     navy ink (16.9:1 on white) and only the phone glyph is the deep blue (#003A72, 11.4:1 on white).
+     Solid white, not a film, so it never depends on the photograph behind it. The navy-glass tokens
+     below are kept only for the hero's own scrim work. */
   --v-glass-dark-pill: rgba(14, 27, 42, 0.66);
   /* The sheen sweep on a WHITE pill (the sticky bar's Quick Quote button): a white sweep over white
      is invisible, so that one sweeps dark. Same subtlety as the white sweep on dark buttons. */
@@ -56,12 +64,14 @@
   --v-glass-dark-pill-hover: rgba(14, 27, 42, 0.82);
   --v-glass-light: rgba(255, 255, 255, 0.12);
   --v-glass-line: rgba(255, 255, 255, 0.28);
-  /* HERO OVERLAY (operator review 6, 25 Nov 2026: "background modestly darker so the Google /
-     Trustindex review strip can be read"). One modest step down from round 5's 0.5/0.6: the
-     photograph still reads as a photograph, and the white slimline rating, the headline and both
-     pills now sit on a ground dark enough to read over the bright parts of Brandon's photos
-     (the lit wall on the Baildon article hero, the pale bedding on the home carousel). */
-  --v-overlay-slide: linear-gradient(180deg, rgba(14, 27, 42, 0.62) 0%, rgba(16, 35, 58, 0.72) 100%);
+  /* HERO OVERLAY. Round 6 made it a darker NAVY; the site owner's own correction the same day
+     (25 Nov 2026) says the tint itself is wrong: "a dark neutral / near-black overlay rather than a
+     blue background or tint", and darker again so the Google / Trustindex strip can be read over a
+     bright photograph. So the hero gradient is now neutral near-black at 0.70 -> 0.82. Measured on
+     the worst case the site has (the pale bedding frame of the home carousel): the white slimline
+     rating reads at better than 9:1 where it used to sit at about 4. The photograph is still clearly
+     a photograph; nothing else on the site takes this overlay. */
+  --v-overlay-slide: linear-gradient(180deg, rgba(10, 11, 13, 0.7) 0%, rgba(10, 11, 13, 0.82) 100%);
   --v-overlay-band: linear-gradient(90deg, rgba(14, 27, 42, 0.88) 0%, rgba(16, 35, 58, 0.7) 45%, rgba(16, 35, 58, 0.2) 100%);
   --v-overlay-tile: linear-gradient(180deg, rgba(14, 27, 42, 0) 45%, rgba(14, 27, 42, 0.85) 100%);
   --v-shadow-soft: 0 10px 30px rgba(14, 27, 42, 0.08);
@@ -109,6 +119,8 @@
   --fs-5xl: 44px;
   --fs-6xl: 52px;
   --fs-7xl: 64px;
+  /* The hero headline (site owner, 25 Nov 2026: "the H1 is 52px on desktop, too small; about 72"). */
+  --fs-8xl: 72px;
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
@@ -128,6 +140,8 @@
   --bg-inverse: var(--v-ink-900);
   --bg-inverse-2: var(--v-ink-800);
   --bg-inverse-deep: var(--v-ink-900);
+  /* The hero's own ground, behind the photograph: neutral, not navy (site owner, 25 Nov 2026). */
+  --bg-hero: var(--v-night-900);
   --text-primary: var(--v-ink-900);
   --text-secondary: var(--v-ink-700);
   --text-muted: var(--v-slate-600);
@@ -160,6 +174,12 @@
   --shadow-raised: var(--v-shadow-soft);
   --shadow-overlay: var(--v-shadow-lift);
   --focus-ring: var(--v-chrome);
+  /* The shared call pill, one set of colours wherever CallButton.astro renders. */
+  --call-bg: var(--v-white);
+  --call-bg-hover: var(--v-mist-100);
+  --call-fg: var(--v-ink-900);
+  --call-icon: var(--v-deep);
+  --call-line: var(--v-mist-200);
   /* WhatsApp's own brand green with the official mark in white on it (operator review 6, 25 Nov
      2026: use the actual official WhatsApp logo). White on #25D366 is the brand's own lock-up;
      WCAG 1.4.11 exempts a logotype from the non-text contrast minimum. */
@@ -173,7 +193,8 @@
   --logo-w: 220px;
   --logo-w-sm: 168px;
   --tap: 44px;
-  --form-w: 460px;
+  /* The quote card (site owner, 25 Nov 2026: "the form is squished - widen it"): 560, not 460. */
+  --form-w: 560px;
   --aside-w: 340px;
   --legal-toc-w: 260px;
   --legal-card-w: 320px;

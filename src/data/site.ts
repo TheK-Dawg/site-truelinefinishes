@@ -108,11 +108,17 @@ export const towns = (seed.towns as { town: string; publishOrder: number; distan
 /** Brandon's close-to-home list, for the one coverage line (plan, Layout). */
 export const mainPlaces = ['Baildon', 'Guiseley', 'Menston', 'Ilkley', 'Shipley', 'Otley', 'Horsforth', 'Bingley'];
 
+/**
+ * THE TOP NAV: FIVE ENTRIES, EXACTLY, IN THIS ORDER (the site owner, 25 Nov 2026: "the header should
+ * only contain Home, Services, About, Resources, Contact - Gallery and Reviews don't need to be in
+ * there"). Both pages stay and stay reachable: the footer's Company column links them on every page,
+ * every page but /reviews/ carries the Read the Reviews button, the home page carries See the
+ * Gallery, and both are in /sitemap/ and the XML sitemap. One list, so the desktop bar and the
+ * mobile menu can never drift apart.
+ */
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services/', drop: true },
-  { label: 'Gallery', href: '/gallery/' },
-  { label: 'Reviews', href: '/reviews/' },
   { label: 'About', href: '/about/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'Contact', href: '/contact/' },

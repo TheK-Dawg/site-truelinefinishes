@@ -11,16 +11,19 @@
  * headline on their own and loop for ever, and there are NO customer-facing controls at all (the
  * arrows and dots are gone, so there is no control left to be unreachable). It still pauses
  * off-screen, and prefers-reduced-motion holds the first photo with no movement.
- * HEIGHTS. Review 5 (19 Nov 2026) set ONE height for every hero on the site through a single token,
- * --hero-h per breakpoint: 780 desktop / 640 tablet / 540 phone floor, with `compact` changing the
- * type scale only. REVIEW 6 (25 Nov 2026) supersedes that for the HOME PAGE ALONE: "homepage hero
- * should feel a little bigger / not stop too soon", with the explicit instruction not to change
- * every hero when only home needs the extra room. So the inner pages keep review 5's shared height
- * exactly (780 / 640 / 540, still one height for all of them, still proved route by route), and the
- * home hero alone takes --hero-h-home: 840 desktop / 720 tablet / a 720 floor on a phone, where the
- * hero may still GROW past the floor so nothing is ever clipped. On a 390x844 phone that leaves the
- * reviews band just peeking under the fold instead of a white gap. `compact` still sets no height
- * of its own. Sub-pages reach the shared height through PageHero.astro.
+ * HEIGHTS. THE SITE OWNER'S OWN CORRECTION (25 Nov 2026, superseding review 5's fixed 780/640/540
+ * and review 6's taller home figure): "the hero should fill the entire visible vertical viewport
+ * automatically, and the EXACT SAME hero size policy on ALL my pages, not just the home page".
+ * Fixed pixel heights are what produced the complaint he opened with - an 840px hero in a 900px
+ * window left a white strip of the next section under it, and a 720px hero in an 844px phone window
+ * left a bigger one. So --hero-h is now ONE viewport-relative value shared by every hero on the
+ * site, home and inner alike: 100svh, the SMALL viewport height, so a phone's address bar can never
+ * crop the hero and nothing reflows when that bar collapses (100vh is the fallback for engines
+ * without svh). It is a MIN-height, so a long headline still GROWS the hero rather than clipping it,
+ * and the hero's own padding clears the fixed header, which sits over it. `compact` sets no height
+ * of its own, ever; it is a slider/no-slider distinction only now. Sub-pages come through
+ * PageHero.astro and get exactly the same policy. Proved route by route at four widths by
+ * scripts/hero-heights.mjs.
  * Buttons: Quick Quote Online = the chrome pill (scrolls to the quote form at the end of the page),
  * Call = the glass pill. REVIEWS: only the SLIMLINE widget (Google's own live rating and count);
  * the site writes no rating or count of its own.
@@ -72,38 +75,37 @@ const slider = photos.length > 1;
 </script>
 
 <style>
-  /* ONE HEIGHT FOR EVERY INNER HERO (operator review 5), THE HOME HERO ONE STEP TALLER (review 6).
-     --hero-h is the height every hero on the site shares at this breakpoint; the home hero, and only
-     the home hero, re-points it at --hero-h-home. It is a MIN either way: a long headline on a narrow
-     window grows the hero rather than clipping it. `compact` sets no height of its own, ever. */
-  .hero, .hero--compact { --hero-h: calc(var(--space-30) * 6.5); --hero-h-home: calc(var(--space-30) * 7); }
-  .hero:not(.hero--compact) { --hero-h: var(--hero-h-home); }
-  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: var(--hero-h); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-20); background: var(--bg-inverse-deep); color: var(--text-inverse-muted); text-align: center; }
-  /* `compact` is a TYPE variant only now: same height, slightly smaller headline. */
-  .hero--compact { padding: calc(var(--header-h) + var(--space-20)) 0 var(--space-20); }
+  /* ONE HEIGHT POLICY FOR EVERY HERO ON THE SITE (the site owner, 25 Nov 2026): the whole visible
+     viewport, home page and inner pages alike. --hero-h is 100svh (the small viewport height, so the
+     mobile address bar cannot crop it and its collapse cannot reflow the page); 100vh is the
+     fallback where svh is not supported. min-height, never height: a long headline grows the hero. */
+  .hero, .hero--compact { --hero-h: 100vh; }
+  @supports (height: 100svh) { .hero, .hero--compact { --hero-h: 100svh; } }
+  .hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; justify-content: center; min-height: var(--hero-h); padding: calc(var(--header-h) + var(--space-16)) 0 var(--space-20); background: var(--bg-hero); color: var(--text-inverse-muted); text-align: center; }
+  /* `compact` carries no geometry of its own at all now: same height, same padding, same type.
+     It only tells the hero there is no photo carousel on this page. */
   .hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
   .hero[data-slider] .hero__bg { opacity: 0; transition: opacity 1.1s var(--ease); }
   .hero[data-slider] .hero__bg.is-on { opacity: 1; }
   .hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-hero); }
   .hero__copy { display: flex; flex-direction: column; align-items: center; }
-  .hero__h1 { color: var(--text-inverse); font-size: var(--fs-7xl); line-height: 1.08; max-width: 18ch; margin-bottom: var(--space-6); }
-  .hero--compact .hero__h1 { font-size: var(--fs-6xl); max-width: 22ch; }
+  /* The headline takes --fs-8xl on a desktop (the site owner, 25 Nov 2026: the old inner-page size
+     "is too small"), and it is now the SAME size on every page - inner heroes used to step it down.
+     Only the measure differs, because an inner-page headline is the longer one. */
+  .hero__h1 { color: var(--text-inverse); font-size: var(--fs-8xl); line-height: 1.06; max-width: 18ch; margin-bottom: var(--space-6); }
+  .hero--compact .hero__h1 { max-width: 20ch; }
   .hero__lead { color: var(--v-mist-100); font-size: var(--fs-lg); max-width: 58ch; margin-bottom: var(--space-4); }
   /* The slimline directly under the paragraph, ABOVE the buttons (operator round 3): 16px above, 24px below. */
   .hero__copy :global(.hero__ti) { width: 100%; margin-bottom: var(--space-6); }
   .hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); }
   .hero__actions :global(.hero__btn) { min-height: var(--btn-h-lg); }
-  /* Tablet: the shared inner height again (640), the home hero 720, the type one step down. The
-     figure leaves room for the longest headline at this width, so every inner tablet hero
-     measures the same. */
-  @media (max-width: 1023px) { .hero, .hero--compact { --hero-h: calc(var(--space-30) * 5 + var(--space-10)); --hero-h-home: calc(var(--space-30) * 6); } .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-5xl); } }
-  /* Phone: the shared inner floor (540) and the home floor (720, review 6), and the hero grows
-     past the floor when the content needs the room, so a long headline plus the slimline and
-     both full-width buttons are never clipped. */
+  /* Tablet: the height policy is the viewport at every width, so only the type scale steps down. */
+  @media (max-width: 1023px) { .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-5xl); } }
+  /* Phone: still the visible viewport (100svh), with the padding trimmed so the headline, the
+     slimline and both full-width buttons fit inside a 320x640 window without the hero having to
+     grow past it. */
   @media (max-width: 760px) {
-    .hero, .hero--compact { --hero-h: calc(var(--space-30) * 4.5); --hero-h-home: calc(var(--space-30) * 6); }
-    .hero { padding: calc(var(--header-h) + var(--space-12)) 0 var(--space-20); }
-    .hero--compact { padding: calc(var(--header-h) + var(--space-10)) 0 var(--space-12); }
+    .hero { padding: calc(var(--header-h) + var(--space-8)) 0 var(--space-10); }
     .hero__h1, .hero--compact .hero__h1 { font-size: var(--fs-4xl); }
     .hero__lead { font-size: var(--fs-base); }
     .hero__actions { width: 100%; flex-direction: column; }

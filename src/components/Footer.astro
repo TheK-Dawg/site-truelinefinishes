@@ -4,8 +4,11 @@
  * Top row: logo + a one-line question + Quick Quote Online. Four columns: About (with the charity
  * line, required by the plan), Our Services (the five hubs + all services), Company (every page),
  * Quick Contact (call button, email, WhatsApp, the opening hours exactly as the Google listing;
- * NO address, ever). Bottom bar: copyright + auto year on the left; the legal links and the
- * keyword build credit on the right (the operator's brief orders the LMB credit, DECISIONS O9).
+ * NO address, ever - and the footer is now the ONLY place the hours are set out in full besides
+ * /contact/, since the site owner had them taken out of the quote-form band on 25 Nov 2026).
+ * Bottom bar: copyright + auto year on the left; the legal links and the keyword build credit on
+ * the right (the operator's brief orders the LMB credit, DECISIONS O9). It has no box of its own:
+ * it blends into the footer behind one hairline (the site owner, 25 Nov 2026).
  * formless: the page has no quote form (thank-you, 404), so Quick Quote goes to /contact/#contact.
  * Links are never underlined.
  * TODO(operator, charity link): the charity line stays plain text until the operator supplies A Child's Wish's
@@ -97,20 +100,31 @@ const company = [
   .ft__hours-h { margin-bottom: var(--space-2); }
   .ft__hours :global(.ft__hrs) { font-size: var(--fs-sm); padding-left: calc(16px + var(--space-2)); }
   .ft__hours :global(.ft__hrs dd) { color: var(--text-inverse); }
-  /* Home 3 (round 3): the legal bar is the deeper navy, not a light glass grey. */
-  .ft__bar { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; background: var(--bg-inverse-2); padding: var(--space-6); font-size: var(--fs-sm); }
-  .ft__bar-end { display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-2); }
+  /* THE BOTTOM BAR (the site owner, 25 Nov 2026: "the copyright line and the Privacy Policy /
+     Terms and Conditions links shouldn't be a separate square blue box - blend them with the rest
+     of the footer"). So the bar carries NO ground of its own: it is the footer's own navy, marked
+     off by the same hairline the columns above it use, aligned on the same container edges as
+     every other footer row, and the line spacing matches the columns. Nothing was removed - the
+     copyright, the six legal links and the build credit all stay, laid out cleanly. */
+  .ft__bar { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3) var(--space-8); flex-wrap: wrap; padding: var(--space-6) 0 var(--space-8); border-top: 1px solid var(--border-inverse); font-size: var(--fs-sm); }
+  .ft__bar-end { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: var(--space-2) var(--space-6); }
   .ft__bar nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2) var(--space-6); }
   .ft__bar a { transition: color 0.2s var(--ease); }
   .ft__bar a:hover { color: var(--accent-on-dark); }
   /* Below the desktop breakpoint the fixed sticky call bar owns the bottom edge: clear its height. */
   @media (max-width: 1023px) { .ft { padding-bottom: calc(var(--btn-h-md) + var(--space-4) + 1px + env(safe-area-inset-bottom)); } }
+  /* ON DESKTOP the fixed Trustindex corner badge owns the bottom-LEFT of the window, and at the foot
+     of the page it sat straight on top of the copyright line - which is why the site owner read the
+     year as "206" (25 Nov 2026). The footer clears the badge's height so the whole bottom row is
+     readable when the page is scrolled all the way down. */
+  @media (min-width: 1024px) { .ft { padding-bottom: var(--space-24); } }
   @media (max-width: 900px) {
     .ft__top { grid-template-columns: 1fr; justify-items: start; }
     .ft__ask { text-align: left; }
     .ft__cols { grid-template-columns: 1fr 1fr; }
     .ft__col--about { grid-column: 1 / -1; }
-    .ft__bar-end { align-items: flex-start; }
+    .ft__bar { flex-direction: column; align-items: flex-start; }
+    .ft__bar-end { align-items: flex-start; justify-content: flex-start; }
     .ft__bar nav { justify-content: flex-start; }
   }
   @media (max-width: 520px) { .ft__cols { grid-template-columns: 1fr; } .ft__brand img { width: var(--logo-w-sm); } }

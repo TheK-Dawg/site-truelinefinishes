@@ -67,6 +67,8 @@ const HOME_GALLERY_MIN = 12;
 const LEGAL_SET = ['/privacy/', '/terms/', '/cookie-policy/', '/complaints-procedure/', '/accessibility/'];
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const NAP_HOURS = JSON.parse(readFileSync(new URL('../site-plan/nap.json', import.meta.url), 'utf8')).hours;
+// THE TOP NAV: five entries, that order (the site owner, 25 Nov 2026). Mirrors `nav` in src/data/site.ts.
+const TOP_NAV = ['Home', 'Services', 'About', 'Resources', 'Contact'];
 const sectionOf = (html, name) => (html.match(new RegExp(`<section[^>]*data-section="${name}"[\\s\\S]*?</section>`)) || [''])[0];
 // ---- ROUND 5 (operator review 5, 19 Nov 2026; DECISIONS R5-*) ----
 // Three rulings become hard gates here: H1s grounded in the real service AND the verified service
@@ -172,6 +174,30 @@ function r5Selftest() {
   if (!ok('/contact/', contact)) bad.push(`contact page with one first name fails: ${r5Fails('/contact/', contact, visibleText(contact))}`);
   return bad;
 }
+// THE HEADER (the site owner, 25 Nov 2026), on every built page: the top nav is exactly Home,
+// Services, About, Resources, Contact and the mobile menu is the same five (Gallery and Reviews
+// stay linked from the footer's Company column and from their own page buttons); the call control
+// carries NO phone icon at either width and still dials Brandon's number.
+function headerFails(html) {
+  const f = [];
+  // Class attributes are matched loosely: Astro may add its own scope class or attribute alongside.
+  const hd = (html.match(/<header[^>]*class="[^"]*\bhd\b[^"]*"[\s\S]*?<\/header>/) || [''])[0];
+  if (hd) {
+    const navOf = (name, link) => [...((hd.match(new RegExp(`<nav[^>]*class="[^"]*\\b${name}\\b[^"]*"[\\s\\S]*?</nav>`)) || [''])[0])
+      .matchAll(new RegExp(`class="[^"]*\\b${link}\\b[^"]*"[^>]*>([^<]*)<`, 'g'))].map((m) => m[1].trim());
+    const topNav = navOf('hd__nav', 'hd__link');
+    const menuNav = navOf('hd__menu-nav', 'hd__menu-link');
+    if (JSON.stringify(topNav) !== JSON.stringify(TOP_NAV)) f.push(`top nav ${JSON.stringify(topNav)}, want ${JSON.stringify(TOP_NAV)}`);
+    if (JSON.stringify(menuNav) !== JSON.stringify(TOP_NAV)) f.push(`mobile menu nav ${JSON.stringify(menuNav)}, want ${JSON.stringify(TOP_NAV)}`);
+    const call = (hd.match(/<a[^>]*href="tel:[^"]*"[^>]*class="[^"]*\bhd__(?:phone|mcall)\b[^"]*"[^>]*>[\s\S]*?<\/a>/g) || []);
+    if (call.length !== 2) f.push(`the header has ${call.length} call control(s), want the desktop number and the narrow Call pill`);
+    for (const c of call) if (/<svg|hd__phone-ic/.test(c)) f.push('the header call control still carries a phone icon');
+    if (!call.some((c) => c.includes('07949 484274'))) f.push('the header does not show Brandon\'s number');
+  } else f.push('no site header in the page');
+  return f;
+}
+
+
 function r3Fails(r, html, text, isArticle) {
   const f = [];
   // Hours: day by day, as the Google listing shows them; never "Monday to Friday" / "Saturday and Sunday".
@@ -198,6 +224,10 @@ function r3Fails(r, html, text, isArticle) {
     const s2 = qf.search(/data-trustindex-slot="slim-form"/); const list = qf.search(/class="(qf__list|dm-qf__list)"/); const card = qf.search(/class="(qf__card|dm-qf__card)"/);
     if (s2 < 0 || list < 0 || card < 0 || !(s2 > list && s2 < card)) f.push(`quote-section slimline not in the left column under the selling points (slot ${s2}, list ${list}, card ${card})`);
   }
+  // THE SITE OWNER'S 25 NOV 2026 CORRECTIONS, in the served bytes of every page.
+  //  - the quote-form band carries no opening hours (they stay in the footer, on /contact/ and in
+  //    the structured data, which the hours gate above still proves);
+  if (qf && /<dl[^>]*data-hours/.test(qf)) f.push('opening hours are still inside the quote-form band');
   // WhatsApp branding removed where the operator flagged it.
   if (isArticle && /article-aside-whatsapp|art__wa/.test(html)) f.push('WhatsApp in the article "Need a quote?" card');
   // HOME 3 SITE-WIDE (19 Nov 2026): Home 3's form band has no WhatsApp button, so no quote section has one.
@@ -473,6 +503,7 @@ for (const file of pages) {
   if (/class="eyebrow"/.test(html)) fails.push(`${r}: eyebrow label`);
   if (!text.includes('07949 484274')) fails.push(`${r}: phone missing`);
   for (const f of r3Fails(r, html, text, isArticle)) fails.push(`${r}: round 3: ${f}`);
+  for (const f of headerFails(html)) fails.push(`${r}: header (25 Nov 2026): ${f}`);
   for (const f of r5Fails(r, html, text)) fails.push(`${r}: round 5: ${f}`);
   for (const f of articlePhotoFails(r, html)) fails.push(`${r}: round 6 article photos: ${f}`);
   for (const f of articleBodyFails(r, html)) fails.push(`${r}: round 6 article body: ${f}`);
