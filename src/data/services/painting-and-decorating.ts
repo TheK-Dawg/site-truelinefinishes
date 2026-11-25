@@ -5,10 +5,10 @@ import type { ServiceContent } from './types';
 // Quotation" heads the quote form, in that order. contentNote scope throughout.
 const content: ServiceContent = {
   slug: 'painting-and-decorating',
-  metaTitle: 'Painting and Decorating in Baildon, Ilkley & Otley | TrueLine Finishes',
-  description: 'Painting and decorating for homes and business premises in Baildon, Guiseley, Ilkley, Otley and Shipley. Preparation included, fully insured, free quotations.',
-  h1: 'Painting and Decorating in Baildon, Ilkley and Otley',
-  lead: 'All aspects of painting and decorating for homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on.',
+  metaTitle: 'Painting and Decorating in West and North Yorkshire | TrueLine Finishes',
+  description: 'Painting and decorating for homes and business premises across West and North Yorkshire: Baildon, Shipley, Ilkley, Otley, Leeds, Bradford, Harrogate and beyond.',
+  h1: 'Painting and Decorating in West and North Yorkshire',
+  lead: 'All aspects of painting and decorating for homes and business premises across Baildon, Shipley, Ilkley, Otley, Leeds, Bradford, Harrogate and the towns around them, from one tired room to a full property redecoration.',
   heroImage: 'victorian-hallway-0065',
   introH2: 'The Whole Trade, From Walls to Woodwork',
   introImage: 'navy-kitchen-0038',

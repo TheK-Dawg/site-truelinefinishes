@@ -1,6 +1,6 @@
 ---
 /**
- * SERVICES INDEX (Buildings for Life services page, operator overhaul 5 Nov 2026): all five hubs
+ * SERVICES INDEX (Buildings for Life services page, operator overhaul 5 Nov 2026): all six hubs
  * as cards, how a job runs, Brandon's work, a short FAQ, the quote form last. The hubs stay at
  * their locked root URLs; this page only lists them.
  */
@@ -24,10 +24,10 @@ const schema = [
   { '@type': 'BreadcrumbList', '@id': `${pageUrl}#crumbs`, itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${business.url}/` }, { '@type': 'ListItem', position: 2, name: 'Services', item: pageUrl }] },
 ];
 ---
-<Base title="Painting and Decorating Services in Baildon and Shipley | TrueLine Finishes" description="Painting and decorating, interior painting, exterior painting, wallpapering and commercial work for homes and business premises in Baildon and Shipley." page="services" schema={schema}>
-  <PageHero h1="Painting and Decorating in Baildon and Shipley" lead="Five services, one standard of preparation and finish, for homes and business premises. Pick the job below to see what it covers, or send the details for a free quotation." image={image('white-staircase-spindles-0162')} />
+<Base title="Painting and Decorating Services in West Yorkshire | TrueLine Finishes" description="Painting and decorating, interior and exterior painting, wallpapering, commercial work and fencing for homes and business premises across West and North Yorkshire." page="services" schema={schema}>
+  <PageHero h1="Painting and Decorating in West and North Yorkshire" lead="Six services, one standard of preparation and finish, for homes and business premises across Baildon, Shipley, Ilkley, Leeds, Bradford, Harrogate and the towns around them." image={image('white-staircase-spindles-0162')} />
   <Reviews />
-  <ServicesGrid heading="Pick the Job You Have in Mind" lead="Interiors, exteriors, wallpaper and business premises, inside and out. Pick the job you have in mind and see how it is done." />
+  <ServicesGrid heading="Pick the Job You Have in Mind" lead="Interiors, exteriors, wallpaper, business premises and fencing, inside and out. Pick the job you have in mind and see how it is done." />
   <Steps heading="How a Job Runs" lead="The same three steps whether it is one room or the whole house." photo="living-room-sheeted-0138" steps={[
     { icon: 'chat', title: 'Get in Touch', text: 'Call 07949 484274, use the quote form or send a WhatsApp message.' },
     { icon: 'clipboard', title: 'A Free Quotation', text: 'The job is talked through with you, then quoted. Quotations are free.' },

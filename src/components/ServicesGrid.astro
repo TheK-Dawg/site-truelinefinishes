@@ -1,10 +1,11 @@
 ---
 /**
  * SERVICES, in Home 3's tiles (the Dom reference's "We Provide All Types"): a centred head with the
- * chevron, then the five hubs as photo tiles with the hub name and its short line on the photo.
+ * chevron, then the six hubs as photo tiles with the hub name and its short line on the photo (the sixth,
+ * Fencing, arrived with the plan's 25 Nov 2026 change; the tiles are three across, two full rows).
  * OPERATOR REVIEW 4 (19 Nov 2026): this is the site's ONE services-links section (the homepage's
  * second "For homes and business premises" card set is gone, its copy folded into this head), the
- * five tiles sit THREE across with the last TWO centred underneath at the same size, and the line
+ * tiles sit THREE across, and the line
  * under each name is 16px, never 12px ("that's too small ... remember this is going to be on a
  * mobile"). On a phone the tiles go one per row so the name and its line stay readable.
  * CARD LAW: the hub name on the title is the tile's ONLY link (exact name, canonical href); photos
@@ -19,7 +20,7 @@
 import { services } from '../data/site';
 import Icon from './Icon.astro';
 interface Props { heading?: string; lead?: string; formless?: boolean; panel?: boolean; allLink?: boolean }
-const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five services, one standard of preparation and finish, for homes and businesses.', formless = false, panel = false, allLink = false } = Astro.props;
+const { heading = 'Painting and Decorating, Inside and Out', lead = 'Six services, one standard of preparation and finish, for homes and businesses.', formless = false, panel = false, allLink = false } = Astro.props;
 ---
 <section class:list={['sv section section-services', panel && 'section--panel']} id="services" data-section="services">
   <div class="container">
@@ -47,12 +48,11 @@ const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five servic
 </section>
 
 <style>
-  /* THREE across, then the last TWO centred underneath at the same size (operator review 4).
-     Six columns: every tile spans two, and the fourth and fifth start one column in. */
-  .sv__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-6); }
-  .sv__tile { position: relative; isolation: isolate; overflow: hidden; grid-column: span 2; aspect-ratio: 5 / 6; background: var(--bg-inverse); }
-  .sv__tile:nth-child(4) { grid-column: 2 / span 2; }
-  .sv__tile:nth-child(5) { grid-column: 4 / span 2; }
+  /* THREE across, TWO full rows (operator review 4 asked for three across with no empty cell; with
+     the plan's sixth hub, Fencing, 25 Nov 2026, the second row fills exactly, so the centring
+     offsets the five-tile layout needed are gone). */
+  .sv__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  .sv__tile { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 5 / 6; background: var(--bg-inverse); }
   .sv__tile img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
   .sv__tile::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--overlay-tile); }
   .sv__tile:hover img { transform: scale(1.05); }
@@ -62,16 +62,15 @@ const { heading = 'Painting and Decorating, Inside and Out', lead = 'Five servic
   .sv__title a:hover { color: var(--accent-on-dark); }
   .sv__body { font-size: var(--fs-card); line-height: var(--lh-normal); color: var(--v-mist-100); }
   .sv__foot { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--space-4) var(--space-8); margin-top: var(--space-10); }
-  /* Tablet: two across, the fifth centred underneath, so the row never ends on an empty cell. */
+  /* Tablet: two across, three full rows, so the grid never ends on an empty cell. */
   @media (max-width: 1023px) {
-    .sv__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .sv__tile, .sv__tile:nth-child(4) { grid-column: span 2; aspect-ratio: 4 / 3; }
-    .sv__tile:nth-child(5) { grid-column: 2 / span 2; }
+    .sv__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .sv__tile { aspect-ratio: 4 / 3; }
   }
   /* Phone: one tile per row, so the hub name and the line under it stay readable (operator review 4). */
   @media (max-width: 760px) {
     .sv__grid { grid-template-columns: 1fr; gap: var(--space-4); }
-    .sv__tile, .sv__tile:nth-child(4), .sv__tile:nth-child(5) { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+    .sv__tile { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
     .sv__cap { padding: var(--space-5) var(--space-4); }
     .sv__title { font-size: var(--fs-xl); }
     .sv__foot :global(.btn) { width: 100%; }

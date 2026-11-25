@@ -15,7 +15,7 @@ import { articlePhotoPool, photoSubject, HUB_SUBJECTS } from '../src/lib/article
 const images = JSON.parse(readFileSync(new URL('../src/data/images.json', import.meta.url), 'utf8'));
 const articles = JSON.parse(readFileSync(new URL('../src/data/articles.json', import.meta.url), 'utf8'));
 // The hero each hub's articles use, as scripts/import-articles.mjs assigns it.
-const HERO = { 'painting-and-decorating': 'victorian-hallway-0066', 'interior-painting': 'green-bedroom-0131', 'exterior-painting': 'stone-terrace-sash-windows-0028', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177' };
+const HERO = { 'painting-and-decorating': 'victorian-hallway-0066', 'interior-painting': 'green-bedroom-0131', 'exterior-painting': 'stone-terrace-sash-windows-0028', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177', fencing: 'painted-railings-0181' };
 
 const bySubject = {};
 for (const i of images) { const s = photoSubject(i) ?? `(not an article figure: ${i.cat})`; bySubject[s] = (bySubject[s] || 0) + 1; }
@@ -35,7 +35,7 @@ if (process.argv.includes('--json')) {
   console.log('\nfigure budget per article, by hub (hero excluded, no repeats, no borrowing):');
   for (const r of rows) {
     console.log(`  ${r.hub.padEnd(36)} ${String(r.budget).padStart(3)} photographs  [${r.subjects.join(', ')}]  hero ${r.hero}  articles ${r.published}/${r.articles} published`);
-    if (r.budget === 0) console.log(`      ^ an article in this hub carries its hero only. More ${r.subjects.join('/')} photographs are needed from Brandon before it can carry figures.`);
+    if (r.budget === 0) console.log(`      ^ an article in this hub carries its hero only. More ${r.subjects.join('/') || `${r.hub} (no subject in the pool shows this work at all; its hero is a stand-in)`} photographs are needed from Brandon before it can carry figures.`);
     else if (r.budget < 4) console.log(`      ^ thin: an article with more than ${r.budget} H2 sections will carry figures above only the first ${r.budget}.`);
   }
 }

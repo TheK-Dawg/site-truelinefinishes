@@ -341,7 +341,8 @@ for (const vp of sizes) {
     else if (r === '/') { if (!cr.linked || cr.rel !== 'nofollow noopener') fails.push(`${tag}: the home page LMB credit keyword is not the one nofollow link ${JSON.stringify(cr)}`); }
     else if (cr.linked || cr.tab || cr.role) fails.push(`${tag}: LMB credit is a link/control off the home page (round 4: home page only) ${JSON.stringify(cr)}`);
     if (m.logos.some((l) => l !== 'header') || m.logos.length !== 1) fails.push(`${tag}: logo outside the header bar ${JSON.stringify(m.logos)}`);
-    if (m.dropHubs < 5) fails.push(`${tag}: services dropdown lists ${m.dropHubs} links`);
+    // SIX hubs + All services in the Services dropdown (Fencing is hub 6, site plan 542315e, 25 Nov 2026).
+    if (m.dropHubs < 7) fails.push(`${tag}: services dropdown lists ${m.dropHubs} links (want the six hubs + All services)`);
     // ---- ROUND 4 gates ----
     const small = m.r4Cards.filter((c) => c.px < 16);
     if (small.length) fails.push(`${tag}: card body text under 16px ${JSON.stringify(small.slice(0, 4))}`);

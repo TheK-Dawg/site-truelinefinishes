@@ -93,20 +93,35 @@ export const image = (key: string): Img => {
   return i;
 };
 
-/** The five hubs, in the plan's order (services-override pin). Names are used word for word. */
+/**
+ * THE SIX HUBS, in the plan's order (services-override pin). Names are used word for word.
+ * FENCING is hub 6, added by the plan on 25 Nov 2026 (site-plan commit 542315e, D-2026-11-25-01):
+ * Brandon asked for it twice on WhatsApp and the operator confirmed his scope ("he does all the
+ * main types of UK fencing"). It is NOT a sixth top-level nav entry: the owner's 25 Nov nav of five
+ * stands, and Fencing is reached from the Services dropdown, the services tiles, the services hub,
+ * the footer and the related-services cards.
+ */
 export const services = [
   { slug: 'painting-and-decorating', name: 'Painting and Decorating', icon: 'roller', img: 'victorian-hallway-0065', short: 'The whole trade, inside and out, for homes and businesses: from one room to a full property redecoration.' },
   { slug: 'interior-painting', name: 'Interior Painting', icon: 'brush', img: 'green-bedroom-0136', short: 'Walls, ceilings, every room, stairs and landings, and all the woodwork, with full preparation first.' },
   { slug: 'exterior-painting', name: 'Exterior Painting', icon: 'house', img: 'semi-detached-after-0125', short: 'Masonry paint on render, brick and stone, plus windows, doors, exterior woodwork and oil varnishing.' },
   { slug: 'wallpapering', name: 'Wallpapering', icon: 'roll', img: 'leaf-pattern-feature-wall-0026', short: 'Wallpaper hung on a feature wall or through a whole room, on walls prepared properly first.' },
   { slug: 'commercial-painting-and-decorating', name: 'Commercial Painting and Decorating', icon: 'office', img: 'office-navy-feature-wall-0178', short: 'The same careful work for offices, restaurants, schools, hotels, spas, leisure centres and local businesses.' },
+  { slug: 'fencing', name: 'Fencing', icon: 'wall', img: 'detached-house-garage-0024', short: 'Garden fencing put up and repaired: panel, close board, composite, and trellis fencing and toppers.' },
 ].map((s) => ({ ...s, image: image(s.img) }));
 export type Service = (typeof services)[number];
 
 /** The publish queue: seed.json towns[], in order (116 towns, two batches). */
 export const towns = (seed.towns as { town: string; publishOrder: number; distanceMiles: number }[]).map((t) => ({ name: t.town, order: t.publishOrder, miles: t.distanceMiles }));
-/** Brandon's close-to-home list, for the one coverage line (plan, Layout). */
-export const mainPlaces = ['Baildon', 'Guiseley', 'Menston', 'Ilkley', 'Shipley', 'Otley', 'Horsforth', 'Bingley'];
+/**
+ * THE AREA, as the plan now frames it (D-2026-11-25-02, 25 Nov 2026): the home page and every hub
+ * page lead on the broad region and still name real towns within it as supporting detail. Brandon's
+ * own words through the operator: "could we change baildon and Shipley to Painting and decorating
+ * in west/North Yorkshire". Individual SEO articles are UNCHANGED: each still names one town only.
+ */
+export const region = 'West and North Yorkshire';
+/** Real pinned towns named in support of the region (all from the plan's 116, plan Layout). */
+export const mainPlaces = ['Baildon', 'Guiseley', 'Menston', 'Ilkley', 'Shipley', 'Otley', 'Horsforth', 'Bingley', 'Leeds', 'Bradford', 'Harrogate'];
 
 /**
  * THE TOP NAV: FIVE ENTRIES, EXACTLY, IN THIS ORDER (the site owner, 25 Nov 2026: "the header should
@@ -125,6 +140,6 @@ export const nav = [
 ];
 
 export const seo = {
-  title: 'Painting and Decorating in Baildon, Shipley and Ilkley | TrueLine Finishes',
-  description: 'Painting and decorating for homes and businesses across Baildon, Guiseley, Ilkley, Otley and Shipley. Over eight years’ experience, fully insured, free quotations.',
+  title: 'Painting and Decorating in West and North Yorkshire | TrueLine Finishes',
+  description: 'Painting and decorating for homes and businesses across West and North Yorkshire, from Baildon, Shipley and Ilkley to Leeds, Bradford and Harrogate. Free quotations.',
 };

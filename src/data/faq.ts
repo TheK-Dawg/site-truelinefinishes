@@ -7,10 +7,10 @@ import { serviceContent } from './services';
 import { services } from './site';
 
 export const generalFaqs = [
-  { q: 'What does TrueLine Finishes do?', a: 'All aspects of painting and decorating for homes and businesses: interior painting, exterior painting, wallpapering and commercial work, from individual rooms to full property redecorations.' },
+  { q: 'What does TrueLine Finishes do?', a: 'All aspects of painting and decorating for homes and businesses: interior painting, exterior painting, wallpapering and commercial work, from individual rooms to full property redecorations, and garden fencing, put up and repaired.' },
   { q: 'Who will carry out the work?', a: 'The owner of TrueLine Finishes carries out the work and oversees every job, and a call to 07949 484274 is a direct line to him.' },
   { q: 'Is the quotation free?', a: 'Yes. Every job is talked through with you before a free quotation is given.' },
-  { q: 'Which areas do you cover?', a: 'Baildon, Guiseley, Menston, Ilkley, Shipley, Otley, Horsforth, Bingley and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.' },
+  { q: 'Which areas do you cover?', a: 'West and North Yorkshire: Baildon, Guiseley, Menston, Ilkley, Shipley, Otley, Horsforth, Bingley, Leeds, Bradford and Harrogate, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Keighley, Skipton and Wetherby.' },
   { q: 'Is preparation included?', a: 'Yes. Sanding, filling and caulking come with everything, and brand-new plaster gets a mist coat before the finish goes on.' },
   { q: 'Are you insured?', a: 'Yes. TrueLine Finishes is fully insured.' },
 ];

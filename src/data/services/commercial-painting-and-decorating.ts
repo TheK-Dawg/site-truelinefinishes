@@ -5,10 +5,10 @@ import type { ServiceContent } from './types';
 // (standing prohibition 5). No out-of-hours, evening or weekend working promised.
 const content: ServiceContent = {
   slug: 'commercial-painting-and-decorating',
-  metaTitle: 'Commercial Painting and Decorating, Baildon & Leeds | TrueLine Finishes',
-  description: 'Commercial painting and decorating for offices, restaurants, schools, hotels and local businesses across Baildon, Shipley, Leeds and Ilkley. Free quotations.',
-  h1: 'Commercial Painting and Decorating in Baildon and Leeds',
-  lead: 'Offices, restaurants, schools, hotels, spas, leisure centres and local businesses, painted and papered around how the building is used, with the same preparation as a home.',
+  metaTitle: 'Commercial Painting and Decorating in West Yorkshire | TrueLine Finishes',
+  description: 'Commercial painting and decorating for offices, restaurants, schools, hotels and local businesses across West and North Yorkshire. Free quotations, fully insured.',
+  h1: 'Commercial Painting and Decorating in West Yorkshire',
+  lead: 'Offices, restaurants, schools, hotels, spas, leisure centres and local businesses across Baildon, Shipley, Leeds, Bradford, Harrogate and the towns around them, painted and papered around how the building is used.',
   heroImage: 'office-navy-feature-wall-0178',
   introH2: 'The Same Trade, for Business Premises',
   introImage: 'office-prepared-0172',

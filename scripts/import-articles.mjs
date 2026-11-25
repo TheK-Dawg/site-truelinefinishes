@@ -31,9 +31,12 @@ const ENGINE = opt('--engine', '/root/audit/claude-seo-engine');
 const PUBLISH = new Set((opt('--publish', '') || '').split(',').filter(Boolean));
 const DIR = path.join(ENGINE, 'clients/truelinefinishes.com', RUN, 'work');
 const OUT = new URL('../src/data/articles.json', import.meta.url).pathname;
-const HUBS = ['painting-and-decorating', 'interior-painting', 'exterior-painting', 'wallpapering', 'commercial-painting-and-decorating'];
+const HUBS = ['painting-and-decorating', 'interior-painting', 'exterior-painting', 'wallpapering', 'commercial-painting-and-decorating', 'fencing'];
 // Hero photo per hub (Brandon's pool; plan hub picks). Any pool photo may illustrate any article it fits.
-const HERO = { 'painting-and-decorating': 'victorian-hallway-0066', 'interior-painting': 'green-bedroom-0131', 'exterior-painting': 'stone-terrace-sash-windows-0028', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177' };
+// fencing: the hub has NO fencing photograph (see src/lib/article-photos.js). Its hero is the one
+// photograph of Brandon's that is a property boundary - the railings and gate he painted - and it
+// is a STAND-IN, to be swapped the moment he sends fencing photographs.
+const HERO = { 'painting-and-decorating': 'victorian-hallway-0066', 'interior-painting': 'green-bedroom-0131', 'exterior-painting': 'stone-terrace-sash-windows-0028', wallpapering: 'leaf-pattern-feature-wall-0026', 'commercial-painting-and-decorating': 'office-navy-feature-wall-0177', fencing: 'painted-railings-0181' };
 
 const existing = fs.existsSync(OUT) ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : [];
 const bySlug = new Map(existing.map((a) => [a.slug, a]));

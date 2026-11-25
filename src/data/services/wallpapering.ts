@@ -5,10 +5,10 @@ import type { ServiceContent } from './types';
 // order. Only TrueLine Finishes' wallpaper photo (one in the pool so far). No brands, no murals.
 const content: ServiceContent = {
   slug: 'wallpapering',
-  metaTitle: 'Wallpapering in Baildon, Ilkley & Guiseley | TrueLine Finishes',
-  description: 'Wallpapering in Baildon, Ilkley, Guiseley and Shipley: feature walls and whole rooms, hung on walls prepared properly first. Free quotations.',
-  h1: 'Wallpapering in Baildon, Ilkley and Guiseley',
-  lead: 'One papered wall behind the bed, or every wall in the room, hung on walls filled, sanded and lined where they need it, with the pattern matched at every join.',
+  metaTitle: 'Wallpapering in West and North Yorkshire | TrueLine Finishes',
+  description: 'Wallpapering across West and North Yorkshire, from Baildon and Ilkley to Leeds and Harrogate: feature walls and whole rooms, hung on walls prepared first.',
+  h1: 'Wallpapering in West and North Yorkshire',
+  lead: 'One papered wall behind the bed, or every wall in the room, hung on walls filled, sanded and lined where they need it, in Baildon, Shipley, Ilkley, Leeds, Bradford, Harrogate and the towns around them.',
   heroImage: 'leaf-pattern-feature-wall-0026',
   introH2: 'Why the Wall Matters as Much as the Paper',
   introImage: 'bedroom-fresh-walls-0158',

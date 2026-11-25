@@ -4,10 +4,10 @@ import type { ServiceContent } from './types';
 // Decorating Process" heads the how-a-job-runs block, "Requesting a Quotation" the quote form.
 const content: ServiceContent = {
   slug: 'interior-painting',
-  metaTitle: 'Interior Painting in Baildon, Guiseley & Ilkley | TrueLine Finishes',
-  description: 'Interior painting in Baildon, Guiseley, Ilkley and Shipley: walls, ceilings, stairs and all the woodwork, with full preparation first. Free quotations.',
-  h1: 'Interior Painting in Baildon, Guiseley and Ilkley',
-  lead: 'Walls, ceilings, every room, the stairs and landings and all the woodwork, filled, sanded and caulked before the first coat goes on.',
+  metaTitle: 'Interior Painting in West and North Yorkshire | TrueLine Finishes',
+  description: 'Interior painting across West and North Yorkshire, from Baildon and Ilkley to Leeds and Harrogate: walls, ceilings, stairs and all the woodwork, prepared first.',
+  h1: 'Interior Painting in West and North Yorkshire',
+  lead: 'Walls, ceilings, every room, the stairs and landings and all the woodwork, filled, sanded and caulked before the first coat goes on, in Baildon, Shipley, Ilkley, Leeds, Bradford, Harrogate and the towns around them.',
   heroImage: 'green-bedroom-0136',
   introH2: 'Every Room, the Stairs and All the Woodwork',
   introImage: 'sage-kitchen-0011',

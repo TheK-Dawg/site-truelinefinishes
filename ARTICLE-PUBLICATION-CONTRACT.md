@@ -54,6 +54,7 @@ fail `scripts/audit.mjs` until one is supplied. That is deliberate: it stops sil
 | exterior-painting | exterior | **31** |
 | commercial-painting-and-decorating | commercial | **6** |
 | wallpapering | wallpapering | **0** |
+| fencing (hub 6, added 25 Nov 2026) | *none declared* | **0** |
 
 Rules, enforced by `src/lib/article-photos.js` and proved on the built page by `scripts/audit.mjs`:
 
@@ -63,6 +64,27 @@ Rules, enforced by `src/lib/article-photos.js` and proved on the built page by `
 * A photograph named `*-before-*` is never a figure above an H2 (it shows the problem, not the work).
 * One photograph per H2, **no repeats on a page**, and the hero is never reused in the body.
 * When a hub's pool runs out, the remaining H2s carry **no figure** rather than a repeat or a borrow.
+
+**Open content gap — fencing (hub 6).** The site plan added Fencing on 25 Nov 2026 (commit
+`542315e`, D-2026-11-25-01) and contemplates 116 fencing town articles inside a 696-article budget
+(462 in the first 77-town batch, 234 in the second 39-town batch). **None has been generated,
+published or queued**, and none should be until the publication path in section 5 is commissioned.
+What IS wired, so that a future batch cannot go wrong quietly:
+
+* `fencing` is a known hub in `scripts/import-articles.mjs`, so a batch with `serviceSlug: fencing`
+  imports instead of throwing, into `/resources/fencing-<town>/` like every other hub.
+* Its accepted photo subjects in `src/lib/article-photos.js` are **deliberately empty**: TrueLine has
+  no photograph of fencing it has put up, so a fencing article carries its hero and **no body
+  figures**. That is the honest answer and it is the same rule, not an exception — the renderer and
+  the audit gate read the same list, so a fencing article can never borrow an interior or exterior
+  photograph to fill itself out.
+* Its hero, `painted-railings-0181` (the railings and gate Brandon painted at a property boundary),
+  is marked in the code as a **stand-in** and should be replaced the moment a fencing album arrives.
+* `scripts/audit.mjs` requires a figure above all but one H2 on a **published** article, so a fencing
+  article would have to stay at `review` status, or arrive with a real fencing album behind it,
+  before it can be published. That is the gate doing its job, not a blocker to work around.
+
+**The ask: a fencing album from Brandon**, the same way the 195 painting photographs arrived.
 
 **Open content gap — wallpapering.** TrueLine has exactly one wallpapering photograph in R2 and it is
 already that hub's hero, so a wallpapering article ships with its hero and no body figures. The R2

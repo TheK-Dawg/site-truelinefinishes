@@ -30,7 +30,7 @@ import ArticlesPreview from '../components/ArticlesPreview.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import CallButton from '../components/CallButton.astro';
 import Icon from '../components/Icon.astro';
-import { business, seo, image, mainPlaces } from '../data/site';
+import { business, seo, image, mainPlaces, region } from '../data/site';
 import { generalFaqs } from '../data/faq';
 import { stripTags } from '../lib/links';
 
@@ -50,8 +50,8 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 ---
 <Base title={seo.title} description={seo.description} page="home" schema={schema}>
   <Hero
-    h1="Painter and Decorator in Baildon and Shipley"
-    lead="TrueLine Finishes paints and papers homes and business premises, from one tired room to a full property redecoration. Sanding, filling and caulking come before any paint goes on."
+    h1="Painter and Decorator in West and North Yorkshire"
+    lead="TrueLine Finishes paints, papers and fences homes and business premises across Baildon, Shipley, Ilkley, Leeds, Bradford, Harrogate and the towns around them, from one tired room to a full property redecoration."
     image={slides[0]}
     slides={slides}
   />
@@ -59,8 +59,8 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
   <Reviews />
 
   <ServicesGrid
-    heading="What TrueLine Finishes Can Paint and Paper for You"
-    lead="Painting, wallpapering and decorating for homes and for business premises of every kind, inside and out. Rooms inside, the outside of the house, wallpaper and commercial premises: pick the job you have in mind."
+    heading="What TrueLine Finishes Can Do for Your Property"
+    lead="Painting, wallpapering, decorating and fencing for homes and for business premises of every kind, inside and out. Rooms inside, the outside of the house, wallpaper, commercial premises and the garden boundary: pick the job you have in mind."
     allLink
   />
 
@@ -113,7 +113,7 @@ const ring = 'TRUELINE FINISHES • PAINTING AND DECORATING • ';
 
   <Areas
     heading="Where to Find Us"
-    body={`Painting and decorating for homes and businesses in ${mainPlaces.slice(0, -1).join(', ')} and ${mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Leeds and Skipton.`}
+    body={`Painting, decorating and fencing for homes and businesses across ${region}: ${mainPlaces.slice(0, -1).join(', ')} and ${mainPlaces.at(-1)}, and the towns around them, including Saltaire, Yeadon, Rawdon, Burley in Wharfedale, Otley and Skipton.`}
   />
 
   <ArticlesPreview always heading="Worth Reading Before the Dust Sheets Go Down" lead="" />

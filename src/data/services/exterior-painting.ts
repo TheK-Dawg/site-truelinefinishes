@@ -5,10 +5,10 @@ import type { ServiceContent } from './types';
 // Never gutters, never applying or repairing render, brickwork repairs or repointing.
 const content: ServiceContent = {
   slug: 'exterior-painting',
-  metaTitle: 'Exterior Painting in Baildon, Shipley & Otley | TrueLine Finishes',
-  description: 'Exterior painting in Baildon, Shipley, Otley and Ilkley: masonry paint on render, brick and stone, windows, doors and woodwork. Free quotations.',
-  h1: 'Exterior Painting in Baildon, Shipley and Otley',
-  lead: 'Masonry paint on render, brick and stone that has been painted before, plus windows, doors and exterior woodwork, prepared first and painted around the weather.',
+  metaTitle: 'Exterior Painting in West and North Yorkshire | TrueLine Finishes',
+  description: 'Exterior painting across West and North Yorkshire, from Baildon and Otley to Leeds and Harrogate: masonry paint on render, brick and stone, windows and doors.',
+  h1: 'Exterior Painting in West and North Yorkshire',
+  lead: 'Masonry paint on render, brick and stone that has been painted before, plus windows, doors and exterior woodwork, in Baildon, Shipley, Otley, Ilkley, Leeds, Bradford, Harrogate and the towns around them.',
   heroImage: 'semi-detached-after-0125',
   introH2: 'Already Painted or Rendered? It Can Be Painted Again',
   introImage: 'navy-front-door-stone-0032',

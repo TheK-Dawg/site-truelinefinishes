@@ -18,12 +18,14 @@ interface Props {
   introImage: string;
   intro: string[];
   sectionsH2: string;
-  sections: { h2: string; lead: string; points: string[]; image: string }[];
+  sections: { h2: string; lead: string; points: string[]; image?: string }[];
   sectorsLine: string;
   sectorsImage?: string;
 }
 const { slug, introH2, introImage, intro, sectionsH2, sections, sectorsLine, sectorsImage } = Astro.props;
-const cards = sections.map((s) => ({ ...s, photo: poolImage(s.image) }));
+// A card carries its own photograph when the hub has one for it. Fencing has none in Brandon's
+// pool (see types.ts), so its cards render copy-only in the same card, at the same height.
+const cards = sections.map((s) => ({ ...s, photo: s.image ? poolImage(s.image) : null }));
 const introPhoto = poolImage(introImage);
 const odd = cards.length % 2 === 1;
 if (odd && !sectorsImage) throw new Error(`${slug}: an odd number of section cards needs sectorsImage (no empty grid cell)`);
@@ -45,10 +47,12 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
     <h2 class="sb3__gh2" data-motion="reveal">{sectionsH2}</h2>
     <div class="sb3__grid" data-gallery>
       {cards.map((s, i) => (
-        <article class="sb3__card" aria-labelledby={`s-${i + 1}`} data-motion="reveal" style={`--reveal-delay: ${(i % 2) * 60}ms`}>
-          <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${s.photo.alt}`}>
-            <img src={s.photo.sm} alt={s.photo.alt} width={s.photo.width} height={s.photo.height} loading="lazy" decoding="async" data-full={s.photo.src} />
-          </button>
+        <article class:list={['sb3__card', !s.photo && 'sb3__card--copy']} aria-labelledby={`s-${i + 1}`} data-motion="reveal" style={`--reveal-delay: ${(i % 2) * 60}ms`}>
+          {s.photo && (
+            <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${s.photo.alt}`}>
+              <img src={s.photo.sm} alt={s.photo.alt} width={s.photo.width} height={s.photo.height} loading="lazy" decoding="async" data-full={s.photo.src} />
+            </button>
+          )}
           <div class="sb3__text">
             <h3 id={`s-${i + 1}`} class="sb3__h3">{s.h2}</h3>
             <p class="sb3__lead" set:html={s.lead} />
@@ -87,6 +91,9 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
   .sb3__gh2 { font-size: var(--fs-5xl); line-height: 1.12; margin-bottom: var(--space-10); text-align: center; }
   .sb3__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
   .sb3__card { display: flex; flex-direction: column; background: var(--bg-card); box-shadow: var(--shadow-raised); }
+  /* A card with no photograph (fencing) keeps the grid's height and the card's own padding.
+     NO top border or accent rule: round 2 banned lone top borders on cards. */
+  .sb3__card--copy .sb3__text { padding-top: var(--card-pad); }
   .sb3__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; background: var(--bg-panel); overflow: hidden; }
   .sb3__shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.5s var(--ease); }
   .sb3__shot:hover img { transform: scale(1.03); }

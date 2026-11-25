@@ -26,8 +26,9 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
   doing every job"): the BRAND leads all marketing copy. No self-work trope ("does the work himself")
   anywhere; no owner name in any H1/H2/H3, title or meta description; the full name "Brandon Dawson"
   only on /privacy/, /terms/, /company-facts/ and in structured data; the first name only in the
-  /contact/ quote-form lead. H1s = real service + verified town from towns.json (home: "Painter and
-  Decorator in Baildon and Shipley"), never a question. Gates: `node scripts/audit.mjs` round-5 block.
+  /contact/ quote-form lead. H1s = real service + a verified place, never a question: a town from
+  towns.json, OR (home page, /services/ and every hub page only, since the 25 Nov 2026 plan change)
+  the plan's region wording "West and North Yorkshire". Gates: `node scripts/audit.mjs` round-5 block.
 - ROUND 5 heroes and gallery: ONE hero height for every route from `--hero-h` in Hero.astro (780
   desktop, 640 tablet, 540 phone floor); `.hero--compact` sets no height. The home gallery is the
   curated `HOME_PICKS` list, at most 20 DISTINCT photographs. The services tile footer carries a
@@ -44,6 +45,15 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
   lifts the engine's "Quick Answer" box into the Quick Rundown. Inventory: `npm run articles:pool`.
   Before any engine batch, follow `ARTICLE-PUBLICATION-CONTRACT.md` - it also records what is NOT
   wired (no CI deploy on push; worker-drip-worker cannot publish to this site as configured).
+- SITE PLAN 25 NOV 2026 (commit `542315e`, D-2026-11-25-01/-02, implemented 25 Nov 2026 - see
+  DECISIONS F1-F8): SIX hubs, Fencing added at the locked URL `/fencing/` (panel, close board,
+  composite, trellis fencing and toppers; installation and repairs; no blueprint bought, default
+  skeleton). The top nav stays the owner's FIVE entries - Fencing is reached from the Services
+  dropdown, the home tiles, /services/, the footer and related-services cards. The home page,
+  /services/ and every hub page lead on "West and North Yorkshire" ("West Yorkshire" where brevity
+  needs it) and still name real towns in support; EVERY SEO ARTICLE IS UNCHANGED and still names one
+  town only. There is NO photograph of TrueLine fencing in the pool, so that hub's section cards
+  carry copy alone and it has no pictures band: do not borrow painting photographs for it.
 - No Areas page, no town pages at the root. Articles live at /resources/<hub>-<town>/ and are
   written by the engine after handoff; anything not `published` in `src/data/articles.json` is
   noindex and unlinked.

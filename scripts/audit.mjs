@@ -82,11 +82,23 @@ const SERVICE_H1 = {
   '/exterior-painting/': 'Exterior Painting',
   '/wallpapering/': 'Wallpapering',
   '/commercial-painting-and-decorating/': 'Commercial Painting and Decorating',
+  '/fencing/': 'Fencing',
 };
 // The full name is legal identification: the data controller, the trading name and the company
 // facts. Everywhere else it is owner-name repetition the operator banned from marketing copy.
 const FULL_NAME_OK = ['/privacy/', '/terms/', '/company-facts/'];
 const namedTown = (t) => TOWN_NAMES.find((n) => new RegExp(`\\b${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(t));
+// THE SERVICE AREA IN A HEADING (site plan 542315e, 25 Nov 2026, D-2026-11-25-02). Round 5 required
+// a verified TOWN in the H1 of the home page, the services hub and every hub page. The plan's own
+// 25 Nov change overrides what LEADS that heading: Brandon asked, in writing, to "change baildon
+// and Shipley to Painting and decorating in west/North Yorkshire", so the home page and every hub
+// page now name the broad region and keep real towns as supporting detail in the lead, the meta and
+// the body. The gate keeps its teeth - a vague or placeless H1 still fails - by accepting EITHER a
+// town from towns.json OR the plan's own approved region wording, and nothing else.
+// SEO ARTICLES ARE UNCHANGED and still single-town: the region phrasing is banned in an article by
+// the whole-region copy rule in BANNED, which this does not touch.
+const REGION = /\bWest(?: and North)? Yorkshire\b/;
+const namedArea = (t) => namedTown(t) || REGION.test(t);
 function r5Fails(r, html, text) {
   const f = [];
   const h1 = visibleText((html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/) || [, ''])[1]).trim();
@@ -96,15 +108,15 @@ function r5Fails(r, html, text) {
   // 1. H1 = real service + verified location.
   if (SERVICE_H1[r]) {
     if (!h1.toLowerCase().includes(SERVICE_H1[r].toLowerCase())) f.push(`service H1 does not carry its service keyword "${SERVICE_H1[r]}": "${h1}"`);
-    if (!namedTown(h1)) f.push(`service H1 names no town from the plan's service area: "${h1}"`);
+    if (!namedArea(h1)) f.push(`service H1 names neither a plan town nor the plan's region: "${h1}"`);
   }
   if (r === '/services/') {
     if (!/painting and decorating/i.test(h1)) f.push(`/services/ H1 must say "Painting and Decorating": "${h1}"`);
-    if (!/\b(Baildon|Shipley)\b/.test(h1)) f.push(`/services/ H1 must name Baildon or Shipley: "${h1}"`);
+    if (!namedArea(h1)) f.push(`/services/ H1 names neither a plan town nor the plan's region: "${h1}"`);
   }
   if (r === '/') {
     if (!/painter and decorator|painting and decorating/i.test(h1)) f.push(`home H1 does not answer a painter or decorator search: "${h1}"`);
-    if (!namedTown(h1)) f.push(`home H1 names no town from the plan's service area: "${h1}"`);
+    if (!namedArea(h1)) f.push(`home H1 names neither a plan town nor the plan's region: "${h1}"`);
   }
   if (/^(\/|\/services\/)$/.test(r) || SERVICE_H1[r] || ['/about/', '/contact/', '/reviews/', '/gallery/', '/faq/', '/resources/'].includes(r)) {
     if (/\?\s*$/.test(h1)) f.push(`H1 is a question, which round 5 ruled out: "${h1}"`);
@@ -151,7 +163,8 @@ function r5Selftest() {
     ['service H1 without its keyword', '/interior-painting/', page({ h1: 'Rooms Repainted in Baildon', sv: goodSv })],
     ['service H1 without a town', '/interior-painting/', page({ h1: 'Interior Painting, Room by Room', sv: goodSv })],
     ['services hub H1 without the trade', '/services/', page({ h1: 'Which Kind of Decorating Does Your Job Need?', sv: goodSv })],
-    ['services hub H1 without the town', '/services/', page({ h1: 'Painting and Decorating Services', sv: goodSv })],
+    ['services hub H1 without the town or the region', '/services/', page({ h1: 'Painting and Decorating Services', sv: goodSv })],
+    ['service H1 with a region that is not the plan\'s', '/fencing/', page({ h1: 'Fencing in Greater Manchester', sv: goodSv })],
     ['home H1 without the trade', '/', page({ h1: 'Tired Rooms in Baildon?', sv: goodSv })],
     ['home H1 without a town', '/', page({ h1: 'Painter and Decorator, Inside and Out', sv: goodSv })],
     ['question H1', '/gallery/', page({ h1: 'Want to See the Finish First?', sv: goodSv })],
@@ -166,6 +179,14 @@ function r5Selftest() {
     ['duplicated quick quote action', '/', page({ h1: 'Painter and Decorator in Baildon', sv: '<section data-section="services"><p>Not sure? <a href="#contact" class="dm-link" data-cta="services-quote">Quick Quote Online</a></p><a href="#contact" class="btn" data-cta="services-quote"><span>Quick Quote Online</span></a></section>' })],
   ];
   for (const [name, r, html] of cases) if (ok(r, html)) bad.push(`not caught: ${name}`);
+  // THE 25 NOV 2026 PLAN CHANGE, both halves: the region is accepted where a town was required,
+  // on the home page, the services hub and every hub page including the new sixth one.
+  for (const [r, h1] of [
+    ['/', 'Painter and Decorator in West and North Yorkshire'],
+    ['/services/', 'Painting and Decorating in West and North Yorkshire'],
+    ['/fencing/', 'Fencing in West and North Yorkshire'],
+    ['/commercial-painting-and-decorating/', 'Commercial Painting and Decorating in West Yorkshire'],
+  ]) { const p = page({ h1, sv: goodSv }); if (!ok(r, p)) bad.push(`region H1 fails on ${r}: ${r5Fails(r, p, visibleText(p))}`); }
   // Legal identification pages keep the full name.
   const legal = page({ h1: 'Privacy Policy', body: '<p>TrueLine Finishes is run by Brandon Dawson. Brandon Dawson is the data controller.</p>', sv: '' });
   if (!ok('/privacy/', legal)) bad.push(`legal page with the full name fails: ${r5Fails('/privacy/', legal, visibleText(legal))}`);
@@ -271,7 +292,7 @@ function r3Fails(r, html, text, isArticle) {
     // ONE services-links section on the home page: the second card set is gone (round 4).
     if (/data-section="craft"|ht__card/.test(html)) f.push('the duplicate "For homes and business premises" services section is back');
     if ((html.match(/data-section="services"/g) || []).length !== 1) f.push('the home page must carry exactly one services-links section');
-    if ((sectionOf(html, 'services').match(/<li class="sv__tile/g) || []).length !== 5) f.push('the five hub tiles are missing');
+    if ((sectionOf(html, 'services').match(/<li class="sv__tile/g) || []).length !== 6) f.push('the six hub tiles are missing (Fencing is hub 6, site plan 542315e)');
     // The hero still cross-fades several photos, but round 4 removed every visitor-facing control.
     const hero = sectionOf(html, 'hero');
     if ((hero.match(/<img class="hero__bg/g) || []).length < 2) f.push('home hero is not the photo carousel');
@@ -389,7 +410,7 @@ if (process.argv.includes('--selftest')) {
   console.log('selftest: round-3, round-4 and the round-5 home-gallery gates, 19 broken cases caught, the good pages and good article pass');
   const r5 = r5Selftest();
   if (r5.length) { console.error('SELFTEST FAIL (round 5)', r5); process.exit(1); }
-  console.log('selftest: round-5 gates (H1 service + location, no owner-centric copy, services footer quote not call), 16 broken cases caught, the good, legal and contact pages pass');
+  console.log('selftest: round-5 gates (H1 service + location, no owner-centric copy, services footer quote not call), 17 broken cases caught, the good, legal, contact and region-H1 pages pass');
   process.exit(0);
 }
 

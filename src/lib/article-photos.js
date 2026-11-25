@@ -38,6 +38,14 @@ export const HUB_SUBJECTS = {
   'exterior-painting': ['exterior'],
   wallpapering: ['wallpapering'],
   'commercial-painting-and-decorating': ['commercial'],
+  // HUB 6, FENCING (site plan 542315e, 25 Nov 2026). Brandon has sent NO photograph of fencing he
+  // has put up: all 194 photographs in the pool are painting and decorating, so there is no subject
+  // a fencing article could honestly take a figure from. An empty list is the honest answer and
+  // the same one `wallpapering` effectively gets (one photograph, already its hero): a fencing
+  // article carries its hero and no body figures until he sends fencing photographs. It is NOT a
+  // licence to borrow interior or exterior shots - that is exactly the fallback chain review 6
+  // removed. `node scripts/article-pool.mjs` prints this budget.
+  fencing: [],
 };
 
 const SUBJECTS = ['interior', 'exterior', 'wallpapering', 'commercial'];
