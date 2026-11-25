@@ -757,3 +757,150 @@ home gallery (20/20 at 1440 and at 390) were confirmed loaded by reading `img.co
   is directly above that page's quote form. That follows his instruction ("a component-level
   change, not just the service detail steps CTA"); say the word and it can be suppressed on that
   one page.
+
+## ROUND 6: the operator's whole-site review, mobile first (25 Nov 2026, brief `TRUELINE-MOBILE-HERO-ARTICLE-READY-20261125`)
+
+| | |
+|---|---|
+| Source commit | `020d3d790648168a2bb2a33c0f7fcde57225be81` on `main`, pushed to `TheK-Dawg/site-truelinefinishes` (was `14aad04`) |
+| Version | `2.3.0` |
+| Worker | `site-truelinefinishes`, deployed through `scripts/deploy-guard.mjs`; **Version ID `aeb76328-b0d9-4d19-a618-71822fe77bae`** |
+| Preview URL | https://site-truelinefinishes.small-bird-3273.workers.dev (still noindexed by `public/_headers`) |
+| **Real domain** | **https://www.truelinefinishes.com — LIVE and serving this build.** Apex 301s to www, HTTP 301s to HTTPS. This is new since round 5 |
+| States | built + checked **PASS** · deployed to the established Worker + read back **PASS** · real domain served + read back **PASS** · operator visual acceptance **NOT RUN** (Vince's) |
+
+### What he asked for, and what it is now
+
+1. **Whole-site smoke and visual check** — run, below. No test lead was sent and no claim is made
+   about Brandon's receipt of the operator's own test.
+2. **Home hero bigger, ground darker so the Google strip reads** — R6-1, R6-2.
+3. **Call CTA legible; mobile sticky bar pills saying Call Us with sheen on both** — R6-3, R6-4.
+4. **The official WhatsApp mark, with motion** — R6-5.
+5. **Resources path ready for the engine's first scheduled post** — R6-6 to R6-11, and the gate that
+   is **not** passed, R6-10.
+
+Full before/after table with his words: `DECISIONS.md`, "Operator round 6".
+
+### The numbers behind the two contrast instructions
+
+| Measured | Before | Now |
+|---|---|---|
+| Trustindex strip (white) over the brightest part of a hero photograph, top of hero | **3.35:1** (below AA) | **4.90:1** |
+| the same, foot of hero | 4.59:1 | **6.92:1** |
+| Call pill label over a pure-white photograph | effectively white on white | **5.61:1** (about 12:1 inside a hero, 18.9:1 over a dark photograph) |
+| Call pill phone icon | chrome blue, **2.42:1** on white | white, same as the label |
+| Button label | 17px medium | **18px semibold** |
+
+**Declared non-change.** The planned brand chrome `#2CB0F8` was NOT re-hexed. Ink on chrome is
+already 7.17:1, so deepening the blue would have *lowered* the label's contrast, and the plan records
+that hex with its contrast pairs. What read as pale was the hero ground, which R6-2 fixes.
+
+### Articles: what the fixture run found
+
+The real `scripts/import-articles.mjs` and the real renderer were run against a throwaway batch of
+three engine-shaped articles (4, 3 and 7 H2s; one deliberately rejected rank), then the batch was
+deleted and `src/data/articles.json` restored — SHA-256 `4ff9fe79…a733` before and after, identical.
+
+Four things would have gone wrong on the engine's first scheduled post:
+
+1. **Off-topic photographs.** Category fallbacks were concatenated, so the live Ilkley interior
+   article carried a gable wall and the front of a house. Fixed, and the honest budgets are now
+   published: 187 / 147 / 31 / 6, and **0 for wallpapering**.
+2. **A foreign CTA.** All **838** engine articles on this box end with a hard-coded CTA block
+   carrying another client's palette, URL and telephone number as inline styles.
+3. **No Quick Rundown.** The audit demands one; the importer never made one. **The first engine
+   article would have failed `node scripts/audit.mjs` outright.**
+4. **The orphan gate** flagged every review-status article, which is unlinked by design.
+
+A fifth defect was found by the fixture itself: `.prose a` outranks `.btn-primary`, so the new
+in-article CTA's pills first rendered at **1.45:1** and **1.53:1**. `scripts/contrast.mjs` fires on
+both once the route is passed to it explicitly, and the article styles now hold the pills' colours.
+
+### Checks (all re-runnable)
+
+| Check | Result |
+|---|---|
+| `npm run build` | 26 pages |
+| `node scripts/audit.mjs` | **26 pages, 0 fails, 0 warnings** (now including the round-6 article photo-pool and article-body gates) |
+| `node scripts/token-gate.mjs` | **PASS, 51 files, 0 violations** |
+| `node scripts/hero-heights.mjs` (local) | **24 routes x 3 widths, 0 fails** |
+| `node scripts/contrast.mjs` | **0 fails** |
+| `node scripts/check.mjs` (local) | **26 routes x 2 widths, 0 fails**, 412 buttons worst 0.5px |
+| `node scripts/check.mjs https://site-truelinefinishes.small-bird-3273.workers.dev` | **26 routes x 2 widths, 0 fails**, 460 buttons worst 0.5px |
+| `node scripts/check.mjs https://www.truelinefinishes.com` | **26 routes x 2 widths, 0 fails**, 460 buttons worst 0.5px |
+| `node scripts/hero-heights.mjs https://www.truelinefinishes.com` | **24 routes x 3 widths, 0 fails** (home 840/720/720, every inner hero 780/640/540+) |
+| sticky bar + WhatsApp, live, 390/360/320 | **0 problem route-widths**: both pills 9999px radius, 48px tall, both sheening with a 0.7s stagger, `tel:+447949484274` intact, `data-brand="official"` on the mark, hidden over hero/form/footer, no horizontal overflow, WhatsApp never overlapping the bar |
+| reduced motion | every sheen and the WhatsApp bob stop; the probe sees them running when motion is allowed, so it is not a false pass |
+| article assets, 1440 + 390 | every figure painted, every `/images/` request 200, no overflow |
+| `node scripts/cookies.mjs https://www.truelinefinishes.com` | **zero cookies on every route**, as the Cookie Policy says. One first-party **sessionStorage** key, `lf_t`, set by the Formlane script — see the open item below |
+
+**Gates proved by breaking them, before any clean pass was trusted:** `.hero--compact` given a height
+of its own → 48 inner-page failures; the home re-point removed → 5 home failures; an off-topic figure
+and a repeat planted in a built article → both caught by name; the in-article CTA colour rule removed
+→ contrast fired at 1.45:1 and 1.53:1. The stale `--selftest` claim in `hero-heights.mjs`'s header
+(a switch that was never written) was corrected rather than left standing.
+
+### Served read-back
+
+Compiled CSS on the live domain carries `--hero-h-home`, `.hero:not(.hero--compact){--hero-h:var(--hero-h-home)}`,
+`--v-overlay-slide:linear-gradient(180deg,#0e1b2a9e 0%,#10233ab8 100%)` (0.62 / 0.72),
+`.btn-call--dark{background:var(--glass-pill)…}`, `.btn-call--dark .icon{color:var(--text-inverse)}`,
+`--whatsapp-fg:#fff`, `@keyframes wa-bob`, and
+`@media (prefers-reduced-motion:reduce){….btn:after,.sb a:after{animation:none;display:none}…}`.
+Served HTML carries `aria-label="Call TrueLine Finishes on 07949 484274"` on the sticky call button
+with the label `Call Us`, and the official WhatsApp path (`data-brand="official"`, `M17.472 14.382…`).
+
+### Real domain: it cut over during this round
+
+The registrar now delegates `truelinefinishes.com` to `brianna.ns.cloudflare.com` and
+`zac.ns.cloudflare.com` — confirmed at the `.com` parent (`a.gtld-servers.net`) and at 1.1.1.1,
+8.8.8.8 and 9.9.9.9. The Cloudflare zone `895830f658c0ba796c06dcee75fbd39b` is active and full, apex
+`A 192.0.2.1` proxied with `www` CNAME to the apex, and Google Workspace MX/SPF/DKIM/DMARC untouched.
+Live: `https://www.truelinefinishes.com/` 200 with this build, apex 301 to www, `http://` 301 to
+`https://`, `robots.txt` Allow with the sitemap, canonical on www, 24 URLs in `sitemap-0.xml` (every
+public page), `/thank-you/` and `/404` noindex, 0 public pages wrongly noindexed, the three retired
+URLs still 301, and the Formlane slot present on every page.
+
+**One honest caveat about how that was measured.** This build host's own resolver repeatedly served a
+stale GoDaddy parking answer (`3.33.130.190`, `15.197.148.33`), which redirects a browser to
+GoDaddy's `/lander`; flushing fixed it for a few minutes at a time. The browser gates against the
+real domain were therefore run with a **temporary** `/etc/hosts` pin to the Cloudflare edge
+(`104.21.80.47`), removed immediately afterwards and `/etc/hosts` verified byte-identical to its
+backup. That pin proves EDGE ROUTING; ordinary public DNS was proved separately and independently at
+the `.com` parent and at three public resolvers. No DNS record was changed by this session.
+
+### Open items after this round
+
+1. **The engine's publication path is NOT proved end to end, and is not claimed to be.** Everything
+   from the engine's artefacts onward is proved; the D1-to-repository-to-deploy half is not wired for
+   this site. `worker-drip-worker` has no `truelinefinishes.com` registry entry, commits
+   `src/content/resources/<slug>.md` for a collection this site does not have, reads R2
+   `truelinefinishes/` (**zero objects**; TrueLine's photographs are under
+   `customers/trueline-finishes/`) and writes `r2.dev` image URLs this site does not use. **And
+   nothing rebuilds or redeploys this site on a push** — no CI workflow, and the Worker serves a
+   pre-built `dist/`. Those are another repository's changes and were deliberately not made here.
+   Full write-up and Kieran's pre-flight: `ARTICLE-PUBLICATION-CONTRACT.md`.
+2. **Wallpapering has one photograph** and it is already that hub's hero, so a wallpapering article
+   ships with no body figures. R2 was listed read-only and the 10 uncategorised `gallery/` objects
+   were downloaded and inspected: another decorator's website screenshot, two logo wordmarks, two
+   photographs with a person in them, a rotten-frame close-up and four near-duplicates of jobs
+   already on the site. **None is a wallpapering photograph.** Commercial is thin at 6. Brandon needs
+   to supply more; stock and generated imagery stay banned.
+3. **Cookie Policy wording, one sentence.** The inventory is accurate on cookies (there are none),
+   but the form service stores one first-party `sessionStorage` key, `lf_t`. The policy's "The quote
+   form" section does not say so. Pre-existing, not a regression, and legal copy is the operator's,
+   so it was not edited. Suggested addition, on his word: *"The form service also stores a single
+   short-lived key in your browser's session storage while the form is open, so your enquiry can be
+   sent; it is cleared when you close the tab."*
+4. **`/cookie-policy/` still carries "Last updated: 19 November 2026"**, against the 30 Sep house law
+   of no dates on any page. Pre-existing and part of the approved legal text; flagged, not changed.
+5. **Round 4's deferred R4-19** (gallery tabs with a thumbnail sidebar) is still deferred.
+6. `astro check` was not run: `@astrojs/check` is not installed here and the brief forbids installs.
+
+### Not touched, by instruction
+
+The Formlane form (no test lead), the four Trustindex widgets, the reviews and gallery pages, the
+approved legal text, the photographs themselves, the towns, the plan and the seed. The three
+hand-written articles keep their URLs, their `published` status and their copy; only their figures
+changed, and only to remove the off-topic ones. No GoDaddy DNS write, no MX/SPF/DKIM/DMARC change, no
+second Worker, no other client's repository, no install, no paid API call and no image generation.
