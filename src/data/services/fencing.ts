@@ -10,8 +10,10 @@ import type { ServiceContent } from './types';
 // NEVER: a fence height, a panel brand, a timber treatment, a warranty, a price or a timescale.
 // Brandon has named none of them (standing prohibitions 12, 13, 14, 17).
 //
-// 26 Nov 2026: Brandon's own first section and credited stock fencing photographs added (DECISIONS
-// B1-B6); the paragraph below still holds for his OWN photographs.
+// 26 Nov 2026: Brandon's own first section added (DECISIONS B1-B6). Later the same day his own seven
+// fencing photographs (WhatsApp, 25 Nov) replaced the credited stock band, and two of them replaced the
+// intro and process photographs; the hero is unchanged (DECISIONS C1-C6). The paragraph below is the
+// history of the hub before then; the section cards still carry copy alone.
 // PHOTOGRAPHS: the pool has NO photograph of a fence TrueLine has put up (194 photographs, all
 // painting and decorating), and only Brandon's own photographs may be used (CLAUDE.md: R2 only,
 // never generated). So this hub's section cards carry copy alone, there is no "Fencing in Pictures"
@@ -27,7 +29,7 @@ const content: ServiceContent = {
   lead: 'Garden fencing put up and repaired for homes and business premises in Baildon, Shipley, Ilkley, Leeds, Bradford, Harrogate and the towns around them.',
   heroImage: 'painted-railings-0181',
   introH2: 'Fencing Put Up, and Fencing Put Right',
-  introImage: 'painted-railings-0180',
+  introImage: 'slotted-panels-concrete-posts',
   sectionsH2: 'What a Fencing Job Covers',
   intro: [
     'All the main types of garden fencing: panel fencing, close board (feather edge), composite fencing, and trellis fencing and toppers. New fencing from scratch, and repairs where a line of fencing is sound but a panel or a post has gone. A call to 07949 484274 is a direct line to the owner.',
@@ -72,17 +74,16 @@ const content: ServiceContent = {
       { title: 'Put Up, and Cleared Up', body: 'The old fencing comes out where there is any, the new line goes up, and the garden is left clear. The job is seen through to the finish by the person who quoted it.' },
     ],
   },
-  processImage: 'stone-farmhouse-0093',
-  // STOCK PICTURES (Brandon, 25 Nov 2026: "some images to add to fencing page ... just stock images
-  // for now but I'll send them"). Still no photograph of TrueLine fencing exists, so the band is
-  // headed and introduced as example photographs, never as his jobs, and every one is credited under
-  // the band and on /image-credits/ (scripts/stock-images.mjs; the receipts are in stock-src/). The
-  // slotted concrete-post fence leads, matching his new first section. When his own fencing
-  // photographs arrive they replace these and the heading goes back to "Fencing in Pictures".
+  processImage: 'timber-panels-concrete-posts-garden',
+  // FENCING IN PICTURES (operator correction 26 Nov 2026, DECISIONS C3): Brandon's own seven fencing
+  // photographs, sent on WhatsApp on 25 Nov, replace the credited stock band. The slotted-panel
+  // photograph is the intro picture directly above, so the band carries the other six (a full 4+2 /
+  // 3+3 / 2x3 grid like every other hub's six). Described as photographs supplied by TrueLine
+  // Finishes; they make no claim about where, or for whom, each fence went up.
   pictures: {
-    heading: 'Fencing Styles in Pictures',
-    lead: 'Example photographs of the kinds of garden fencing we put up. They are credited stock photographs, not TrueLine Finishes jobs.',
-    images: ['concrete-post-panel-fence', 'lattice-topped-fence', 'close-board-fence-path', 'lap-panel-garden-fence', 'panel-garden-fencing-roadside', 'panel-fence-footpath'],
+    heading: 'Fencing in Pictures',
+    lead: 'Panel, lattice-topped, trellis and composite fencing, in photographs supplied by TrueLine Finishes.',
+    images: ['timber-panels-concrete-posts-garden', 'lattice-top-panels-beside-house', 'lattice-top-fence-planted-border', 'composite-fence-panels', 'timber-panels-concrete-kickboards', 'curved-trellis-fence-panels'],
   },
   faqs: [
     { q: 'What kinds of fencing do you put up?', a: 'Panel fencing, close board (feather edge) fencing, composite fencing, and trellis fencing and toppers: the main types of garden fencing in this country.' },

@@ -22,7 +22,8 @@ export interface ServiceContent {
    * Brandon's own photographs) contains no photograph of a fence he has put up, and the site may
    * use only his own photographs (CLAUDE.md: R2 only, never generated, no stock). A painted bedroom
    * over "Composite Fencing" would be a picture that says something untrue, so that hub's cards
-   * carry their copy alone until Brandon sends fencing photographs.
+   * carry their copy alone. (26 Nov 2026: his fencing photographs now fill the fencing intro, process
+   * and pictures band, from fencing-images.json; the cards were left as they were.)
    */
   sections: { h2: string; lead: string; points: string[]; image?: string }[];
   sectorsLine: string; // the seed's `sectors:` section: one line on who the work is for

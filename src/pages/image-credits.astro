@@ -1,23 +1,28 @@
 ---
 /**
- * /image-credits/ (26 Nov 2026, DECISIONS B4). The site's photographs are TrueLine Finishes' own,
- * EXCEPT the credited stock photographs of fencing Brandon asked for until he sends his own (the
- * Fencing service tile and the fencing page's pictures band). Each is a Wikimedia Commons file under
- * a Creative Commons licence that requires attribution; this page carries the full credit for every
- * one (title, author, source, licence, change made), generated from src/data/stock-images.json so it
- * cannot drift from what is shown.
+ * /image-credits/ (26 Nov 2026, DECISIONS B4, revised C4). Every photograph on the site is TrueLine
+ * Finishes' own or was supplied by TrueLine Finishes. The credited Wikimedia Commons stock photographs
+ * of fencing it carried for a few hours on 26 Nov were replaced by Brandon's own fencing photographs
+ * (DECISIONS C1-C6), so no third-party photograph is in use and there is nothing to credit. The page
+ * stays (footer legal bar, HTML sitemap) and still lists any stock entry in src/data/stock-images.json,
+ * so a future credited photograph cannot go uncredited.
  */
 import LegalPage from '../components/LegalPage.astro';
 import { stockImages } from '../data/site';
 ---
-<LegalPage title="Image Credits | TrueLine Finishes" description="Credits and licences for the stock photographs of fencing on the TrueLine Finishes website. Every other photograph on the site is TrueLine Finishes' own." h1="Image Credits" page="image-credits" lead="Credits and licences for the stock photographs used on this website." related={false}>
+<LegalPage title="Image Credits | TrueLine Finishes" description="Where the photographs on the TrueLine Finishes website come from: TrueLine Finishes' own pictures, and fencing photographs supplied by TrueLine Finishes." h1="Image Credits" page="image-credits" lead="Where the photographs used on this website come from." related={false}>
   <h2>Our own photographs</h2>
   <p>The painting and decorating photographs on this website are TrueLine Finishes' own pictures of its work.</p>
-  <h2>Stock photographs of fencing</h2>
-  <p>The fencing photographs on the <a href="/fencing/">fencing page</a> and the Fencing service tile are example photographs from Wikimedia Commons. They are not TrueLine Finishes jobs. Each is used under the licence named below (Creative Commons, or public domain), resized and converted to WebP for this website; the resized copies of Creative Commons photographs are shared under the same licence.</p>
-  <ul>
-    {stockImages.map((s) => (
-      <li><a href={s.sourcePage} target="_blank" rel="noopener nofollow">{s.title}</a> by {s.author} ({s.via}), licensed under <a href={s.licenceUrl} target="_blank" rel="noopener nofollow license">{s.licence}</a>. Shown as: {s.alt.charAt(0).toLowerCase() + s.alt.slice(1)}.</li>
-    ))}
-  </ul>
+  <h2>Fencing photographs</h2>
+  <p>The fencing photographs on the <a href="/fencing/">fencing page</a> and the Fencing service tile were supplied by TrueLine Finishes for this website. No stock or third-party photographs are used.</p>
+  {stockImages.length > 0 && (
+    <>
+      <h2>Stock photographs</h2>
+      <ul>
+        {stockImages.map((s) => (
+          <li><a href={s.sourcePage} target="_blank" rel="noopener nofollow">{s.title}</a> by {s.author} ({s.via}), licensed under <a href={s.licenceUrl} target="_blank" rel="noopener nofollow license">{s.licence}</a>. Shown as: {s.alt.charAt(0).toLowerCase() + s.alt.slice(1)}.</li>
+        ))}
+      </ul>
+    </>
+  )}
 </LegalPage>

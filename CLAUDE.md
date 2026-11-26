@@ -52,17 +52,20 @@ for Life v4 structure ONLY: TrueLine's own brand, words and photos.
   dropdown, the home tiles, /services/, the footer and related-services cards. The home page,
   /services/ and every hub page lead on "West and North Yorkshire" ("West Yorkshire" where brevity
   needs it) and still name real towns in support; EVERY SEO ARTICLE IS UNCHANGED and still names one
-  town only. There is NO photograph of TrueLine fencing in the pool, so that hub's section cards
-  carry copy alone: do not borrow painting photographs for it. Its pictures band is the credited STOCK
-  band Brandon asked for on 26 Nov 2026 (DECISIONS B3), labelled as example photographs.
+  town only. Fencing's section cards carry copy alone: do not borrow painting photographs for it.
+  Since 26 Nov 2026 (DECISIONS C1-C6) its intro, process photo, "Fencing in Pictures" band and the
+  Fencing tile use Brandon's OWN seven fencing photographs (WhatsApp 25 Nov), described as "supplied by
+  TrueLine Finishes"; the /fencing/ hero (`painted-railings-0181`) is unchanged on purpose.
 - No Areas page, no town pages at the root. Articles live at /resources/<hub>-<town>/ and are
   written by the engine after handoff; anything not `published` in `src/data/articles.json` is
   noindex and unlinked.
 - Royal blue never on black; chrome blue never on white. All raw colours live in `src/styles/tokens.css`.
-- Images: Brandon's own photos from R2 only (`npm run images`), never generated. ONE exception (26 Nov 2026,
-  DECISIONS B1-B6, his own request): credited free-licence STOCK fencing photographs on the Fencing tile and the
-  /fencing/ pictures band only, kept in `src/data/stock-images.json` (never `images.json`), receipts in
-  `stock-src/`, credits on /image-credits/, always labelled as example photographs, never as TrueLine jobs.
+- Images: Brandon's own photos from R2 only (`npm run images`), never generated. His seven client-supplied
+  FENCING photographs live apart in `src/data/fencing-images.json` (never `images.json`, so never in the
+  gallery, home picks or article pools), built by `node scripts/fencing-images.mjs <originals>` with SHA-256
+  checks against `client-src/fencing-originals.json`; originals in R2 `customers/trueline-finishes/fencing/`.
+  The credited Wikimedia stock band (DECISIONS B1-B6) was REMOVED 26 Nov 2026 (C1-C6): `stock-images.json`
+  is empty, `stock-src/` is history, /image-credits/ stays and lists any future stock entry.
 - Round 2 (DECISIONS R2-*): the DEFAULT quote form everywhere (name, email, phone, postcode, short
   description) unless the operator says otherwise; one hero pattern (Hero.astro) on every page; no
   lone top borders on cards.
