@@ -29,7 +29,9 @@ export interface ServiceContent {
   sectorsImage?: string; // round 3: with an odd number of sections the line becomes the last grid card (photo + black box) so no cell is left empty
   process: { heading: string; lead: string; steps: [ServiceStep, ServiceStep, ServiceStep] };
   processImage?: string; // the photo beside "how a job runs"; defaults to the first section card's
-  /** "<hub> in pictures". An EMPTY images list drops the band (fencing: no fencing photographs yet). */
+  /** "<hub> in pictures". An EMPTY images list drops the band. Keys may be credited STOCK keys
+   *  (stock-images.json; fencing only, Brandon's 25 Nov 2026 request): the band then prints their
+   *  credits, and its heading/lead must say they are example photographs, not TrueLine jobs. */
   pictures: { heading: string; lead: string; images: string[] };
   faqs: { q: string; a: string }[];
   related: string[];

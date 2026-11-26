@@ -7,10 +7,14 @@
  * spaces between them. They shouldn't all be next to each other." So this is the gallery page's own
  * treatment: square tiles with gaps, four across on a desktop, three on a tablet, two on a phone.
  */
-import { image } from '../data/site';
+import { image, stockImages } from '../data/site';
 interface Props { heading: string; lead: string; images: string[] }
 const { heading, lead, images } = Astro.props;
 const list = images.map(image);
+// STOCK (fencing, 26 Nov 2026): a band that shows credited stock photographs carries their
+// attribution directly under the grid (title, author, licence, source), plus the full list on
+// /image-credits/. Brandon's own photographs need no credit line, so other hubs are unchanged.
+const credits = images.map((k) => stockImages.find((s) => s.key === k)).filter((s) => s !== undefined);
 ---
 <section class="pg section section-pictures" data-section="pictures">
   <div class="container">
@@ -20,6 +24,15 @@ const list = images.map(image);
         <li><button type="button" class="pg__shot" data-lightbox aria-label={`Open larger: ${im.alt}`}><img src={im.sm} data-full={im.src} alt={im.alt} width={im.width} height={im.height} loading="lazy" decoding="async" /></button></li>
       ))}
     </ul>
+    {credits.length > 0 && (
+      <p class="pg__credit" data-stock-credits>
+        Photographs:{' '}
+        {credits.map((c, i) => (
+          <span><a href={c.sourcePage} target="_blank" rel="noopener nofollow">{c.title}</a> by {c.author}, <a href={c.licenceUrl} target="_blank" rel="noopener nofollow license">{c.licence}</a>{i < credits.length - 1 ? '; ' : '. '}</span>
+        ))}
+        Resized from the originals. Full details on the <a href="/image-credits/">image credits page</a>.
+      </p>
+    )}
   </div>
 </section>
 <style>
@@ -28,6 +41,8 @@ const list = images.map(image);
   .pg__shot { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; overflow: hidden; background: var(--bg-panel); aspect-ratio: 1; }
   .pg__shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease), opacity 0.3s var(--ease); }
   .pg__shot:hover img { transform: scale(1.04); opacity: 0.9; }
+  .pg__credit { margin-top: var(--space-5); font-size: var(--fs-sm); line-height: var(--lh-relaxed); color: var(--text-secondary); }
+  .pg__credit a { color: var(--brand-text); }
   @media (max-width: 900px) { .pg__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 520px) { .pg__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); } }
 </style>

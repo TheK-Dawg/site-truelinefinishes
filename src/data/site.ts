@@ -7,6 +7,7 @@
 import seed from '../../site-plan/seed.json';
 import { hours as napHours } from '../../site-plan/nap.json'; // the hours only: nap.json also holds the never-shown address
 import imagesData from './images.json';
+import stockData from './stock-images.json';
 
 export const business = {
   name: 'TrueLine Finishes',
@@ -86,7 +87,17 @@ export const videos = {
 
 export type Img = { key: string; cat: string; src: string; sm: string; width: number; height: number; alt: string; messageId: string; r2: string; sha256: string };
 export const images = imagesData as Img[];
-const byKey = new Map(images.map((i) => [i.key, i]));
+/**
+ * STOCK photographs (Brandon's request, 25 Nov 2026: "just stock images for now" for fencing, until he
+ * sends his own). Free-licence Wikimedia Commons files with download receipts; see
+ * scripts/stock-images.mjs. They are NOT in `images` above, so the gallery, the home picks and the
+ * article pools never show one as a TrueLine job; `image()` resolves them by key for the Fencing tile
+ * and the fencing page only, and every one is credited on /image-credits/.
+ */
+export type StockImg = { key: string; cat: 'stock'; stock: true; src: string; sm: string; width: number; height: number; alt: string; title: string; author: string; licence: string; licenceUrl: string; sourcePage: string; sourceFile: string; via: string; sha256: string; modified: string; licenceTemplate?: string | null };
+export const stockImages = stockData as StockImg[];
+const byKey = new Map<string, Img>([...images.map((i) => [i.key, i] as const), ...stockImages.map((i) => [i.key, i as unknown as Img] as const)]);
+export const isStock = (key: string) => stockImages.some((i) => i.key === key);
 export const image = (key: string): Img => {
   const i = byKey.get(key);
   if (!i) throw new Error(`unknown image: ${key}`);
@@ -107,7 +118,7 @@ export const services = [
   { slug: 'exterior-painting', name: 'Exterior Painting', icon: 'house', img: 'semi-detached-after-0125', short: 'Masonry paint on render, brick and stone, plus windows, doors, exterior woodwork and oil varnishing.' },
   { slug: 'wallpapering', name: 'Wallpapering', icon: 'roll', img: 'leaf-pattern-feature-wall-0026', short: 'Wallpaper hung on a feature wall or through a whole room, on walls prepared properly first.' },
   { slug: 'commercial-painting-and-decorating', name: 'Commercial Painting and Decorating', icon: 'office', img: 'office-navy-feature-wall-0178', short: 'The same careful work for offices, restaurants, schools, hotels, spas, leisure centres and local businesses.' },
-  { slug: 'fencing', name: 'Fencing', icon: 'wall', img: 'detached-house-garage-0024', short: 'Garden fencing put up and repaired: panel, close board, composite, and trellis fencing and toppers.' },
+  { slug: 'fencing', name: 'Fencing', icon: 'wall', img: 'concrete-post-panel-fence', short: 'Garden fencing put up and repaired: panel, close board, composite, and trellis fencing and toppers.' },
 ].map((s) => ({ ...s, image: image(s.img) }));
 export type Service = (typeof services)[number];
 

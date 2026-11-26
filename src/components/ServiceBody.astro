@@ -28,8 +28,13 @@ const { slug, introH2, introImage, intro, sectionsH2, sections, sectorsLine, sec
 const cards = sections.map((s) => ({ ...s, photo: s.image ? poolImage(s.image) : null }));
 const introPhoto = poolImage(introImage);
 const odd = cards.length % 2 === 1;
-if (odd && !sectorsImage) throw new Error(`${slug}: an odd number of section cards needs sectorsImage (no empty grid cell)`);
+// A hub whose cards are ALL copy-only (fencing, 26 Nov 2026: Brandon's fifth section made the count
+// odd) closes the grid with the same dark sectors card, without a photograph, so no cell is empty and
+// no painting photograph is borrowed for it.
+const allCopy = cards.every((c) => !c.photo);
+if (odd && !sectorsImage && !allCopy) throw new Error(`${slug}: an odd number of section cards needs sectorsImage (no empty grid cell)`);
 const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
+const sectorsCard = odd && (sectorsPhoto || allCopy);
 ---
 <section class="sb3 section section-service-intro" id="details" data-section="service-intro">
   <div class="container sb3__intro">
@@ -62,11 +67,11 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
           </div>
         </article>
       ))}
-      {sectorsPhoto && (
+      {sectorsCard && (
         <article class="sb3__card sb3__card--sectors" aria-labelledby="s-sectors" data-motion="reveal" data-sectors-card style="--reveal-delay: 60ms">
-          <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${sectorsPhoto.alt}`}>
+          {sectorsPhoto && <button type="button" class="sb3__shot" data-lightbox aria-label={`Open larger: ${sectorsPhoto.alt}`}>
             <img src={sectorsPhoto.sm} alt={sectorsPhoto.alt} width={sectorsPhoto.width} height={sectorsPhoto.height} loading="lazy" decoding="async" data-full={sectorsPhoto.src} />
-          </button>
+          </button>}
           <div class="sb3__text sb3__text--dark on-dark">
             <h3 id="s-sectors" class="sb3__h3"><Icon name="office" size={22} /> Who the Work Is For</h3>
             <p class="sb3__lead">{sectorsLine}</p>
@@ -74,7 +79,7 @@ const sectorsPhoto = odd && sectorsImage ? poolImage(sectorsImage) : null;
         </article>
       )}
     </div>
-    {!sectorsPhoto && <p class="sb3__sectors"><Icon name="office" size={20} /> {sectorsLine}</p>}
+    {!sectorsCard && <p class="sb3__sectors"><Icon name="office" size={20} /> {sectorsLine}</p>}
   </div>
 </section>
 
