@@ -1132,3 +1132,25 @@ Cloudflare cache purged, origin/main = `22495ff` at release.
 - **Untouched:** form (no test lead), NAP, hours, five-entry nav, heroes, articles, Trustindex, DNS, Formlane.
 - **Open:** replace the stock with Brandon's own fencing photographs when he sends them (swap the keys in
   `fencing.ts` / `site.ts`, heading back to "Fencing in Pictures", and drop the credits if no stock remains).
+
+## Brandon's own fencing photographs replace the stock, released 26 Nov 2026 (DECISIONS C1-C6)
+
+Operator correction: the seven fencing photographs in Brandon's WhatsApp album of 25 Nov are his own and go on the
+site; the /fencing/ hero stays. Commit `b3f2a7f` (v2.6.0), Worker `site-truelinefinishes` version
+`ac9fbba8-4164-4ff2-88ab-c6d248447f60`, zone cache purged twice (the first read-back caught the edge mid-propagation:
+the Worker URL served every file while the edge still had 404s and the old home page).
+
+- **Placed:** Fencing tile (home, /services/, /resources/) and /fencing/ intro = `slotted-panels-concrete-posts`;
+  process photo = `timber-panels-concrete-posts-garden`; "Fencing in Pictures" band = the other six. All seven on the
+  page; the eighth album image (his screenshot, `OlR3DQluRIGmXQ-hcCf1wAAAOw`) is not published.
+- **Removed:** the six Wikimedia stock photographs (12 files); all 12 old URLs return 404 live. No "stock" or
+  "example photograph" wording on /, /services/, /resources/, /fencing/, /image-credits/ or /gallery/. /image-credits/
+  stays and now says the fencing photographs were supplied by TrueLine Finishes.
+- **Read back live:** all 14 fencing WebP URLs 200; each derivative compared with its original (after the recorded
+  crop) at mean absolute difference 0.35-0.88 of 255, i.e. the same photograph re-encoded. Hero `painted-railings-0181.webp`
+  SHA-256 identical live and in the repo (`f0086508...`). The gallery carries no fencing photograph (kept out of `images.json`).
+- **Gates:** build, token gate, audit (28 pages 0 fails) + selftest, contrast (with /fencing/ and /image-credits/) 0 fails,
+  live `check.mjs` 28 routes x 2 widths 0 fails, live `hero-heights.mjs` 26 routes x 4 widths 0 fails, `cookies.mjs` exit 0.
+  Screenshots of the band at 1440 and 390 and the Fencing tile checked by eye.
+- **Not touched:** hero, copy, nav, forms, NAP, Trustindex, articles, DNS, payments. No test lead, no message to Brandon.
+- **Left as it was:** the five fencing section cards still carry copy only (not in the correction's scope).
