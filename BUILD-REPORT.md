@@ -1105,3 +1105,30 @@ no article's single-town wording was changed. `site-plan/` was not edited.
    phones only; at 360 and 390 there is no overlap.
 6. `astro check` is still not installed here (it stops at an interactive install prompt); no install
    was made. The build, the token gate and the five gate scripts are this site's ship gate.
+
+## Brandon's fencing changes, released 26 Nov 2026 (DECISIONS B1-B6)
+
+Commit `22495ff`, version 2.5.0, Worker `site-truelinefinishes` version `62327a13-cdc9-4dbf-83b9-61a8aa1f4ef8`,
+Cloudflare cache purged, origin/main = `22495ff` at release.
+
+- **Built:** "Slotted Panel Fencing with Concrete Posts" is the FIRST of the five section cards on
+  /fencing/ (his heading, description and four points, word for word); the Fencing tile shows a fencing
+  photograph (timber panels between concrete posts on gravel boards) instead of the house; /fencing/ has a
+  "Fencing Styles in Pictures" band of six credited stock photographs, labelled as example photographs and
+  not TrueLine jobs; new `/image-credits/` page (footer legal bar, HTML sitemap, XML sitemap).
+- **Rights:** Brandon's seven WhatsApp pictures were NOT published (no origin, author or licence). The six
+  used are Wikimedia Commons files (five CC BY-SA 2.0, one public domain), receipts in
+  `stock-src/fencing-receipts.json` with the Commons SHA-1 matched to the downloaded bytes. Two of them are
+  the same photographs as two of his references; a third match (lattice over decking) was dropped because
+  decking is a not-offered service.
+- **Checked (local dist):** build, token gate PASS, audit 28 pages 0 fails (+ selftest), check 28 routes x 2
+  widths 0 fails, contrast 0 fails with /fencing/ and /image-credits/ passed explicitly, hero heights 26
+  routes x 4 widths 0 fails.
+- **Real-domain verified (www.truelinefinishes.com, public DNS 1.1.1.1 -> Cloudflare):** check 28 routes x 2
+  widths 0 fails; hero heights 26 x 4 0 fails; cookies run clean (exit 0); /, /fencing/, /image-credits/,
+  /services/, /gallery/, /resources/ 200; all 12 stock WebP files 200 `image/webp`; the Fencing tile and the
+  six band images load (naturalWidth > 0) at 1440 and 390; the gallery carries no stock image.
+  `contrast.mjs` serves `dist/` only, so its result is for the same build, not a live run.
+- **Untouched:** form (no test lead), NAP, hours, five-entry nav, heroes, articles, Trustindex, DNS, Formlane.
+- **Open:** replace the stock with Brandon's own fencing photographs when he sends them (swap the keys in
+  `fencing.ts` / `site.ts`, heading back to "Fencing in Pictures", and drop the credits if no stock remains).
